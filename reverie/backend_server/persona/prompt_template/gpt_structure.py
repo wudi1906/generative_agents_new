@@ -70,6 +70,17 @@ cost_logger = OpenAICostLogger_Singleton(
   cost_upperbound = openai_config["cost-upperbound"]
 )
 
+def ChatGPT_single_request(prompt): 
+  temp_sleep()
+  try:
+    response = llm(prompt)
+    # response = llm('[INST]\n' + prompt + '\n[/INST]')
+  except ValueError:
+    print("Requested tokens exceed context window")
+    ### TODO: Add map-reduce or splitter to handle this error.
+    return "LLM ERROR"
+  return response
+
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
