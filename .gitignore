@@ -119,5 +119,4 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# VS Code settings
-.vscode/
+.history/
