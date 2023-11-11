@@ -137,6 +137,7 @@ class ReverieServer:
     # cycle; this is to not kill our machine. 
     self.server_sleep = 0.1
 
+    # Here
     # SIGNALING THE FRONTEND SERVER: 
     # curr_sim_code.json contains the current simulation code, and
     # curr_step.json contains the current step of the simulation. These are 
@@ -308,6 +309,7 @@ class ReverieServer:
       if int_counter == 0: 
         break
 
+      # Here
       # <curr_env_file> file is the file that our frontend outputs. When the
       # frontend has done its job and moved the personas, then it will put a 
       # new environment file that matches our step count. That's when we run 
@@ -391,6 +393,7 @@ class ReverieServer:
           movements["meta"]["curr_time"] = (self.curr_time 
                                              .strftime("%B %d, %Y, %H:%M:%S"))
 
+          # Here
           # We then write the personas' movements to a file that will be sent 
           # to the frontend server. 
           # Example json output: 
@@ -608,6 +611,7 @@ if __name__ == '__main__':
   origin = input("Enter the name of the forked simulation: ").strip()
   target = input("Enter the name of the new simulation: ").strip()
 
+  # Here
   rs = ReverieServer(origin, target)
   rs.open_server()
 
