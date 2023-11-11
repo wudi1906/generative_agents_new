@@ -16,6 +16,99 @@ from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Sin
 config_path = Path("../../openai_config.json")
 with open(config_path, "r") as f:
     openai_config = json.load(f) 
+import boto3
+import random
+from typing import Dict, List
+
+# from langchain.llms import Ollama
+# from langchain.llms import OpenAI
+# from langchain.llms import LlamaCpp
+# from langchain.llms import GPT4All
+# from langchain.chat_models import ChatAnthropic
+# from langchain.embeddings import GPT4AllEmbeddings
+# from langchain.callbacks.manager import CallbackManager
+# from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+# from langchain.llms import HuggingFacePipeline
+
+
+# ============================================================================
+# ################### [Set LLM] ###################
+# ============================================================================
+
+### **** OpenAI **** 
+'''
+llm = OpenAI(temperature=0,model_name="gpt-3.5-turbo-16k")
+'''
+
+### **** Anthropic **** 
+'''
+llm = ChatAnthropic(model_name="claude-2", temperature=0)
+'''
+
+### *** Llama.cpp (Llama2-13b) ***
+'''
+n_gpu_layers = 1  # Metal set to 1 is enough.
+n_batch = 512  # Should be between 1 and n_ctx, consider the amount of RAM of your Apple Silicon Chip.
+callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+model_path="/Users/rlm/Desktop/Code/llama.cpp/llama-2-13b-chat.ggmlv3.q4_0.bin"
+llm = LlamaCpp(
+    model_path=model_path,
+    n_gpu_layers=n_gpu_layers,
+    n_batch=n_batch,
+    n_ctx=4096,
+    f16_kv=True,  # MUST set to True, otherwise you will run into problem after a couple of calls
+    callback_manager=callback_manager,
+    verbose=True,
+)
+''' 
+
+### *** GPT4Alll (nous-hermes-13b) *** 
+''' 
+model_path = "/Users/rlm/Desktop/Code/gpt4all/models/nous-hermes-13b.ggmlv3.q4_0.bin"
+llm = GPT4All(
+    model=model_path
+)
+'''
+
+### *** Ollama (Vicuna-13b-16k) *** 
+''' 
+llm = Ollama(base_url="http://localhost:11434",
+              model="vicuna:13b-v1.5-16k-q4_0",
+              callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]))
+'''
+
+### *** Ollama (Llama2-13b) *** 
+'''
+llm = Ollama(base_url="http://localhost:11434",
+              model="llama2:13b",
+              callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]))
+'''
+
+### *** Hugging Face Transformers ***
+'''
+llm = pipeline("text-generation", model="meta-llama/Llama-2-13b-chat-hf", device=0, token=huggingface_token)
+# llm.tokenizer.pad_token_id = llm.model.config.eos_token_id
+'''
+
+### *** SageMaker Jumpstart ***
+
+
+# def llm(prompt):
+#   payload =  {
+#     "inputs": prompt, 
+#     "parameters": {"max_new_tokens": 256, "top_p": 0.9, "temperature": 0.6}
+#   }
+#   endpoint_name = 'jumpstart-dft-meta-textgeneration-llama-codellama-7b'
+#   client = boto3.client("sagemaker-runtime")
+#   response = client.invoke_endpoint(
+#     EndpointName=endpoint_name,
+#     ContentType="application/json",
+#     Body=json.dumps(payload),
+#     CustomAttributes="accept_eula=true",
+#   )
+#   response = response["Body"].read().decode("utf8")
+#   response = json.loads(response)
+#   return response["generated_text"]
 
 def setup_client(type: str, config: dict):
   """Setup the OpenAI client.
@@ -79,6 +172,15 @@ def ChatGPT_single_request(prompt):
   )
   return completion["choices"][0]["message"]["content"]
 
+  # try:
+  #   response = llm(prompt)
+  # except:
+  #   print("Requested tokens exceed context window")
+  #   ### TODO: Add map-reduce or splitter to handle this error.
+  #   prompt = prompt.split(" ")[-1400:]
+  #   prompt = str(' '.join(prompt))
+  #   response = llm(prompt)
+  # return response
 
 
 def temp_sleep(seconds=0.1):
@@ -95,17 +197,14 @@ def ChatGPT_single_request(prompt):
   return completion.choices[0].message.content
 
 
-def ChatGPT_request(prompt): 
+def ChatGPT_request(prompt, parameters): 
   """
-  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
-  server and returns the response. 
+  Given a prompt, make a request to LLM server and returns the response. 
   ARGS:
-    prompt: a str prompt
-    gpt_parameter: a python dictionary with the keys indicating the names of  
-                   the parameter and the values indicating the parameter 
-                   values.   
+    prompt: a str prompt 
+    parameters: optional
   RETURNS: 
-    a str of GPT-3's response. 
+    a str of LLM's response. 
   """
   # temp_sleep()
   try: 
@@ -120,44 +219,15 @@ def ChatGPT_request(prompt):
     print(f"Error: {e}")
     return "ChatGPT ERROR"
 
-
-def GPT4_safe_generate_response(prompt, 
-                                   example_output,
-                                   special_instruction,
-                                   repeat=3,
-                                   fail_safe_response="error",
-                                   func_validate=None,
-                                   func_clean_up=None,
-                                   verbose=False): 
-  prompt = 'GPT-3.5-turbo-1106 Prompt:\n"""\n' + prompt + '\n"""\n'
-  prompt += f"Output the response to the prompt above in json. {special_instruction}\n"
-  prompt += "Example output json:\n"
-  prompt += '{"output": "' + str(example_output) + '"}'
-
-  if verbose: 
-    print ("CHAT GPT PROMPT")
-    print (prompt)
-
-  for i in range(repeat): 
-
-    try: 
-      curr_gpt_response = GPT4_request(prompt).strip()
-      end_index = curr_gpt_response.rfind('}') + 1
-      curr_gpt_response = curr_gpt_response[:end_index]
-      curr_gpt_response = json.loads(curr_gpt_response)["output"]
-      
-      if func_validate(curr_gpt_response, prompt=prompt): 
-        return func_clean_up(curr_gpt_response, prompt=prompt)
-      
-      if verbose: 
-        print ("---- repeat count: \n", i, curr_gpt_response)
-        print (curr_gpt_response)
-        print ("~~~~")
-
-    except: 
-      pass
-
-  return False
+  # try:
+  #   response = llm(prompt)
+  # except:
+  #   print("Requested tokens exceed context window")
+  #   ### TODO: Add map-reduce or splitter to handle this error.
+  #   prompt = prompt.split(" ")[-1400:]
+  #   prompt = str(' '.join(prompt))
+  #   response = llm(prompt)
+  # return response
 
 
 def ChatGPT_safe_generate_response(prompt, 
@@ -175,7 +245,7 @@ def ChatGPT_safe_generate_response(prompt,
   prompt += '{"output": "' + str(example_output) + '"}'
 
   if verbose: 
-    print ("CHAT GPT PROMPT")
+    print ("LLM PROMPT")
     print (prompt)
 
   for i in range(repeat): 
@@ -227,17 +297,18 @@ def ChatGPT_safe_generate_response_OLD(prompt,
   return fail_safe_response
 
 
+
+# ============================================================================
+# ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
+# ============================================================================
 def GPT_request(prompt, gpt_parameter): 
   """
-  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
-  server and returns the response. 
+  Given a prompt, make a request to LLM server and returns the response. 
   ARGS:
-    prompt: a str prompt
-    gpt_parameter: a python dictionary with the keys indicating the names of  
-                   the parameter and the values indicating the parameter 
-                   values.   
+    prompt: a str prompt 
+    parameters: optional 
   RETURNS: 
-    a str of GPT-3's response. 
+    a str of LLM's response. 
   """
   temp_sleep()
   try: 
@@ -260,6 +331,16 @@ def GPT_request(prompt, gpt_parameter):
     print(f"Error: {e}")
     return "TOKEN LIMIT EXCEEDED"
 
+  # temp_sleep()
+  # try:
+  #   response = llm(prompt)
+  # except:
+  #   print("Requested tokens exceed context window")
+  #   ### TODO: Add map-reduce or splitter to handle this error.
+  #   prompt = prompt.split(" ")[-1400:]
+  #   prompt = str(' '.join(prompt))
+  #   response = llm(prompt)
+  # return response
 
 def generate_prompt(curr_input, prompt_lib_file): 
   """
@@ -291,7 +372,7 @@ def generate_prompt(curr_input, prompt_lib_file):
 
 def safe_generate_response(prompt, 
                            gpt_parameter,
-                           repeat=5,
+                           repeat=1,
                            fail_safe_response="error",
                            func_validate=None,
                            func_clean_up=None,
@@ -320,6 +401,13 @@ def get_embedding(text, model=openai_config["embeddings"]):
   response = embeddings_client.embeddings.create(input=[text], model=model)
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
   return response.data[0].embedding
+
+  # endpoint_name = 'jumpstart-dft-hf-textembedding-gpt-j-6b-fp16'
+  # client = boto3.client('runtime.sagemaker')
+  # payload = {"text_inputs": [text]}
+  # query_response = client.invoke_endpoint(EndpointName=endpoint_name, ContentType='application/json', Body=json.dumps(payload).encode('utf-8'))
+  # model_predictions = json.loads(query_response['Body'].read())
+  # return model_predictions['embedding'][0]
 
 
 if __name__ == '__main__':
