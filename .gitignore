@@ -102,3 +102,4 @@ ENV/
 .ropeproject
 
 .history/
+.vscode/

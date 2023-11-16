@@ -104,6 +104,8 @@ resource "aws_instance" "generative-agents-simulation" {
               #!/bin/bash
               sudo yum update -y
               sudo yum install -y git
+              sudo yum install -y unzip
+              sudo yum install -y docker
 
               #install nvidia drivers
               sudo yum install -y gcc kernel-devel-$(uname -r)
