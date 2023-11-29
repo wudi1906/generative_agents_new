@@ -1,19 +1,19 @@
 # OpenAI API key
 openai_config.json
+reverie/backend_server/utils.py
 
 environment/frontend_server/storage/*
 environment/frontend_server/temp_storage*/*
+environment/frontend_server/frontend_server/settings/local.py
+environment/frontend_server/static_dirs/*
 reverie/backend_server/cost-logs/*
 
 # Logs folder
 logs/*
 
-frontend_server/settings/local.py
-storage/*
-static_dirs/*
-
 !environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/*
 !environment/frontend_server/storage/base_the_ville_n25/*
+!environment/frontend_server/storage/July1_the_ville_isabella_maria_klaus-step-3-*/*
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters_swapped_personalities
 
