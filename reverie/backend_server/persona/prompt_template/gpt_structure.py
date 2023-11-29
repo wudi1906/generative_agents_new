@@ -290,7 +290,7 @@ if __name__ == '__main__':
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}
   curr_input = ["driving to a friend's house"]
-  prompt_lib_file = "prompt_template/test_prompt_July5.txt"
+  prompt_lib_file = "prompt_template/v1/test_prompt_July5.txt"
   prompt = generate_prompt(curr_input, prompt_lib_file)
 
   def __func_validate(gpt_response): 
