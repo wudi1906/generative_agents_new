@@ -1,6 +1,6 @@
 provider "aws" {
   region = "us-west-2"
-  profile = "AdministratorAccess-987705332432"
+  profile = "default"
 }
 
 resource "aws_key_pair" "key_pair" {

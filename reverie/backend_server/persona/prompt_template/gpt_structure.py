@@ -20,6 +20,13 @@ import boto3
 import random
 from typing import Dict, List
 
+import openai
+
+openai.api_key = open_ai_key
+if not use_openai:
+  openai.api_base = api_base
+  model = api_model
+
 # from langchain.llms import Ollama
 # from langchain.llms import OpenAI
 # from langchain.llms import LlamaCpp
@@ -140,6 +147,12 @@ def ChatGPT_single_request(prompt):
   cost_logger.update_cost(completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"])
   return completion.choices[0].message.content
 
+  # completion = openai.ChatCompletion.create(
+  #   model= "gpt-3.5-turbo" if use_openai else model, 
+  #   messages=[{"role": "user", "content": prompt}]
+  # )
+  # return completion["choices"][0]["message"]["content"]
+
   # try:
   #   response = llm( prompt)
   # except:
@@ -154,12 +167,41 @@ def ChatGPT_single_request(prompt):
 
 def ChatGPT_request(prompt, parameters): 
   """
-  Given a prompt, make a request to LLM server and returns the response. 
+  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
+  server and returns the response. 
   ARGS:
-    prompt: a str prompt 
-    parameters: optional
+    prompt: a str prompt
+    gpt_parameter: a python dictionary with the keys indicating the names of  
+                   the parameter and the values indicating the parameter 
+                   values.   
   RETURNS: 
-    a str of LLM's response. 
+    a str of GPT-3's response. 
+  """
+  temp_sleep()
+
+  try: 
+    completion = openai.ChatCompletion.create(
+    model="gpt-4" if use_openai else model, 
+    messages=[{"role": "user", "content": prompt}]
+    )
+    return completion["choices"][0]["message"]["content"]
+  
+  except: 
+    print ("ChatGPT ERROR")
+    return "ChatGPT ERROR"
+
+
+def ChatGPT_request(prompt): 
+  """
+  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
+  server and returns the response. 
+  ARGS:
+    prompt: a str prompt
+    gpt_parameter: a python dictionary with the keys indicating the names of  
+                   the parameter and the values indicating the parameter 
+                   values.   
+  RETURNS: 
+    a str of GPT-3's response. 
   """
   # temp_sleep()
   try: 
@@ -200,7 +242,7 @@ def ChatGPT_safe_generate_response(prompt,
   prompt += '{"output": "' + str(example_output) + '"}'
 
   if verbose: 
-    print ("LLM PROMPT")
+    print ("CHAT GPT PROMPT")
     print (prompt)
 
   for i in range(repeat): 
@@ -258,15 +300,19 @@ def ChatGPT_safe_generate_response_OLD(prompt,
 # ============================================================================
 def GPT_request(prompt, gpt_parameter): 
   """
-  Given a prompt, make a request to LLM server and returns the response. 
+  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
+  server and returns the response. 
   ARGS:
-    prompt: a str prompt 
-    parameters: optional 
+    prompt: a str prompt
+    gpt_parameter: a python dictionary with the keys indicating the names of  
+                   the parameter and the values indicating the parameter 
+                   values.   
   RETURNS: 
-    a str of LLM's response. 
+    a str of GPT-3's response. 
   """
   temp_sleep()
   try: 
+    # if use_openai:
     messages = [{
       "role": "system", "content": prompt
     }]
@@ -322,17 +368,16 @@ def generate_prompt(curr_input, prompt_lib_file):
     prompt = prompt.replace(f"!<INPUT {count}>!", i)
   if "<commentblockmarker>###</commentblockmarker>" in prompt: 
     prompt = prompt.split("<commentblockmarker>###</commentblockmarker>")[1]
-  return prompt
+  return prompt.strip()
 
 
 def safe_generate_response(prompt, 
                            gpt_parameter,
-                           repeat=1,
+                           repeat=5,
                            fail_safe_response="error",
                            func_validate=None,
                            func_clean_up=None,
                            verbose=False): 
-  print(f"Safe generate response prompt: {prompt}")
   if verbose: 
     print (prompt)
 
@@ -394,21 +439,3 @@ if __name__ == '__main__':
                                  True)
 
   print (output)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
