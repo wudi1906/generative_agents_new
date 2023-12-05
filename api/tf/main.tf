@@ -1,9 +1,10 @@
 provider "aws" {
   region = "us-west-2"
+  profile = "AdministratorAccess-987705332432"
 }
 
-resource "aws_key_pair" "nclark_temp_key_pair" {
-  key_name   = "nclark_temp_key_pair"
+resource "aws_key_pair" "key_pair" {
+  key_name   = "key_pair"
   public_key = file("~/.ssh/id_rsa.pub")
 }
 
@@ -90,7 +91,7 @@ resource "aws_security_group" "allow_traffic" {
 resource "aws_instance" "generative-agents-simulation" {
   ami           = "ami-01bfa15e1c92b9dab"
   instance_type = "g5.2xlarge"
-  key_name      = aws_key_pair.nclark_temp_key_pair.key_name
+  key_name      = aws_key_pair.key_pair.key_name
   vpc_security_group_ids = [aws_security_group.allow_traffic.id]
   associate_public_ip_address = true
   iam_instance_profile = aws_iam_instance_profile.ec2_s3_instance_profile.name
@@ -127,6 +128,11 @@ resource "aws_instance" "generative-agents-simulation" {
               else
                 echo "Driver not installed successfully"
               fi
+
+              sudo usermod -aG docker $USER
+              sudo systemctl enable docker
+              sudo systemctl start docker
+              docker pull vllm/vllm-openai:latest
               EOF
 
   tags = {
@@ -135,5 +141,5 @@ resource "aws_instance" "generative-agents-simulation" {
 }
 
 output "ssh_command" {
-  value = "ssh -i nclark_temp_key_pair.pem ec2-user@${aws_instance.generative-agents-simulation.public_ip}"
+  value = "ssh ec2-user@${aws_instance.generative-agents-simulation.public_ip}"
 }
