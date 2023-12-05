@@ -18,6 +18,11 @@ In the `reverie/backend_server` folder (where `reverie.py` is located), create a
 openai_api_key = "<Your OpenAI API>"
 # Put your name
 key_owner = "<Name>"
+# If using vLLM on EC2, set following
+use_openai = "<True or False>"
+api_base = "<URL>"
+api_model = "<Your LLM>"
+
 
 maze_assets_loc = "../../environment/frontend_server/static_dirs/assets"
 env_matrix = f"{maze_assets_loc}/the_ville/matrix"
