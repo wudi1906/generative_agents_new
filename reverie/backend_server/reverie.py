@@ -76,6 +76,7 @@ class ReverieServer:
     sim_folder = f"{fs_storage}/{self.sim_code}"
     copyanything(fork_folder, sim_folder)
 
+    # Overwrite sys.stdout (!!!)
     sys.stdout = Logger(f"{sim_folder}/{logfile_name}")
 
     with open(f"{sim_folder}/reverie/meta.json") as json_file:  
@@ -656,8 +657,6 @@ if __name__ == '__main__':
   # target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
   # target = input(target_prompt).strip()
 
-  # sim_folder = f"{fs_storage}/{target}"
-
   # Pars input params
   parser = argparse.ArgumentParser(description='Reverie Server')
   parser.add_argument(
@@ -677,8 +676,12 @@ if __name__ == '__main__':
   target = parser.parse_args().target
   
   rs = ReverieServer(origin, target)
-  with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
-    outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
+
+  # Allow the server to create this folder before writing to the logfile
+  # sim_folder = f"{fs_storage}/{target}"
+  # with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
+  #   outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
+
   rs.open_server()
 
 
