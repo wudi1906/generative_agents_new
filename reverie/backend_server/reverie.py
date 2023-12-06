@@ -28,6 +28,7 @@ import os
 import shutil
 import traceback
 import argparse
+import sys
 
 from selenium import webdriver
 
@@ -52,6 +53,8 @@ def trace_calls_and_lines(frame, event, arg):
 #                                  REVERIE                                   #
 ##############################################################################
 
+logfile_name = "log.txt"
+
 class ReverieServer: 
   def __init__(self, 
                fork_sim_code,
@@ -72,6 +75,8 @@ class ReverieServer:
     self.sim_code = sim_code
     sim_folder = f"{fs_storage}/{self.sim_code}"
     copyanything(fork_folder, sim_folder)
+
+    sys.stdout = Logger(f"{sim_folder}/{logfile_name}")
 
     with open(f"{sim_folder}/reverie/meta.json") as json_file:  
       reverie_meta = json.load(json_file)
@@ -458,6 +463,7 @@ class ReverieServer:
       else:
         sim_command = input_command
       sim_command = sim_command.strip()
+      print(sim_command)
       ret_str = ""
 
       try: 
@@ -637,6 +643,20 @@ class ReverieServer:
           break
 
 if __name__ == '__main__':
+  # origin_prompt = "Enter the name of the forked simulation (leave blank for base_the_ville_isabella_maria_klaus): "
+  # origin = input(origin_prompt).strip()
+  # if not origin:
+  #   origin = "base_the_ville_isabella_maria_klaus"
+  #   print(origin)
+
+  # last_sim_code = ""
+  # with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
+  #   curr_sim_code = json.load(json_file)
+  #   last_sim_code = curr_sim_code["sim_code"]
+  # target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
+  # target = input(target_prompt).strip()
+
+  # sim_folder = f"{fs_storage}/{target}"
 
   # Pars input params
   parser = argparse.ArgumentParser(description='Reverie Server')
@@ -657,6 +677,8 @@ if __name__ == '__main__':
   target = parser.parse_args().target
   
   rs = ReverieServer(origin, target)
+  with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
+    outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
   rs.open_server()
 
 

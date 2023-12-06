@@ -225,6 +225,25 @@ def copyanything(src, dst):
     else: raise
 
 
+class Logger(object):
+  def __init__(self, logfile_path):
+    self.terminal = sys.stdout
+    self.logfile = open(logfile_path, "a")
+
+  def write(self, message):
+    self.terminal.write(message)
+    self.terminal.flush()
+    self.logfile.write(message)
+
+  def flush(self):
+    self.terminal.flush()
+    self.logfile.flush()
+
+  def __del__(self):
+    self.flush()
+    self.logfile.close()
+
+
 if __name__ == '__main__':
   pass
 
