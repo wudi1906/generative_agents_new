@@ -615,12 +615,15 @@ if __name__ == '__main__':
   #                    "July1_the_ville_isabella_maria_klaus-step-3-21")
   # rs.open_server()
 
-  origin_prompt = "Enter the name of the forked simulation (leave blank for base_the_ville_isabella_maria_klaus): "
+  # Get the simulation to fork from the user
+  default = "base_the_ville_isabella_maria_klaus"
+  origin_prompt = f"Enter the name of the forked simulation (leave blank for {default}): "
   origin = input(origin_prompt).strip()
   if not origin:
-    origin = "base_the_ville_isabella_maria_klaus"
+    origin = default
     print(origin)
 
+  # Get the name of the new simulation from the user
   last_sim_code = ""
   with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
     curr_sim_code = json.load(json_file)
@@ -630,7 +633,7 @@ if __name__ == '__main__':
 
   rs = ReverieServer(origin, target)
 
-  # Allow the server to create this folder before writing to the logfile
+  # Allow the server to create this folder above before writing to the logfile
   sim_folder = f"{fs_storage}/{target}"
   with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
     outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
