@@ -225,6 +225,8 @@ def copyanything(src, dst):
     else: raise
 
 
+# Anything written to this logger object will be written
+# to both stdout and a logfile
 class Logger(object):
   def __init__(self, logfile_path):
     self.terminal = sys.stdout
