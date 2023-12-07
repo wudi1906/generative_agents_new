@@ -36,7 +36,7 @@ def get_random_alphanumeric(i=6, j=6):
 # CHAPTER 1: Run GPT Prompt
 ##############################################################################
 
-def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=True): 
+def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False): 
   """
   Given the persona, returns an integer that indicates the hour when the 
   persona wakes up.  
@@ -86,7 +86,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=True):
 def run_gpt_prompt_daily_plan(persona, 
                               wake_up_hour, 
                               test_input=None, 
-                              verbose=True):
+                              verbose=False):
   """
   Basically the long term planning that spans a day. Returns a list of actions
   that the persona will take today. Usually comes in the following form: 
@@ -156,7 +156,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
                                             hour_str,
                                             intermission2=None,
                                             test_input=None, 
-                                            verbose=True): 
+                                            verbose=False): 
   def create_prompt_input(persona, 
                           curr_hour_str, 
                           p_f_ds_hourly_org,
@@ -290,7 +290,7 @@ def run_gpt_prompt_task_decomp(persona,
                                task, 
                                duration, 
                                test_input=None, 
-                               verbose=True): 
+                               verbose=False): 
   def create_prompt_input(persona, task, duration, test_input=None):
 
     """
@@ -504,7 +504,7 @@ def run_gpt_prompt_action_sector(action_description,
                                 persona, 
                                 maze, 
                                 test_input=None, 
-                                verbose=True):
+                                verbose=False):
   def create_prompt_input(action_description, persona, maze, test_input=None): 
     act_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
     
@@ -641,7 +641,7 @@ def run_gpt_prompt_action_arena(action_description,
                                 persona, 
                                 maze, act_world, act_sector,
                                 test_input=None, 
-                                verbose=True):
+                                verbose=False):
   def create_prompt_input(action_description, persona, maze, act_world, act_sector, test_input=None): 
     prompt_input = []
     # prompt_input += [persona.scratch.get_str_name()]
@@ -716,7 +716,7 @@ def run_gpt_prompt_action_arena(action_description,
 
   fail_safe = get_fail_safe()
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up, verbose=True)
+                                   __func_validate, __func_clean_up, verbose=False)
   print (output)
   # y = f"{act_world}:{act_sector}"
   # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
@@ -736,7 +736,7 @@ def run_gpt_prompt_action_game_object(action_description,
                                       maze,
                                       temp_address,
                                       test_input=None, 
-                                      verbose=True): 
+                                      verbose=False): 
   def create_prompt_input(action_description, 
                           persona, 
                           temp_address, 
@@ -789,7 +789,7 @@ def run_gpt_prompt_action_game_object(action_description,
 
 
 
-def run_gpt_prompt_pronunciatio(action_description, persona, verbose=True): 
+def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False): 
   def create_prompt_input(action_description): 
     if "(" in action_description: 
       action_description = action_description.split("(")[-1].split(")")[0]
@@ -878,7 +878,7 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=True):
 
 
 
-def run_gpt_prompt_event_triple(action_description, persona, verbose=True): 
+def run_gpt_prompt_event_triple(action_description, persona, verbose=False): 
   def create_prompt_input(action_description, persona): 
     if "(" in action_description: 
       action_description = action_description.split("(")[-1].split(")")[0]
@@ -966,7 +966,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=True):
 
 
 
-def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=True): 
+def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_desp, persona): 
     prompt_input = [act_game_object, 
                     persona.name,
@@ -1044,7 +1044,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=True
 
 
 
-def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, verbose=True): 
+def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_obj_desc): 
     prompt_input = [act_game_object, 
                     act_obj_desc,
@@ -1096,7 +1096,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
                                        inserted_act,
                                        inserted_act_dur,
                                        test_input=None, 
-                                       verbose=True): 
+                                       verbose=False): 
   def create_prompt_input(persona, 
                            main_act_dur, 
                            truncated_act_dur, 
@@ -1243,7 +1243,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
 
 
 def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=None, 
-                                       verbose=True): 
+                                       verbose=False): 
   def create_prompt_input(init_persona, target_persona, retrieved, 
                           test_input=None): 
     last_chat = init_persona.a_mem.get_last_chat(target_persona.name)
@@ -1343,7 +1343,7 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
 
 
 def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input=None, 
-                                       verbose=True): 
+                                       verbose=False): 
   def create_prompt_input(init_persona, target_persona, retrieved, 
                           test_input=None): 
 
@@ -1454,7 +1454,7 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
 
 
 def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
-                                       test_input=None, verbose=True): 
+                                       test_input=None, verbose=False): 
   def create_prompt_input(init_persona, target_persona, curr_loc, 
                           test_input=None): 
 
@@ -1589,7 +1589,7 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
 
 
 
-def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None, verbose=True): 
+def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None, verbose=False): 
   def create_prompt_input(conversation, test_input=None): 
     convo_str = ""
     for row in conversation: 
@@ -1663,7 +1663,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
 
 
 
-def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbose=True): 
+def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbose=False): 
   def create_prompt_input(description, test_input=None): 
     if "\n" in description: 
       description = description.replace("\n", " <LINE_BREAK> ")
@@ -1723,7 +1723,7 @@ def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbo
 
 
 
-def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_input=None, verbose=True): 
+def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_input=None, verbose=False): 
   def create_prompt_input(persona, keyword, concept_summary, test_input=None): 
     prompt_input = [keyword, concept_summary, persona.name]
     return prompt_input
@@ -1771,7 +1771,7 @@ def run_gpt_prompt_convo_to_thoughts(persona,
                                     init_persona_name,  
                                     target_persona_name,
                                     convo_str,
-                                    fin_target, test_input=None, verbose=True): 
+                                    fin_target, test_input=None, verbose=False): 
   def create_prompt_input(init_persona_name,  
                                     target_persona_name,
                                     convo_str,
@@ -1843,7 +1843,7 @@ def run_gpt_prompt_convo_to_thoughts(persona,
 
 
 
-def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, verbose=True): 
+def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, verbose=False): 
   def create_prompt_input(persona, event_description, test_input=None): 
     prompt_input = [persona.scratch.name,
                     persona.scratch.get_str_iss(),
@@ -1916,7 +1916,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None, verbose=True): 
+def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None, verbose=False): 
   def create_prompt_input(persona, event_description, test_input=None): 
     prompt_input = [persona.scratch.name,
                     persona.scratch.get_str_iss(),
@@ -1987,7 +1987,7 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
 
 
 
-def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, verbose=True): 
+def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, verbose=False): 
   def create_prompt_input(persona, event_description, test_input=None): 
     prompt_input = [persona.scratch.name,
                     persona.scratch.get_str_iss(),
@@ -2062,7 +2062,7 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
 
 
 
-def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=True): 
+def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=False): 
   def create_prompt_input(persona, statements, n, test_input=None): 
     prompt_input = [statements, str(n)]
     return prompt_input
@@ -2140,7 +2140,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Tru
 
 
   
-def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None, verbose=True): 
+def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None, verbose=False): 
   def create_prompt_input(persona, statements, n, test_input=None): 
     prompt_input = [statements, str(n)]
     return prompt_input
@@ -2194,7 +2194,7 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
 
 
 
-def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statements, curr_context, test_input=None, verbose=True): 
+def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statements, curr_context, test_input=None, verbose=False): 
   def create_prompt_input(persona, target_persona, statements, curr_context, test_input=None): 
     prompt_input = [persona.scratch.get_str_curr_date_str(), curr_context, persona.scratch.currently, 
                     statements, persona.scratch.name, target_persona.scratch.name]
@@ -2263,7 +2263,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
 
 
 
-def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, statements, test_input=None, verbose=True): 
+def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, statements, test_input=None, verbose=False): 
   def create_prompt_input(persona, target_persona, statements, test_input=None): 
     prompt_input = [statements, persona.scratch.name, target_persona.scratch.name]
     return prompt_input
@@ -2334,7 +2334,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
 def run_gpt_prompt_agent_chat(maze, persona, target_persona,
                                curr_context, 
                                init_summ_idea, 
-                               target_summ_idea, test_input=None, verbose=True): 
+                               target_summ_idea, test_input=None, verbose=False): 
   def create_prompt_input(persona, target_persona, curr_context, init_summ_idea, target_summ_idea, test_input=None): 
     prev_convo_insert = "\n"
     if persona.a_mem.seq_chat: 
@@ -2472,7 +2472,7 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
 
 
 
-def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=None, verbose=True): 
+def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=None, verbose=False): 
   def create_prompt_input(persona, statements, question, test_input=None): 
     prompt_input = [statements, persona.scratch.name, question]
     return prompt_input
@@ -2538,7 +2538,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
 
 
 
-def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_convo, retrieved_summary, test_input=None, verbose=True): 
+def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_convo, retrieved_summary, test_input=None, verbose=False): 
   def create_prompt_input(persona, interlocutor_desc, prev_convo, retrieved_summary, test_input=None): 
     prompt_input = [persona.scratch.name, 
                     persona.scratch.get_str_iss(),
@@ -2616,7 +2616,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
 
 
 
-def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=None, verbose=True): 
+def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=None, verbose=False): 
   def create_prompt_input(persona, whisper, test_input=None): 
     prompt_input = [persona.scratch.name, whisper]
     return prompt_input
@@ -2653,7 +2653,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
 
 
 
-def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, verbose=True): 
+def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, verbose=False): 
   def create_prompt_input(persona, all_utt, test_input=None): 
     prompt_input = [all_utt, persona.scratch.name, persona.scratch.name, persona.scratch.name]
     return prompt_input
@@ -2690,7 +2690,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
 
 
 
-def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=True): 
+def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=False): 
   def create_prompt_input(persona, all_utt, test_input=None): 
     prompt_input = [all_utt, persona.scratch.name, persona.scratch.name, persona.scratch.name]
     return prompt_input
@@ -2757,7 +2757,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=True
 
 
 
-def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=True): 
+def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False): 
   def create_prompt_input(comment, test_input=None):
     prompt_input = [comment]
     return prompt_input
@@ -2819,7 +2819,7 @@ def extract_first_json_dict(data_str):
         return None
 
 
-def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retrieved, curr_context, curr_chat, test_input=None, verbose=True): 
+def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retrieved, curr_context, curr_chat, test_input=None, verbose=False): 
   def create_prompt_input(maze, init_persona, target_persona, retrieved, curr_context, curr_chat, test_input=None):
     persona = init_persona
     prev_convo_insert = "\n"
