@@ -150,14 +150,15 @@ def ChatGPT_safe_generate_response(prompt,
       # print ("---ashdfaf")
       # print (curr_gpt_response)
       # print ("000asdfhia")
+
+      if verbose: 
+        print ("---- repeat count:", i)
+        print ("~~~~ curr_gpt_response:")
+        print (curr_gpt_response)
+        print ("~~~~")
       
       if func_validate(curr_gpt_response, prompt=prompt): 
         return func_clean_up(curr_gpt_response, prompt=prompt)
-      
-      if verbose: 
-        print ("---- repeat count: \n", i, curr_gpt_response)
-        print (curr_gpt_response)
-        print ("~~~~")
 
     except: 
       pass
@@ -288,7 +289,7 @@ if __name__ == '__main__':
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}
   curr_input = ["driving to a friend's house"]
-  prompt_lib_file = "prompt_template/test_prompt_July5.txt"
+  prompt_lib_file = "prompt_template/v1/test_prompt_July5.txt"
   prompt = generate_prompt(curr_input, prompt_lib_file)
 
   def __func_validate(gpt_response): 

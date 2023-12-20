@@ -112,7 +112,7 @@ def run_gpt_prompt_daily_plan(persona,
 
   def __func_clean_up(gpt_response, prompt=""):
     cr = []
-    _cr = gpt_response.split(")")
+    _cr = re.split(r'\d\)', gpt_response)
     for i in _cr: 
       if i[-1].isdigit(): 
         i = i[:-1].strip()
@@ -178,7 +178,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
       schedule_format += f" Activity: [Fill in]\n"
     schedule_format = schedule_format[:-1]
 
-    intermission_str = f"Here the originally intended hourly breakdown of"
+    intermission_str = f"Here is the originally intended hourly breakdown of"
     intermission_str += f" {persona.scratch.get_str_firstname()}'s schedule today: "
     for count, i in enumerate(persona.scratch.daily_req): 
       intermission_str += f"{str(count+1)}) {i}, "
@@ -367,15 +367,31 @@ def run_gpt_prompt_task_decomp(persona,
     cr = []
     for count, i in enumerate(temp): 
       if count != 0: 
+        # Get rid of "2) Isabella is" line starts, only retaining task and timeframe
+        # like "making breakfast at home. (duration in minutes: 30, minutes left: 30)"
         _cr += [" ".join([j.strip () for j in i.split(" ")][3:])]
       else: 
         _cr += [i]
     for count, i in enumerate(_cr): 
       k = [j.strip() for j in i.split("(duration in minutes:")]
+      # Ensure there are enough elements in k
+      if len(k) < 2:
+          print(f"Warning: Unexpected string structure in '{i}'. Missing '(duration in minutes:' delimiter.")
+          continue
+    
       task = k[0]
-      if task[-1] == ".": 
+      # Error thrown when task string is empty 
+      if task and task[-1] == ".": 
         task = task[:-1]
-      duration = int(k[1].split(",")[0].strip())
+      
+      try:
+          duration = int(k[1].split(",")[0].strip())
+      except ValueError:
+          # Handle the case when the conversion to int fails
+          print(f"Error: Failed to convert '{k[1].split(',')[0].strip()}' to integer.")
+          duration = 0
+          continue
+  
       cr += [[task, duration]]
 
     total_expected_min = int(prompt.split("(total duration in minutes")[-1]
