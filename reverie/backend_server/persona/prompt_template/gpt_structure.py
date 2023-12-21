@@ -18,14 +18,13 @@ def temp_sleep(seconds=0.1):
 
 def ChatGPT_single_request(prompt): 
   temp_sleep()
-  try:
-    response = llm(prompt)
-    # response = llm('[INST]\n' + prompt + '\n[/INST]')
-  except ValueError:
-    print("Requested tokens exceed context window")
-    ### TODO: Add map-reduce or splitter to handle this error.
-    return "LLM ERROR"
-  return response
+
+  completion = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo", 
+    messages=[{"role": "user", "content": prompt}]
+  )
+  return completion["choices"][0]["message"]["content"]
+
 
 # ============================================================================
 # #####################[SECTION 1: CHATGPT-3 STRUCTURE] ######################
