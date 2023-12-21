@@ -420,7 +420,8 @@ class ReverieServer:
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
 
-          # If we're running in headless mode, also create the environment file to immediately trigger the next simulation step
+          # If we're running in headless mode, also create the environment file
+          # to immediately trigger the next simulation step
           if headless:
             with open(f"{sim_folder}/environment/{self.step + 1}.json", "w") as outfile: 
               outfile.write(json.dumps(next_env, indent=2))
