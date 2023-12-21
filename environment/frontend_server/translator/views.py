@@ -240,7 +240,6 @@ def path_tester(request):
   return render(request, template, context)
 
 
-# Here
 def process_environment(request): 
   """
   <FRONTEND to BACKEND> 
@@ -269,7 +268,6 @@ def process_environment(request):
   return HttpResponse("received")
 
 
-# Here
 def update_environment(request): 
   """
   <BACKEND to FRONTEND> 

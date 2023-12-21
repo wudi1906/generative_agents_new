@@ -159,7 +159,6 @@ class ReverieServer:
     # cycle; this is to not kill our machine. 
     self.server_sleep = 0.1
 
-    # Here
     # SIGNALING THE FRONTEND SERVER: 
     # curr_sim_code.json contains the current simulation code, and
     # curr_step.json contains the current step of the simulation. These are 
@@ -332,7 +331,6 @@ class ReverieServer:
       if int_counter == 0: 
         break
 
-      # Here here
       # <curr_env_file> file is the file that our frontend outputs. When the
       # frontend has done its job and moved the personas, then it will put a 
       # new environment file that matches our step count. That's when we run 
@@ -358,7 +356,6 @@ class ReverieServer:
           # Then we initialize game_obj_cleanup for this cycle. 
           game_obj_cleanup = dict()
 
-          # Here here
           # We first move our personas in the backend environment to match 
           # the frontend environment. 
           for persona_name, persona in self.personas.items(): 
@@ -414,6 +411,7 @@ class ReverieServer:
             movements["persona"][persona_name]["description"] = description
             movements["persona"][persona_name]["chat"] = (persona
                                                           .scratch.chat)
+            
             if headless:
               next_env[persona_name] = {
                 "x": next_tile[0],
@@ -426,7 +424,6 @@ class ReverieServer:
           movements["meta"]["curr_time"] = (self.curr_time 
                                              .strftime("%B %d, %Y, %H:%M:%S"))
 
-          # Here here
           # We then write the personas' movements to a file that will be sent 
           # to the frontend server. 
           # Example json output: 
@@ -440,14 +437,13 @@ class ReverieServer:
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
 
-          # If we're running in headless mode, also create the environment file
+          # If we're running in headless mode, also create the environment file to immediately trigger the next simulation step
           if headless:
             with open(f"{sim_folder}/environment/{self.step + 1}.json", "w") as outfile: 
               outfile.write(json.dumps(next_env, indent=2))
 
           # After this cycle, the world takes one step forward, and the 
           # current time moves by <sec_per_step> amount. 
-          # Here
           self.step += 1
           self.curr_time += datetime.timedelta(seconds=self.sec_per_step)
 
@@ -667,6 +663,27 @@ class ReverieServer:
           break
 
 if __name__ == '__main__':
+
+  # Pars input params
+  parser = argparse.ArgumentParser(description='Reverie Server')
+  parser.add_argument(
+    '--origin',
+    type=str,
+    default="base_the_ville_isabella_maria_klaus",
+    help='The name of the forked simulation'
+  )
+  parser.add_argument(
+    '--target',
+    type=str,
+    default="test-simulation",
+    help='The name of the new simulation'
+  )
+    
+  origin = parser.parse_args().origin
+  target = parser.parse_args().target
+  
+  rs = ReverieServer(origin, target)
+
   # # Get the simulation to fork from the user
   # default = "base_the_ville_isabella_maria_klaus"
   # origin_prompt = f"Enter the name of the forked simulation (leave blank for {default}): "
@@ -689,25 +706,5 @@ if __name__ == '__main__':
   # sim_folder = f"{fs_storage}/{target}"
   # with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
   #   outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
-
-  # Pars input params
-  parser = argparse.ArgumentParser(description='Reverie Server')
-  parser.add_argument(
-    '--origin',
-    type=str,
-    default="base_the_ville_isabella_maria_klaus",
-    help='The name of the forked simulation'
-  )
-  parser.add_argument(
-    '--target',
-    type=str,
-    default="test-simulation",
-    help='The name of the new simulation'
-  )
-    
-  origin = parser.parse_args().origin
-  target = parser.parse_args().target
-  
-  rs = ReverieServer(origin, target)
 
   rs.open_server()
