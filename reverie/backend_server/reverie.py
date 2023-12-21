@@ -283,7 +283,7 @@ class ReverieServer:
       time.sleep(self.server_sleep * 10)
 
 
-  def start_server(self, int_counter): 
+  def start_server(self, int_counter, headless=False): 
     """
     The main backend server of Reverie. 
     This function retrieves the environment file from the frontend to 
@@ -315,7 +315,7 @@ class ReverieServer:
       if int_counter == 0: 
         break
 
-      # Here
+      # Here here
       # <curr_env_file> file is the file that our frontend outputs. When the
       # frontend has done its job and moved the personas, then it will put a 
       # new environment file that matches our step count. That's when we run 
@@ -341,6 +341,7 @@ class ReverieServer:
           # Then we initialize game_obj_cleanup for this cycle. 
           game_obj_cleanup = dict()
 
+          # Here here
           # We first move our personas in the backend environment to match 
           # the frontend environment. 
           for persona_name, persona in self.personas.items(): 
@@ -378,6 +379,9 @@ class ReverieServer:
           # This is where the core brains of the personas are invoked. 
           movements = {"persona": dict(), 
                        "meta": dict()}
+          # This will only be used in headless mode
+          next_env = {}
+
           for persona_name, persona in self.personas.items(): 
             # <next_tile> is a x,y coordinate. e.g., (58, 9)
             # <pronunciatio> is an emoji. e.g., "\ud83d\udca4"
@@ -393,13 +397,19 @@ class ReverieServer:
             movements["persona"][persona_name]["description"] = description
             movements["persona"][persona_name]["chat"] = (persona
                                                           .scratch.chat)
+            if headless:
+              next_env[persona_name] = {
+                "x": next_tile[0],
+                "y": next_tile[1],
+                "maze": self.maze.maze_name,
+              }
 
           # Include the meta information about the current stage in the 
           # movements dictionary. 
           movements["meta"]["curr_time"] = (self.curr_time 
                                              .strftime("%B %d, %Y, %H:%M:%S"))
 
-          # Here
+          # Here here
           # We then write the personas' movements to a file that will be sent 
           # to the frontend server. 
           # Example json output: 
@@ -413,8 +423,14 @@ class ReverieServer:
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
 
+          # If we're running in headless mode, also create the environment file
+          if headless:
+            with open(f"{sim_folder}/environment/{self.step + 1}.json", "w") as outfile: 
+              outfile.write(json.dumps(next_env, indent=2))
+
           # After this cycle, the world takes one step forward, and the 
           # current time moves by <sec_per_step> amount. 
+          # Here
           self.step += 1
           self.curr_time += datetime.timedelta(seconds=self.sec_per_step)
 
@@ -473,6 +489,13 @@ class ReverieServer:
           # Saves the current simulation progress. 
           # Example: save
           self.save()
+
+        elif sim_command[:8].lower() == "headless":
+          # Runs the simulation in headless mode, which means that it will
+          # run without the frontend server. 
+          # Example: headless 1000
+          int_count = int(sim_command.split()[-1])
+          self.start_server(int_count, headless=True)
 
         elif sim_command[:3].lower() == "run": 
           # Runs the number of steps specified in the prompt.
@@ -643,55 +666,3 @@ if __name__ == '__main__':
     outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
 
   rs.open_server()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
