@@ -282,7 +282,7 @@ class ReverieServer:
       time.sleep(self.server_sleep * 10)
 
 
-  def start_server(self, int_counter): 
+  def start_server(self, int_counter, headless=False): 
     """
     The main backend server of Reverie. 
     This function retrieves the environment file from the frontend to 
@@ -376,6 +376,9 @@ class ReverieServer:
           # This is where the core brains of the personas are invoked. 
           movements = {"persona": dict(), 
                        "meta": dict()}
+          # This will only be used in headless mode
+          next_env = {}
+
           for persona_name, persona in self.personas.items(): 
             # <next_tile> is a x,y coordinate. e.g., (58, 9)
             # <pronunciatio> is an emoji. e.g., "\ud83d\udca4"
@@ -391,6 +394,13 @@ class ReverieServer:
             movements["persona"][persona_name]["description"] = description
             movements["persona"][persona_name]["chat"] = (persona
                                                           .scratch.chat)
+            
+            if headless:
+              next_env[persona_name] = {
+                "x": next_tile[0],
+                "y": next_tile[1],
+                "maze": self.maze.maze_name,
+              }
 
           # Include the meta information about the current stage in the 
           # movements dictionary. 
@@ -409,6 +419,12 @@ class ReverieServer:
           curr_move_file = f"{sim_folder}/movement/{self.step}.json"
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
+
+          # If we're running in headless mode, also create the environment file
+          # to immediately trigger the next simulation step
+          if headless:
+            with open(f"{sim_folder}/environment/{self.step + 1}.json", "w") as outfile: 
+              outfile.write(json.dumps(next_env, indent=2))
 
           # After this cycle, the world takes one step forward, and the 
           # current time moves by <sec_per_step> amount. 
@@ -476,6 +492,13 @@ class ReverieServer:
           # Example: run 1000
           int_count = int(sim_command.split()[-1])
           rs.start_server(int_count)
+
+        elif sim_command[:8].lower() == "headless":
+          # Runs the simulation in headless mode, which means that it will
+          # run without the frontend server. 
+          # Example: headless 1000
+          int_count = int(sim_command.split()[-1])
+          self.start_server(int_count, headless=True)
 
         elif ("print persona schedule" 
               in sim_command[:22].lower()): 
@@ -639,55 +662,3 @@ if __name__ == '__main__':
     outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
 
   rs.open_server()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
