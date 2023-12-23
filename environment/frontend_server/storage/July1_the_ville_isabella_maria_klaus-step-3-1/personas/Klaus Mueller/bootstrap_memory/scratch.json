@@ -7,15 +7,15 @@
     127,
     46
   ],
-  "daily_plan_req": "Klaus Mueller goes to the library at Oak Hill College early in the morning, spends his days writing, and eats at Hobbs Cafe.",
+  "daily_plan_req": "Klaus Mueller goes to the park early in the morning, spends his days playing hide and seek, where he is the seeker and looks for the hidder in the park.",
   "name": "Klaus Mueller",
   "first_name": "Klaus",
   "last_name": "Mueller",
   "age": 20,
-  "innate": "kind, inquisitive, passionate",
-  "learned": "Klaus Mueller is a student at Oak Hill College studying sociology. He is passionate about social justice and loves to explore different perspectives.",
-  "currently": "Klaus Mueller is writing a research paper on the effects of gentrification in low-income communities.",
-  "lifestyle": "Klaus Mueller goes to bed around 11pm, awakes up around 7am, eats dinner around 5pm.",
+  "innate": "resourceful, intelligent, perseverant",
+  "learned": "Klaus Mueller is the seeker in the game of hide and seek at the park. He is passionate about being the seeker and loves to strategize new searching locations in the park.",
+  "currently": "Klaus Mueller is searching for Isabella Rodriguez, who is hidding.",
+  "lifestyle": "Klaus Mueller goes to bed around 11pm, awakes up around 6am and immdiately plays hide and seek.",
   "living_area": "the Ville:Dorm for Oak Hill College:Klaus Mueller's room",
   "concept_forget": 100,
   "daily_reflection_time": 180,
@@ -32,132 +32,80 @@
   "importance_ele_n": 7,
   "thought_count": 5,
   "daily_req": [
-    "wake up and complete the morning routine at 7:00 am",
-    "go to the library at Oak Hill College and work on his research paper from 8:00 am to 1:00 pm",
-    "have lunch at Hobbs Cafe at 12:00 pm",
-    "continue work at the library from 2:00 pm to 5:00 pm",
-    "Eat dinner at 5:00 pm",
-    "Watch TV for an hour from 7:00 pm to 8:00 pm",
-    "read a Sociology-related book from 8:00 pm to 9:00 pm"
+    "wake up and immdiately play hide and seek by searching for Isabella Rodriguez at 6:00 am",
+    "go to the park and look for Isabella Rodriguez from 6:00 am to 11:00 pm",
+    "have meeting with Isabella Rodriguez at 12:00 pm to discuss the hide and seek game",
+    "go search for Isabella Rodriguez in the park again from 12:30pm",
+    "move around the park to find the best hidding spot to check if Isabella is hidding there",
+    "If Isabella Rodriguez is not at a hidding spot go to the next one and do not search there again", 
+    "stay quiet, vigligiant, and perseverant"
   ],
   "f_daily_schedule": [
     [
       "sleeping",
-      420
+      360
     ],
     [
-      "waking up and completing his morning routine (getting out of bed)",
-      5
+      "waking up and go search for the Isabella Rodriguez in the park",
+      150
     ],
     [
-      "waking up and completing his morning routine (brushing his teeth)",
-      5
+      "look for the best hidding place in the park",
+      150
     ],
     [
-      "waking up and completing his morning routine (taking a shower)",
-      10
+      "stay quite and still, so no one can see you",
+      150
     ],
     [
-      "waking up and completing his morning routine (getting dressed)",
-      10
+      "look around and check each hidding spot if Isabella Rodriguez is not there go to the next hidding spot",
+      150
     ],
     [
-      "waking up and completing his morning routine (eating breakfast)",
-      10
+      "go to the next hidding spot",
+      150
     ],
     [
-      "waking up and completing his morning routine (packing his bag)",
-      5
-    ],
-    [
-      "waking up and completing his morning routine (checking his emails)",
-      5
-    ],
-    [
-      "waking up and completing his morning routine (gathering his books and supplies)",
-      5
-    ],
-    [
-      "waking up and completing his morning routine (leaving for the library)",
-      5
-    ],
-    [
-      "going to the library at Oak Hill College to work on his research paper",
-      60
-    ],
-    [
-      "working on his research paper at the library",
-      120
-    ],
-    [
-      "having lunch at Hobbs Cafe",
-      120
-    ],
-    [
-      "working on his research paper at the library",
-      240
-    ],
-    [
-      "eating dinner",
-      60
-    ],
-    [
-      "watching TV",
-      120
-    ],
-    [
-      "reading a Sociology-related book",
-      120
-    ],
-    [
-      "getting ready for bed",
-      120
+      "repeat same process as you just did until you need to sleep or until you found Isabella",
+      150
     ],
     [
       "sleeping",
-      0
+      180
     ]
   ],
   "f_daily_schedule_hourly_org": [
     [
       "sleeping",
-      420
+      360
     ],
     [
-      "waking up and completing his morning routine",
-      60
+      "waking up and go search for the Isabella Rodriguez in the park",
+      150
     ],
     [
-      "going to the library at Oak Hill College to work on his research paper",
-      60
+      "look for the best hidding place in the park",
+      150
     ],
     [
-      "working on his research paper at the library",
-      120
+      "stay quite and still, so no one can see you",
+      150
     ],
     [
-      "having lunch at Hobbs Cafe",
-      120
+      "look around and check each hidding spot if Isabella Rodriguez is not there go to the next hidding spot",
+      150
     ],
     [
-      "working on his research paper at the library",
-      240
+      "go to the next hidding spot",
+      150
     ],
     [
-      "eating dinner",
-      60
+      "repeat same process as you just did until you need to sleep or until you found Isabella",
+      150
     ],
     [
-      "watching TV",
-      120
-    ],
-    [
-      "reading a Sociology-related book",
-      120
-    ],
-    [
-      "getting ready for bed",
-      120
+      "sleeping",
+      180
     ]
   ],
   "act_address": "the Ville:Dorm for Oak Hill College:Klaus Mueller's room:bed",

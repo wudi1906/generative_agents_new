@@ -101,11 +101,11 @@ def generate_hourly_schedule(persona, wake_up_hour):
     if len(n_m1_activity_set) < 5: 
       n_m1_activity = []
       for count, curr_hour_str in enumerate(hour_str): 
-        if wake_up_hour > 0: 
-          n_m1_activity += ["sleeping"]
-          wake_up_hour -= 1
-        else: 
-          n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
+        # #if wake_up_hour > 0: 
+        #   n_m1_activity += ["sleeping"]
+        #   wake_up_hour -= 1
+        #else: commented on 10/27 4:59 pm to remove sleeping
+        n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
                           persona, curr_hour_str, n_m1_activity, hour_str)[0]]
   
   # Step 1. Compressing the hourly schedule to the following format: 

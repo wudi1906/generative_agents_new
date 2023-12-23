@@ -29,6 +29,9 @@ import shutil
 import traceback
 import argparse
 import sys
+import urllib.request  
+import webbrowser
+
 
 from selenium import webdriver
 
@@ -477,6 +480,7 @@ class ReverieServer:
       else:
         sim_command = input_command
       sim_command = sim_command.strip()
+      # sim_command = "run"
       print(sim_command)
       ret_str = ""
 
@@ -505,6 +509,14 @@ class ReverieServer:
           # Saves the current simulation progress. 
           # Example: save
           self.save()
+
+        elif sim_command[:3].lower() == "run": 
+          # Runs the number of steps specified in the prompt.
+          # Example: run 1000
+          int_count = int(sim_command.split()[-1])
+          # int_count = 5
+
+          rs.start_server(int_count)
 
         elif sim_command[:8].lower() == "headless":
           # Runs the simulation in headless mode, which means that it will
@@ -664,6 +676,22 @@ class ReverieServer:
           break
 
 if __name__ == '__main__':
+  # # Get the simulation to fork from the user
+  # default = "base_the_ville_isabella_maria_klaus"
+  # origin_prompt = f"Enter the name of the forked simulation (leave blank for {default}): "
+  # # origin = input(origin_prompt).strip()
+  # origin = 'base_the_ville_isabella_maria_klaus'
+  # if not origin:
+  #   origin = default
+  #   print(origin)
+
+  # # Get the name of the new simulation from the user
+  # last_sim_code = ""
+  # with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
+  #   curr_sim_code = json.load(json_file)
+  #   last_sim_code = curr_sim_code["sim_code"]
+  # target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
+  # target = input(target_prompt).strip()
 
   # Pars input params
   parser = argparse.ArgumentParser(description='Reverie Server')
@@ -685,27 +713,11 @@ if __name__ == '__main__':
   
   rs = ReverieServer(origin, target)
 
-  # # Get the simulation to fork from the user
-  # default = "base_the_ville_isabella_maria_klaus"
-  # origin_prompt = f"Enter the name of the forked simulation (leave blank for {default}): "
-  # origin = input(origin_prompt).strip()
-  # if not origin:
-  #   origin = default
-  #   print(origin)
-
-  # # Get the name of the new simulation from the user
-  # last_sim_code = ""
-  # with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
-  #   curr_sim_code = json.load(json_file)
-  #   last_sim_code = curr_sim_code["sim_code"]
-  # target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
-  # target = input(target_prompt).strip()
-
-  # rs = ReverieServer(origin, target)
-
   # # Allow the server to create this folder above before writing to the logfile
   # sim_folder = f"{fs_storage}/{target}"
   # with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
   #   outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
 
+  url = 'http://localhost:8000/simulator_home' 
+  webbrowser.open_new_tab(url)  
   rs.open_server()

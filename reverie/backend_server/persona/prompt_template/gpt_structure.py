@@ -74,7 +74,7 @@ def ChatGPT_single_request(prompt):
   temp_sleep()
 
   completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    model="gpt-3.5-turbo-1106", 
     messages=[{"role": "user", "content": prompt}]
   )
   return completion["choices"][0]["message"]["content"]
@@ -119,6 +119,45 @@ def ChatGPT_request(prompt):
   except Exception as e: 
     print(f"Error: {e}")
     return "ChatGPT ERROR"
+
+
+def GPT4_safe_generate_response(prompt, 
+                                   example_output,
+                                   special_instruction,
+                                   repeat=3,
+                                   fail_safe_response="error",
+                                   func_validate=None,
+                                   func_clean_up=None,
+                                   verbose=False): 
+  prompt = 'GPT-3.5-turbo-1106 Prompt:\n"""\n' + prompt + '\n"""\n'
+  prompt += f"Output the response to the prompt above in json. {special_instruction}\n"
+  prompt += "Example output json:\n"
+  prompt += '{"output": "' + str(example_output) + '"}'
+
+  if verbose: 
+    print ("CHAT GPT PROMPT")
+    print (prompt)
+
+  for i in range(repeat): 
+
+    try: 
+      curr_gpt_response = GPT4_request(prompt).strip()
+      end_index = curr_gpt_response.rfind('}') + 1
+      curr_gpt_response = curr_gpt_response[:end_index]
+      curr_gpt_response = json.loads(curr_gpt_response)["output"]
+      
+      if func_validate(curr_gpt_response, prompt=prompt): 
+        return func_clean_up(curr_gpt_response, prompt=prompt)
+      
+      if verbose: 
+        print ("---- repeat count: \n", i, curr_gpt_response)
+        print (curr_gpt_response)
+        print ("~~~~")
+
+    except: 
+      pass
+
+  return False
 
 
 def ChatGPT_safe_generate_response(prompt, 

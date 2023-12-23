@@ -1,0 +1,40 @@
+Variables: 
+!<INPUT 0>! -- an action phrae
+
+<commentblockmarker>###</commentblockmarker>
+Output the best keyword that describes an action.
+Action: "Dolores is making breakfast"
+Keyword: "Cooking"
+---
+Action: "Joey is off to see a baseball game"
+Keyword: "Watching"
+---
+Action: "driving to work"
+Keyword: "Commuting"
+---
+Action: "crouching behind a tree in the park"
+Keyword: "Hiding"
+---
+Action: "sneaking into the Co-Living Space's balcony"
+Keyword: "Hiding"
+---
+Action: "slipping into a shadowy alley between houses"
+Keyword: "Hiding"
+---
+Action: "nestling under a table at the Cafe"
+Keyword: "Hiding"
+---
+Action: "searching behind bushes and listening for movements in the park"
+Keyword: "Seeking"
+---
+Action: "peering into the windows of the College Dorm's common room"
+Keyword: "Seeking"
+---
+Action: "listening closely at the door of the Supply Store"
+Keyword: "Seeking"
+---
+Action: "methodically checking each room in the Family House"
+Keyword: "Seeking"
+---
+Action: "!<INPUT 0>!"
+Keyword: "
