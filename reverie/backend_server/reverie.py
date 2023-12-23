@@ -28,6 +28,9 @@ import os
 import shutil
 import traceback
 import sys
+import urllib.request  
+import webbrowser
+
 
 from selenium import webdriver
 
@@ -414,8 +417,9 @@ class ReverieServer:
           #  "persona": {"Klaus Mueller": {"movement": [38, 12]}}, 
           #  "meta": {curr_time: <datetime>}}
           movementFolder = f"{sim_folder}/movement"
+          # If the folder doesn't exist, we create it.
           if not os.path.exists(movementFolder):
-            os.mkdir(movementFolder)
+            os.makedirs(movementFolder)
           curr_move_file = f"{sim_folder}/movement/{self.step}.json"
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
@@ -458,6 +462,7 @@ class ReverieServer:
     while True: 
       sim_command = input("Enter option: ")
       sim_command = sim_command.strip()
+      # sim_command = "run"
       print(sim_command)
       ret_str = ""
 
@@ -491,6 +496,8 @@ class ReverieServer:
           # Runs the number of steps specified in the prompt.
           # Example: run 1000
           int_count = int(sim_command.split()[-1])
+          # int_count = 5
+
           rs.start_server(int_count)
 
         elif sim_command[:8].lower() == "headless":
@@ -641,7 +648,8 @@ if __name__ == '__main__':
   # Get the simulation to fork from the user
   default = "base_the_ville_isabella_maria_klaus"
   origin_prompt = f"Enter the name of the forked simulation (leave blank for {default}): "
-  origin = input(origin_prompt).strip()
+  # origin = input(origin_prompt).strip()
+  origin = 'base_the_ville_isabella_maria_klaus'
   if not origin:
     origin = default
     print(origin)
@@ -653,6 +661,7 @@ if __name__ == '__main__':
     last_sim_code = curr_sim_code["sim_code"]
   target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
   target = input(target_prompt).strip()
+  # target = "test-simulation-101"
 
   rs = ReverieServer(origin, target)
 
@@ -661,4 +670,6 @@ if __name__ == '__main__':
   with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
     outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
 
+  url = 'http://localhost:8000/simulator_home' 
+  webbrowser.open_new_tab(url)  
   rs.open_server()

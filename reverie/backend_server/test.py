@@ -27,7 +27,7 @@ def ChatGPT_request(prompt):
   # temp_sleep()
   try: 
     completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    model="gpt-3.5-turbo--1106", 
     messages=[{"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
@@ -54,7 +54,21 @@ Current Location: library in Oak Hill College
 
 Here is their conversation. 
 
-Maria Lopez: "
+Maria Lopez: "Hey Klaus! I was thinking, after class, how about a game of hide and seek in Oak Hill College? I think it'd be a fun way to take a break from our work."
+
+Klaus Mueller: "Hide and seek? That's unexpected! But sure, it could be a fun way to de-stress. Plus, I've always wanted to explore more of the college grounds."
+
+Maria Lopez: "Great! I know some excellent hiding spots. But let's set a few ground rules: no hiding in any classrooms or labs. Just the open areas, gardens, and maybe the library."
+
+Klaus Mueller: "Sounds good! And let's say the cafe is the home base. Whoever is seeking can start counting there."
+
+Maria Lopez: "Deal! I'll go hide first. Give me a 3-minute head start?"
+
+Klaus Mueller: "Three minutes it is! Ready when you are."
+
+Maria Lopez: "Alright, see you soon! And remember, no peeking!"
+
+Klaus Mueller: "
 ---
 Output the response to the prompt above in json. The output should be a list of list where the inner lists are in the form of ["<Name>", "<Utterance>"]. Output multiple utterances in ther conversation until the conversation comes to a natural conclusion.
 Example output json:

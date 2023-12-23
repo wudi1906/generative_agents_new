@@ -59,7 +59,11 @@
     },
     "Johnson Park": {
       "park": [
-        "park garden"
+        "park garden", 
+        "park tree", 
+        "park bushes", 
+        "park fountain", 
+        "Klauss is near me"
       ]
     }
   }
