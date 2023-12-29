@@ -21,6 +21,7 @@ def compress(sim_code):
     if x[0] != ".": 
       persona_names += [x]
 
+
   max_move_count = max([int(i.split("/")[-1].split(".")[0]) 
                  for i in find_filenames(move_folder, "json")])
   
@@ -60,7 +61,7 @@ def compress(sim_code):
 
 
 if __name__ == '__main__':
-  compress("July1_the_ville_isabella_maria_klaus-step-3-9")
+  compress("test-12")
 
 
 
