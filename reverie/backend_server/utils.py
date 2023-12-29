@@ -1,3 +1,8 @@
+# Copy and paste your OpenAI API Key
+openai_api_key = ""
+# Put your name
+key_owner = ""
+
 maze_assets_loc = "../../environment/frontend_server/static_dirs/assets"
 env_matrix = f"{maze_assets_loc}/the_ville/matrix"
 env_visuals = f"{maze_assets_loc}/the_ville/visuals"
