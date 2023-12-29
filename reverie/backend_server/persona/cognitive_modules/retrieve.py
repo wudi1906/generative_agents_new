@@ -30,19 +30,22 @@ def retrieve(persona, perceived):
                and "thoughts" that are relevant.
   """
   # We rerieve events and thoughts separately. 
-  retrieved = dict()
-  for event in perceived: 
-    retrieved[event.description] = dict()
-    retrieved[event.description]["curr_event"] = event
-    
-    relevant_events = persona.a_mem.retrieve_relevant_events(
-                        event.subject, event.predicate, event.object)
-    retrieved[event.description]["events"] = list(relevant_events)
-
-    relevant_thoughts = persona.a_mem.retrieve_relevant_thoughts(
+  retrieved = dict() 
+  try: 
+    for event in perceived: 
+      print(f"Events in Perceivdd memory: {event}")
+      retrieved[event.description] = dict()
+      retrieved[event.description]["curr_event"] = event
+      
+      relevant_events = persona.a_mem.retrieve_relevant_events(
                           event.subject, event.predicate, event.object)
-    retrieved[event.description]["thoughts"] = list(relevant_thoughts)
-    
+      retrieved[event.description]["events"] = list(relevant_events)
+
+      relevant_thoughts = persona.a_mem.retrieve_relevant_thoughts(
+                            event.subject, event.predicate, event.object)
+      retrieved[event.description]["thoughts"] = list(relevant_thoughts)
+  except: 
+    print("Error. No memories were retrieved.")
   return retrieved
 
 
