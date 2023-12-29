@@ -1,0 +1,362 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 06:38:00",
+  "curr_tile": [
+    78,
+    14
+  ],
+  "daily_plan_req": "Isabella Rodriguez plays hide and seek everyday all day.",
+  "name": "Isabella Rodriguez",
+  "first_name": "Isabella",
+  "last_name": "Rodriguez",
+  "age": 34,
+  "innate": "Obedient, empathy, humility, sensitivity",
+  "learned": "Isabella Rodriguez is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hidding so Klauss cannot find her.",
+  "currently": "Isabella Rodriguez is playing a hide and seek game at the Johnson Park with Klauss and Maria. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away.",
+  "lifestyle": "Isabella awakes at 0:00 am and plays hide and seek at Johnson Park.",
+  "living_area": "the Ville:Isabella Rodriguez's apartment:main room",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.995,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 137,
+  "importance_ele_n": 5,
+  "thought_count": 5,
+  "daily_req": [
+    "wake up 0:00 am",
+    "immdiately start playing hiding in the game of hide and seek at Johnson Park",
+    "move around the park to find the best hidding spot",
+    "stay quiet and vigligiant, so Klauss cannot find you"
+  ],
+  "f_daily_schedule": [
+    [
+      "go to hide immediately in Johnson Park",
+      150
+    ],
+    [
+      "look for the best hidding place in the Johnson Park",
+      150
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (on the way to listening for any sound of the seekers)",
+      0
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (conversing about Maria Lopez and Isabella Rodriguez are discussing various hiding spots in the park, as well as strategies to trick Klauss and communicate silently while hiding.)",
+      7
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (on the way to listening for any sound of the seekers)",
+      0
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (conversing about a friendly game of hide and seek between Isabella Rodriguez and Klaus Mueller, where Klaus eventually finds them after a fun and competitive exchange)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      3
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (staying still and quiet)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (listening for any sound of the seekers)",
+      5
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      10
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (listening for any sound of Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (looking around for Klauss)",
+      5
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot (staying still and quiet)",
+      5
+    ],
+    [
+      "look around and if Klaus is around, look for a new hidding place in the Johnson Park without being seen by Klauss",
+      150
+    ],
+    [
+      "go to the new hidding spot and repeat same process as you just did",
+      150
+    ],
+    [
+      "sleeping",
+      540
+    ],
+    [
+      "sleeping",
+      0
+    ],
+    [
+      "sleeping",
+      0
+    ],
+    [
+      "sleeping",
+      0
+    ],
+    [
+      "sleeping",
+      0
+    ],
+    [
+      "sleeping",
+      0
+    ],
+    [
+      "sleeping",
+      0
+    ],
+    [
+      "sleeping",
+      0
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "go to hide immediately in the Johnson Park",
+      150
+    ],
+    [
+      "look for the best hidding place in the Johnson Park",
+      150
+    ],
+    [
+      "stay quite and still, so Klauss cannot find you",
+      150
+    ],
+    [
+      "look around and if Klauss is not around, stay put in your hidding spot",
+      150
+    ],
+    [
+      "look around and if the seekers are around look for a new hidding place in the park without getting caught",
+      150
+    ],
+    [
+      "go to the new hidding spot and repeat same process as you just did",
+      150
+    ]
+  ],
+  "act_address": "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+  "act_start_time": "February 13, 2023, 06:38:00",
+  "act_duration": 5,
+  "act_description": "stay quiet and still, so Klauss cannot find you (looking around for any sign of the seekers)",
+  "act_pronunciatio": "\ud83d\udd0d",
+  "act_event": [
+    "Isabella Rodriguez",
+    "look",
+    "sign of the seekers"
+  ],
+  "act_obj_description": "neatly organized",
+  "act_obj_pronunciatio": "\ud83d\udce6",
+  "act_obj_event": [
+    "shelf",
+    "be",
+    "neatly organized"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {
+    "Maria Lopez": 618,
+    "Klaus Mueller": 649
+  },
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": []
+}
