@@ -95,14 +95,10 @@
   "act_duration": 540,
   "act_description": "hiding",
   "act_pronunciatio": "\ud83d\ude34",
-  "act_event": [
-    "hiding"
-  ],
+  "act_event": ["Maria Lopez", null, null], 
   "act_obj_description": "hidden behind",
   "act_obj_pronunciatio": "\ud83d\ude34",
-  "act_obj_event": [
-    "park bush"
-  ],
+  "act_obj_event": [null, null, null], 
   "chatting_with": null,
   "chat": null,
   "chatting_with_buffer": {},
