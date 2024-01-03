@@ -15,6 +15,7 @@ import sys
 import numpy
 import math
 import shutil, errno
+from typing import TextIO
 
 from os import listdir
 
@@ -228,8 +229,8 @@ def copyanything(src, dst):
 # Anything written to this logger object will be written
 # to both stdout and a logfile
 class Logger(object):
-  def __init__(self, logfile_path):
-    self.terminal = sys.stdout
+  def __init__(self, logfile_path: str, std_channel: TextIO):
+    self.terminal = std_channel
     self.logfile = open(logfile_path, "a")
 
   def write(self, message):
