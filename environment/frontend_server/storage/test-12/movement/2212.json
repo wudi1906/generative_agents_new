@@ -1,0 +1,164 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        26,
+        49
+      ],
+      "pronunciatio": "\ud83d\udcac",
+      "description": "conversing about a friendly game of hide and seek between Isabella Rodriguez and Klaus Mueller, where Klaus eventually finds them after a fun and competitive exchange @ <persona> Klaus Mueller",
+      "chat": [
+        [
+          "Isabella Rodriguez",
+          "Hey Klaus, have you had any luck finding us yet?"
+        ],
+        [
+          "Klaus Mueller",
+          "Not yet, but I have a feeling I'm getting closer. You both are very good at this game!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Well, we'll just have to see about that! Remember, no peeking!"
+        ],
+        [
+          "Klaus Mueller",
+          "I never peek, you know that! But I have a few new ideas for searching spots. Let's see if you can outsmart me this time!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Bring it on, Klaus! We're ready for your new tricks!"
+        ],
+        [
+          "Klaus Mueller",
+          "I'll give you a head start this time, but don't get too comfortable!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Alright, we're ready! Let's see if your new tricks can outsmart us!"
+        ],
+        [
+          "Klaus Mueller",
+          "Alright, I'll start counting to 100 now. Get ready to be found!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Good luck, Klaus! We'll be ready for you!"
+        ],
+        [
+          "Klaus Mueller",
+          "I'll start counting now! 1... 2... 3..."
+        ],
+        [
+          "Isabella Rodriguez",
+          "We'll be counting on you to find us!"
+        ],
+        [
+          "Klaus Mueller",
+          "Ready or not, here I come!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "We'll be counting on you to find us!"
+        ],
+        [
+          "Klaus Mueller",
+          "I found you! You're both very clever, but I finally caught you!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Well done, Klaus! You finally found us!"
+        ],
+        [
+          "Klaus Mueller",
+          "Great job, Isabella! You both were very tricky to find."
+        ]
+      ]
+    },
+    "Maria Lopez": {
+      "movement": [
+        31,
+        49
+      ],
+      "pronunciatio": "\ud83d\udebf",
+      "description": "getting ready for the day @ the Ville:Dorm for Oak Hill College:Maria Lopez's room:closet",
+      "chat": null
+    },
+    "Klaus Mueller": {
+      "movement": [
+        30,
+        46
+      ],
+      "pronunciatio": "\ud83d\udcac",
+      "description": "conversing about a friendly game of hide and seek between Isabella Rodriguez and Klaus Mueller, where Klaus eventually finds them after a fun and competitive exchange @ <persona> Isabella Rodriguez",
+      "chat": [
+        [
+          "Isabella Rodriguez",
+          "Hey Klaus, have you had any luck finding us yet?"
+        ],
+        [
+          "Klaus Mueller",
+          "Not yet, but I have a feeling I'm getting closer. You both are very good at this game!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Well, we'll just have to see about that! Remember, no peeking!"
+        ],
+        [
+          "Klaus Mueller",
+          "I never peek, you know that! But I have a few new ideas for searching spots. Let's see if you can outsmart me this time!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Bring it on, Klaus! We're ready for your new tricks!"
+        ],
+        [
+          "Klaus Mueller",
+          "I'll give you a head start this time, but don't get too comfortable!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Alright, we're ready! Let's see if your new tricks can outsmart us!"
+        ],
+        [
+          "Klaus Mueller",
+          "Alright, I'll start counting to 100 now. Get ready to be found!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Good luck, Klaus! We'll be ready for you!"
+        ],
+        [
+          "Klaus Mueller",
+          "I'll start counting now! 1... 2... 3..."
+        ],
+        [
+          "Isabella Rodriguez",
+          "We'll be counting on you to find us!"
+        ],
+        [
+          "Klaus Mueller",
+          "Ready or not, here I come!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "We'll be counting on you to find us!"
+        ],
+        [
+          "Klaus Mueller",
+          "I found you! You're both very clever, but I finally caught you!"
+        ],
+        [
+          "Isabella Rodriguez",
+          "Well done, Klaus! You finally found us!"
+        ],
+        [
+          "Klaus Mueller",
+          "Great job, Isabella! You both were very tricky to find."
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 06:09:00"
+  }
+}

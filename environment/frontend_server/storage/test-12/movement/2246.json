@@ -1,0 +1,34 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        30,
+        42
+      ],
+      "pronunciatio": "\ud83d\udd75\ufe0f\u200d",
+      "description": "stay quiet and still, so Klauss cannot find you (conversing about a friendly game of hide and seek between Isabella Rodriguez and Klaus Mueller, where Klaus eventually finds them after a fun and competitive exchange) @ the Ville:The Rose and Crown Pub:pub:shelf",
+      "chat": null
+    },
+    "Maria Lopez": {
+      "movement": [
+        58,
+        56
+      ],
+      "pronunciatio": "\ud83d\udebf",
+      "description": "getting ready for the day @ the Ville:Dorm for Oak Hill College:Maria Lopez's room:closet",
+      "chat": null
+    },
+    "Klaus Mueller": {
+      "movement": [
+        30,
+        46
+      ],
+      "pronunciatio": "\ud83d\udeb6\u200d\u2642",
+      "description": "stay quite and still, so Isabella and Maria cannot see you (on the way to stay quite and still, so Isabella and Maria cannot see yo) (walking slowly and quietly) @ the Ville:Johnson Park:park:park garden",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 06:14:40"
+  }
+}
