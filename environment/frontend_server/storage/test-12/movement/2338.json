@@ -1,0 +1,34 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        73,
+        14
+      ],
+      "pronunciatio": "\ud83e\udd2b",
+      "description": "stay quiet and still, so Klauss cannot find you (staying still and quiet) @ the Ville:Isabella Rodriguez's apartment:main room:bed",
+      "chat": null
+    },
+    "Maria Lopez": {
+      "movement": [
+        123,
+        54
+      ],
+      "pronunciatio": "\ud83d\udebf",
+      "description": "getting ready for the day @ the Ville:Dorm for Oak Hill College:Maria Lopez's room:closet",
+      "chat": null
+    },
+    "Klaus Mueller": {
+      "movement": [
+        30,
+        46
+      ],
+      "pronunciatio": "\ud83d\udd0d",
+      "description": "stay quite and still, so Isabella and Maria cannot see you (on the way to stay quite and still, so Isabella and Maria cannot see yo) (checking the ground for any signs of Isabella and Maria) @ the Ville:Johnson Park:park:park garden",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 06:30:00"
+  }
+}
