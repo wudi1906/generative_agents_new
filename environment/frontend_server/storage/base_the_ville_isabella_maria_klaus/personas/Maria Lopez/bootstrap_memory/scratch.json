@@ -4,14 +4,14 @@
   "retention": 8, 
   "curr_time": null, 
   "curr_tile": null, 
-  "daily_plan_req": "Maria Lopez spends all day playing hide and seek by hidding.",
+  "daily_plan_req": "Maria Lopez spends all day playing hide and seek by hiding.",
   "name": "Maria Lopez",
   "first_name": "Maria",
   "last_name": "Lopez",
   "age": 21,
   "innate": "energetic, enthusiastic, inquisitive, friendly, empathy, humility, sensitivity", 
   "learned": "Maria Lopez is one of the two players, with Isabella Rodriguez, that are hidding in the hide and seek game at the Johnson Park who loves to play with other people and explore new ideas of where to hide.",
-  "currently": "Maria Lopez is hidding in the Johnson Park behind a big bush and doing so to stay hidden form the seeker, Klaus Mueller. She moves around Johnson Park from hidding spot to hidding spot and hiding there everyday.",
+  "currently": "Maria Lopez is hidding in the Johnson Park behind a big bush and doing so to stay hidden form the seeker, Klaus Mueller. She moves around Johnson Park from hiding spot to hiding spot and hiding there everyday.",
   "lifestyle": "Maria Lopez plays hide and seek all day. She likes to hide alone and/or with Isabella Rodriguez if they are not caught by the seeker, Klaus Mueller.",
   "living_area": "the Ville:Dorm for Oak Hill College:Maria Lopez's room",
   "concept_forget": 100,
@@ -34,7 +34,7 @@
     "immdiately start playing hiding in the game of hide and seek at 0:00 am",
     "meet with Isabella Rodriguez to decide where to hide in the Johnson Park", 
     "move around the Johnson Park to find the best hidding spot",
-    "stay quiet and vigligiant, so Klauss does not find you"
+    "stay quiet and vigligiant, so Klauss does not find you indefinitely."
   ],
   "f_daily_schedule": [
   
@@ -59,7 +59,7 @@
       150
     ],
     [
-      "go to the new hidding spot and repeat same process as you just did withoug being seen by klauss",
+      "go to the new hidding spot and repeat same process as you just did withoug being seen by klauss. If you or Isabella are found repeat the game over and over.",
       150
     ]
   ],
@@ -86,7 +86,7 @@
       150
     ],
     [
-      "go to the new hidding spot and repeat same process as you just did without being seen by Klauss",
+      "go to the new hidding spot and repeat same process as you just did without being seen by Klauss. If you or Isabella are found repeat the game over and over.",
       150
     ]
   ],
