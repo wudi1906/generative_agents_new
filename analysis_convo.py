@@ -15,7 +15,7 @@ def analyze_convo(json_data, keywords):
                     # Check if any of the keywords are in the conversation
                     for keyword in keywords:
                         if keyword in conversation[1]:
-                            print(f"Keyword '{keyword}' found in conversation: {conversation}")
+                            print(f"Keyword '{keyword}' found in conversation with {persona}: {conversation}")
                             keywords[keyword] += 1
 
 def main():
@@ -25,7 +25,7 @@ def main():
         with open(json_file, 'r') as file:
             json_data = json.load(file)
 
-        # Define the keywords to search for
+        # Define the keywords to search for and keeping a number count
         keywords = {'hiding': 0 , 'searching': 0, 'found you' : 0 , 'close-by': 0} 
 
         # Analyze the conversations
