@@ -16,6 +16,8 @@ from global_methods import *
 from persona.prompt_template.gpt_structure import *
 from persona.prompt_template.print_prompt import *
 
+USE_REGEX = True
+
 def get_random_alphanumeric(i=6, j=6): 
   """
   Returns a random alpha numeric strength that has the length of somewhere
@@ -54,7 +56,11 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    return re.search(r'^\d{1,2}(?::\d{2})?[aA][mM]', gpt_response.strip()).group()[0]
+    if USE_REGEX:
+      return re.search(r'^\d{1,2}(?::\d{2})?[aA][mM]', gpt_response.strip()).group()[0]
+    else:
+      cr = int(gpt_response.strip().lower().split("am")[0])
+      return cr
   
   def __func_validate(gpt_response, prompt=""): 
     try: __func_clean_up(gpt_response, prompt="")
@@ -110,7 +116,18 @@ def run_gpt_prompt_daily_plan(persona,
     return prompt_input
 ### Need to fix daily plan generation
   def __func_clean_up(gpt_response, prompt=""):
-    return re.findall(r'\d+\)\s+(.*?)(?=, \d+\)|\.|$)', ' '.join(gpt_response.split("\n")))
+    if USE_REGEX:
+      return re.findall(r'\d+\)\s+(.*?)(?=, \d+\)|\.|$)', ' '.join(gpt_response.split("\n")))
+    else:
+      cr = []
+      _cr = re.split(r'\d\)', gpt_response)
+      for i in _cr: 
+        if i[-1].isdigit(): 
+          i = i[:-1].strip()
+          if i[-1] == "." or i[-1] == ",": 
+            cr += [i[:-1].strip()]
+      return cr
+
 
   def __func_validate(gpt_response, prompt=""):
     try: __func_clean_up(gpt_response, prompt="")
@@ -389,7 +406,7 @@ def run_gpt_prompt_task_decomp(persona,
       cr += [[task, duration]]
 
     total_expected_min = int(prompt.split("(total duration in minutes")[-1]
-                                   .split(")")[0].strip())
+                                   .split("):")[0].strip())
     
     # TODO -- now, you need to make sure that this is the same as the sum of 
     #         the current action sequence. 
