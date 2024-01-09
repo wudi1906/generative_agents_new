@@ -399,6 +399,7 @@ def get_embedding(text, model=openai_config["embeddings"]):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
+<<<<<<< HEAD
   response = embeddings_client.embeddings.create(input=[text], model=model)
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
   return response.data[0].embedding
@@ -409,6 +410,13 @@ def get_embedding(text, model=openai_config["embeddings"]):
 #   response = requests.post(api_url, json=payload)
 #   response = response.json()
 #   return response
+=======
+  try:
+    return openai.Embedding.create(
+            input=[text], model=model)['data'][0]['embedding']
+  except:
+    return None
+>>>>>>> Add back embeddings
 
 
 if __name__ == '__main__':
