@@ -289,9 +289,11 @@ def get_embedding(text, model="text-embedding-ada-002"):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return None
-#   return openai.Embedding.create(
-#           input=[text], model=model)['data'][0]['embedding']
+  try:
+    return openai.Embedding.create(
+            input=[text], model=model)['data'][0]['embedding']
+  except:
+    return None
 
 
 if __name__ == '__main__':
