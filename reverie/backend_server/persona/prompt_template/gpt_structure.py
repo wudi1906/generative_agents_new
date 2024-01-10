@@ -11,7 +11,11 @@ import time
 
 from utils import *
 
-openai.api_key = openai_api_key
+openai.api_key = open_ai_key
+if not use_openai:
+  openai.api_base = api_base
+  model = api_model
+
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
@@ -20,7 +24,7 @@ def ChatGPT_single_request(prompt):
   temp_sleep()
 
   completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    model= "gpt-3.5-turbo" if use_openai else model, 
     messages=[{"role": "user", "content": prompt}]
   )
   return completion["choices"][0]["message"]["content"]
@@ -46,7 +50,7 @@ def GPT4_request(prompt):
 
   try: 
     completion = openai.ChatCompletion.create(
-    model="gpt-4", 
+    model="gpt-4" if use_openai else model, 
     messages=[{"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
@@ -71,7 +75,7 @@ def ChatGPT_request(prompt):
   # temp_sleep()
   try: 
     completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    model="gpt-3.5-turbo" if use_openai else model, 
     messages=[{"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
@@ -208,9 +212,10 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  try: 
-    response = openai.Completion.create(
-                model=gpt_parameter["engine"],
+  try:
+    if use_openai:
+      response = openai.Completion.create(
+                engine=gpt_parameter["engine"],
                 prompt=prompt,
                 temperature=gpt_parameter["temperature"],
                 max_tokens=gpt_parameter["max_tokens"],
@@ -219,6 +224,12 @@ def GPT_request(prompt, gpt_parameter):
                 presence_penalty=gpt_parameter["presence_penalty"],
                 stream=gpt_parameter["stream"],
                 stop=gpt_parameter["stop"],)
+    else:
+      response = openai.Completion.create(
+                model=model,
+                prompt=prompt
+      )
+
     return response.choices[0].text
   except: 
     print ("TOKEN LIMIT EXCEEDED")
@@ -278,8 +289,11 @@ def get_embedding(text, model="text-embedding-ada-002"):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return openai.Embedding.create(
-          input=[text], model=model)['data'][0]['embedding']
+  try:
+    return openai.Embedding.create(
+            input=[text], model=model)['data'][0]['embedding']
+  except:
+    return None
 
 
 if __name__ == '__main__':
@@ -310,23 +324,3 @@ if __name__ == '__main__':
                                  True)
 
   print (output)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

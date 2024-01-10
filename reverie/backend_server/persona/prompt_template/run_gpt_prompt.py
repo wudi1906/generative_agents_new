@@ -16,6 +16,8 @@ from global_methods import *
 from persona.prompt_template.gpt_structure import *
 from persona.prompt_template.print_prompt import *
 
+USE_REGEX = True
+
 def get_random_alphanumeric(i=6, j=6): 
   """
   Returns a random alpha numeric strength that has the length of somewhere
@@ -54,8 +56,11 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    cr = int(gpt_response.strip().lower().split("am")[0])
-    return cr
+    if USE_REGEX:
+      return re.search(r'^\d{1,2}(?::\d{2})?[aA][mM]', gpt_response.strip()).group()[0]
+    else:
+      cr = int(gpt_response.strip().lower().split("am")[0])
+      return cr
   
   def __func_validate(gpt_response, prompt=""): 
     try: __func_clean_up(gpt_response, prompt="")
@@ -109,16 +114,20 @@ def run_gpt_prompt_daily_plan(persona,
     prompt_input += [persona.scratch.get_str_firstname()]
     prompt_input += [f"{str(wake_up_hour)}:00 am"]
     return prompt_input
-
+### Need to fix daily plan generation
   def __func_clean_up(gpt_response, prompt=""):
-    cr = []
-    _cr = re.split(r'\d\)', gpt_response)
-    for i in _cr: 
-      if i[-1].isdigit(): 
-        i = i[:-1].strip()
-        if i[-1] == "." or i[-1] == ",": 
-          cr += [i[:-1].strip()]
-    return cr
+    if USE_REGEX:
+      return re.findall(r'\d+\)\s+(.*?)(?=, \d+\)|\.|$)', ' '.join(gpt_response.split("\n")))
+    else:
+      cr = []
+      _cr = re.split(r'\d\)', gpt_response)
+      for i in _cr: 
+        if i[-1].isdigit(): 
+          i = i[:-1].strip()
+          if i[-1] == "." or i[-1] == ",": 
+            cr += [i[:-1].strip()]
+      return cr
+
 
   def __func_validate(gpt_response, prompt=""):
     try: __func_clean_up(gpt_response, prompt="")
@@ -197,7 +206,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     prompt_ending = f"[(ID:{get_random_alphanumeric()})"
     prompt_ending += f" {persona.scratch.get_str_curr_date_str()}"
     prompt_ending += f" -- {curr_hour_str}] Activity:"
-    prompt_ending += f" {persona.scratch.get_str_firstname()} is"
+    prompt_ending += f" {persona.scratch.get_str_firstname()}"
 
     if intermission2: 
       intermission2 = f"\n{intermission2}"
@@ -217,10 +226,10 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.strip()
-    if cr[-1] == ".":
-      cr = cr[:-1]
-    return cr
+    activity = ''.join(gpt_response.split("[")[0]).strip()
+    if activity[:3] == "is ":
+      activity = activity[3:]
+    return activity
 
   def __func_validate(gpt_response, prompt=""): 
     try: __func_clean_up(gpt_response, prompt="")
@@ -360,9 +369,11 @@ def run_gpt_prompt_task_decomp(persona,
     print ("TOODOOOOOO")
     print (gpt_response)
     print ("-==- -==- -==- ")
+    pattern = r'^(?:\d*\) )?.+ \(duration in minutes: \d+, minutes left: \d+\)\n?((?:\d+\) .+ \(duration in minutes: \d+, minutes left: \d+\)\n?)*)'
+    raw_activities_list = re.search(pattern, gpt_response).group()
 
     # TODO SOMETHING HERE sometimes fails... See screenshot
-    temp = [i.strip() for i in gpt_response.split("\n")]
+    temp = [i.strip() for i in raw_activities_list.split("\n")]
     _cr = []
     cr = []
     for count, i in enumerate(temp): 
@@ -569,8 +580,7 @@ def run_gpt_prompt_action_sector(action_description,
 
 
   def __func_clean_up(gpt_response, prompt=""):
-    cleaned_response = gpt_response.split("}")[0]
-    return cleaned_response
+    return ''.join(gpt_response.split("}")[0]).strip()
 
   def __func_validate(gpt_response, prompt=""): 
     if len(gpt_response.strip()) < 1: 
@@ -582,7 +592,7 @@ def run_gpt_prompt_action_sector(action_description,
     return True
   
   def get_fail_safe(): 
-    fs = ("kitchen")
+    fs = ("main room")
     return fs
 
 
@@ -699,8 +709,7 @@ def run_gpt_prompt_action_arena(action_description,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    cleaned_response = gpt_response.split("}")[0]
-    return cleaned_response
+    return ''.join(gpt_response.split("}")[0]).strip()
 
   def __func_validate(gpt_response, prompt=""): 
     if len(gpt_response.strip()) < 1: 
@@ -712,7 +721,7 @@ def run_gpt_prompt_action_arena(action_description,
     return True
   
   def get_fail_safe(): 
-    fs = ("kitchen")
+    fs = ("main room")
     return fs
 
   gpt_param = {"engine": "text-davinci-003", "max_tokens": 15, 
@@ -724,7 +733,7 @@ def run_gpt_prompt_action_arena(action_description,
 
   fail_safe = get_fail_safe()
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+                                   __func_validate, __func_clean_up, verbose=False)
   print (output)
   # y = f"{act_world}:{act_sector}"
   # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
@@ -764,8 +773,7 @@ def run_gpt_prompt_action_game_object(action_description,
     return True
 
   def __func_clean_up(gpt_response, prompt=""):
-    cleaned_response = gpt_response.strip()
-    return cleaned_response
+    return ''.join(gpt_response.split("---")[0]).strip()
 
   def get_fail_safe(): 
     fs = ("bed")
@@ -826,10 +834,8 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    cr = gpt_response.strip()
-    if len(cr) > 3:
-      cr = cr[:3]
-    return cr
+    pattern = r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F700-\U0001F77F\U0001F780-\U0001F7FF\U0001F800-\U0001F8FF\U0001F900-\U0001F9FF\U0001FA00-\U0001FA6F\U0001FA70-\U0001FAFF]'
+    return re.search(pattern, gpt_response).group()
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
@@ -899,9 +905,8 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.strip()
-    cr = [i.strip() for i in cr.split(")")[0].split(",")]
-    return cr
+    cr = gpt_response.split(")")[0].split(',')
+    return [x.strip() for x in cr]
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -988,9 +993,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.strip()
-    if cr[-1] == ".": cr = cr[:-1]
-    return cr
+    return ''.join(gpt_response.split("\n")[0].split(".")[0]).strip()
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1066,9 +1069,8 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.strip()
-    cr = [i.strip() for i in cr.split(")")[0].split(",")]
-    return cr
+    cr = gpt_response.split(")")[0].split(',')
+    return [x.strip() for x in cr]
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
