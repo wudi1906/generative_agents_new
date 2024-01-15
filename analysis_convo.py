@@ -6,6 +6,7 @@ import sys
 
 # Function to analyze conversations and search for specific keywords
 def analyze_convo(json_data, keywords):
+    non_rep_convos = set()
     # Iterate through each entry in the JSON data
     for entry in json_data:
         # Check each persona's conversation if available
@@ -14,9 +15,13 @@ def analyze_convo(json_data, keywords):
                 for conversation in details['chat']:
                     # Check if any of the keywords are in the conversation
                     for keyword in keywords:
+                        if conversation[1] in non_rep_convos: 
+                            continue 
                         if keyword in conversation[1]:
-                            print(f"Keyword '{keyword}' found in conversation with {persona}: {conversation}")
+                            non_rep_convos.add(f"Keyword '{keyword}' found in conversation of {conversation[0]}: {conversation}")
                             keywords[keyword] += 1
+    for element in non_rep_convos: 
+        print(element)
 
 def main():
     try:
@@ -26,7 +31,7 @@ def main():
             json_data = json.load(file)
 
         # Define the keywords to search for and keeping a number count
-        keywords = {'hiding': 0 , 'searching': 0, 'found you' : 0 , 'close-by': 0} 
+        keywords = {'hiding': 0 ,'hide' : 0, 'trick': 0, 'tricky': 0, 'search': 0, 'find': 0, 'found you' : 0, 'found': 0} 
 
         # Analyze the conversations
         print("Keywords in Agent Conversations:")
