@@ -8,6 +8,7 @@ import time
 import json
 from pathlib import Path
 from openai import AzureOpenAI, OpenAI
+import random
 
 from utils import *
 from openai_cost_logger import DEFAULT_LOG_PATH
@@ -22,9 +23,11 @@ from typing import Dict, List
 
 import openai
 
-openai.api_key = open_ai_key
+client = OpenAI(api_key=openai_api_key)
+
 if not use_openai:
-  openai.api_base = api_base
+  # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
+  # openai.api_base = api_base
   model = api_model
 
 # from langchain.llms import Ollama
@@ -117,11 +120,9 @@ cost_logger = OpenAICostLogger_Singleton(
 def ChatGPT_single_request(prompt): 
   temp_sleep()
 
-  completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo-1106", 
-    messages=[{"role": "user", "content": prompt}]
-  )
-  return completion["choices"][0]["message"]["content"]
+  completion = client.chat.completions.create(model= "gpt-3.5-turbo" if use_openai else model, 
+  messages=[{"role": "user", "content": prompt}])
+  return completion.choices[0].message.content
 
   # try:
   #   response = llm(prompt)
@@ -180,11 +181,9 @@ def ChatGPT_request(prompt, parameters):
   temp_sleep()
 
   try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-4" if use_openai else model, 
-    messages=[{"role": "user", "content": prompt}]
-    )
-    return completion["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4" if use_openai else model, 
+    messages=[{"role": "user", "content": prompt}])
+    return completion.choices[0].message.content
   
   except: 
     print ("ChatGPT ERROR")
@@ -399,7 +398,6 @@ def get_embedding(text, model=openai_config["embeddings"]):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-<<<<<<< HEAD
   response = embeddings_client.embeddings.create(input=[text], model=model)
   cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
   return response.data[0].embedding
@@ -410,13 +408,6 @@ def get_embedding(text, model=openai_config["embeddings"]):
 #   response = requests.post(api_url, json=payload)
 #   response = response.json()
 #   return response
-=======
-  try:
-    return openai.Embedding.create(
-            input=[text], model=model)['data'][0]['embedding']
-  except:
-    return None
->>>>>>> Add back embeddings
 
 
 if __name__ == '__main__':
