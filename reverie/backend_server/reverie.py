@@ -29,9 +29,6 @@ import shutil
 import traceback
 import argparse
 import sys
-import urllib.request  
-import webbrowser
-
 
 from selenium import webdriver
 
@@ -482,7 +479,6 @@ class ReverieServer:
       else:
         sim_command = input_command
       sim_command = sim_command.strip()
-      # sim_command = "run"
       print(sim_command)
       ret_str = ""
 
@@ -516,8 +512,6 @@ class ReverieServer:
           # Runs the number of steps specified in the prompt.
           # Example: run 1000
           int_count = int(sim_command.split()[-1])
-          # int_count = 5
-
           rs.start_server(int_count)
 
         elif sim_command[:8].lower() == "headless":
@@ -720,6 +714,4 @@ if __name__ == '__main__':
   # with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
   #   outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
 
-  url = 'http://localhost:8000/simulator_home' 
-  webbrowser.open_new_tab(url)  
   rs.open_server()
