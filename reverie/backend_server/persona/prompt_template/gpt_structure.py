@@ -25,11 +25,9 @@ def temp_sleep(seconds=0.1):
 def ChatGPT_single_request(prompt): 
   temp_sleep()
 
-  completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}]
-  )
-  return completion["choices"][0]["message"]["content"]
+  completion = client.chat.completions.create(model= "gpt-3.5-turbo" if use_openai else model, 
+  messages=[{"role": "user", "content": prompt}])
+  return completion.choices[0].message.content
 
 
 # ============================================================================
@@ -51,11 +49,9 @@ def GPT4_request(prompt):
   temp_sleep()
 
   try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-4", 
-    messages=[{"role": "user", "content": prompt}]
-    )
-    return completion["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4" if use_openai else model, 
+    messages=[{"role": "user", "content": prompt}])
+    return completion.choices[0].message.content
   
   except: 
     print ("ChatGPT ERROR")
@@ -76,11 +72,9 @@ def ChatGPT_request(prompt):
   """
   # temp_sleep()
   try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}]
-    )
-    return completion["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-3.5-turbo" if use_openai else model, 
+    messages=[{"role": "user", "content": prompt}])
+    return completion.choices[0].message.content
   
   except: 
     print ("ChatGPT ERROR")
@@ -95,7 +89,7 @@ def GPT4_safe_generate_response(prompt,
                                    func_validate=None,
                                    func_clean_up=None,
                                    verbose=False): 
-  prompt = 'GPT-3.5-turbo-1106 Prompt:\n"""\n' + prompt + '\n"""\n'
+  prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
   prompt += f"Output the response to the prompt above in json. {special_instruction}\n"
   prompt += "Example output json:\n"
   prompt += '{"output": "' + str(example_output) + '"}'
