@@ -6,12 +6,18 @@ Description: Wrapper functions for calling OpenAI APIs.
 """
 import json
 import random
-import openai
 import time 
+from openai import OpenAI
 
 from utils import *
 
-openai.api_key = openai_api_key
+client = OpenAI(api_key=openai_api_key)
+
+if not use_openai:
+  # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
+  # openai.api_base = api_base
+  model = api_model
+
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
@@ -20,7 +26,7 @@ def ChatGPT_single_request(prompt):
   temp_sleep()
 
   completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo-1106", 
+    model="gpt-3.5-turbo", 
     messages=[{"role": "user", "content": prompt}]
   )
   return completion["choices"][0]["message"]["content"]
@@ -46,7 +52,7 @@ def GPT4_request(prompt):
 
   try: 
     completion = openai.ChatCompletion.create(
-    model="gpt-4-1106-preview", 
+    model="gpt-4", 
     messages=[{"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
@@ -71,7 +77,7 @@ def ChatGPT_request(prompt):
   # temp_sleep()
   try: 
     completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo-1106", 
+    model="gpt-3.5-turbo", 
     messages=[{"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
@@ -208,21 +214,26 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  try: 
-    response = openai.Completion.create(
-                model=gpt_parameter["engine"],
-                prompt=prompt,
-                temperature=gpt_parameter["temperature"],
-                max_tokens=gpt_parameter["max_tokens"],
-                top_p=gpt_parameter["top_p"],
-                frequency_penalty=gpt_parameter["frequency_penalty"],
-                presence_penalty=gpt_parameter["presence_penalty"],
-                stream=gpt_parameter["stream"],
-                stop=gpt_parameter["stop"],)
-    return response.choices[0].text
-  except: 
-    print ("TOKEN LIMIT EXCEEDED")
-    return "TOKEN LIMIT EXCEEDED"
+  try:
+    if use_openai:
+      response = client.chat.completions.create(model=gpt_parameter["engine"],
+      messages=[{"role": "user", "content": prompt}],
+      temperature=gpt_parameter["temperature"],
+      max_tokens=gpt_parameter["max_tokens"],
+      top_p=gpt_parameter["top_p"],
+      frequency_penalty=gpt_parameter["frequency_penalty"],
+      presence_penalty=gpt_parameter["presence_penalty"],
+      stream=gpt_parameter["stream"],
+      stop=gpt_parameter["stop"])
+    else:
+      response = client.completions.create(model=model,
+      prompt=prompt)
+
+    return response.choices[0].message.content
+  except Exception as e: 
+    print (e)
+    print ("REQUEST ERROR")
+    return "REQUEST ERROR"
 
 
 def generate_prompt(curr_input, prompt_lib_file): 
@@ -278,12 +289,14 @@ def get_embedding(text, model="text-embedding-ada-002"):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return openai.Embedding.create(
-          input=[text], model=model)['data'][0]['embedding']
+  try:
+    return client.embeddings.create(input=[text], model=model).data[0].embedding
+  except:
+    return None
 
 
 if __name__ == '__main__':
-  gpt_parameter = {"engine": "text-davinci-003", "max_tokens": 50, 
+  gpt_parameter = {"engine": "gpt-3.5-turbo", "max_tokens": 50, 
                    "temperature": 0, "top_p": 1, "stream": False,
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}
@@ -310,23 +323,3 @@ if __name__ == '__main__':
                                  True)
 
   print (output)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
