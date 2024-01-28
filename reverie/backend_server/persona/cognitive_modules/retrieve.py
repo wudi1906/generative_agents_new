@@ -98,9 +98,9 @@ def normalize_dict_floats(d, target_min, target_max):
   min_val = min(val for val in d.values())
   max_val = max(val for val in d.values())
   sleep(2)
-  # # ##JSG: Error capture case if there is no min_val, I set it to 0 automatically
-  # if not min_val:
-  #   min_val = 0; 
+  ###JSG: Error capture case if there is no min_val, I set it to 0 automatically
+  if not min_val:
+    min_val = 0; 
 
   range_val = max_val - min_val
 
@@ -229,10 +229,10 @@ def new_retrieve(persona, focal_points, n_count=30):
   """
   print(f"Focal points in new_retrieve function as input: {focal_points}")
   sleep(3)
-  # ###JSG: If there are no focal points, we will add a default value to it
-  # if not focal_points: 
-  #   for i in range(n_count): 
-  #     focal_points[i] = "play hide-and-seek"
+  ###JSG: If there are no focal points, we will add a default value to it
+  if not focal_points: 
+    for i in range(n_count): 
+      focal_points[i] = "play hide-and-seek"
   
   print(f"Focal points added if there are none: {focal_points}")
   sleep(3)
@@ -248,28 +248,28 @@ def new_retrieve(persona, focal_points, n_count=30):
     nodes = sorted(nodes, key=lambda x: x[0])
     nodes = [i for created, i in nodes]
 
-    # if not nodes:
-    #   nodes = [ 0 for created, i in nodes]
+    if not nodes:
+      nodes = [ 0 for created, i in nodes]
 
     # Calculating the component dictionaries and normalizing them.
     recency_out = extract_recency(persona, nodes)
 
-    # ####JSG: Added these lines of code to avoid passing empty dictionaries
-    # if not recency_out: 
-    #   recency_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
+    ####JSG: Added these lines of code to avoid passing empty dictionaries
+    if not recency_out: 
+      recency_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
 
     recency_out = normalize_dict_floats(recency_out, 0, 1)
     importance_out = extract_importance(persona, nodes)
 
-    # ####JSG: Added these lines of code to avoid passing empty dictionaries
-    # if not importance_out: 
-    #   importance_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
+    ####JSG: Added these lines of code to avoid passing empty dictionaries
+    if not importance_out: 
+      importance_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
 
     importance_out = normalize_dict_floats(importance_out, 0, 1)  
     relevance_out = extract_relevance(persona, nodes, focal_pt)
-    # ####JSG: Added these lines of code to avoid passing empty dictionaries
-    # if not relevance_out: 
-    #   relevance_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
+    ####JSG: Added these lines of code to avoid passing empty dictionaries
+    if not relevance_out: 
+      relevance_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
     relevance_out = normalize_dict_floats(relevance_out, 0, 1)
 
     # Computing the final scores that combines the component values. 

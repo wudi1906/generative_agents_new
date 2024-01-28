@@ -90,9 +90,9 @@ def agent_chat_v1(maze, init_persona, target_persona):
   for p_1, p_2 in part_pairs: 
     focal_points = [f"{p_2.scratch.name}"]
     ###JSG: If there are no focal points, we will add a default value to it
-    # if not focal_points: 
-    #   for i in range(len(focal_points)): 
-    #     focal_points[i] = "play hide-and-seek"
+    if not focal_points: 
+      for i in range(len(focal_points)): 
+        focal_points[i] = "play hide-and-seek"
     retrieved = new_retrieve(p_1, focal_points, 50)
     relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
     focal_points = [f"{relationship}", 
