@@ -5,6 +5,7 @@ File: retrieve.py
 Description: This defines the "Retrieve" module for generative agents. 
 """
 import sys
+from time import sleep 
 sys.path.append('../../')
 
 from global_methods import *
@@ -93,8 +94,14 @@ def normalize_dict_floats(d, target_min, target_max):
     target_min = -5
     target_max = 5
   """
+  print(f"D in normalize_dict_floats function as input: {d}\n")
   min_val = min(val for val in d.values())
   max_val = max(val for val in d.values())
+  sleep(2)
+  # # ##JSG: Error capture case if there is no min_val, I set it to 0 automatically
+  # if not min_val:
+  #   min_val = 0; 
+
   range_val = max_val - min_val
 
   if range_val == 0: 
@@ -145,6 +152,7 @@ def extract_recency(persona, nodes):
     recency_out: A dictionary whose keys are the node.node_id and whose values
                  are the float that represents the recency score. 
   """
+  print(f"Nodes in extract_recency function: {nodes}\n")
   recency_vals = [persona.scratch.recency_decay ** i 
                   for i in range(1, len(nodes) + 1)]
   
@@ -152,6 +160,7 @@ def extract_recency(persona, nodes):
   for count, node in enumerate(nodes): 
     recency_out[node.node_id] = recency_vals[count]
 
+  print(f"Recency output in extract_recency function: {recency_out}")
   return recency_out
 
 
@@ -218,6 +227,15 @@ def new_retrieve(persona, focal_points, n_count=30):
     persona = <persona> object 
     focal_points = ["How are you?", "Jane is swimming in the pond"]
   """
+  print(f"Focal points in new_retrieve function as input: {focal_points}")
+  sleep(3)
+  # ###JSG: If there are no focal points, we will add a default value to it
+  # if not focal_points: 
+  #   for i in range(n_count): 
+  #     focal_points[i] = "play hide-and-seek"
+  
+  print(f"Focal points added if there are none: {focal_points}")
+  sleep(3)
   # <retrieved> is the main dictionary that we are returning
   retrieved = dict() 
   for focal_pt in focal_points: 
@@ -230,12 +248,28 @@ def new_retrieve(persona, focal_points, n_count=30):
     nodes = sorted(nodes, key=lambda x: x[0])
     nodes = [i for created, i in nodes]
 
+    # if not nodes:
+    #   nodes = [ 0 for created, i in nodes]
+
     # Calculating the component dictionaries and normalizing them.
     recency_out = extract_recency(persona, nodes)
+
+    # ####JSG: Added these lines of code to avoid passing empty dictionaries
+    # if not recency_out: 
+    #   recency_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
+
     recency_out = normalize_dict_floats(recency_out, 0, 1)
     importance_out = extract_importance(persona, nodes)
+
+    # ####JSG: Added these lines of code to avoid passing empty dictionaries
+    # if not importance_out: 
+    #   importance_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
+
     importance_out = normalize_dict_floats(importance_out, 0, 1)  
     relevance_out = extract_relevance(persona, nodes, focal_pt)
+    # ####JSG: Added these lines of code to avoid passing empty dictionaries
+    # if not relevance_out: 
+    #   relevance_out = {"Klauss":0,"Isabella":0 ,"Maria":0}
     relevance_out = normalize_dict_floats(relevance_out, 0, 1)
 
     # Computing the final scores that combines the component values. 
@@ -271,6 +305,8 @@ def new_retrieve(persona, focal_points, n_count=30):
       
     retrieved[focal_pt] = master_nodes
 
+  print(f"Retrived output in new_retrieve function: {retrieved}\n")
+  sleep(2)
   return retrieved
 
 

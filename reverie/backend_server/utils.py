@@ -1,5 +1,5 @@
 # Copy and paste your OpenAI API Key
-openai_api_key = "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"
+openai_api_key = "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"
 # Put your name
 key_owner = "Jonathan Granda Acaro"
 

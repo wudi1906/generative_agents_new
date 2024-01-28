@@ -13,10 +13,11 @@ from utils import *
 
 client = OpenAI(api_key=openai_api_key)
 
-if not use_openai:
-  # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
-  # openai.api_base = api_base
-  model = api_model
+
+# if not use_openai:
+#   # TODO: The 'openai.api_base' option isn't read in the client API. You will need to pass it when you instantiate the client, e.g. 'OpenAI(base_url=api_base)'
+#   openai.api_base = api_base
+# model = api_model
 
 
 def temp_sleep(seconds=0.1):
