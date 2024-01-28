@@ -658,7 +658,10 @@ if __name__ == '__main__':
 
   # Get the name of the new simulation from the user
   last_sim_code = ""
-  with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
+  destination_dir = "/home/jgrandaa/Desktop/simulacra/environment/frontend_server/temp_storage"
+
+  os.chdir(destination_dir)
+  with open("curr_sim_code.json", "r") as json_file:
     curr_sim_code = json.load(json_file)
     last_sim_code = curr_sim_code["sim_code"]
   target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
