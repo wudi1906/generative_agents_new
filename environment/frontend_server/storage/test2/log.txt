@@ -1,0 +1,1730 @@
+Enter the name of the forked simulation (leave blank for base_the_ville_isabella_maria_klaus): large_scale_hide_and_seek
+Enter the name of the new simulation (last was test1): test2
+Note: The agents in this simulation package are computational
+constructs powered by generative agents architecture and LLM. We
+clarify that these agents lack human-like agency, consciousness,
+and independent decision-making.
+---
+Enter option: run 5000
+GNS FUNCTION: <generate_wake_up_hour>
+=== persona/prompt_template/v2/wake_up_hour_v1.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 5, 'temperature': 0.8, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', 'Abigail Chen 0:00 am and plays hide and seek at Johnson Park.', 'Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+In general, Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Abigail's wake up hour: 
+
+~~~ output    ----------------------------------------------------
+8 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_first_daily_plan>
+=== persona/prompt_template/v2/daily_planning_v6.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 500, 'temperature': 1, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': None} 
+
+~~~ prompt_input    ----------------------------------------------
+['Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', 'Abigail Chen 0:00 am and plays hide and seek at Johnson Park.', 'Monday February 13', 'Abigail', '8:00 am'] 
+
+~~~ prompt    ----------------------------------------------------
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+In general, Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Today is Monday February 13. Here is Abigail's plan today in broad-strokes (with the time of the day. e.g., have a lunch at 12:00 pm, watch TV from 7 to 8 pm): 1) wake up and complete the morning routine at 8:00 am, 2) 
+
+~~~ output    ----------------------------------------------------
+['wake up and complete the morning routine at 8:00 am', 'have breakfast at 10:00 am', 'spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm', 'have lunch at 1:00 pm', 'play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm', 'have dinner at 6:00 pm', "reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm", 'relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm', "go to bed and get a good night's sleep at 11:00 pm"] 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_hourly_schedule>
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:xdyA3p) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:cLmMCw) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:vyZy2Z) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:XCxttj) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:IXOgyb) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:mjpYdB) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:2U3kSg) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:33VhTB) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:7s2fmX) Monday February 13 -- 08:00 AM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:xdyA3p) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:cLmMCw) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:vyZy2Z) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:XCxttj) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:IXOgyb) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:mjpYdB) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:2U3kSg) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:33VhTB) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:7s2fmX) Monday February 13 -- 08:00 AM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+wakes up and completes morning routine 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:lW5W9g) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:qbWPAI) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:5TZb4d) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:A3QZ7Y) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:M4So7b) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:EAJ1m7) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:cglpEn) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:yccqL2) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:aW2w9N) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:a0Avr1) Monday February 13 -- 09:00 AM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:lW5W9g) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:qbWPAI) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:5TZb4d) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:A3QZ7Y) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:M4So7b) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:EAJ1m7) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:cglpEn) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:yccqL2) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:aW2w9N) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:a0Avr1) Monday February 13 -- 09:00 AM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+has breakfast 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:BD8Dsf) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:e85VMj) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:dusmX7) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:cf8MnO) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:rsLCqb) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:8WHZzp) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:3raGOI) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:1Dhizh) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:WFVEkg) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:CL5E8K) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:lqonbA) Monday February 13 -- 10:00 AM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:BD8Dsf) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:e85VMj) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:dusmX7) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:cf8MnO) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:rsLCqb) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:8WHZzp) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:3raGOI) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:1Dhizh) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:WFVEkg) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:CL5E8K) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:lqonbA) Monday February 13 -- 10:00 AM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+brainstorming new hiding spots at Johnson Park 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:VXI1Jf) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:4BLwaO) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:14Hal8) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:X7ruKL) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:tleN8B) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:2xPRq6) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:FcAYVV) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:G6vnIr) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:1nnMCh) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:NenXmA) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:17kGHz) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:RsSbFA) Monday February 13 -- 11:00 AM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:VXI1Jf) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:4BLwaO) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:14Hal8) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:X7ruKL) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:tleN8B) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:2xPRq6) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:FcAYVV) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:G6vnIr) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:1nnMCh) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:NenXmA) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:17kGHz) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:RsSbFA) Monday February 13 -- 11:00 AM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+brainstorming new hiding spots at Johnson Park 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:f3Ty9X) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:1QgqtV) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:tQ55Ln) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:GUJykh) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:YPLgzh) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:mlwqW3) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:JODQTh) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:4VeEx3) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:QLF8DL) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:Mz9wOr) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:PT8vSY) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:0miZfe) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:iZBvXr) Monday February 13 -- 12:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:f3Ty9X) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:1QgqtV) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:tQ55Ln) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:GUJykh) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:YPLgzh) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:mlwqW3) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:JODQTh) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:4VeEx3) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:QLF8DL) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:Mz9wOr) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:PT8vSY) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:0miZfe) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:iZBvXr) Monday February 13 -- 12:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+having lunch 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:qyomPL) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:y6J17n) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:rq6EBM) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:YkXbUN) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:C4GwfE) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:eb25qv) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:oGEHqs) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:kOXRhx) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:0wciTE) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:PxAPhc) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:vkM09c) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:1jaMO5) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:5pUqaN) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:I6iSxW) Monday February 13 -- 01:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:qyomPL) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:y6J17n) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:rq6EBM) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:YkXbUN) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:C4GwfE) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:eb25qv) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:oGEHqs) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:kOXRhx) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:0wciTE) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:PxAPhc) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:vkM09c) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:1jaMO5) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:5pUqaN) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:I6iSxW) Monday February 13 -- 01:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+playing hide and seek at Johnson Park with the other 24 people. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:HRlSSD) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:gQ4P1x) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:roiSh8) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:R65BsN) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:s4rY12) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:uHa8Fb) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:dgXDth) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:7zf59z) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:LJPAZ8) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:YE2xAy) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:GDa9RA) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:bTqDTZ) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:ZrU3li) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:oWtuBK) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:41fmGw) Monday February 13 -- 02:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:HRlSSD) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:gQ4P1x) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:roiSh8) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:R65BsN) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:s4rY12) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:uHa8Fb) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:dgXDth) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:7zf59z) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:LJPAZ8) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:YE2xAy) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:GDa9RA) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:bTqDTZ) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:ZrU3li) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:oWtuBK) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:41fmGw) Monday February 13 -- 02:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+playing hide and seek at Johnson Park with the other 24 people. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:N3IY7n) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:pFjsCz) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:MPkF70) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:D7yksc) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:05XnN8) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:b4eJHS) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:UjntNN) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:d4Mag4) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:BqyYXP) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:FRZwxK) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:I2k10J) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:2by6Gb) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:3q7SDm) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:m9PGMN) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:oLBLuf) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:p9wt5P) Monday February 13 -- 03:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:N3IY7n) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:pFjsCz) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:MPkF70) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:D7yksc) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:05XnN8) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:b4eJHS) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:UjntNN) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:d4Mag4) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:BqyYXP) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:FRZwxK) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:I2k10J) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:2by6Gb) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:3q7SDm) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:m9PGMN) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:oLBLuf) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:p9wt5P) Monday February 13 -- 03:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+playing hide and seek at Johnson Park with the other 24 people. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:OROJ5l) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:qs7YjZ) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:7oVNsy) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:c71fnd) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:Bu5PAH) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:62iZX9) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:yEHDtP) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:2VEP45) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:MXswxF) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:uPSHcm) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:LQiwvZ) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:elb6N4) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:5fWqBC) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:Jhu42b) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:LXLg7H) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:kjwWUL) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:JeNhAD) Monday February 13 -- 04:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:OROJ5l) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:qs7YjZ) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:7oVNsy) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:c71fnd) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:Bu5PAH) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:62iZX9) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:yEHDtP) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:2VEP45) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:MXswxF) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:uPSHcm) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:LQiwvZ) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:elb6N4) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:5fWqBC) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:Jhu42b) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:LXLg7H) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:kjwWUL) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:JeNhAD) Monday February 13 -- 04:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+playing hide and seek at Johnson Park with the other 24 people. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:03yW0L) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:cdZLIl) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:6EsCl3) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:sCiZEE) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:ZRjKDV) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:aLIu3T) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:jWKxCa) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:dKO3Me) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:dSAESn) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:U9IiA9) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:RqNKkM) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:kTMelK) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:lp7i5S) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:pHvhSh) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:RzKmL4) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:IH89PH) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:AFlAAn) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:VMWgSn) Monday February 13 -- 05:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:03yW0L) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:cdZLIl) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:6EsCl3) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:sCiZEE) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:ZRjKDV) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:aLIu3T) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:jWKxCa) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:dKO3Me) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:dSAESn) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:U9IiA9) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:RqNKkM) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:kTMelK) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:lp7i5S) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:pHvhSh) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:RzKmL4) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:IH89PH) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:AFlAAn) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:VMWgSn) Monday February 13 -- 05:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+playing hide and seek at Johnson Park with the other 24 people. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:a00mqL) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:WYL6w2) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:95RitV) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:K4yt0D) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:q5xUot) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:vvr5HQ) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:8ACJ7t) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:x0u6GU) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:sUUFkH) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:eP7U3T) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:J5N2ob) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:ZW66RG) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:5HXKtS) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:VU0Kxu) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:RYb5tp) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:l1jbmR) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:eM8sut) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:EZJXO6) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:cAOuU7) Monday February 13 -- 06:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:a00mqL) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:WYL6w2) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:95RitV) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:K4yt0D) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:q5xUot) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:vvr5HQ) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:8ACJ7t) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:x0u6GU) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:sUUFkH) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:eP7U3T) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:J5N2ob) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:ZW66RG) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:5HXKtS) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:VU0Kxu) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:RYb5tp) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:l1jbmR) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:eM8sut) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:EZJXO6) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:cAOuU7) Monday February 13 -- 06:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+having dinner 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', '\n[(ID:rLqfVq) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:sNG615) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:MyE58Z) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:qOGfWq) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:k37Uf7) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:n17EIE) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:n7SYp3) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:MfRbaZ) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:nCVnoM) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:vu0xY5) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:1wuERM) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:04WOaV) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:gIS4tb) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:6KEpji) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:3xzCJG) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:sQo2Im) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:z5hyCv) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:x2giPJ) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:vct4kc) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner\n\n', "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:lLYZxo) Monday February 13 -- 07:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:rLqfVq) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:sNG615) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:MyE58Z) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:qOGfWq) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:k37Uf7) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:n17EIE) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:n7SYp3) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:MfRbaZ) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:nCVnoM) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:vu0xY5) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:1wuERM) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:04WOaV) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:gIS4tb) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:6KEpji) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:3xzCJG) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:sQo2Im) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:z5hyCv) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:x2giPJ) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:vct4kc) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:lLYZxo) Monday February 13 -- 07:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+reflecting on the day's hiding strategy and brainstorming new ideas. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', "\n[(ID:anrsyB) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:fGfJTO) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:MvqG4U) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:xvKF7F) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:F2bHix) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:HFkexQ) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:R2fX6o) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:NV4fvJ) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:thhe9l) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:E67sLe) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:Nd6ux2) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:bWFmtI) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:kLDAMu) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:1wNo9u) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:BpuTHn) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:IwnGmR) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:bpby3P) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:l53x5K) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:FHKLr6) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner\n[(ID:7012QR) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.\n\n", "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:F6YE1V) Monday February 13 -- 08:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:anrsyB) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:fGfJTO) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:MvqG4U) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:xvKF7F) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:F2bHix) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:HFkexQ) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:R2fX6o) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:NV4fvJ) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:thhe9l) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:E67sLe) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:Nd6ux2) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:bWFmtI) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:kLDAMu) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:1wNo9u) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:BpuTHn) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:IwnGmR) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:bpby3P) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:l53x5K) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:FHKLr6) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner
+[(ID:7012QR) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:F6YE1V) Monday February 13 -- 08:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+relaxes and unwinds by reading a book or watching a movie 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', "\n[(ID:2IZvlu) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:mcJOt8) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:kLGRtc) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:cMA4Q0) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:algtYz) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:yHzxmC) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:19WX0x) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:gTVNWV) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:fypn3v) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:o6a2Wo) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:fxP27k) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:WUwzqr) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:SiJaGy) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:eWnoXh) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:lJ37c6) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:kmgSH9) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:EvOiZM) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:zCgY8G) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:BGJGzy) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner\n[(ID:1rVrYi) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.\n[(ID:CdTcRU) Monday February 13 -- 08:00 PM] Activity: Abigail is relaxes and unwinds by reading a book or watching a movie\n\n", "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:P60d4T) Monday February 13 -- 09:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:2IZvlu) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:mcJOt8) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:kLGRtc) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:cMA4Q0) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:algtYz) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:yHzxmC) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:19WX0x) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:gTVNWV) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:fypn3v) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:o6a2Wo) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:fxP27k) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:WUwzqr) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:SiJaGy) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:eWnoXh) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:lJ37c6) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:kmgSH9) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:EvOiZM) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:zCgY8G) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:BGJGzy) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner
+[(ID:1rVrYi) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.
+[(ID:CdTcRU) Monday February 13 -- 08:00 PM] Activity: Abigail is relaxes and unwinds by reading a book or watching a movie
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:P60d4T) Monday February 13 -- 09:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+playing hide and seek at Johnson Park with the other 24 people. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', "\n[(ID:Gqv13a) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:PURVw9) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:ct6rlI) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:pCQnV7) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:mWzJpr) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:MMJade) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:ryj0nf) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:TewYER) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:GGSjYJ) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:4CGeGa) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:jAqexn) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:coQSqi) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:CXBmq8) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:RxUFuX) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:nAq4yB) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:CpNn3c) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:94GcHQ) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:sPt4W9) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:u9MKYW) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner\n[(ID:veVeZE) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.\n[(ID:5smtA3) Monday February 13 -- 08:00 PM] Activity: Abigail is relaxes and unwinds by reading a book or watching a movie\n[(ID:L9InvW) Monday February 13 -- 09:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n\n", "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:qOS1wq) Monday February 13 -- 10:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:Gqv13a) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:PURVw9) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:ct6rlI) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:pCQnV7) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:mWzJpr) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:MMJade) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:ryj0nf) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:TewYER) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:GGSjYJ) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:4CGeGa) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:jAqexn) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:coQSqi) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:CXBmq8) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:RxUFuX) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:nAq4yB) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:CpNn3c) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:94GcHQ) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:sPt4W9) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:u9MKYW) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner
+[(ID:veVeZE) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.
+[(ID:5smtA3) Monday February 13 -- 08:00 PM] Activity: Abigail is relaxes and unwinds by reading a book or watching a movie
+[(ID:L9InvW) Monday February 13 -- 09:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:qOS1wq) Monday February 13 -- 10:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+going to bed and getting a good night's sleep. 
+
+=== END ==========================================================
+
+
+
+
+=== persona/prompt_template/v2/generate_hourly_schedule_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 50, 'temperature': 0.5, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['[Monday February 13 -- 00:00 AM] Activity: [Fill in]\n[Monday February 13 -- 01:00 AM] Activity: [Fill in]\n[Monday February 13 -- 02:00 AM] Activity: [Fill in]\n[Monday February 13 -- 03:00 AM] Activity: [Fill in]\n[Monday February 13 -- 04:00 AM] Activity: [Fill in]\n[Monday February 13 -- 05:00 AM] Activity: [Fill in]\n[Monday February 13 -- 06:00 AM] Activity: [Fill in]\n[Monday February 13 -- 07:00 AM] Activity: [Fill in]\n[Monday February 13 -- 08:00 AM] Activity: [Fill in]\n[Monday February 13 -- 09:00 AM] Activity: [Fill in]\n[Monday February 13 -- 10:00 AM] Activity: [Fill in]\n[Monday February 13 -- 11:00 AM] Activity: [Fill in]\n[Monday February 13 -- 12:00 PM] Activity: [Fill in]\n[Monday February 13 -- 01:00 PM] Activity: [Fill in]\n[Monday February 13 -- 02:00 PM] Activity: [Fill in]\n[Monday February 13 -- 03:00 PM] Activity: [Fill in]\n[Monday February 13 -- 04:00 PM] Activity: [Fill in]\n[Monday February 13 -- 05:00 PM] Activity: [Fill in]\n[Monday February 13 -- 06:00 PM] Activity: [Fill in]\n[Monday February 13 -- 07:00 PM] Activity: [Fill in]\n[Monday February 13 -- 08:00 PM] Activity: [Fill in]\n[Monday February 13 -- 09:00 PM] Activity: [Fill in]\n[Monday February 13 -- 10:00 PM] Activity: [Fill in]\n[Monday February 13 -- 11:00 PM] Activity: [Fill in]', 'Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', "\n[(ID:xqj9WE) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping\n[(ID:CBP0mR) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping\n[(ID:BSnEF8) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping\n[(ID:zXuyiS) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping\n[(ID:zuBe5j) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping\n[(ID:bBF55r) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping\n[(ID:9ajvHa) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping\n[(ID:ejcF6Z) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping\n[(ID:ok1pZi) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine\n[(ID:XJF7XC) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast\n[(ID:wLlJNG) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:7Jz2Va) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park\n[(ID:XddV32) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch\n[(ID:k1KSDQ) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:Qv6WlU) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:HRFOZT) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:QVVbLU) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:DXr0tL) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:96RTfO) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner\n[(ID:IPXzFy) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.\n[(ID:qutRbp) Monday February 13 -- 08:00 PM] Activity: Abigail is relaxes and unwinds by reading a book or watching a movie\n[(ID:ctQ1f2) Monday February 13 -- 09:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.\n[(ID:3kpr0U) Monday February 13 -- 10:00 PM] Activity: Abigail is going to bed and getting a good night's sleep.\n\n", "Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm", '', '[(ID:xLdhOr) Monday February 13 -- 11:00 PM] Activity: Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Hourly schedule format: 
+[Monday February 13 -- 00:00 AM] Activity: [Fill in]
+[Monday February 13 -- 01:00 AM] Activity: [Fill in]
+[Monday February 13 -- 02:00 AM] Activity: [Fill in]
+[Monday February 13 -- 03:00 AM] Activity: [Fill in]
+[Monday February 13 -- 04:00 AM] Activity: [Fill in]
+[Monday February 13 -- 05:00 AM] Activity: [Fill in]
+[Monday February 13 -- 06:00 AM] Activity: [Fill in]
+[Monday February 13 -- 07:00 AM] Activity: [Fill in]
+[Monday February 13 -- 08:00 AM] Activity: [Fill in]
+[Monday February 13 -- 09:00 AM] Activity: [Fill in]
+[Monday February 13 -- 10:00 AM] Activity: [Fill in]
+[Monday February 13 -- 11:00 AM] Activity: [Fill in]
+[Monday February 13 -- 12:00 PM] Activity: [Fill in]
+[Monday February 13 -- 01:00 PM] Activity: [Fill in]
+[Monday February 13 -- 02:00 PM] Activity: [Fill in]
+[Monday February 13 -- 03:00 PM] Activity: [Fill in]
+[Monday February 13 -- 04:00 PM] Activity: [Fill in]
+[Monday February 13 -- 05:00 PM] Activity: [Fill in]
+[Monday February 13 -- 06:00 PM] Activity: [Fill in]
+[Monday February 13 -- 07:00 PM] Activity: [Fill in]
+[Monday February 13 -- 08:00 PM] Activity: [Fill in]
+[Monday February 13 -- 09:00 PM] Activity: [Fill in]
+[Monday February 13 -- 10:00 PM] Activity: [Fill in]
+[Monday February 13 -- 11:00 PM] Activity: [Fill in]
+===
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+
+[(ID:xqj9WE) Monday February 13 -- 00:00 AM] Activity: Abigail is sleeping
+[(ID:CBP0mR) Monday February 13 -- 01:00 AM] Activity: Abigail is sleeping
+[(ID:BSnEF8) Monday February 13 -- 02:00 AM] Activity: Abigail is sleeping
+[(ID:zXuyiS) Monday February 13 -- 03:00 AM] Activity: Abigail is sleeping
+[(ID:zuBe5j) Monday February 13 -- 04:00 AM] Activity: Abigail is sleeping
+[(ID:bBF55r) Monday February 13 -- 05:00 AM] Activity: Abigail is sleeping
+[(ID:9ajvHa) Monday February 13 -- 06:00 AM] Activity: Abigail is sleeping
+[(ID:ejcF6Z) Monday February 13 -- 07:00 AM] Activity: Abigail is sleeping
+[(ID:ok1pZi) Monday February 13 -- 08:00 AM] Activity: Abigail is wakes up and completes morning routine
+[(ID:XJF7XC) Monday February 13 -- 09:00 AM] Activity: Abigail is has breakfast
+[(ID:wLlJNG) Monday February 13 -- 10:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:7Jz2Va) Monday February 13 -- 11:00 AM] Activity: Abigail is brainstorming new hiding spots at Johnson Park
+[(ID:XddV32) Monday February 13 -- 12:00 PM] Activity: Abigail is having lunch
+[(ID:k1KSDQ) Monday February 13 -- 01:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:Qv6WlU) Monday February 13 -- 02:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:HRFOZT) Monday February 13 -- 03:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:QVVbLU) Monday February 13 -- 04:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:DXr0tL) Monday February 13 -- 05:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:96RTfO) Monday February 13 -- 06:00 PM] Activity: Abigail is having dinner
+[(ID:IPXzFy) Monday February 13 -- 07:00 PM] Activity: Abigail is reflecting on the day's hiding strategy and brainstorming new ideas.
+[(ID:qutRbp) Monday February 13 -- 08:00 PM] Activity: Abigail is relaxes and unwinds by reading a book or watching a movie
+[(ID:ctQ1f2) Monday February 13 -- 09:00 PM] Activity: Abigail is playing hide and seek at Johnson Park with the other 24 people.
+[(ID:3kpr0U) Monday February 13 -- 10:00 PM] Activity: Abigail is going to bed and getting a good night's sleep.
+
+
+Here is the originally intended hourly breakdown of Abigail's schedule today: 1) wake up and complete the morning routine at 8:00 am, 2) have breakfast at 10:00 am, 3) spend time brainstorming new hiding spots at Johnson Park from 11:00 am to 1:00 pm, 4) have lunch at 1:00 pm, 5) play hide and seek at Johnson Park with the other 24 people from 2:00 pm to 6:00 pm, 6) have dinner at 6:00 pm, 7) reflect on the day's hiding strategy and brainstorm new ideas from 7:00 pm to 8:00 pm, 8) relax and unwind by reading a book or watching a movie from 8:00 pm to 10:00 pm, 9) go to bed and get a good night's sleep at 11:00 pm
+[(ID:xLdhOr) Monday February 13 -- 11:00 PM] Activity: Abigail 
+
+~~~ output    ----------------------------------------------------
+going to bed and getting a good night's sleep. 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_task_decomp>
+DEBUG
+[['sleeping', 480], ['wakes up and completes morning routine', 60], ['has breakfast', 60], ['brainstorming new hiding spots at Johnson Park', 120], ['having lunch', 60], ['playing hide and seek at Johnson Park with the other 24 people.', 300], ['having dinner', 60], ["reflecting on the day's hiding strategy and brainstorming new ideas.", 60], ['relaxes and unwinds by reading a book or watching a movie', 60], ['playing hide and seek at Johnson Park with the other 24 people.', 60], ["going to bed and getting a good night's sleep.", 120]]
+[0, 1, 2]
+index 0
+index 1
+index 2
+?????
+Describe subtasks in 5 min increments. 
+---
+Name: Kelly Bronson
+Age: 35
+Backstory: Kelly always wanted to be a teacher, and now she teaches kindergarten. During the week, she dedicates herself to her students, but on the weekends, she likes to try out new restaurants and hang out with friends. She is very warm and friendly, and loves caring for others.
+Personality: sweet, gentle, meticulous
+Location: Kelly is in an older condo that has the following areas: {kitchen, bedroom, dining, porch, office, bathroom, living room, hallway}.
+Currently: Kelly is a teacher during the school year. She teaches at the school but works on lesson plans at home. She is currently living alone in a single bedroom condo.
+Daily plan requirement: Kelly is planning to teach during the morning and work from home in the afternoon.s
+
+Today is Saturday May 10. From 08:00am ~09:00am, Kelly is planning on having breakfast, from 09:00am ~ 12:00pm, Kelly is planning on working on the next day's kindergarten lesson plan, and from 12:00 ~ 13pm, Kelly is planning on taking a break. 
+In 5 min increments, list the subtasks Kelly does when Kelly is working on the next day's kindergarten lesson plan from 09:00am ~ 12:00pm (total duration in minutes: 180):
+1) Kelly is reviewing the kindergarten curriculum standards. (duration in minutes: 15, minutes left: 165)
+2) Kelly is brainstorming ideas for the lesson. (duration in minutes: 30, minutes left: 135)
+3) Kelly is creating the lesson plan. (duration in minutes: 30, minutes left: 105)
+4) Kelly is creating materials for the lesson. (duration in minutes: 30, minutes left: 75)
+5) Kelly is taking a break. (duration in minutes: 15, minutes left: 60)
+6) Kelly is reviewing the lesson plan. (duration in minutes: 30, minutes left: 30)
+7) Kelly is making final changes to the lesson plan. (duration in minutes: 15, minutes left: 15)
+8) Kelly is printing the lesson plan. (duration in minutes: 10, minutes left: 5)
+9) Kelly is putting the lesson plan in her bag. (duration in minutes: 5, minutes left: 0)
+---
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+Today is February 13, 2023. From 00:00AM ~ 08:00AM, Abigail Chen is planning on sleeping, 08:00AM ~ 09:00AM, Abigail Chen is planning on wakes up and completes morning routine, 09:00AM ~ 10:00AM, Abigail Chen is planning on has breakfast.
+In 5 min increments, list the subtasks Abigail does when Abigail is wakes up and completes morning routine from 08:00AM ~ 09:00AM (total duration in minutes 60): 
+1) Abigail is
+TOODOOOOOO
+waking up and stretching. (duration in minutes: 5, minutes left: 55)
+2) Abigail is brushing her teeth. (duration in minutes: 3, minutes left: 52)
+3) Abigail is washing her face. (duration in minutes: 2, minutes left: 50)
+4) Abigail is getting dressed. (duration in minutes: 5, minutes left: 45)
+5) Abigail is combing her hair. (duration in minutes: 3, minutes left: 42)
+6) Abigail is making her bed. (duration in minutes: 5, minutes left: 37)
+7) Abigail is tidying up her bedroom. (duration in minutes: 10, minutes left: 27)
+8) Abigail is preparing her breakfast. (duration in minutes: 10, minutes left: 17)
+9) Abigail is eating her breakfast. (duration in minutes: 10, minutes left: 7)
+10) Abigail is washing her dishes. (duration in minutes: 5, minutes left: 2)
+11) Abigail is checking her phone for any messages. (duration in minutes: 3, minutes left: -1)
+-==- -==- -==- 
+Warning: Unexpected string structure in ''. Missing '(duration in minutes:' delimiter.
+TOODOOOOOO
+waking up and stretching. (duration in minutes: 5, minutes left: 55)
+2) Abigail is brushing her teeth. (duration in minutes: 3, minutes left: 52)
+3) Abigail is washing her face. (duration in minutes: 2, minutes left: 50)
+4) Abigail is getting dressed. (duration in minutes: 5, minutes left: 45)
+5) Abigail is combing her hair. (duration in minutes: 3, minutes left: 42)
+6) Abigail is making her bed. (duration in minutes: 5, minutes left: 37)
+7) Abigail is tidying up her bedroom. (duration in minutes: 10, minutes left: 27)
+8) Abigail is preparing her breakfast. (duration in minutes: 10, minutes left: 17)
+9) Abigail is eating her breakfast. (duration in minutes: 10, minutes left: 7)
+10) Abigail is washing her dishes. (duration in minutes: 5, minutes left: 2)
+11) Abigail is checking her phone for any messages. (duration in minutes: 3, minutes left: -1)
+-==- -==- -==- 
+Warning: Unexpected string structure in ''. Missing '(duration in minutes:' delimiter.
+IMPORTANT VVV DEBUG
+[['waking up and stretching', 5], ['getting dressed', 5], ['making her bed', 5], ['tidying up her bedroom', 10], ['preparing her breakfast', 10], ['eating her breakfast', 10], ['washing her dishes', 15]]
+=== persona/prompt_template/v2/task_decomp_v3.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 1000, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': None} 
+
+~~~ prompt_input    ----------------------------------------------
+['Name: Abigail Chen\nAge: 25\nInnate traits: open-minded, curious, determined\nLearned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.\nCurrently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.\nLifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.\nDaily plan requirement: \nCurrent Date: Monday February 13\n', 'Today is February 13, 2023. From 00:00AM ~ 08:00AM, Abigail Chen is planning on sleeping, 08:00AM ~ 09:00AM, Abigail Chen is planning on wakes up and completes morning routine, 09:00AM ~ 10:00AM, Abigail Chen is planning on has breakfast.', 'Abigail', 'Abigail', 'wakes up and completes morning routine', '08:00AM ~ 09:00AM', 60, 'Abigail'] 
+
+~~~ prompt    ----------------------------------------------------
+Describe subtasks in 5 min increments. 
+---
+Name: Kelly Bronson
+Age: 35
+Backstory: Kelly always wanted to be a teacher, and now she teaches kindergarten. During the week, she dedicates herself to her students, but on the weekends, she likes to try out new restaurants and hang out with friends. She is very warm and friendly, and loves caring for others.
+Personality: sweet, gentle, meticulous
+Location: Kelly is in an older condo that has the following areas: {kitchen, bedroom, dining, porch, office, bathroom, living room, hallway}.
+Currently: Kelly is a teacher during the school year. She teaches at the school but works on lesson plans at home. She is currently living alone in a single bedroom condo.
+Daily plan requirement: Kelly is planning to teach during the morning and work from home in the afternoon.s
+
+Today is Saturday May 10. From 08:00am ~09:00am, Kelly is planning on having breakfast, from 09:00am ~ 12:00pm, Kelly is planning on working on the next day's kindergarten lesson plan, and from 12:00 ~ 13pm, Kelly is planning on taking a break. 
+In 5 min increments, list the subtasks Kelly does when Kelly is working on the next day's kindergarten lesson plan from 09:00am ~ 12:00pm (total duration in minutes: 180):
+1) Kelly is reviewing the kindergarten curriculum standards. (duration in minutes: 15, minutes left: 165)
+2) Kelly is brainstorming ideas for the lesson. (duration in minutes: 30, minutes left: 135)
+3) Kelly is creating the lesson plan. (duration in minutes: 30, minutes left: 105)
+4) Kelly is creating materials for the lesson. (duration in minutes: 30, minutes left: 75)
+5) Kelly is taking a break. (duration in minutes: 15, minutes left: 60)
+6) Kelly is reviewing the lesson plan. (duration in minutes: 30, minutes left: 30)
+7) Kelly is making final changes to the lesson plan. (duration in minutes: 15, minutes left: 15)
+8) Kelly is printing the lesson plan. (duration in minutes: 10, minutes left: 5)
+9) Kelly is putting the lesson plan in her bag. (duration in minutes: 5, minutes left: 0)
+---
+Name: Abigail Chen
+Age: 25
+Innate traits: open-minded, curious, determined
+Learned traits: Abigail Chen is one of the best hide and seek players around who loves to hide in the hide and seek game. She is always looking for ways to improve her strategy in hiding so Klauss cannot find her.
+Currently: Abigail Chen is playing a hide and seek game at the Johnson Park with the other 24 people indefinitely. She is thinking of places to hide in the Johnson Park, and is telling everyone to join the game at the Johnson Park right away and they will all play indefinitely.
+Lifestyle: Abigail Chen 0:00 am and plays hide and seek at Johnson Park.
+Daily plan requirement: 
+Current Date: Monday February 13
+
+Today is February 13, 2023. From 00:00AM ~ 08:00AM, Abigail Chen is planning on sleeping, 08:00AM ~ 09:00AM, Abigail Chen is planning on wakes up and completes morning routine, 09:00AM ~ 10:00AM, Abigail Chen is planning on has breakfast.
+In 5 min increments, list the subtasks Abigail does when Abigail is wakes up and completes morning routine from 08:00AM ~ 09:00AM (total duration in minutes 60): 
+1) Abigail is 
+
+~~~ output    ----------------------------------------------------
+[['wakes up and completes morning routine (waking up and stretching)', 5], ['wakes up and completes morning routine (getting dressed)', 5], ['wakes up and completes morning routine (making her bed)', 5], ['wakes up and completes morning routine (tidying up her bedroom)', 10], ['wakes up and completes morning routine (preparing her breakfast)', 10], ['wakes up and completes morning routine (eating her breakfast)', 10], ['wakes up and completes morning routine (washing her dishes)', 15]] 
+
+=== END ==========================================================
+
+
+
+
+DEBUG LJSDLFSKJF
+['sleeping', 480]
+['wakes up and completes morning routine (waking up and stretching)', 5]
+['wakes up and completes morning routine (getting dressed)', 5]
+['wakes up and completes morning routine (making her bed)', 5]
+['wakes up and completes morning routine (tidying up her bedroom)', 10]
+['wakes up and completes morning routine (preparing her breakfast)', 10]
+['wakes up and completes morning routine (eating her breakfast)', 10]
+['wakes up and completes morning routine (washing her dishes)', 15]
+['has breakfast', 60]
+['brainstorming new hiding spots at Johnson Park', 120]
+['having lunch', 60]
+['playing hide and seek at Johnson Park with the other 24 people.', 300]
+['having dinner', 60]
+["reflecting on the day's hiding strategy and brainstorming new ideas.", 60]
+['relaxes and unwinds by reading a book or watching a movie', 60]
+['playing hide and seek at Johnson Park with the other 24 people.', 60]
+["going to bed and getting a good night's sleep.", 120]
+0
+17
+Abigail Chen
+------
+GNS FUNCTION: <generate_action_sector>
+DEBUG The Willows Market and Pharmacy ------ Johnson Park
+=== persona/prompt_template/v1/action_location_sector_v1.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 15, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': None} 
+
+~~~ prompt_input    ----------------------------------------------
+['Abigail Chen', 'Johnson Park', 'park', 'Abigail Chen', '', '', '', "artist's co-living space, The Rose and Crown Pub, Hobbs Cafe, Oak Hill College, Dorm for Oak Hill College, The Willows Market and Pharmacy, Harvey Oak Supply Store, Johnson Park", 'Abigail Chen', 'sleeping', 'sleeping', 'Abigail Chen'] 
+
+~~~ prompt    ----------------------------------------------------
+Task -- choose an appropriate area  from the area options for a task at hand. 
+
+Sam Kim lives in {Sam Kim's house} that has Sam Kim's room, bathroom, kitchen.
+Sam Kim is currently in {Sam Kim's house} that has Sam Kim's room, bathroom, kitchen. 
+Area options: {Sam Kim's house, The Rose and Crown Pub, Hobbs Cafe, Oak Hill College, Johnson Park, Harvey Oak Supply Store, The Willows Market and Pharmacy}.
+* Stay in the current area if the activity can be done there. Only go out if the activity needs to take place in another place.
+* Must be one of the "Area options," verbatim.
+For taking a walk, Sam Kim should go to the following area: {Johnson Park}
+---
+Jane Anderson lives in {Oak Hill College Student Dormatory} that has Jane Anderson's room.
+Jane Anderson is currently in {Oak Hill College} that has a classroom, library
+Area options: {Oak Hill College Student Dormatory, The Rose and Crown Pub, Hobbs Cafe, Oak Hill College, Johnson Park, Harvey Oak Supply Store, The Willows Market and Pharmacy}. 
+* Stay in the current area if the activity can be done there. Only go out if the activity needs to take place in another place.
+* Must be one of the "Area options," verbatim.
+For eating dinner, Jane Anderson should go to the following area: {Hobbs Cafe}
+---
+Abigail Chen lives in {Johnson Park} that has park.
+Abigail Chen is currently in {} that has . 
+Area options: {artist's co-living space, The Rose and Crown Pub, Hobbs Cafe, Oak Hill College, Dorm for Oak Hill College, The Willows Market and Pharmacy, Harvey Oak Supply Store, Johnson Park}. 
+* Stay in the current area if the activity can be done there. Only go out if the activity needs to take place in another place.
+* Must be one of the "Area options," verbatim.
+Abigail Chen is sleeping. For sleeping, Abigail Chen should go to the following area: { 
+
+~~~ output    ----------------------------------------------------
+Johnson Park 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_action_arena>
+park
+=== persona/prompt_template/v1/action_location_object_vMar11.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 15, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': None} 
+
+~~~ prompt_input    ----------------------------------------------
+Traceback (most recent call last):
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 496, in open_server
+    rs.start_server(int_count)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 390, in start_server
+    next_tile, pronunciatio, description = persona.move(
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/persona.py", line 231, in move
+    return self.execute(maze, personas, plan)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/persona.py", line 170, in execute
+    return execute(self, maze, personas, plan)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/cognitive_modules/execute.py", line 92, in execute
+    maze.address_tiles["Johnson Park:park:park garden"] #ERRORRRRRRR
+KeyError: 'Johnson Park:park:park garden'
+['Abigail Chen', 'Johnson Park', 'park', 'Abigail Chen', 'sleeping', 'sleeping', 'Abigail Chen', 'Johnson Park', 'park'] 
+
+~~~ prompt    ----------------------------------------------------
+Jane Anderson is in kitchen in Jane Anderson's house.
+Jane Anderson is going to Jane Anderson's house that has the following areas: {kitchen,  bedroom, bathroom}
+Stay in the current area if the activity can be done there. Never go into other people's rooms unless necessary.
+For cooking, Jane Anderson should go to the following area in Jane Anderson's house:
+Answer: {kitchen}
+---
+Tom Watson is in common room in Tom Watson's apartment. 
+Tom Watson is going to Hobbs Cafe that has the following areas: {cafe}
+Stay in the current area if the activity can be done there. Never go into other people's rooms unless necessary.
+For getting coffee, Tom Watson should go to the following area in Hobbs Cafe:
+Answer: {cafe}
+---
+
+Abigail Chen is going to Johnson Park that has the following areas: {park}
+* Stay in the current area if the activity can be done there. 
+* NEVER go into other people's rooms unless necessary.
+Abigail Chen is sleeping. For sleeping, Abigail Chen should go to the following area in Johnson Park (MUST pick one of {park}):
+Answer: { 
+
+~~~ output    ----------------------------------------------------
+park 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_action_game_object>
+=== persona/prompt_template/v1/action_object_v2.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 15, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': None} 
+
+~~~ prompt_input    ----------------------------------------------
+['sleeping', 'park garden, park tree, park bushes, park fountain, the seeker is near'] 
+
+~~~ prompt    ----------------------------------------------------
+Current activity: sleep in bed
+Objects available: {bed, easel, closet, painting}
+Pick ONE most relevant object from the objects available: bed
+---
+Current activity: painting
+Objects available: {easel, closet, sink, microwave}
+Pick ONE most relevant object from the objects available: easel
+---
+Current activity: cooking
+Objects available: {stove, sink, fridge, counter}
+Pick ONE most relevant object from the objects available: stove
+---
+Current activity: watch TV
+Objects available: {couch, TV, remote, coffee table}
+Pick ONE most relevant object from the objects available: TV
+---
+Current activity: study
+Objects available: {desk, computer, chair, bookshelf}
+Pick ONE most relevant object from the objects available: desk
+---
+Current activity: talk on the phone
+Objects available: {phone, charger, bed, nightstand}
+Pick ONE most relevant object from the objects available: phone
+---
+Current activity: sleeping
+Objects available: {park garden, park tree, park bushes, park fountain, the seeker is near}
+Pick ONE most relevant object from the objects available: 
+
+~~~ output    ----------------------------------------------------
+park bushes 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_action_pronunciatio>
+asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4
+CHAT GPT PROMPT
+"""
+Convert an action description to an emoji (important: use two or less emojis).
+
+Action description: sleeping
+Emoji:
+"""
+Output the response to the prompt above in json. The value for the output must ONLY contain the emojis.
+Example output json:
+{"output": "🛁🧖‍♀️"}
+---- repeat count: 0
+~~~~ curr_gpt_response:
+😴
+~~~~
+GNS FUNCTION: <generate_action_event_triple>
+=== persona/prompt_template/v2/generate_event_triple_v1.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 30, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['Abigail Chen', 'sleeping', 'Abigail Chen'] 
+
+~~~ prompt    ----------------------------------------------------
+Task: Turn the input into (subject, predicate, object). 
+
+Input: Sam Johnson is eating breakfast. 
+Output: (Dolores Murphy, eat, breakfast) 
+--- 
+Input: Joon Park is brewing coffee.
+Output: (Joon Park, brew, coffee)
+---
+Input: Jane Cook is sleeping. 
+Output: (Jane Cook, is, sleep)
+---
+Input: Michael Bernstein is writing email on a computer. 
+Output: (Michael Bernstein, write, email)
+---
+Input: Percy Liang is teaching students in a classroom. 
+Output: (Percy Liang, teach, students)
+---
+Input: Merrie Morris is running on a treadmill. 
+Output: (Merrie Morris, run, treadmill)
+---
+Input: Abigail Chen is sleeping. 
+Output: (Abigail Chen, 
+
+~~~ output    ----------------------------------------------------
+('Abigail Chen', 'sleep', 'null') 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_act_obj_desc>
+asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 6
+CHAT GPT PROMPT
+"""
+Task: We want to understand the state of an object that is being used by someone. 
+
+Let's think step by step. 
+We want to know about park bushes's state. 
+Step 1. Abigail Chen is sleeping.
+Step 2. Describe the park bushes's state: park bushes is <fill in>
+"""
+Output the response to the prompt above in json. The output should ONLY contain the phrase that should go in <fill in>.
+Example output json:
+{"output": "being fixed"}
+---- repeat count: 0
+~~~~ curr_gpt_response:
+being trimmed
+~~~~
+GNS FUNCTION: <generate_action_pronunciatio>
+asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4
+CHAT GPT PROMPT
+"""
+Convert an action description to an emoji (important: use two or less emojis).
+
+Action description: being trimmed
+Emoji:
+"""
+Output the response to the prompt above in json. The value for the output must ONLY contain the emojis.
+Example output json:
+{"output": "🛁🧖‍♀️"}
+---- repeat count: 0
+~~~~ curr_gpt_response:
+✂️
+~~~~
+---- repeat count: 1
+~~~~ curr_gpt_response:
+✂️
+~~~~
+---- repeat count: 2
+~~~~ curr_gpt_response:
+✂️
+~~~~
+GNS FUNCTION: <generate_act_obj_event_triple>
+=== persona/prompt_template/v2/generate_event_triple_v1.txt
+~~~ persona    ---------------------------------------------------
+Abigail Chen 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 30, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': ['\n']} 
+
+~~~ prompt_input    ----------------------------------------------
+['park bushes', 'being trimmed', 'park bushes'] 
+
+~~~ prompt    ----------------------------------------------------
+Task: Turn the input into (subject, predicate, object). 
+
+Input: Sam Johnson is eating breakfast. 
+Output: (Dolores Murphy, eat, breakfast) 
+--- 
+Input: Joon Park is brewing coffee.
+Output: (Joon Park, brew, coffee)
+---
+Input: Jane Cook is sleeping. 
+Output: (Jane Cook, is, sleep)
+---
+Input: Michael Bernstein is writing email on a computer. 
+Output: (Michael Bernstein, write, email)
+---
+Input: Percy Liang is teaching students in a classroom. 
+Output: (Percy Liang, teach, students)
+---
+Input: Merrie Morris is running on a treadmill. 
+Output: (Merrie Morris, run, treadmill)
+---
+Input: park bushes is being trimmed. 
+Output: (park bushes, 
+
+~~~ output    ----------------------------------------------------
+('park bushes', 'trim', 'being') 
+
+=== END ==========================================================
+
+
+
+
+Abigail Chen persona.scratch.importance_trigger_curr:: 248
+250
+aldhfoaf/????
+the Ville:Johnson Park:park:park bushes
+Error.
+Enter option: Traceback (most recent call last):
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 666, in <module>
+    rs.open_server()
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 461, in open_server
+    sim_command = input("Enter option: ")
+KeyboardInterrupt
