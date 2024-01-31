@@ -1,0 +1,8 @@
+{
+    "files": [
+        "environment/",
+        "reverie/"
+    ],
+    "format_js": true,
+    "use_gitignore": true
+}
