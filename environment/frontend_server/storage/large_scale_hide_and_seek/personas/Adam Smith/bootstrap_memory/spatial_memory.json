@@ -17,7 +17,11 @@
     },
     "Johnson Park": {
       "park": [
-        "park garden"
+        "park garden", 
+        "park tree", 
+        "park bushes", 
+        "park fountain", 
+        "the seeker is near"
       ]
     },
     "Harvey Oak Supply Store": {
