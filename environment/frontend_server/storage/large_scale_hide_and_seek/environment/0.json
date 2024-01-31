@@ -1,131 +1,28 @@
 {
-  "Latoya Williams": {
-    "maze": "the_ville",
-    "x": 20,
-    "y": 40
-  },
-  "Rajiv Patel": {
-    "maze": "the_ville",
-    "x": 22,
-    "y": 38
-  },
   "Abigail Chen": {
     "maze": "the_ville",
     "x": 25,
     "y": 34
-  },
-  "Francisco Lopez": {
-    "maze": "the_ville",
-    "x": 27,
-    "y": 32
-  },
-  "Hailey Johnson": {
-    "maze": "the_ville",
-    "x": 35,
-    "y": 32
-  },
-  "Arthur Burton": {
-    "maze": "the_ville",
-    "x": 24,
-    "y": 27
-  },
-  "Ryan Park": {
-    "maze": "the_ville",
-    "x": 33,
-    "y": 23
   },
     "Isabella Rodriguez": {
       "maze": "the_ville",
       "x": 25,
       "y": 50
     }, 
-  "Giorgio Rossi": {
-    "maze": "the_ville",
-    "x": 44,
-    "y": 40
-  },
-  "Carlos Gomez": {
-    "maze": "the_ville",
-    "x": 39,
-    "y": 50
-  },
-
   "Klaus Mueller": { 
     "maze": "the_ville",
     "x": 30,
     "y": 46
   },
-
   "Maria Lopez": {
     "maze": "the_ville",
     "x": 26,
-    "y": 48
-  },
-
-  "Ayesha Khan": {
-    "maze": "the_ville",
-    "x": 34,
-    "y": 39
-  },
-  "Wolfgang Schulz": {
-    "maze": "the_ville",
-    "x": 50,
-    "y": 49
-  },
-  "Mei Lin": {
-    "maze": "the_ville",
-    "x": 39,
-    "y": 27
-  },
-  "John Lin": {
-    "maze": "the_ville",
-    "x": 20,
-    "y": 50
-  },
-  "Eddy Lin": {
-    "maze": "the_ville",
-    "x": 46,
-    "y": 38
-  },
-  "Jane Moreno": {
-    "maze": "the_ville",
-    "x": 36,
-    "y": 37
-  },
-  "Tom Moreno": {
-    "maze": "the_ville",
-    "x": 23,
-    "y": 45
-  },
-  "Tamara Taylor": {
-    "maze": "the_ville",
-    "x": 50,
-    "y": 19
-  },
-  "Carmen Ortiz": {
-    "maze": "the_ville",
-    "x": 30,
     "y": 48
   },
   "Adam Smith": {
     "maze": "the_ville",
     "x": 26,
     "y": 35
-  }, 
-  "Yuriko Yamamoto": {
-    "maze": "the_ville",
-    "x": 28,
-    "y": 50
-  },
-  "Sam Moore": {
-    "maze": "the_ville",
-    "x": 36,
-    "y": 49
-  },
-  "Jennifer Moore": {
-    "maze": "the_ville",
-    "x": 37,
-    "y": 44
   }
 }
 
