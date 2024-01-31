@@ -1,0 +1,164 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        30,
+        36
+      ],
+      "pronunciatio": "\ud83e\udd2b",
+      "description": "stay quiet and still, so Klauss cannot find you (staying still and quiet) @ the Ville:Isabella Rodriguez's apartment:main room:bed",
+      "chat": null
+    },
+    "Maria Lopez": {
+      "movement": [
+        26,
+        49
+      ],
+      "pronunciatio": "\ud83d\udcac",
+      "description": "conversing about searching for their friend Isabella in the park and deciding to split up to cover more ground and meet back in 30 minutes to update each other on their progress @ <persona> Klaus Mueller",
+      "chat": [
+        [
+          "Klaus Mueller",
+          "Hey Maria, have you seen Isabella around here?"
+        ],
+        [
+          "Maria Lopez",
+          "No, I haven't seen her around."
+        ],
+        [
+          "Klaus Mueller",
+          "Let me know if you see her, I need to find her as soon as possible."
+        ],
+        [
+          "Maria Lopez",
+          "Sure, I'll keep an eye out for her. If I see her, I'll let you know."
+        ],
+        [
+          "Klaus Mueller",
+          "Thanks, I appreciate it. I'll keep looking for her around here."
+        ],
+        [
+          "Maria Lopez",
+          "Do you want me to help you look for Isabella?"
+        ],
+        [
+          "Klaus Mueller",
+          "Yes, that would be great. Let's search for her together."
+        ],
+        [
+          "Maria Lopez",
+          "Let's split up and cover more ground. I'll check the east side of the park and you can check the west side."
+        ],
+        [
+          "Klaus Mueller",
+          "Okay, sounds like a plan. Let's meet back here in 30 minutes and update each other on our progress."
+        ],
+        [
+          "Maria Lopez",
+          "Okay, sounds good. I'll see you back here in 30 minutes."
+        ],
+        [
+          "Klaus Mueller",
+          "Great, I'll start searching the west side of the park right away. Let's find Isabella!"
+        ],
+        [
+          "Maria Lopez",
+          "Good luck, Klaus. I'll start searching on the east side now."
+        ],
+        [
+          "Klaus Mueller",
+          "I'll keep in touch with you via text if I find her before the 30 minutes are up."
+        ],
+        [
+          "Maria Lopez",
+          "Good idea, I'll keep my phone on me in case you need to reach me."
+        ],
+        [
+          "Klaus Mueller",
+          "I'll text you if I find Isabella before the 30 minutes are up."
+        ],
+        [
+          "Maria Lopez",
+          "Okay, I'll head to the east side and start searching for Isabella now. Good luck!"
+        ]
+      ]
+    },
+    "Klaus Mueller": {
+      "movement": [
+        30,
+        46
+      ],
+      "pronunciatio": "\ud83d\udcac",
+      "description": "conversing about searching for their friend Isabella in the park and deciding to split up to cover more ground and meet back in 30 minutes to update each other on their progress @ <persona> Maria Lopez",
+      "chat": [
+        [
+          "Klaus Mueller",
+          "Hey Maria, have you seen Isabella around here?"
+        ],
+        [
+          "Maria Lopez",
+          "No, I haven't seen her around."
+        ],
+        [
+          "Klaus Mueller",
+          "Let me know if you see her, I need to find her as soon as possible."
+        ],
+        [
+          "Maria Lopez",
+          "Sure, I'll keep an eye out for her. If I see her, I'll let you know."
+        ],
+        [
+          "Klaus Mueller",
+          "Thanks, I appreciate it. I'll keep looking for her around here."
+        ],
+        [
+          "Maria Lopez",
+          "Do you want me to help you look for Isabella?"
+        ],
+        [
+          "Klaus Mueller",
+          "Yes, that would be great. Let's search for her together."
+        ],
+        [
+          "Maria Lopez",
+          "Let's split up and cover more ground. I'll check the east side of the park and you can check the west side."
+        ],
+        [
+          "Klaus Mueller",
+          "Okay, sounds like a plan. Let's meet back here in 30 minutes and update each other on our progress."
+        ],
+        [
+          "Maria Lopez",
+          "Okay, sounds good. I'll see you back here in 30 minutes."
+        ],
+        [
+          "Klaus Mueller",
+          "Great, I'll start searching the west side of the park right away. Let's find Isabella!"
+        ],
+        [
+          "Maria Lopez",
+          "Good luck, Klaus. I'll start searching on the east side now."
+        ],
+        [
+          "Klaus Mueller",
+          "I'll keep in touch with you via text if I find her before the 30 minutes are up."
+        ],
+        [
+          "Maria Lopez",
+          "Good idea, I'll keep my phone on me in case you need to reach me."
+        ],
+        [
+          "Klaus Mueller",
+          "I'll text you if I find Isabella before the 30 minutes are up."
+        ],
+        [
+          "Maria Lopez",
+          "Okay, I'll head to the east side and start searching for Isabella now. Good luck!"
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 06:06:40"
+  }
+}

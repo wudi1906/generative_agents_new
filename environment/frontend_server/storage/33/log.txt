@@ -1,0 +1,101 @@
+Enter the name of the forked simulation (leave blank for base_the_ville_isabella_maria_klaus): base_the_ville_isabella_maria_klaus
+Enter the name of the new simulation (last was 32): 33
+Note: The agents in this simulation package are computational
+constructs powered by generative agents architecture and LLM. We
+clarify that these agents lack human-like agency, consciousness,
+and independent decision-making.
+---
+Enter option: Traceback (most recent call last):
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 496, in open_server
+    rs.start_server(int_count)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 390, in start_server
+    next_tile, pronunciatio, description = persona.move(
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/persona.py", line 222, in move
+    plan = self.plan(maze, personas, new_day, retrieved)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/persona.py", line 148, in plan
+    return plan(self, maze, personas, new_day, retrieved)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/cognitive_modules/plan.py", line 985, in plan
+    _chat_react(maze, persona, focused_event, reaction_mode, personas)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/cognitive_modules/plan.py", line 868, in _chat_react
+    convo, duration_min = generate_convo(maze, init_persona, target_persona)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/cognitive_modules/plan.py", line 282, in generate_convo
+    convo = agent_chat_v2(maze, init_persona, target_persona)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/cognitive_modules/converse.py", line 136, in agent_chat_v2
+    retrieved = new_retrieve(init_persona, focal_points, 50)
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/persona/cognitive_modules/retrieve.py", line 290, in new_retrieve
+    print (persona.a_mem.id_to_node[key].embedding_key, val)
+KeyError: 'Klauss'
+run 5000
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc55c84f2e0>
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc55c84f3a0>
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc55c8502e0>
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc55c89d970>
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc55c70b6a0>
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc5845abbe0>
+Events in Perceivdd memory: <persona.memory_structures.associative_memory.ConceptNode object at 0x7fc5845ab670>
+name 'use_openai' is not defined
+REQUEST ERROR
+name 'use_openai' is not defined
+REQUEST ERROR
+name 'use_openai' is not defined
+REQUEST ERROR
+name 'use_openai' is not defined
+REQUEST ERROR
+name 'use_openai' is not defined
+REQUEST ERROR
+=== persona/prompt_template/v2/decide_to_talk_v2.txt
+~~~ persona    ---------------------------------------------------
+Isabella Rodriguez 
+
+~~~ gpt_param ----------------------------------------------------
+{'engine': 'gpt-3.5-turbo', 'max_tokens': 20, 'temperature': 0, 'top_p': 1, 'stream': False, 'frequency_penalty': 0, 'presence_penalty': 0, 'stop': None} 
+
+~~~ prompt_input    ----------------------------------------------
+['park garden was idle. looking around was idle. Maria Lopez was idle.  tree was idle. park bushes was idle. Isabella Rodriguez was idle. Klaus Mueller was idle. \n', 'February 13, 2023, 00:00:20 AM', 'Isabella Rodriguez', 'Maria Lopez', '', '', 'Isabella Rodriguez is already hiding', 'Maria Lopez is already hiding', 'Isabella Rodriguez', 'Maria Lopez'] 
+
+~~~ prompt    ----------------------------------------------------
+Task -- given context, determine whether the subject will initiate a conversation with another. 
+Format: 
+Context: []
+Question: []
+Reasoning: []
+Answer in "yes" or "no": []
+---
+Context: park garden was idle. looking around was idle. Maria Lopez was idle.  tree was idle. park bushes was idle. Isabella Rodriguez was idle. Klaus Mueller was idle. 
+ 
+Right now, it is February 13, 2023, 00:00:20 AM. Isabella Rodriguez and Maria Lopez last chatted at  about . 
+Isabella Rodriguez is already hiding 
+Maria Lopez is already hiding 
+
+Question: Would Isabella Rodriguez initiate a conversation with Maria Lopez? 
+
+Reasoning: Let's think step by step. 
+
+~~~ output    ----------------------------------------------------
+yes 
+
+=== END ==========================================================
+
+
+
+
+GNS FUNCTION: <generate_decide_to_talk>
+July 23
+Focal points in new_retrieve function as input: ['Maria Lopez']
+Focal points added if there are none: ['Maria Lopez']
+Nodes in extract_recency function: []
+
+Recency output in extract_recency function: {}
+D in normalize_dict_floats function as input: {'Klauss': 0, 'Isabella': 0, 'Maria': 0}
+
+D in normalize_dict_floats function as input: {'Klauss': 0, 'Isabella': 0, 'Maria': 0}
+
+D in normalize_dict_floats function as input: {'Klauss': 0, 'Isabella': 0, 'Maria': 0}
+
+Error.
+Enter option: Traceback (most recent call last):
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 666, in <module>
+    rs.open_server()
+  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 461, in open_server
+    sim_command = input("Enter option: ")
+KeyboardInterrupt
