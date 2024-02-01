@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 659, in <module>
-    rs = ReverieServer(origin, target)
-  File "/home/jgrandaa/Desktop/simulacra/reverie/backend_server/reverie.py", line 134, in __init__
-    p_x = init_env[persona_name]["x"]
-KeyError: 'Latoya Williams'
