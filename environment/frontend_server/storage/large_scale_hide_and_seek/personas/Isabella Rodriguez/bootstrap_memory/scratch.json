@@ -2,10 +2,10 @@
   "vision_r": 8,
   "att_bandwidth": 8,
   "retention": 8,
-  "curr_time": "February 13, 2023, 00:00:20",
+  "curr_time": "February 13, 2023, 00:00:00",
   "curr_tile": [
-    73,
-    14
+    25,
+    50
   ],
   "daily_plan_req": "Isabella Rodriguez plays hide and seek everyday all day.",
   "name": "Isabella Rodriguez",
