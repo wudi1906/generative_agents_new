@@ -2,8 +2,11 @@
   "vision_r": 8, 
   "att_bandwidth": 8, 
   "retention": 8, 
-  "curr_time": null, 
-  "curr_tile": null, 
+  "curr_time": "February 13, 2023, 00:00:00", 
+  "curr_tile": [
+    25,
+    34
+  ], 
   "daily_plan_req": "", 
   "name": "Abigail Chen", 
   "first_name": "Abigail", 

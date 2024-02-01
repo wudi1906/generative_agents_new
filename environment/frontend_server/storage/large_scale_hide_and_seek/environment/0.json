@@ -4,11 +4,11 @@
     "x": 25,
     "y": 34
   },
-    "Isabella Rodriguez": {
-      "maze": "the_ville",
-      "x": 25,
-      "y": 50
-    }, 
+  "Isabella Rodriguez": {
+    "maze": "the_ville",
+    "x": 25,
+    "y": 50
+  }, 
   "Klaus Mueller": { 
     "maze": "the_ville",
     "x": 30,
@@ -25,12 +25,3 @@
     "y": 35
   }
 }
-
-
-
-
-
-
-
-
-

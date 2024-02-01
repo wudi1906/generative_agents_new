@@ -2,8 +2,11 @@
   "vision_r": 8, 
   "att_bandwidth": 8, 
   "retention": 8, 
-  "curr_time": null, 
-  "curr_tile": null, 
+  "curr_time": "February 13, 2023, 00:00:00", 
+  "curr_tile": [
+    26,
+    48
+  ], 
   "daily_plan_req": "Maria Lopez spends all day playing hide and seek by hiding.",
   "name": "Maria Lopez",
   "first_name": "Maria",
