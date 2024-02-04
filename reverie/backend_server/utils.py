@@ -12,5 +12,6 @@ fs_temp_storage = "../../environment/frontend_server/temp_storage"
 
 collision_block_id = "32125"
 
+use_openai = True
 # Verbose 
 debug = True
