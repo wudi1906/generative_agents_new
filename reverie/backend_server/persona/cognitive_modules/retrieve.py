@@ -94,7 +94,9 @@ def normalize_dict_floats(d, target_min, target_max):
     target_min = -5
     target_max = 5
   """
-  print(f"D in normalize_dict_floats function as input: {d}\n")
+  if (len(d) == 0):
+    return d
+
   min_val = min(val for val in d.values())
   max_val = max(val for val in d.values())
   sleep(2)
