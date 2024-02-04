@@ -1,0 +1,175 @@
+[
+  {
+    "persona": {
+      "Isabella Rodriguez": {
+        "movement": [
+          25,
+          50
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Isabella Rodriguez and Maria Lopez, discussing their hiding spot for a game of hide and seek and planning a secret signal to alert each other if Klaus Mueller gets close @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Maria! How are you doing today?"
+          ],
+          [
+            "Maria Lopez",
+            "Hey Isabella! I'm doing great, just enjoying this game of hide and seek. How about you?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm doing well too! I've been thinking of a new hiding spot, do you have any suggestions?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I have a few ideas. How about we try hiding behind the big tree near the playground? It's a pretty secluded spot and I don't think Klaus Mueller has checked there yet."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That sounds like a great idea! Let's go hide behind the big tree near the playground."
+          ],
+          [
+            "Maria Lopez",
+            "Okay, let's go quickly before Klaus finds us!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think we should tell others to hide there too?"
+          ],
+          [
+            "Maria Lopez",
+            "I think it's best if we keep it just between us for now. If we tell others, they might tell Klaus."
+          ],
+          [
+            "Isabella Rodriguez",
+            "You're right, let's keep it between us for now. We don't want Klaus to find out."
+          ],
+          [
+            "Maria Lopez",
+            "We should also make sure to have a signal or a secret code to let each other know if Klaus gets close. How about we whistle softly if he's nearby?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's come up with a secret whistle so we know when Klaus is nearby."
+          ],
+          [
+            "Maria Lopez",
+            "We can use a code word as well, like 'pineapple' to mean Klaus is close. That way, even if others overhear us, they won't know what it means."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I like the idea of using a code word! Let's use 'pineapple' as our signal."
+          ],
+          [
+            "Maria Lopez",
+            "Do you think we should come up with a backup hiding spot as well?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I think having a backup hiding spot is a good idea. Let's brainstorm some options."
+          ],
+          [
+            "Maria Lopez",
+            "We can try hiding behind the bushes near the picnic area. It's another secluded spot that Klaus might not check."
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          30,
+          46
+        ],
+        "pronunciatio": "\ud83d\udca4",
+        "description": "searching @ the Ville:Johnson Park:park garden:looking around",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          25,
+          48
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Isabella Rodriguez and Maria Lopez, discussing their hiding spot for a game of hide and seek and planning a secret signal to alert each other if Klaus Mueller gets close @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Maria! How are you doing today?"
+          ],
+          [
+            "Maria Lopez",
+            "Hey Isabella! I'm doing great, just enjoying this game of hide and seek. How about you?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm doing well too! I've been thinking of a new hiding spot, do you have any suggestions?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I have a few ideas. How about we try hiding behind the big tree near the playground? It's a pretty secluded spot and I don't think Klaus Mueller has checked there yet."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That sounds like a great idea! Let's go hide behind the big tree near the playground."
+          ],
+          [
+            "Maria Lopez",
+            "Okay, let's go quickly before Klaus finds us!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think we should tell others to hide there too?"
+          ],
+          [
+            "Maria Lopez",
+            "I think it's best if we keep it just between us for now. If we tell others, they might tell Klaus."
+          ],
+          [
+            "Isabella Rodriguez",
+            "You're right, let's keep it between us for now. We don't want Klaus to find out."
+          ],
+          [
+            "Maria Lopez",
+            "We should also make sure to have a signal or a secret code to let each other know if Klaus gets close. How about we whistle softly if he's nearby?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's come up with a secret whistle so we know when Klaus is nearby."
+          ],
+          [
+            "Maria Lopez",
+            "We can use a code word as well, like 'pineapple' to mean Klaus is close. That way, even if others overhear us, they won't know what it means."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I like the idea of using a code word! Let's use 'pineapple' as our signal."
+          ],
+          [
+            "Maria Lopez",
+            "Do you think we should come up with a backup hiding spot as well?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I think having a backup hiding spot is a good idea. Let's brainstorm some options."
+          ],
+          [
+            "Maria Lopez",
+            "We can try hiding behind the bushes near the picnic area. It's another secluded spot that Klaus might not check."
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          26,
+          35
+        ],
+        "pronunciatio": "\ud83d\ude34",
+        "description": "hiding @ the Ville:Johnson Park: park garden: tree",
+        "chat": null
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:00:00"
+    }
+  }
+]
