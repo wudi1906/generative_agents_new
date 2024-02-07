@@ -5,6 +5,7 @@ File: maze.py
 Description: Defines the Maze class, which represents the map of the simulated
 world in a 2-dimensional matrix. 
 """
+
 import json
 import numpy
 import datetime

@@ -15,4 +15,4 @@ repos:
     rev: v1.34.1
     hooks:
       - id: djlint-reformat-django
-        args: [--quiet, --format-js, --use-gitignore]
+        args: [--format-js, --use-gitignore]
