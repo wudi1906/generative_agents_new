@@ -15,4 +15,4 @@ repos:
     rev: v1.34.1
     hooks:
       - id: djlint-reformat-django
-        args: [--format-js, --use-gitignore]
+        args: [--quiet, --format-js, --use-gitignore, --extend-exclude=environment/frontend_server/static_dirs]
