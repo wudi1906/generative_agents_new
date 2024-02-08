@@ -14,7 +14,7 @@
   "age": 36, 
   "innate": "thoughtful, reflective, intellectual", 
   "learned": "Adam Smith is playiing hide-and-seek and loves to explore different ideas. He is always looking for ways to challenge people.", 
-  "currently": "Adam Smith is writing strategies of how to hide in the hide-and-seek game and how it can shape the world. Adam is also curious who is the best hide-and-seek player.", 
+  "currently": "Adam Smith is hiding in the game of hide-and-seek. He is one of the players that hides such as Maria, Abigail, and Isabella.", 
   "lifestyle": "Adam Smith never sleeps", 
   "living_area": "the Ville:Adam Smith's house:main room",
   "concept_forget": 100,
@@ -32,23 +32,80 @@
   "importance_trigger_curr": 250,
   "importance_ele_n": 0, 
   "thought_count": 5, 
+  "daily_req": [
+    "wake up 0:00 am",
+    "immdiately start playing hiding in the game of hide and seek at Johnson Park",
+    "move around the park to find the best hidding spot",
+    "stay quiet and vigligiant, so Klauss cannot find you"
+  ],
+  "f_daily_schedule": [
+    [
+      "go to hide immediately in Johnson Park",
+      150
+    ],
+    [
+      "look for the best hidding place in the Johnson Park",
+      150
+    ],
+    [
+      "stay quiet and still, so Klauss cannot find you",
+      150
+    ],
+    [
+      "look around and if Klauss is around, stay put in your hidding spot",
+      150
+    ],
+    [
+      "look around and if Klaus is around, look for a new hidding place in the Johnson Park without being seen by Klauss",
+      150
+    ],
+    [
+      "go to the new hidding spot and repeat same process as you just did. Also, keep playing hide and seek indefinitely",
+      150
+    ]
   
-  "daily_req": [], 
-  "f_daily_schedule": [],
-  "f_daily_schedule_hourly_org": [],
-  "act_address": null, 
-  "act_start_time": null, 
-  "act_duration": null, 
-  "act_description": null, 
-  "act_pronunciatio": null, 
+  ],
+  "f_daily_schedule_hourly_org": [
+  
+    [
+      "go to hide immediately in the Johnson Park",
+      150
+    ],
+    [
+      "look for the best hidding place in the Johnson Park",
+      150
+    ],
+    [
+      "stay quite and still, so Klauss cannot find you",
+      150
+    ],
+    [
+      "look around and if Klauss is not around, stay put in your hidding spot",
+      150
+    ],
+    [
+      "look around and if the seekers are around look for a new hidding place in the park without getting caught",
+      150
+    ],
+    [
+      "go to the new hidding spot and repeat the same process. Also, keep playing hide and seek indefinitely",
+      150
+    ]
+   
+  ],
+  "act_address": "the Ville:Johnson Park: park garden: tree",
+  "act_start_time": "February 13, 2023, 00:00:00",
+  "act_duration": 360,
+  "act_description": "hiding",
+  "act_pronunciatio": "\ud83d\ude34",
   "act_event": ["Adam Smith", null, null], 
-  "act_obj_description": null, 
-  "act_obj_pronunciatio": null, 
+  "act_obj_description": "being used",
+  "act_obj_pronunciatio": "\ud83d\udd04",
   "act_obj_event": [null, null, null], 
-  "chatting_with": null, 
+  "chatting_with": null,
   "chat": null,
-  "chatting_with_buffer": {}, 
+  "chatting_with_buffer": {},
   "chatting_end_time": null,
-  "act_path_set": false, 
+  "act_path_set": true,
   "planned_path": []
 }
