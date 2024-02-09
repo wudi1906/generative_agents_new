@@ -62,9 +62,8 @@
         "park garden", 
         "park tree", 
         "park bushes", 
-        "park fountain", 
-        "seeker is near me"
-      ]
+        "park fountain"
+    ]
     }
   }
 }
