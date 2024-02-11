@@ -79,6 +79,10 @@ def execute(persona, maze, personas, plan):
     elif "<random>" in plan: 
       # Executing a random location action.
       plan = ":".join(plan.split(":")[:-1])
+
+      if plan not in maze.address_tiles: 
+        plan = "the Ville:Johnson Park:park:park garden"
+        
       target_tiles = maze.address_tiles[plan]
       target_tiles = random.sample(list(target_tiles), 1)
 
