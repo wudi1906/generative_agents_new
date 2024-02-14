@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
+
 import json
 import random
 from openai import OpenAI
@@ -78,6 +79,5 @@ Output the response to the prompt above in json. The output should be a list of 
 Example output json:
 {"output": "[["Jane Doe", "Hi!"], ["John Doe", "Hello there!"] ... ]"}
 """
-
 
 print(ChatGPT_request(prompt))

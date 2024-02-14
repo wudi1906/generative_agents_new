@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: retrieve.py
 Description: This defines the "Retrieve" module for generative agents. 
 """
+
 import sys
 
 sys.path.append("../../")

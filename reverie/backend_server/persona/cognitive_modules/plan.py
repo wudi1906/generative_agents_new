@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: plan.py
 Description: This defines the "Plan" module for generative agents. 
 """
+
 import datetime
 import math
 import random

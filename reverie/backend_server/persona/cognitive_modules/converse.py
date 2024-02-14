@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: converse.py
 Description: An extra cognitive module for generating conversations. 
 """
+
 import math
 import sys
 import datetime
