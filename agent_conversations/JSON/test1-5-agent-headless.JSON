@@ -1,0 +1,3854 @@
+[
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          36,
+          36
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about finding good hiding spots in Johnson Park, specifically near the playground, the bushes by the lake, and the gazebo, and planning to check out the gazebo together to see if it's a good hiding spot. @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Isabella, have you thought of any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few ideas. I found some great hiding spots near the playground, the bushes near the lake, and the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Those sound like great spots! I think I'll try hiding behind the big oak tree near the playground. Do you have any other suggestions?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "You can also try hiding in the bushes by the lake. They provide good coverage."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll give the bushes by the lake a try as well."
+          ],
+          [
+            "Isabella Rodriguez",
+            "We should also check out the gazebo. It could be a good hiding spot too."
+          ],
+          [
+            "Abigail Chen",
+            "That's a great idea! Let's check out the gazebo together."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's also make sure to meet back here in 15 minutes to share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you know if Adam is coming to play hide and seek with us at Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm not sure if Adam is coming, but we can check with him later. Let's focus on finding the best hiding spots for now."
+          ],
+          [
+            "Abigail Chen",
+            "Should we start by checking out the gazebo first?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's start by checking out the gazebo first."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's go check out the gazebo together!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see if the gazebo is a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          31,
+          40
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about finding good hiding spots in Johnson Park, specifically near the playground, the bushes by the lake, and the gazebo, and planning to check out the gazebo together to see if it's a good hiding spot. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Isabella, have you thought of any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few ideas. I found some great hiding spots near the playground, the bushes near the lake, and the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Those sound like great spots! I think I'll try hiding behind the big oak tree near the playground. Do you have any other suggestions?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "You can also try hiding in the bushes by the lake. They provide good coverage."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll give the bushes by the lake a try as well."
+          ],
+          [
+            "Isabella Rodriguez",
+            "We should also check out the gazebo. It could be a good hiding spot too."
+          ],
+          [
+            "Abigail Chen",
+            "That's a great idea! Let's check out the gazebo together."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's also make sure to meet back here in 15 minutes to share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you know if Adam is coming to play hide and seek with us at Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm not sure if Adam is coming, but we can check with him later. Let's focus on finding the best hiding spots for now."
+          ],
+          [
+            "Abigail Chen",
+            "Should we start by checking out the gazebo first?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's start by checking out the gazebo first."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's go check out the gazebo together!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see if the gazebo is a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          26,
+          53
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about the two friends, Klaus Mueller and Adam Smith, discussing their game of hide and seek in Johnson Park, sharing information about hiding spots, and strategizing to find their friends Maria, Isabella, and Abigail. @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam! Fancy meeting you here. Are you also playing hide and seek in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I am playing hide and seek in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, I have found a few good hiding spots. I actually found Maria Lopez hiding near the entrance of the park. She's tricky to find!"
+          ],
+          [
+            "Adam Smith",
+            "That's great! I was actually planning to suggest the hiding spot in the gazebo near the pond. It's a bit secluded and offers good cover. Have you checked it out?"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great suggestion, Adam! I haven't checked out the gazebo near the pond yet, but I will definitely give it a try. Thanks for the tip!"
+          ],
+          [
+            "Adam Smith",
+            "Do you know where Isabella is hiding?"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't found Isabella yet. Have you seen her anywhere?"
+          ],
+          [
+            "Adam Smith",
+            "I haven't seen Isabella either. Let's keep looking!"
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground to increase our chances of finding Isabella. You search the east side of the park and I'll search the west side. Let's meet back here in an hour and exchange any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Sounds like a plan! I'll head to the east side of the park and search for Isabella. Let's meet back here in an hour."
+          ],
+          [
+            "Klaus Mueller",
+            "Do you have any idea where Abigail Chen might be hiding?"
+          ],
+          [
+            "Adam Smith",
+            "I'm not sure where Abigail Chen might be hiding. But let's continue searching and meet back here in an hour to exchange any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's meet back here in an hour and share any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up and cover more ground. I'll search the north side of the park and you search the south side. We can meet back here in an hour and share any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Before we split up, let's quickly brainstorm some possible hiding spots for Abigail Chen. Any ideas?"
+          ],
+          [
+            "Adam Smith",
+            "Let's brainstorm some possible hiding spots for Abigail Chen. How about the playground or the picnic area?"
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          49
+        ],
+        "pronunciatio": "\ud83d\udd0d",
+        "description": "go to hide immediately in the Johnson Park (on the way to go to hide immediately in the Johnson Par) (finding a safe and secluded spot to hide) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Adam Smith": {
+        "movement": [
+          28,
+          52
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about the two friends, Klaus Mueller and Adam Smith, discussing their game of hide and seek in Johnson Park, sharing information about hiding spots, and strategizing to find their friends Maria, Isabella, and Abigail. @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam! Fancy meeting you here. Are you also playing hide and seek in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I am playing hide and seek in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, I have found a few good hiding spots. I actually found Maria Lopez hiding near the entrance of the park. She's tricky to find!"
+          ],
+          [
+            "Adam Smith",
+            "That's great! I was actually planning to suggest the hiding spot in the gazebo near the pond. It's a bit secluded and offers good cover. Have you checked it out?"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great suggestion, Adam! I haven't checked out the gazebo near the pond yet, but I will definitely give it a try. Thanks for the tip!"
+          ],
+          [
+            "Adam Smith",
+            "Do you know where Isabella is hiding?"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't found Isabella yet. Have you seen her anywhere?"
+          ],
+          [
+            "Adam Smith",
+            "I haven't seen Isabella either. Let's keep looking!"
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground to increase our chances of finding Isabella. You search the east side of the park and I'll search the west side. Let's meet back here in an hour and exchange any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Sounds like a plan! I'll head to the east side of the park and search for Isabella. Let's meet back here in an hour."
+          ],
+          [
+            "Klaus Mueller",
+            "Do you have any idea where Abigail Chen might be hiding?"
+          ],
+          [
+            "Adam Smith",
+            "I'm not sure where Abigail Chen might be hiding. But let's continue searching and meet back here in an hour to exchange any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's meet back here in an hour and share any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up and cover more ground. I'll search the north side of the park and you search the south side. We can meet back here in an hour and share any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Before we split up, let's quickly brainstorm some possible hiding spots for Abigail Chen. Any ideas?"
+          ],
+          [
+            "Adam Smith",
+            "Let's brainstorm some possible hiding spots for Abigail Chen. How about the playground or the picnic area?"
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:16:20"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          28,
+          45
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about This is a conversation about finding potential hiding spots in Johnson Park near the playground and bushes near the lake, including checking out the gazebo and the abandoned treehouse after. @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Abigail! I overheard you talking about hiding spots in Johnson Park. I was wondering if you found any good ones near the playground or the bushes by the lake?"
+          ],
+          [
+            "Abigail Chen",
+            "Hey Maria! Yes, I did find some potential hiding spots near the playground and bushes by the lake. One suggestion was to hide behind the big oak tree near the playground and another was to hide behind the bushes near the lake entrance. We're actually planning to check out the gazebo together to see if it's a good hiding spot. Would you like to join us?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'd love to join you in checking out the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Great! Let's head over to the gazebo now and see if it's a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Do you think the gazebo will be a good hiding spot?"
+          ],
+          [
+            "Abigail Chen",
+            "I'm not sure, but it's worth checking out. Let's go and see!"
+          ],
+          [
+            "Maria Lopez",
+            "I hope the gazebo is a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see what we find at the gazebo. Let's go!"
+          ],
+          [
+            "Maria Lopez",
+            "Is there anywhere else we should check out after the gazebo?"
+          ],
+          [
+            "Abigail Chen",
+            "After we check out the gazebo, we can also explore the abandoned treehouse near the pond. It might be a good hiding spot too!"
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great plan! Let's go check out the abandoned treehouse after the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go check out the abandoned treehouse after the gazebo!"
+          ],
+          [
+            "Maria Lopez",
+            "Which way is the gazebo? I'm not familiar with the park."
+          ],
+          [
+            "Abigail Chen",
+            "The gazebo is just a short walk from here. Follow me and I'll show you the way!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for showing me the way to the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's head over to the gazebo now and see if it's a good hiding spot."
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          33,
+          46
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about exploring different hiding spots in Johnson Park @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Adam! I saw you on your way to hide in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Hey Isabella! Yes, I found a great hiding spot near the gazebo near the pond. It's secluded and provides a great vantage point. You should try it out!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Thanks for the suggestion, Adam! I'll definitely check out the gazebo near the pond. I'm always looking for new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Do you have any other hiding spots in mind?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few hiding spots in mind. I was thinking of checking out the playground and the bushes near the lake. Let's explore together!"
+          ],
+          [
+            "Adam Smith",
+            "That sounds like a great plan! Let's start with the gazebo near the pond and then move on to the playground and the bushes near the lake."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you want to split up and meet back in 15 minutes to share our findings?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, let's split up and meet back in 15 minutes to share our findings."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Great! Let's meet back here in 15 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Let's make sure to search the east side of the park as well. We might find some good hiding spots there too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think the trees near the playground would be good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, the trees near the playground would be great hiding spots! Let's check them out."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm excited to explore the trees near the playground! Let's go check them out."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up now and meet back in 15 minutes."
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          30,
+          53
+        ],
+        "pronunciatio": "\ud83e\udde5",
+        "description": "go search for the players that are hiding in the Johnson Park (on the way to go search for the players that are hiding in the Johnson Par) (getting dressed in warm clothing) @ the Ville:Dorm for Oak Hill College:common room:common room sofa",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          44
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about This is a conversation about finding potential hiding spots in Johnson Park near the playground and bushes near the lake, including checking out the gazebo and the abandoned treehouse after. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Abigail! I overheard you talking about hiding spots in Johnson Park. I was wondering if you found any good ones near the playground or the bushes by the lake?"
+          ],
+          [
+            "Abigail Chen",
+            "Hey Maria! Yes, I did find some potential hiding spots near the playground and bushes by the lake. One suggestion was to hide behind the big oak tree near the playground and another was to hide behind the bushes near the lake entrance. We're actually planning to check out the gazebo together to see if it's a good hiding spot. Would you like to join us?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'd love to join you in checking out the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Great! Let's head over to the gazebo now and see if it's a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Do you think the gazebo will be a good hiding spot?"
+          ],
+          [
+            "Abigail Chen",
+            "I'm not sure, but it's worth checking out. Let's go and see!"
+          ],
+          [
+            "Maria Lopez",
+            "I hope the gazebo is a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see what we find at the gazebo. Let's go!"
+          ],
+          [
+            "Maria Lopez",
+            "Is there anywhere else we should check out after the gazebo?"
+          ],
+          [
+            "Abigail Chen",
+            "After we check out the gazebo, we can also explore the abandoned treehouse near the pond. It might be a good hiding spot too!"
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great plan! Let's go check out the abandoned treehouse after the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go check out the abandoned treehouse after the gazebo!"
+          ],
+          [
+            "Maria Lopez",
+            "Which way is the gazebo? I'm not familiar with the park."
+          ],
+          [
+            "Abigail Chen",
+            "The gazebo is just a short walk from here. Follow me and I'll show you the way!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for showing me the way to the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's head over to the gazebo now and see if it's a good hiding spot."
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          30,
+          50
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about exploring different hiding spots in Johnson Park @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Adam! I saw you on your way to hide in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Hey Isabella! Yes, I found a great hiding spot near the gazebo near the pond. It's secluded and provides a great vantage point. You should try it out!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Thanks for the suggestion, Adam! I'll definitely check out the gazebo near the pond. I'm always looking for new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Do you have any other hiding spots in mind?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few hiding spots in mind. I was thinking of checking out the playground and the bushes near the lake. Let's explore together!"
+          ],
+          [
+            "Adam Smith",
+            "That sounds like a great plan! Let's start with the gazebo near the pond and then move on to the playground and the bushes near the lake."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you want to split up and meet back in 15 minutes to share our findings?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, let's split up and meet back in 15 minutes to share our findings."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Great! Let's meet back here in 15 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Let's make sure to search the east side of the park as well. We might find some good hiding spots there too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think the trees near the playground would be good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, the trees near the playground would be great hiding spots! Let's check them out."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm excited to explore the trees near the playground! Let's go check them out."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up now and meet back in 15 minutes."
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:22:30"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          27,
+          42
+        ],
+        "pronunciatio": "\ud83d\udde3",
+        "description": "go to hide immediately in the Johnson Park (conversing about conversing about potential hiding spots, such as the gazebo, abandoned treehouse, big oak tree, bench near the lake, and area under the bridge, and deciding to split up to cover more ground) @ the Ville:Johnson Park:park:park garden",
+        "chat": null
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          26,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "go to hide immediately in Johnson Park (on the way to go to hide immediately in Johnson Par) (discussing the rules of the game with her friends) @ the Ville:Johnson Park:park:park fountain",
+        "chat": null
+      },
+      "Klaus Mueller": {
+        "movement": [
+          32,
+          43
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about finding Isabella or Abigail and searching various locations to find them. @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Maria! Have you seen Isabella or Abigail anywhere?"
+          ],
+          [
+            "Maria Lopez",
+            "No, I haven't seen them. Have you checked the gazebo or the abandoned treehouse?"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't checked the gazebo or the abandoned treehouse yet. Let's split up and cover more ground!"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'll check out the gazebo and you can check the abandoned treehouse."
+          ],
+          [
+            "Klaus Mueller",
+            "Alright, let's meet back here in 10 minutes and share any updates."
+          ],
+          [
+            "Maria Lopez",
+            "Do you want me to also check behind the big oak tree near the playground and the bushes near the lake entrance?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, please check behind the big oak tree near the playground and the bushes near the lake entrance as well."
+          ],
+          [
+            "Maria Lopez",
+            "Okay, I'll make sure to check behind the big oak tree and the bushes near the lake entrance. See you in 10 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Thanks, Maria! Let's also check the area under the bridge together."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check the area under the bridge together."
+          ],
+          [
+            "Klaus Mueller",
+            "Do you think Isabella or Abigail would hide behind the bench near the lake?"
+          ],
+          [
+            "Maria Lopez",
+            "I'm not sure if Isabella or Abigail would hide behind the bench near the lake, but I can go check it out."
+          ],
+          [
+            "Klaus Mueller",
+            "Great, while you check out the bench near the lake, I'll go search under the bridge. Let's meet back here in 10 minutes and share any updates."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'll check out the bench near the lake. See you in 10 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Maria, before we split up, let's also check the area near the gazebo. They might be hiding there too."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check the area near the gazebo. They might be hiding there too."
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          33,
+          42
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about finding Isabella or Abigail and searching various locations to find them. @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Maria! Have you seen Isabella or Abigail anywhere?"
+          ],
+          [
+            "Maria Lopez",
+            "No, I haven't seen them. Have you checked the gazebo or the abandoned treehouse?"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't checked the gazebo or the abandoned treehouse yet. Let's split up and cover more ground!"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'll check out the gazebo and you can check the abandoned treehouse."
+          ],
+          [
+            "Klaus Mueller",
+            "Alright, let's meet back here in 10 minutes and share any updates."
+          ],
+          [
+            "Maria Lopez",
+            "Do you want me to also check behind the big oak tree near the playground and the bushes near the lake entrance?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, please check behind the big oak tree near the playground and the bushes near the lake entrance as well."
+          ],
+          [
+            "Maria Lopez",
+            "Okay, I'll make sure to check behind the big oak tree and the bushes near the lake entrance. See you in 10 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Thanks, Maria! Let's also check the area under the bridge together."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check the area under the bridge together."
+          ],
+          [
+            "Klaus Mueller",
+            "Do you think Isabella or Abigail would hide behind the bench near the lake?"
+          ],
+          [
+            "Maria Lopez",
+            "I'm not sure if Isabella or Abigail would hide behind the bench near the lake, but I can go check it out."
+          ],
+          [
+            "Klaus Mueller",
+            "Great, while you check out the bench near the lake, I'll go search under the bridge. Let's meet back here in 10 minutes and share any updates."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'll check out the bench near the lake. See you in 10 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Maria, before we split up, let's also check the area near the gazebo. They might be hiding there too."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check the area near the gazebo. They might be hiding there too."
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          33,
+          42
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "go to hide immediately in Johnson Park (conversing about exploring potential hiding spots in Johnson Park between Maria Lopez and Adam Smith) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:42:00"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          36,
+          36
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about finding good hiding spots in Johnson Park, specifically near the playground, the bushes by the lake, and the gazebo, and planning to check out the gazebo together to see if it's a good hiding spot. @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Isabella, have you thought of any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few ideas. I found some great hiding spots near the playground, the bushes near the lake, and the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Those sound like great spots! I think I'll try hiding behind the big oak tree near the playground. Do you have any other suggestions?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "You can also try hiding in the bushes by the lake. They provide good coverage."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll give the bushes by the lake a try as well."
+          ],
+          [
+            "Isabella Rodriguez",
+            "We should also check out the gazebo. It could be a good hiding spot too."
+          ],
+          [
+            "Abigail Chen",
+            "That's a great idea! Let's check out the gazebo together."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's also make sure to meet back here in 15 minutes to share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you know if Adam is coming to play hide and seek with us at Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm not sure if Adam is coming, but we can check with him later. Let's focus on finding the best hiding spots for now."
+          ],
+          [
+            "Abigail Chen",
+            "Should we start by checking out the gazebo first?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's start by checking out the gazebo first."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's go check out the gazebo together!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see if the gazebo is a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          31,
+          40
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about finding good hiding spots in Johnson Park, specifically near the playground, the bushes by the lake, and the gazebo, and planning to check out the gazebo together to see if it's a good hiding spot. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Isabella, have you thought of any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few ideas. I found some great hiding spots near the playground, the bushes near the lake, and the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Those sound like great spots! I think I'll try hiding behind the big oak tree near the playground. Do you have any other suggestions?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "You can also try hiding in the bushes by the lake. They provide good coverage."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll give the bushes by the lake a try as well."
+          ],
+          [
+            "Isabella Rodriguez",
+            "We should also check out the gazebo. It could be a good hiding spot too."
+          ],
+          [
+            "Abigail Chen",
+            "That's a great idea! Let's check out the gazebo together."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's also make sure to meet back here in 15 minutes to share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you know if Adam is coming to play hide and seek with us at Johnson Park?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm not sure if Adam is coming, but we can check with him later. Let's focus on finding the best hiding spots for now."
+          ],
+          [
+            "Abigail Chen",
+            "Should we start by checking out the gazebo first?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's start by checking out the gazebo first."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's go check out the gazebo together!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see if the gazebo is a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's go to the gazebo and see if it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          26,
+          53
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about the two friends, Klaus Mueller and Adam Smith, discussing their game of hide and seek in Johnson Park, sharing information about hiding spots, and strategizing to find their friends Maria, Isabella, and Abigail. @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam! Fancy meeting you here. Are you also playing hide and seek in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I am playing hide and seek in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, I have found a few good hiding spots. I actually found Maria Lopez hiding near the entrance of the park. She's tricky to find!"
+          ],
+          [
+            "Adam Smith",
+            "That's great! I was actually planning to suggest the hiding spot in the gazebo near the pond. It's a bit secluded and offers good cover. Have you checked it out?"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great suggestion, Adam! I haven't checked out the gazebo near the pond yet, but I will definitely give it a try. Thanks for the tip!"
+          ],
+          [
+            "Adam Smith",
+            "Do you know where Isabella is hiding?"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't found Isabella yet. Have you seen her anywhere?"
+          ],
+          [
+            "Adam Smith",
+            "I haven't seen Isabella either. Let's keep looking!"
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground to increase our chances of finding Isabella. You search the east side of the park and I'll search the west side. Let's meet back here in an hour and exchange any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Sounds like a plan! I'll head to the east side of the park and search for Isabella. Let's meet back here in an hour."
+          ],
+          [
+            "Klaus Mueller",
+            "Do you have any idea where Abigail Chen might be hiding?"
+          ],
+          [
+            "Adam Smith",
+            "I'm not sure where Abigail Chen might be hiding. But let's continue searching and meet back here in an hour to exchange any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's meet back here in an hour and share any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up and cover more ground. I'll search the north side of the park and you search the south side. We can meet back here in an hour and share any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Before we split up, let's quickly brainstorm some possible hiding spots for Abigail Chen. Any ideas?"
+          ],
+          [
+            "Adam Smith",
+            "Let's brainstorm some possible hiding spots for Abigail Chen. How about the playground or the picnic area?"
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          49
+        ],
+        "pronunciatio": "\ud83d\udd0d",
+        "description": "go to hide immediately in the Johnson Park (on the way to go to hide immediately in the Johnson Par) (finding a safe and secluded spot to hide) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Adam Smith": {
+        "movement": [
+          28,
+          52
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about the two friends, Klaus Mueller and Adam Smith, discussing their game of hide and seek in Johnson Park, sharing information about hiding spots, and strategizing to find their friends Maria, Isabella, and Abigail. @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam! Fancy meeting you here. Are you also playing hide and seek in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I am playing hide and seek in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, I have found a few good hiding spots. I actually found Maria Lopez hiding near the entrance of the park. She's tricky to find!"
+          ],
+          [
+            "Adam Smith",
+            "That's great! I was actually planning to suggest the hiding spot in the gazebo near the pond. It's a bit secluded and offers good cover. Have you checked it out?"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great suggestion, Adam! I haven't checked out the gazebo near the pond yet, but I will definitely give it a try. Thanks for the tip!"
+          ],
+          [
+            "Adam Smith",
+            "Do you know where Isabella is hiding?"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't found Isabella yet. Have you seen her anywhere?"
+          ],
+          [
+            "Adam Smith",
+            "I haven't seen Isabella either. Let's keep looking!"
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground to increase our chances of finding Isabella. You search the east side of the park and I'll search the west side. Let's meet back here in an hour and exchange any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Sounds like a plan! I'll head to the east side of the park and search for Isabella. Let's meet back here in an hour."
+          ],
+          [
+            "Klaus Mueller",
+            "Do you have any idea where Abigail Chen might be hiding?"
+          ],
+          [
+            "Adam Smith",
+            "I'm not sure where Abigail Chen might be hiding. But let's continue searching and meet back here in an hour to exchange any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's meet back here in an hour and share any information we find."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up and cover more ground. I'll search the north side of the park and you search the south side. We can meet back here in an hour and share any information we find."
+          ],
+          [
+            "Klaus Mueller",
+            "Before we split up, let's quickly brainstorm some possible hiding spots for Abigail Chen. Any ideas?"
+          ],
+          [
+            "Adam Smith",
+            "Let's brainstorm some possible hiding spots for Abigail Chen. How about the playground or the picnic area?"
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:14:40"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          28,
+          48
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends discussing potential hiding spots near the bushes, gazebo, playground, and abandoned treehouse. @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Isabella! Have you found any good hiding spots near the bushes?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I found a great hiding spot behind the big oak tree! It's well-hidden and has a lot of coverage from the bushes."
+          ],
+          [
+            "Abigail Chen",
+            "That's awesome! I also found a potential hiding spot near the gazebo. Do you want to check it out together?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's go check out the hiding spot near the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's hurry and check out the gazebo before someone else takes it!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go quickly before someone else finds it!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see if the gazebo will be a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm curious, have you checked out the area near the playground? It might have some good hiding spots too."
+          ],
+          [
+            "Abigail Chen",
+            "Yes, I checked out the area near the playground. There are a few potential hiding spots there too. Let's go explore it together!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's split up and cover more ground. You check out the area near the playground and I'll continue exploring near the bushes."
+          ],
+          [
+            "Abigail Chen",
+            "Great! Let's meet back here in 10 minutes and share any potential hiding spots we found."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's meet back here in 10 minutes and share any potential hiding spots we found."
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also check out the abandoned treehouse near the pond. It could be an interesting hiding spot."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's go check out the abandoned treehouse near the pond together."
+          ],
+          [
+            "Abigail Chen",
+            "Let's split up and cover more ground. You check out the area near the playground and I'll continue exploring near the bushes."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think we should also check out the area under the bridge? It might have some good hiding spots too."
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          28,
+          48
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends discussing potential hiding spots near the bushes, gazebo, playground, and abandoned treehouse. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Isabella! Have you found any good hiding spots near the bushes?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I found a great hiding spot behind the big oak tree! It's well-hidden and has a lot of coverage from the bushes."
+          ],
+          [
+            "Abigail Chen",
+            "That's awesome! I also found a potential hiding spot near the gazebo. Do you want to check it out together?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's go check out the hiding spot near the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's hurry and check out the gazebo before someone else takes it!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go quickly before someone else finds it!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see if the gazebo will be a good hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm curious, have you checked out the area near the playground? It might have some good hiding spots too."
+          ],
+          [
+            "Abigail Chen",
+            "Yes, I checked out the area near the playground. There are a few potential hiding spots there too. Let's go explore it together!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's split up and cover more ground. You check out the area near the playground and I'll continue exploring near the bushes."
+          ],
+          [
+            "Abigail Chen",
+            "Great! Let's meet back here in 10 minutes and share any potential hiding spots we found."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's meet back here in 10 minutes and share any potential hiding spots we found."
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also check out the abandoned treehouse near the pond. It could be an interesting hiding spot."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's go check out the abandoned treehouse near the pond together."
+          ],
+          [
+            "Abigail Chen",
+            "Let's split up and cover more ground. You check out the area near the playground and I'll continue exploring near the bushes."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think we should also check out the area under the bridge? It might have some good hiding spots too."
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          33,
+          48
+        ],
+        "pronunciatio": "\ud83d\udec1",
+        "description": "go search for the players that are hiding in the Johnson Park (checking inside the public restroom, making sure no players are hiding in there) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          38,
+          41
+        ],
+        "pronunciatio": "\ud83d\udd2d",
+        "description": "look for the best hidding place in the Johnson Park (scouting the park for potential hiding spots) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Adam Smith": {
+        "movement": [
+          22,
+          47
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "go to hide immediately in Johnson Park (conversing about hiding spots in Johnson Park, as Abigail Chen asks for suggestions and Adam Smith provides multiple options) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 02:39:20"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          28,
+          45
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about This is a conversation about finding potential hiding spots in Johnson Park near the playground and bushes near the lake, including checking out the gazebo and the abandoned treehouse after. @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Abigail! I overheard you talking about hiding spots in Johnson Park. I was wondering if you found any good ones near the playground or the bushes by the lake?"
+          ],
+          [
+            "Abigail Chen",
+            "Hey Maria! Yes, I did find some potential hiding spots near the playground and bushes by the lake. One suggestion was to hide behind the big oak tree near the playground and another was to hide behind the bushes near the lake entrance. We're actually planning to check out the gazebo together to see if it's a good hiding spot. Would you like to join us?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'd love to join you in checking out the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Great! Let's head over to the gazebo now and see if it's a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Do you think the gazebo will be a good hiding spot?"
+          ],
+          [
+            "Abigail Chen",
+            "I'm not sure, but it's worth checking out. Let's go and see!"
+          ],
+          [
+            "Maria Lopez",
+            "I hope the gazebo is a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see what we find at the gazebo. Let's go!"
+          ],
+          [
+            "Maria Lopez",
+            "Is there anywhere else we should check out after the gazebo?"
+          ],
+          [
+            "Abigail Chen",
+            "After we check out the gazebo, we can also explore the abandoned treehouse near the pond. It might be a good hiding spot too!"
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great plan! Let's go check out the abandoned treehouse after the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go check out the abandoned treehouse after the gazebo!"
+          ],
+          [
+            "Maria Lopez",
+            "Which way is the gazebo? I'm not familiar with the park."
+          ],
+          [
+            "Abigail Chen",
+            "The gazebo is just a short walk from here. Follow me and I'll show you the way!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for showing me the way to the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's head over to the gazebo now and see if it's a good hiding spot."
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          32,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about exploring different hiding spots in Johnson Park @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Adam! I saw you on your way to hide in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Hey Isabella! Yes, I found a great hiding spot near the gazebo near the pond. It's secluded and provides a great vantage point. You should try it out!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Thanks for the suggestion, Adam! I'll definitely check out the gazebo near the pond. I'm always looking for new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Do you have any other hiding spots in mind?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few hiding spots in mind. I was thinking of checking out the playground and the bushes near the lake. Let's explore together!"
+          ],
+          [
+            "Adam Smith",
+            "That sounds like a great plan! Let's start with the gazebo near the pond and then move on to the playground and the bushes near the lake."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you want to split up and meet back in 15 minutes to share our findings?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, let's split up and meet back in 15 minutes to share our findings."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Great! Let's meet back here in 15 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Let's make sure to search the east side of the park as well. We might find some good hiding spots there too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think the trees near the playground would be good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, the trees near the playground would be great hiding spots! Let's check them out."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm excited to explore the trees near the playground! Let's go check them out."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up now and meet back in 15 minutes."
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          48,
+          53
+        ],
+        "pronunciatio": "\ud83e\udde5",
+        "description": "go search for the players that are hiding in the Johnson Park (on the way to go search for the players that are hiding in the Johnson Par) (getting dressed in warm clothing) @ the Ville:Dorm for Oak Hill College:common room:common room sofa",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          44
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about This is a conversation about finding potential hiding spots in Johnson Park near the playground and bushes near the lake, including checking out the gazebo and the abandoned treehouse after. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Abigail! I overheard you talking about hiding spots in Johnson Park. I was wondering if you found any good ones near the playground or the bushes by the lake?"
+          ],
+          [
+            "Abigail Chen",
+            "Hey Maria! Yes, I did find some potential hiding spots near the playground and bushes by the lake. One suggestion was to hide behind the big oak tree near the playground and another was to hide behind the bushes near the lake entrance. We're actually planning to check out the gazebo together to see if it's a good hiding spot. Would you like to join us?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I'd love to join you in checking out the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Great! Let's head over to the gazebo now and see if it's a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Do you think the gazebo will be a good hiding spot?"
+          ],
+          [
+            "Abigail Chen",
+            "I'm not sure, but it's worth checking out. Let's go and see!"
+          ],
+          [
+            "Maria Lopez",
+            "I hope the gazebo is a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "I'm excited to see what we find at the gazebo. Let's go!"
+          ],
+          [
+            "Maria Lopez",
+            "Is there anywhere else we should check out after the gazebo?"
+          ],
+          [
+            "Abigail Chen",
+            "After we check out the gazebo, we can also explore the abandoned treehouse near the pond. It might be a good hiding spot too!"
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great plan! Let's go check out the abandoned treehouse after the gazebo."
+          ],
+          [
+            "Abigail Chen",
+            "Let's go check out the abandoned treehouse after the gazebo!"
+          ],
+          [
+            "Maria Lopez",
+            "Which way is the gazebo? I'm not familiar with the park."
+          ],
+          [
+            "Abigail Chen",
+            "The gazebo is just a short walk from here. Follow me and I'll show you the way!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for showing me the way to the gazebo!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's head over to the gazebo now and see if it's a good hiding spot."
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          33,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about exploring different hiding spots in Johnson Park @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Adam! I saw you on your way to hide in Johnson Park. Have you found any good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Hey Isabella! Yes, I found a great hiding spot near the gazebo near the pond. It's secluded and provides a great vantage point. You should try it out!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Thanks for the suggestion, Adam! I'll definitely check out the gazebo near the pond. I'm always looking for new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Do you have any other hiding spots in mind?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, I have a few hiding spots in mind. I was thinking of checking out the playground and the bushes near the lake. Let's explore together!"
+          ],
+          [
+            "Adam Smith",
+            "That sounds like a great plan! Let's start with the gazebo near the pond and then move on to the playground and the bushes near the lake."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you want to split up and meet back in 15 minutes to share our findings?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, let's split up and meet back in 15 minutes to share our findings."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Great! Let's meet back here in 15 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Let's make sure to search the east side of the park as well. We might find some good hiding spots there too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you think the trees near the playground would be good hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, the trees near the playground would be great hiding spots! Let's check them out."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm excited to explore the trees near the playground! Let's go check them out."
+          ],
+          [
+            "Adam Smith",
+            "Let's split up now and meet back in 15 minutes."
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:25:30"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          24,
+          34
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about hiding spots in Johnson Park, as Abigail Chen asks for suggestions and Adam Smith provides multiple options @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Adam, I've been thinking of a new hiding spot in Johnson Park. Do you have any suggestions?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, Abigail! How about behind the big oak tree near the playground? It's a spot I've used before and it's usually not crowded."
+          ],
+          [
+            "Abigail Chen",
+            "That sounds like a great spot! I'll definitely give it a try. Thanks, Adam!"
+          ],
+          [
+            "Adam Smith",
+            "I'm glad you like the idea. Let me know if you need any more suggestions."
+          ],
+          [
+            "Abigail Chen",
+            "Actually, do you have any other spots in mind? I want to try a variety of hiding places."
+          ],
+          [
+            "Adam Smith",
+            "How about hiding behind the bushes near the entrance of the park? It's another good spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll definitely give that spot a try too. It's always good to have a few different options."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, if you're feeling adventurous, you could try hiding in the abandoned treehouse near the pond. It's a bit risky, but it might be exciting!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll keep that in mind. It's always fun to try new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I just thought of another hiding spot. How about the treehouse near the baseball field? It's a less risky option but still a unique spot."
+          ],
+          [
+            "Abigail Chen",
+            "Thank you, Adam! Those are great suggestions. I'll try all of those hiding spots and see which ones work best for me."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I also know a good spot near the lake. It's a secluded area with tall grass. Do you want to give it a try?"
+          ],
+          [
+            "Abigail Chen",
+            "Sure, Adam! I'm always up for trying new spots. Let's check out the secluded area near the lake with tall grass. It sounds like a promising hiding spot!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I'm glad you're open to trying new spots. One more suggestion I have is hiding in the gazebo near the playground. It's a unique spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Adam, those are all great suggestions! I really appreciate it. I'll definitely try all of those hiding spots. Thanks again!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, one last suggestion I have is hiding in the gazebo near the pond. It's another unique spot that not many people think of."
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          30,
+          50
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Isabella Rodriguez and Maria Lopez, discussing their excitement for playing hide and seek, exploring different areas of the park, and agreeing to split up and meet back in 15 minutes to share their findings @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Maria! Are you as excited as I am to play hide and seek today?"
+          ],
+          [
+            "Maria Lopez",
+            "Yes, I'm so excited to play hide and seek today! It's always fun trying to find the perfect hiding spot."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I've been thinking of a new spot to hide, want to join me in exploring the park and finding the perfect spot?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I would love to explore the park with you and find a new hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's start by checking the trees near the playground. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great idea! Let's head over to the trees near the playground."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I hope we can find a spot where Klauss won't think to look!"
+          ],
+          [
+            "Maria Lopez",
+            "I think we should also check the bushes near the lake. They could be a good hiding spot too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's check the bushes near the lake too."
+          ],
+          [
+            "Maria Lopez",
+            "We should also check the gazebo. It might have some good hiding spots."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yeah, let's check the gazebo. It might have some good hiding spots too!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm glad we're exploring together. It's always more fun with a teammate!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I think we should split up and search different areas of the park. It will increase our chances of finding a great hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a good idea! Let's split up and search different areas of the park."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Okay, let's split up and meet back here in 15 minutes!"
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          30,
+          55
+        ],
+        "pronunciatio": "\ud83d\udca4",
+        "description": "searching @ the Ville:Johnson Park:park garden:looking around",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Isabella Rodriguez and Maria Lopez, discussing their excitement for playing hide and seek, exploring different areas of the park, and agreeing to split up and meet back in 15 minutes to share their findings @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Maria! Are you as excited as I am to play hide and seek today?"
+          ],
+          [
+            "Maria Lopez",
+            "Yes, I'm so excited to play hide and seek today! It's always fun trying to find the perfect hiding spot."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I've been thinking of a new spot to hide, want to join me in exploring the park and finding the perfect spot?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I would love to explore the park with you and find a new hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's start by checking the trees near the playground. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great idea! Let's head over to the trees near the playground."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I hope we can find a spot where Klauss won't think to look!"
+          ],
+          [
+            "Maria Lopez",
+            "I think we should also check the bushes near the lake. They could be a good hiding spot too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's check the bushes near the lake too."
+          ],
+          [
+            "Maria Lopez",
+            "We should also check the gazebo. It might have some good hiding spots."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yeah, let's check the gazebo. It might have some good hiding spots too!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm glad we're exploring together. It's always more fun with a teammate!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I think we should split up and search different areas of the park. It will increase our chances of finding a great hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a good idea! Let's split up and search different areas of the park."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Okay, let's split up and meet back here in 15 minutes!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          22,
+          35
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about hiding spots in Johnson Park, as Abigail Chen asks for suggestions and Adam Smith provides multiple options @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Adam, I've been thinking of a new hiding spot in Johnson Park. Do you have any suggestions?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, Abigail! How about behind the big oak tree near the playground? It's a spot I've used before and it's usually not crowded."
+          ],
+          [
+            "Abigail Chen",
+            "That sounds like a great spot! I'll definitely give it a try. Thanks, Adam!"
+          ],
+          [
+            "Adam Smith",
+            "I'm glad you like the idea. Let me know if you need any more suggestions."
+          ],
+          [
+            "Abigail Chen",
+            "Actually, do you have any other spots in mind? I want to try a variety of hiding places."
+          ],
+          [
+            "Adam Smith",
+            "How about hiding behind the bushes near the entrance of the park? It's another good spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll definitely give that spot a try too. It's always good to have a few different options."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, if you're feeling adventurous, you could try hiding in the abandoned treehouse near the pond. It's a bit risky, but it might be exciting!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll keep that in mind. It's always fun to try new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I just thought of another hiding spot. How about the treehouse near the baseball field? It's a less risky option but still a unique spot."
+          ],
+          [
+            "Abigail Chen",
+            "Thank you, Adam! Those are great suggestions. I'll try all of those hiding spots and see which ones work best for me."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I also know a good spot near the lake. It's a secluded area with tall grass. Do you want to give it a try?"
+          ],
+          [
+            "Abigail Chen",
+            "Sure, Adam! I'm always up for trying new spots. Let's check out the secluded area near the lake with tall grass. It sounds like a promising hiding spot!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I'm glad you're open to trying new spots. One more suggestion I have is hiding in the gazebo near the playground. It's a unique spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Adam, those are all great suggestions! I really appreciate it. I'll definitely try all of those hiding spots. Thanks again!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, one last suggestion I have is hiding in the gazebo near the pond. It's another unique spot that not many people think of."
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:05:20"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          24,
+          34
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about hiding spots in Johnson Park, as Abigail Chen asks for suggestions and Adam Smith provides multiple options @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Adam, I've been thinking of a new hiding spot in Johnson Park. Do you have any suggestions?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, Abigail! How about behind the big oak tree near the playground? It's a spot I've used before and it's usually not crowded."
+          ],
+          [
+            "Abigail Chen",
+            "That sounds like a great spot! I'll definitely give it a try. Thanks, Adam!"
+          ],
+          [
+            "Adam Smith",
+            "I'm glad you like the idea. Let me know if you need any more suggestions."
+          ],
+          [
+            "Abigail Chen",
+            "Actually, do you have any other spots in mind? I want to try a variety of hiding places."
+          ],
+          [
+            "Adam Smith",
+            "How about hiding behind the bushes near the entrance of the park? It's another good spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll definitely give that spot a try too. It's always good to have a few different options."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, if you're feeling adventurous, you could try hiding in the abandoned treehouse near the pond. It's a bit risky, but it might be exciting!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll keep that in mind. It's always fun to try new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I just thought of another hiding spot. How about the treehouse near the baseball field? It's a less risky option but still a unique spot."
+          ],
+          [
+            "Abigail Chen",
+            "Thank you, Adam! Those are great suggestions. I'll try all of those hiding spots and see which ones work best for me."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I also know a good spot near the lake. It's a secluded area with tall grass. Do you want to give it a try?"
+          ],
+          [
+            "Abigail Chen",
+            "Sure, Adam! I'm always up for trying new spots. Let's check out the secluded area near the lake with tall grass. It sounds like a promising hiding spot!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I'm glad you're open to trying new spots. One more suggestion I have is hiding in the gazebo near the playground. It's a unique spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Adam, those are all great suggestions! I really appreciate it. I'll definitely try all of those hiding spots. Thanks again!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, one last suggestion I have is hiding in the gazebo near the pond. It's another unique spot that not many people think of."
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          30,
+          50
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Isabella Rodriguez and Maria Lopez, discussing their excitement for playing hide and seek, exploring different areas of the park, and agreeing to split up and meet back in 15 minutes to share their findings @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Maria! Are you as excited as I am to play hide and seek today?"
+          ],
+          [
+            "Maria Lopez",
+            "Yes, I'm so excited to play hide and seek today! It's always fun trying to find the perfect hiding spot."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I've been thinking of a new spot to hide, want to join me in exploring the park and finding the perfect spot?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I would love to explore the park with you and find a new hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's start by checking the trees near the playground. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great idea! Let's head over to the trees near the playground."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I hope we can find a spot where Klauss won't think to look!"
+          ],
+          [
+            "Maria Lopez",
+            "I think we should also check the bushes near the lake. They could be a good hiding spot too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's check the bushes near the lake too."
+          ],
+          [
+            "Maria Lopez",
+            "We should also check the gazebo. It might have some good hiding spots."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yeah, let's check the gazebo. It might have some good hiding spots too!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm glad we're exploring together. It's always more fun with a teammate!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I think we should split up and search different areas of the park. It will increase our chances of finding a great hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a good idea! Let's split up and search different areas of the park."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Okay, let's split up and meet back here in 15 minutes!"
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          30,
+          55
+        ],
+        "pronunciatio": "\ud83d\udca4",
+        "description": "searching @ the Ville:Johnson Park:park garden:looking around",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Isabella Rodriguez and Maria Lopez, discussing their excitement for playing hide and seek, exploring different areas of the park, and agreeing to split up and meet back in 15 minutes to share their findings @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Isabella Rodriguez",
+            "Hey Maria! Are you as excited as I am to play hide and seek today?"
+          ],
+          [
+            "Maria Lopez",
+            "Yes, I'm so excited to play hide and seek today! It's always fun trying to find the perfect hiding spot."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I've been thinking of a new spot to hide, want to join me in exploring the park and finding the perfect spot?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, I would love to explore the park with you and find a new hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's start by checking the trees near the playground. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "That sounds like a great idea! Let's head over to the trees near the playground."
+          ],
+          [
+            "Isabella Rodriguez",
+            "I hope we can find a spot where Klauss won't think to look!"
+          ],
+          [
+            "Maria Lopez",
+            "I think we should also check the bushes near the lake. They could be a good hiding spot too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "That's a great idea! Let's check the bushes near the lake too."
+          ],
+          [
+            "Maria Lopez",
+            "We should also check the gazebo. It might have some good hiding spots."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yeah, let's check the gazebo. It might have some good hiding spots too!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm glad we're exploring together. It's always more fun with a teammate!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I think we should split up and search different areas of the park. It will increase our chances of finding a great hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a good idea! Let's split up and search different areas of the park."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Okay, let's split up and meet back here in 15 minutes!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          22,
+          35
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about hiding spots in Johnson Park, as Abigail Chen asks for suggestions and Adam Smith provides multiple options @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Adam, I've been thinking of a new hiding spot in Johnson Park. Do you have any suggestions?"
+          ],
+          [
+            "Adam Smith",
+            "Sure, Abigail! How about behind the big oak tree near the playground? It's a spot I've used before and it's usually not crowded."
+          ],
+          [
+            "Abigail Chen",
+            "That sounds like a great spot! I'll definitely give it a try. Thanks, Adam!"
+          ],
+          [
+            "Adam Smith",
+            "I'm glad you like the idea. Let me know if you need any more suggestions."
+          ],
+          [
+            "Abigail Chen",
+            "Actually, do you have any other spots in mind? I want to try a variety of hiding places."
+          ],
+          [
+            "Adam Smith",
+            "How about hiding behind the bushes near the entrance of the park? It's another good spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll definitely give that spot a try too. It's always good to have a few different options."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, if you're feeling adventurous, you could try hiding in the abandoned treehouse near the pond. It's a bit risky, but it might be exciting!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion, Adam! I'll keep that in mind. It's always fun to try new hiding spots."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I just thought of another hiding spot. How about the treehouse near the baseball field? It's a less risky option but still a unique spot."
+          ],
+          [
+            "Abigail Chen",
+            "Thank you, Adam! Those are great suggestions. I'll try all of those hiding spots and see which ones work best for me."
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I also know a good spot near the lake. It's a secluded area with tall grass. Do you want to give it a try?"
+          ],
+          [
+            "Abigail Chen",
+            "Sure, Adam! I'm always up for trying new spots. Let's check out the secluded area near the lake with tall grass. It sounds like a promising hiding spot!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, I'm glad you're open to trying new spots. One more suggestion I have is hiding in the gazebo near the playground. It's a unique spot that not many people think of."
+          ],
+          [
+            "Abigail Chen",
+            "Adam, those are all great suggestions! I really appreciate it. I'll definitely try all of those hiding spots. Thanks again!"
+          ],
+          [
+            "Adam Smith",
+            "Abigail, one last suggestion I have is hiding in the gazebo near the pond. It's another unique spot that not many people think of."
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:04:10"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          21,
+          45
+        ],
+        "pronunciatio": "\ud83d\udd0e",
+        "description": "go to hide immediately in the Johnson Park (on the way to go to hide immediately in the Johnson Par) (choosing the best hiding spot) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          33,
+          46
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about where to search for their friends in a game of hide and seek, including areas such as the gazebo, bushes near the lake, behind the big oak tree, under the bridge, the abandoned treehouse, the area near the gazebo, and the playground. @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Isabella, I found you! You're really good at hiding. Have you seen Maria, Abigail, or Adam around?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "No, I haven't seen them yet. We just started the game and I wanted to find a good hiding spot. Have you checked the gazebo or the bushes near the lake?"
+          ],
+          [
+            "Klaus Mueller",
+            "I haven't checked the gazebo or the bushes near the lake yet. Let's split up and cover more ground to find the others."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's split up and meet back here in 15 minutes to share our findings."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll check the gazebo and you can search the bushes near the lake. Let's meet back here in 15 minutes."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you want me to check any specific areas?"
+          ],
+          [
+            "Klaus Mueller",
+            "You can also check behind the big oak tree near the playground. That's a common hiding spot. Good luck!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Okay, I'll check behind the big oak tree and in the bushes near the lake. Let's meet back here in 15 minutes."
+          ],
+          [
+            "Klaus Mueller",
+            "By the way, did you check the area under the bridge? That could be a good hiding spot too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "No, I haven't checked the area under the bridge yet. I'll make sure to do that. See you in 15 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Is there any other spot you think I should check?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "You should also check the abandoned treehouse. It could be a good hiding spot. See you in 15 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Okay, I'll check the abandoned treehouse. See you in 15 minutes!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Should we also check the area near the gazebo? There are many hiding spots there too."
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's also check the area near the gazebo. It's a good idea to cover all the potential hiding spots. See you in 15 minutes!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I think we should also check the playground. It has some good hiding spots too."
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          33,
+          47
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about where to search for their friends in a game of hide and seek, including areas such as the gazebo, bushes near the lake, behind the big oak tree, under the bridge, the abandoned treehouse, the area near the gazebo, and the playground. @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Isabella, I found you! You're really good at hiding. Have you seen Maria, Abigail, or Adam around?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "No, I haven't seen them yet. We just started the game and I wanted to find a good hiding spot. Have you checked the gazebo or the bushes near the lake?"
+          ],
+          [
+            "Klaus Mueller",
+            "I haven't checked the gazebo or the bushes near the lake yet. Let's split up and cover more ground to find the others."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, let's split up and meet back here in 15 minutes to share our findings."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll check the gazebo and you can search the bushes near the lake. Let's meet back here in 15 minutes."
+          ],
+          [
+            "Isabella Rodriguez",
+            "Do you want me to check any specific areas?"
+          ],
+          [
+            "Klaus Mueller",
+            "You can also check behind the big oak tree near the playground. That's a common hiding spot. Good luck!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Okay, I'll check behind the big oak tree and in the bushes near the lake. Let's meet back here in 15 minutes."
+          ],
+          [
+            "Klaus Mueller",
+            "By the way, did you check the area under the bridge? That could be a good hiding spot too."
+          ],
+          [
+            "Isabella Rodriguez",
+            "No, I haven't checked the area under the bridge yet. I'll make sure to do that. See you in 15 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Is there any other spot you think I should check?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "You should also check the abandoned treehouse. It could be a good hiding spot. See you in 15 minutes!"
+          ],
+          [
+            "Klaus Mueller",
+            "Okay, I'll check the abandoned treehouse. See you in 15 minutes!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Should we also check the area near the gazebo? There are many hiding spots there too."
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's also check the area near the gazebo. It's a good idea to cover all the potential hiding spots. See you in 15 minutes!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I think we should also check the playground. It has some good hiding spots too."
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          39,
+          37
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "go to hide immediately in the Johnson Park (conversing about conversing about finding Isabella or Abigail and searching various locations to find them.) @ the Ville:Dorm for Oak Hill College:common room:common room table",
+        "chat": null
+      },
+      "Adam Smith": {
+        "movement": [
+          34,
+          42
+        ],
+        "pronunciatio": "\ud83d\udd04",
+        "description": "go to hide immediately in Johnson Park (on the way to go to hide immediately in Johnson Par) (adjusting his hiding strategy based on the park layout) @ the Ville:Johnson Park:park:park fountain",
+        "chat": null
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:50:20"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          27,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about the best hiding spots in a park being discussed between Abigail Chen and Adam Smith @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Adam! Have you found any good hiding spots yet?"
+          ],
+          [
+            "Adam Smith",
+            "Yeah, I found a great hiding spot in the gazebo near the pond. It's secluded and offers a good view of the park."
+          ],
+          [
+            "Abigail Chen",
+            "That sounds like a good spot! I'll check it out. Thanks!"
+          ],
+          [
+            "Adam Smith",
+            "I also saw a potential hiding spot near the playground and bushes near the lake. You might want to give it a try."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll explore the playground and bushes near the lake as well."
+          ],
+          [
+            "Adam Smith",
+            "You're welcome, Abigail. I hope you find a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you have any other suggestions for hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "You might want to check out the abandoned treehouse as well. It could be a cool hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll also check out the abandoned treehouse. It sounds interesting."
+          ],
+          [
+            "Adam Smith",
+            "After you check out the abandoned treehouse, you should also consider hiding in the big oak tree. It's a unique spot that might surprise the other players!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestions, Adam! I'll definitely check out the big oak tree after exploring the abandoned treehouse. I want to find the best hiding spot!"
+          ],
+          [
+            "Adam Smith",
+            "Good luck with your search, Abigail! Let me know if you have any questions or need more suggestions."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks, Adam! I'll let you know if I need any more suggestions or if I find a great hiding spot."
+          ],
+          [
+            "Adam Smith",
+            "You should also consider hiding under the bridge. It's a less common spot that might give you an advantage."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the additional suggestions, Adam! I'll definitely explore the options you mentioned. I appreciate your help!"
+          ],
+          [
+            "Adam Smith",
+            "You're welcome, Abigail. I hope you find a good hiding spot!"
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          28,
+          44
+        ],
+        "pronunciatio": "\ud83c\udf33",
+        "description": "look for the best hidding place in the Johnson Park (considering hiding spots behind trees) @ the Ville:Johnson Park:park:park tree",
+        "chat": null
+      },
+      "Klaus Mueller": {
+        "movement": [
+          30,
+          50
+        ],
+        "pronunciatio": "\ud83d\udd0d",
+        "description": "go search for the players that are hiding in the Johnson Park (searching under benches and picnic tables, hoping to find any players hiding there) @ the Ville:Johnson Park:park:park fountain",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          99,
+          39
+        ],
+        "pronunciatio": "\ud83c\udf2c",
+        "description": "go to hide immediately in the Johnson Park (on the way to go to hide immediately in the Johnson Par) (taking one last deep breath and preparing herself to stay hidden until morning) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Adam Smith": {
+        "movement": [
+          28,
+          48
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about the best hiding spots in a park being discussed between Abigail Chen and Adam Smith @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Adam! Have you found any good hiding spots yet?"
+          ],
+          [
+            "Adam Smith",
+            "Yeah, I found a great hiding spot in the gazebo near the pond. It's secluded and offers a good view of the park."
+          ],
+          [
+            "Abigail Chen",
+            "That sounds like a good spot! I'll check it out. Thanks!"
+          ],
+          [
+            "Adam Smith",
+            "I also saw a potential hiding spot near the playground and bushes near the lake. You might want to give it a try."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll explore the playground and bushes near the lake as well."
+          ],
+          [
+            "Adam Smith",
+            "You're welcome, Abigail. I hope you find a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you have any other suggestions for hiding spots?"
+          ],
+          [
+            "Adam Smith",
+            "You might want to check out the abandoned treehouse as well. It could be a cool hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestion! I'll also check out the abandoned treehouse. It sounds interesting."
+          ],
+          [
+            "Adam Smith",
+            "After you check out the abandoned treehouse, you should also consider hiding in the big oak tree. It's a unique spot that might surprise the other players!"
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the suggestions, Adam! I'll definitely check out the big oak tree after exploring the abandoned treehouse. I want to find the best hiding spot!"
+          ],
+          [
+            "Adam Smith",
+            "Good luck with your search, Abigail! Let me know if you have any questions or need more suggestions."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks, Adam! I'll let you know if I need any more suggestions or if I find a great hiding spot."
+          ],
+          [
+            "Adam Smith",
+            "You should also consider hiding under the bridge. It's a less common spot that might give you an advantage."
+          ],
+          [
+            "Abigail Chen",
+            "Thanks for the additional suggestions, Adam! I'll definitely explore the options you mentioned. I appreciate your help!"
+          ],
+          [
+            "Adam Smith",
+            "You're welcome, Abigail. I hope you find a good hiding spot!"
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 02:28:10"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          27,
+          42
+        ],
+        "pronunciatio": "\ud83d\udde3",
+        "description": "go to hide immediately in the Johnson Park (conversing about conversing about potential hiding spots, such as the gazebo, abandoned treehouse, big oak tree, bench near the lake, and area under the bridge, and deciding to split up to cover more ground) @ the Ville:Johnson Park:park:park garden",
+        "chat": null
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          25,
+          49
+        ],
+        "pronunciatio": "\ud83d\udeb6",
+        "description": "go to hide immediately in Johnson Park (on the way to go to hide immediately in Johnson Par) (walking towards the entrance of Johnson Park) @ the Ville:Johnson Park:park:park fountain",
+        "chat": null
+      },
+      "Klaus Mueller": {
+        "movement": [
+          34,
+          46
+        ],
+        "pronunciatio": "\ud83c\udf32",
+        "description": "go search for the players that are hiding in the Johnson Park (on the way to go search for the players that are hiding in the Johnson Par) (searching behind trees and bushes) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          42
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about exploring potential hiding spots in Johnson Park between Maria Lopez and Adam Smith @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Adam, have you found any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a great hiding spot near the gazebo near the pond. It's a bit tricky to get to, but it provides excellent coverage. You should try it!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for the suggestion, Adam! I'll definitely check out the gazebo as a hiding spot."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the abandoned treehouse could be a good hiding spot. Maybe we can explore it together?"
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the abandoned treehouse together."
+          ],
+          [
+            "Adam Smith",
+            "I think we should also consider hiding near the big oak tree. It's a bit of a risk, but it could be a good spot."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's go check out the big oak tree as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the area under the bridge, it might be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the area under the bridge as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also take a look at the bench near the lake, it could be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Let's go check out the bench near the lake as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Great suggestions, Adam! I'm excited to check out all these hiding spots. Let's start with the gazebo, then we can explore the abandoned treehouse, big oak tree, area under the bridge, bench near the lake, and the playground and bushes near the lake. Thanks for your help!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Let's start with the gazebo and then we can explore the playground and bushes near the lake. After that, we can check out the abandoned treehouse, big oak tree, and the area under the bridge. It seems like we have a lot of places to explore!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          28,
+          42
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about exploring potential hiding spots in Johnson Park between Maria Lopez and Adam Smith @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Adam, have you found any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a great hiding spot near the gazebo near the pond. It's a bit tricky to get to, but it provides excellent coverage. You should try it!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for the suggestion, Adam! I'll definitely check out the gazebo as a hiding spot."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the abandoned treehouse could be a good hiding spot. Maybe we can explore it together?"
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the abandoned treehouse together."
+          ],
+          [
+            "Adam Smith",
+            "I think we should also consider hiding near the big oak tree. It's a bit of a risk, but it could be a good spot."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's go check out the big oak tree as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the area under the bridge, it might be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the area under the bridge as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also take a look at the bench near the lake, it could be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Let's go check out the bench near the lake as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Great suggestions, Adam! I'm excited to check out all these hiding spots. Let's start with the gazebo, then we can explore the abandoned treehouse, big oak tree, area under the bridge, bench near the lake, and the playground and bushes near the lake. Thanks for your help!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Let's start with the gazebo and then we can explore the playground and bushes near the lake. After that, we can check out the abandoned treehouse, big oak tree, and the area under the bridge. It seems like we have a lot of places to explore!"
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:40:30"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          29,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about Abigail Chen and Maria Lopez are discussing and planning to search for hiding spots, such as the gazebo, abandoned treehouse, playground, and bushes near the lake entrance, in order to meet back in 15 minutes and share their findings. @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Maria! Have you found any good hiding spots yet?"
+          ],
+          [
+            "Maria Lopez",
+            "No, I haven't found any good hiding spots yet. Have you?"
+          ],
+          [
+            "Abigail Chen",
+            "No, I haven't found any good hiding spots yet. Let's keep looking together!"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up to cover more ground. We can meet back here in 15 minutes and share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to check out the gazebo first?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check out the gazebo first!"
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also check out the abandoned treehouse. It could be a great hiding spot!"
+          ],
+          [
+            "Maria Lopez",
+            "Yeah, let's check out the abandoned treehouse next!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to split up and cover more ground?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up and cover more ground!"
+          ],
+          [
+            "Abigail Chen",
+            "I'll search around the playground. You can check the bench near the lake."
+          ],
+          [
+            "Maria Lopez",
+            "Sounds like a plan! I'll check the bushes near the lake entrance. See you in 15 minutes!"
+          ],
+          [
+            "Abigail Chen",
+            "Okay, let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Do you want to meet back here in 15 minutes or should we meet somewhere else?"
+          ],
+          [
+            "Abigail Chen",
+            "Let's meet back here in 15 minutes."
+          ],
+          [
+            "Maria Lopez",
+            "I'll take a look behind the big oak tree near the playground. Maybe it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          34,
+          48
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "look for the best hidding place in the Johnson Park (conversing about two friends discussing potential hiding spots near the bushes, gazebo, playground, and abandoned treehouse.) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Klaus Mueller": {
+        "movement": [
+          23,
+          50
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about potential hiding spots in the park and splitting up to cover more ground @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam, have you found any good hiding spots in the park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a few interesting hiding spots near the lake and the abandoned treehouse."
+          ],
+          [
+            "Klaus Mueller",
+            "That's great! I'll check those spots first. Let's split up and cover more ground."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the gazebo near the pond is a good hiding spot. We should check there too."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Should we also check the playground and the bushes near the lake?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also check behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the playground and the bushes near the lake."
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the gazebo near the pond."
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about Abigail Chen and Maria Lopez are discussing and planning to search for hiding spots, such as the gazebo, abandoned treehouse, playground, and bushes near the lake entrance, in order to meet back in 15 minutes and share their findings. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Maria! Have you found any good hiding spots yet?"
+          ],
+          [
+            "Maria Lopez",
+            "No, I haven't found any good hiding spots yet. Have you?"
+          ],
+          [
+            "Abigail Chen",
+            "No, I haven't found any good hiding spots yet. Let's keep looking together!"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up to cover more ground. We can meet back here in 15 minutes and share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to check out the gazebo first?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check out the gazebo first!"
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also check out the abandoned treehouse. It could be a great hiding spot!"
+          ],
+          [
+            "Maria Lopez",
+            "Yeah, let's check out the abandoned treehouse next!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to split up and cover more ground?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up and cover more ground!"
+          ],
+          [
+            "Abigail Chen",
+            "I'll search around the playground. You can check the bench near the lake."
+          ],
+          [
+            "Maria Lopez",
+            "Sounds like a plan! I'll check the bushes near the lake entrance. See you in 15 minutes!"
+          ],
+          [
+            "Abigail Chen",
+            "Okay, let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Do you want to meet back here in 15 minutes or should we meet somewhere else?"
+          ],
+          [
+            "Abigail Chen",
+            "Let's meet back here in 15 minutes."
+          ],
+          [
+            "Maria Lopez",
+            "I'll take a look behind the big oak tree near the playground. Maybe it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          22,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about potential hiding spots in the park and splitting up to cover more ground @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam, have you found any good hiding spots in the park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a few interesting hiding spots near the lake and the abandoned treehouse."
+          ],
+          [
+            "Klaus Mueller",
+            "That's great! I'll check those spots first. Let's split up and cover more ground."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the gazebo near the pond is a good hiding spot. We should check there too."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Should we also check the playground and the bushes near the lake?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also check behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the playground and the bushes near the lake."
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the gazebo near the pond."
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 02:50:50"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          27,
+          47
+        ],
+        "pronunciatio": "\ud83c\udf33",
+        "description": "look for the best hidding place in the Johnson Park (scouting the park for potential hiding spots) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          32,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Maria Lopez and Isabella Rodriguez, planning to explore potential hiding spots near the gazebo, the abandoned treehouse, the big oak tree near the playground, the bridge, the bench near the lake, and the bushes near the lake entrance. @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Isabella! I just found a really cool hiding spot near the gazebo. Do you want to check it out with me?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, I'll come with you. Let's go check it out!"
+          ],
+          [
+            "Maria Lopez",
+            "Let's also check out the abandoned treehouse near the pond. It could be a great hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "That sounds like a good plan. Let's go to the abandoned treehouse next!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm excited to see if we can find any other good hiding spots!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm glad you found a cool hiding spot near the gazebo! Let's definitely check it out."
+          ],
+          [
+            "Maria Lopez",
+            "I think we should also look behind the big oak tree near the playground. It might be a good hiding spot too!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the big oak tree near the playground as well!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm glad we have so many potential hiding spots to explore!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm also curious to see if there are any hiding spots under the bridge. Let's go check it out!"
+          ],
+          [
+            "Maria Lopez",
+            "Let's also check out the bench near the lake. It might be a good hiding spot too!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the bench near the lake. It might be a good hiding spot too!"
+          ],
+          [
+            "Maria Lopez",
+            "Hey Isabella! I just thought of another potential hiding spot behind the bushes near the lake entrance. Let's go check it out!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the hiding spot behind the bushes near the lake entrance. It sounds promising!"
+          ],
+          [
+            "Maria Lopez",
+            "Let's also check out the area near the gazebo. It might have some good hiding spots!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the area near the gazebo. It might have some good hiding spots!"
+          ]
+        ]
+      },
+      "Klaus Mueller": {
+        "movement": [
+          27,
+          50
+        ],
+        "pronunciatio": "\ud83d\udce3",
+        "description": "go search for the players that are hiding in the Johnson Park (calling out the names of the players, hoping to lure them out of their hiding spots) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Maria Lopez": {
+        "movement": [
+          32,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about two friends, Maria Lopez and Isabella Rodriguez, planning to explore potential hiding spots near the gazebo, the abandoned treehouse, the big oak tree near the playground, the bridge, the bench near the lake, and the bushes near the lake entrance. @ <persona> Isabella Rodriguez",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Isabella! I just found a really cool hiding spot near the gazebo. Do you want to check it out with me?"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Sure, I'll come with you. Let's go check it out!"
+          ],
+          [
+            "Maria Lopez",
+            "Let's also check out the abandoned treehouse near the pond. It could be a great hiding spot!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "That sounds like a good plan. Let's go to the abandoned treehouse next!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm excited to see if we can find any other good hiding spots!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm glad you found a cool hiding spot near the gazebo! Let's definitely check it out."
+          ],
+          [
+            "Maria Lopez",
+            "I think we should also look behind the big oak tree near the playground. It might be a good hiding spot too!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the big oak tree near the playground as well!"
+          ],
+          [
+            "Maria Lopez",
+            "I'm glad we have so many potential hiding spots to explore!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "I'm also curious to see if there are any hiding spots under the bridge. Let's go check it out!"
+          ],
+          [
+            "Maria Lopez",
+            "Let's also check out the bench near the lake. It might be a good hiding spot too!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the bench near the lake. It might be a good hiding spot too!"
+          ],
+          [
+            "Maria Lopez",
+            "Hey Isabella! I just thought of another potential hiding spot behind the bushes near the lake entrance. Let's go check it out!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the hiding spot behind the bushes near the lake entrance. It sounds promising!"
+          ],
+          [
+            "Maria Lopez",
+            "Let's also check out the area near the gazebo. It might have some good hiding spots!"
+          ],
+          [
+            "Isabella Rodriguez",
+            "Yes, let's go check out the area near the gazebo. It might have some good hiding spots!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          21,
+          46
+        ],
+        "pronunciatio": "\ud83d\udd0d",
+        "description": "look for the best hidding place in the Johnson Park (scouting the park for potential hiding spots) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 02:46:50"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          34,
+          45
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about potential hiding spots, such as the gazebo, abandoned treehouse, big oak tree, bench near the lake, and area under the bridge, and deciding to split up to cover more ground @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Klaus, have you checked out the gazebo as a hiding spot yet? I think it could be a good one!"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't checked the gazebo yet. Thanks for the suggestion, Abigail!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's go check it out together!"
+          ],
+          [
+            "Klaus Mueller",
+            "Sure, let's go check out the gazebo together!"
+          ],
+          [
+            "Abigail Chen",
+            "I also heard there's an abandoned treehouse near the pond. We should check that out too!"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great idea, Abigail! Let's go check out the gazebo first and then we can explore the abandoned treehouse near the pond."
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also consider hiding behind the big oak tree near the playground. It could be a good spot too!"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great suggestion, Abigail! Let's go check out the gazebo first and then we can explore the abandoned treehouse near the pond. After that, we can also hide behind the big oak tree near the playground!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you have any other suggestions for potential hiding spots?"
+          ],
+          [
+            "Klaus Mueller",
+            "We should also check behind the bench near the lake. It could be a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "That's a great idea, Klaus! Let's go check behind the bench near the lake as well."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's go check behind the bench near the lake as well."
+          ],
+          [
+            "Abigail Chen",
+            "Should we also check the area under the bridge? It could be a good hiding spot too!"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's go check the area under the bridge as well. It could be a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's split up and cover more ground. I'll check the gazebo and you can explore the treehouse. We can meet back here later."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll head to the treehouse now and meet you back here later."
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          34,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "go to hide immediately in Johnson Park (conversing about conversing about exploring different hiding spots in Johnson Park) @ the Ville:Johnson Park:park:park fountain",
+        "chat": null
+      },
+      "Klaus Mueller": {
+        "movement": [
+          33,
+          45
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about potential hiding spots, such as the gazebo, abandoned treehouse, big oak tree, bench near the lake, and area under the bridge, and deciding to split up to cover more ground @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Klaus, have you checked out the gazebo as a hiding spot yet? I think it could be a good one!"
+          ],
+          [
+            "Klaus Mueller",
+            "No, I haven't checked the gazebo yet. Thanks for the suggestion, Abigail!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's go check it out together!"
+          ],
+          [
+            "Klaus Mueller",
+            "Sure, let's go check out the gazebo together!"
+          ],
+          [
+            "Abigail Chen",
+            "I also heard there's an abandoned treehouse near the pond. We should check that out too!"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great idea, Abigail! Let's go check out the gazebo first and then we can explore the abandoned treehouse near the pond."
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also consider hiding behind the big oak tree near the playground. It could be a good spot too!"
+          ],
+          [
+            "Klaus Mueller",
+            "That's a great suggestion, Abigail! Let's go check out the gazebo first and then we can explore the abandoned treehouse near the pond. After that, we can also hide behind the big oak tree near the playground!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you have any other suggestions for potential hiding spots?"
+          ],
+          [
+            "Klaus Mueller",
+            "We should also check behind the bench near the lake. It could be a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "That's a great idea, Klaus! Let's go check behind the bench near the lake as well."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's go check behind the bench near the lake as well."
+          ],
+          [
+            "Abigail Chen",
+            "Should we also check the area under the bridge? It could be a good hiding spot too!"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's go check the area under the bridge as well. It could be a good hiding spot!"
+          ],
+          [
+            "Abigail Chen",
+            "Let's split up and cover more ground. I'll check the gazebo and you can explore the treehouse. We can meet back here later."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll head to the treehouse now and meet you back here later."
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          27,
+          42
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about exploring potential hiding spots in Johnson Park between Maria Lopez and Adam Smith @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Adam, have you found any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a great hiding spot near the gazebo near the pond. It's a bit tricky to get to, but it provides excellent coverage. You should try it!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for the suggestion, Adam! I'll definitely check out the gazebo as a hiding spot."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the abandoned treehouse could be a good hiding spot. Maybe we can explore it together?"
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the abandoned treehouse together."
+          ],
+          [
+            "Adam Smith",
+            "I think we should also consider hiding near the big oak tree. It's a bit of a risk, but it could be a good spot."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's go check out the big oak tree as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the area under the bridge, it might be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the area under the bridge as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also take a look at the bench near the lake, it could be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Let's go check out the bench near the lake as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Great suggestions, Adam! I'm excited to check out all these hiding spots. Let's start with the gazebo, then we can explore the abandoned treehouse, big oak tree, area under the bridge, bench near the lake, and the playground and bushes near the lake. Thanks for your help!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Let's start with the gazebo and then we can explore the playground and bushes near the lake. After that, we can check out the abandoned treehouse, big oak tree, and the area under the bridge. It seems like we have a lot of places to explore!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          29,
+          42
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about exploring potential hiding spots in Johnson Park between Maria Lopez and Adam Smith @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Maria Lopez",
+            "Hey Adam, have you found any good hiding spots in Johnson Park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a great hiding spot near the gazebo near the pond. It's a bit tricky to get to, but it provides excellent coverage. You should try it!"
+          ],
+          [
+            "Maria Lopez",
+            "Thank you for the suggestion, Adam! I'll definitely check out the gazebo as a hiding spot."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the abandoned treehouse could be a good hiding spot. Maybe we can explore it together?"
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the abandoned treehouse together."
+          ],
+          [
+            "Adam Smith",
+            "I think we should also consider hiding near the big oak tree. It's a bit of a risk, but it could be a good spot."
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's go check out the big oak tree as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the area under the bridge, it might be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "That's a great idea, Adam! Let's go check out the area under the bridge as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also take a look at the bench near the lake, it could be a good hiding spot."
+          ],
+          [
+            "Maria Lopez",
+            "Let's go check out the bench near the lake as well!"
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Great suggestions, Adam! I'm excited to check out all these hiding spots. Let's start with the gazebo, then we can explore the abandoned treehouse, big oak tree, area under the bridge, bench near the lake, and the playground and bushes near the lake. Thanks for your help!"
+          ],
+          [
+            "Adam Smith",
+            "We should also check out the playground and bushes near the lake. They might have some good hiding spots."
+          ],
+          [
+            "Maria Lopez",
+            "Let's start with the gazebo and then we can explore the playground and bushes near the lake. After that, we can check out the abandoned treehouse, big oak tree, and the area under the bridge. It seems like we have a lot of places to explore!"
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 00:33:50"
+    }
+  },
+  {
+    "persona": {
+      "Abigail Chen": {
+        "movement": [
+          29,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about Abigail Chen and Maria Lopez are discussing and planning to search for hiding spots, such as the gazebo, abandoned treehouse, playground, and bushes near the lake entrance, in order to meet back in 15 minutes and share their findings. @ <persona> Maria Lopez",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Maria! Have you found any good hiding spots yet?"
+          ],
+          [
+            "Maria Lopez",
+            "No, I haven't found any good hiding spots yet. Have you?"
+          ],
+          [
+            "Abigail Chen",
+            "No, I haven't found any good hiding spots yet. Let's keep looking together!"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up to cover more ground. We can meet back here in 15 minutes and share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to check out the gazebo first?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check out the gazebo first!"
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also check out the abandoned treehouse. It could be a great hiding spot!"
+          ],
+          [
+            "Maria Lopez",
+            "Yeah, let's check out the abandoned treehouse next!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to split up and cover more ground?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up and cover more ground!"
+          ],
+          [
+            "Abigail Chen",
+            "I'll search around the playground. You can check the bench near the lake."
+          ],
+          [
+            "Maria Lopez",
+            "Sounds like a plan! I'll check the bushes near the lake entrance. See you in 15 minutes!"
+          ],
+          [
+            "Abigail Chen",
+            "Okay, let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Do you want to meet back here in 15 minutes or should we meet somewhere else?"
+          ],
+          [
+            "Abigail Chen",
+            "Let's meet back here in 15 minutes."
+          ],
+          [
+            "Maria Lopez",
+            "I'll take a look behind the big oak tree near the playground. Maybe it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Isabella Rodriguez": {
+        "movement": [
+          34,
+          48
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "look for the best hidding place in the Johnson Park (conversing about two friends discussing potential hiding spots near the bushes, gazebo, playground, and abandoned treehouse.) @ the Ville:Johnson Park:park:park bushes",
+        "chat": null
+      },
+      "Klaus Mueller": {
+        "movement": [
+          22,
+          50
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about potential hiding spots in the park and splitting up to cover more ground @ <persona> Adam Smith",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam, have you found any good hiding spots in the park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a few interesting hiding spots near the lake and the abandoned treehouse."
+          ],
+          [
+            "Klaus Mueller",
+            "That's great! I'll check those spots first. Let's split up and cover more ground."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the gazebo near the pond is a good hiding spot. We should check there too."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Should we also check the playground and the bushes near the lake?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also check behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the playground and the bushes near the lake."
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the gazebo near the pond."
+          ]
+        ]
+      },
+      "Maria Lopez": {
+        "movement": [
+          28,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about Abigail Chen and Maria Lopez are discussing and planning to search for hiding spots, such as the gazebo, abandoned treehouse, playground, and bushes near the lake entrance, in order to meet back in 15 minutes and share their findings. @ <persona> Abigail Chen",
+        "chat": [
+          [
+            "Abigail Chen",
+            "Hey Maria! Have you found any good hiding spots yet?"
+          ],
+          [
+            "Maria Lopez",
+            "No, I haven't found any good hiding spots yet. Have you?"
+          ],
+          [
+            "Abigail Chen",
+            "No, I haven't found any good hiding spots yet. Let's keep looking together!"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up to cover more ground. We can meet back here in 15 minutes and share our findings."
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to check out the gazebo first?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's check out the gazebo first!"
+          ],
+          [
+            "Abigail Chen",
+            "I think we should also check out the abandoned treehouse. It could be a great hiding spot!"
+          ],
+          [
+            "Maria Lopez",
+            "Yeah, let's check out the abandoned treehouse next!"
+          ],
+          [
+            "Abigail Chen",
+            "Do you want to split up and cover more ground?"
+          ],
+          [
+            "Maria Lopez",
+            "Sure, let's split up and cover more ground!"
+          ],
+          [
+            "Abigail Chen",
+            "I'll search around the playground. You can check the bench near the lake."
+          ],
+          [
+            "Maria Lopez",
+            "Sounds like a plan! I'll check the bushes near the lake entrance. See you in 15 minutes!"
+          ],
+          [
+            "Abigail Chen",
+            "Okay, let's meet back here in 15 minutes and share our findings!"
+          ],
+          [
+            "Maria Lopez",
+            "Do you want to meet back here in 15 minutes or should we meet somewhere else?"
+          ],
+          [
+            "Abigail Chen",
+            "Let's meet back here in 15 minutes."
+          ],
+          [
+            "Maria Lopez",
+            "I'll take a look behind the big oak tree near the playground. Maybe it's a good hiding spot!"
+          ]
+        ]
+      },
+      "Adam Smith": {
+        "movement": [
+          23,
+          49
+        ],
+        "pronunciatio": "\ud83d\udcac",
+        "description": "conversing about conversing about potential hiding spots in the park and splitting up to cover more ground @ <persona> Klaus Mueller",
+        "chat": [
+          [
+            "Klaus Mueller",
+            "Hey Adam, have you found any good hiding spots in the park?"
+          ],
+          [
+            "Adam Smith",
+            "Yes, I found a few interesting hiding spots near the lake and the abandoned treehouse."
+          ],
+          [
+            "Klaus Mueller",
+            "That's great! I'll check those spots first. Let's split up and cover more ground."
+          ],
+          [
+            "Adam Smith",
+            "I also heard that the gazebo near the pond is a good hiding spot. We should check there too."
+          ],
+          [
+            "Klaus Mueller",
+            "Sounds like a plan! I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "Should we also check the playground and the bushes near the lake?"
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake as well."
+          ],
+          [
+            "Adam Smith",
+            "We should also check behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "Let's split up and cover more ground. I'll head towards the gazebo and you can check the area near the lake and the abandoned treehouse. Let's meet back here in 30 minutes."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the playground and the bushes near the lake."
+          ],
+          [
+            "Klaus Mueller",
+            "Yes, let's check the playground and the bushes near the lake."
+          ],
+          [
+            "Adam Smith",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Klaus Mueller",
+            "We should also check the area behind the big oak tree and under the bridge."
+          ],
+          [
+            "Adam Smith",
+            "We should also explore the gazebo near the pond."
+          ]
+        ]
+      }
+    },
+    "meta": {
+      "curr_time": "February 13, 2023, 02:52:50"
+    }
+  }
+]
