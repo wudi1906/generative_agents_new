@@ -21,7 +21,7 @@ def analyze_convo(json_file, json_data, keywords):
                             non_rep_convos.add(f"Keyword '{keyword}' found in conversation of {conversation[0]}: {conversation}")
                             keywords[keyword] += 1
 
-    with open(f"agent_conversations/text/{json_file}.txt", "w") as newfile:
+    with open(f"convo-analysis/key-words/{json_file}.txt", "w") as newfile:
         newfile.write("Keywords in Agent Conversations:\n")
         for element in non_rep_convos:
             newfile.write(f"{element}\n")
@@ -34,7 +34,7 @@ def main():
     try:
         # Load the JSON data
         json_file = sys.argv[1]
-        step_file = f"agent_conversations/JSON/{json_file}"
+        step_file = f"convo-analysis/JSON/{json_file}"
 
         with open(step_file, "r") as file:
             json_data = json.load(file)
