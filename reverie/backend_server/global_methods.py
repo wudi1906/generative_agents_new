@@ -222,7 +222,27 @@ def copyanything(src, dst):
   except OSError as exc: # python >2.5
     if exc.errno in (errno.ENOTDIR, errno.EINVAL):
       shutil.copy(src, dst)
+    elif exc.errno == 17:  # file exists
+      valid = False
+      should_delete = False
+      while not valid:
+        user_input = input(f"{dst} is not empty. Do you want to delete it first? [y/N]")
+        if user_input.lower().strip() in {"n", "no", ""}:
+          valid = True
+          should_delete = False
+        elif user_input.lower().strip() in {"y", "yes"}:
+          valid = True
+          should_delete = True
+        else:
+          print("Sorry, I didn't understand that.")
+          continue
+      if should_delete:
+        shutil.rmtree(dst, ignore_errors=True)
+        shutil.copytree(src, dst)
+      else:
+        print("Delete the path manaully or provide an empty path.")
     else: raise
+
 
 
 if __name__ == '__main__':
