@@ -7,8 +7,12 @@ interface with the safe_generate_response function.
 """
 import ast
 import datetime
+import random
 import re
+import string
 import sys
+
+from utils import debug
 
 sys.path.append('../../')
 
