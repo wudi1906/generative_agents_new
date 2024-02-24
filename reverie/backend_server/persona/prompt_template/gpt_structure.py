@@ -255,7 +255,6 @@ def generate_prompt(curr_input, prompt_lib_file):
     return prompt.strip()
 
 
-@cache
 def safe_generate_response(prompt,
                            gpt_parameter,
                            repeat=5,
