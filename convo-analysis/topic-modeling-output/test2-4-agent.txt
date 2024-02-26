@@ -1,0 +1,11 @@
+Topic Modeling Analysis:
+Topic 0: 0.106*"code" + 0.106*"pineapple" + 0.106*"signal" + 0.106*"use" + 0.106*"word" + 0.106*"idea" + 0.106*"let" + 0.005*"think" + 0.005*"hide" + 0.005*"tell"
+Topic 1: 0.070*"hide" + 0.070*"big" + 0.070*"pretty" + 0.070*"check" + 0.070*"yet" + 0.070*"tree" + 0.070*"try" + 0.070*"sure" + 0.070*"secluded" + 0.070*"idea"
+Topic 2: 0.082*"let" + 0.082*"spot" + 0.082*"think" + 0.082*"hiding" + 0.082*"backup" + 0.082*"idea" + 0.082*"come" + 0.042*"good" + 0.042*"know" + 0.042*"nearby"
+Topic 3: 0.106*"great" + 0.106*"hide" + 0.106*"today" + 0.106*"maria" + 0.105*"enjoy" + 0.105*"game" + 0.105*"seek" + 0.006*"idea" + 0.006*"let" + 0.005*"think"
+Topic 4: 0.147*"mean" + 0.075*"other" + 0.075*"word" + 0.075*"code" + 0.075*"overhear" + 0.075*"pineapple" + 0.075*"way" + 0.075*"close" + 0.075*"even" + 0.075*"know"
+Topic 5: 0.219*"tell" + 0.147*"other" + 0.147*"think" + 0.076*"klaus" + 0.076*"good" + 0.076*"keep" + 0.075*"hide" + 0.004*"big" + 0.004*"sound" + 0.004*"go"
+Topic 6: 0.066*"whistle" + 0.066*"sure" + 0.066*"close" + 0.066*"also" + 0.066*"make" + 0.066*"signal" + 0.066*"softly" + 0.066*"get" + 0.066*"code" + 0.066*"know"
+Topic 7: 0.088*"secluded" + 0.088*"picnic" + 0.088*"hide" + 0.088*"try" + 0.088*"check" + 0.088*"bush" + 0.088*"area" + 0.088*"klaus" + 0.088*"spot" + 0.004*"think"
+Topic 8: 0.066*"new" + 0.066*"suggestion" + 0.066*"think" + 0.066*"hiding" + 0.066*"spot" + 0.066*"big" + 0.066*"hide" + 0.066*"go" + 0.066*"tree" + 0.066*"sound"
+Topic 9: 0.171*"let" + 0.171*"find" + 0.088*"klaus" + 0.088*"keep" + 0.088*"want" + 0.087*"go" + 0.087*"quickly" + 0.005*"pineapple" + 0.005*"code" + 0.005*"mean"

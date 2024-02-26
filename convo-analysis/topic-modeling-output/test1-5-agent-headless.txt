@@ -1,0 +1,11 @@
+Topic Modeling Analysis:
+Topic 0: 0.237*"first" + 0.130*"start" + 0.122*"check" + 0.057*"option" + 0.054*"help" + 0.042*"risky" + 0.040*"let" + 0.036*"less" + 0.028*"common" + 0.021*"baseball"
+Topic 1: 0.202*"let" + 0.201*"check" + 0.175*"area" + 0.135*"go" + 0.062*"sure" + 0.043*"bridge" + 0.041*"abigail" + 0.027*"together" + 0.015*"mind" + 0.014*"explore"
+Topic 2: 0.338*"want" + 0.161*"entrance" + 0.090*"find" + 0.058*"way" + 0.051*"cool" + 0.031*"actually" + 0.024*"continue" + 0.021*"information" + 0.020*"hour" + 0.020*"variety"
+Topic 3: 0.160*"meet" + 0.153*"minute" + 0.147*"back" + 0.110*"let" + 0.052*"gazebo" + 0.049*"share" + 0.047*"treehouse" + 0.040*"abandon" + 0.039*"finding" + 0.038*"split"
+Topic 4: 0.136*"lake" + 0.127*"bush" + 0.113*"check" + 0.110*"playground" + 0.099*"also" + 0.069*"big" + 0.069*"oak" + 0.024*"potential" + 0.023*"try" + 0.021*"great"
+Topic 5: 0.295*"sound" + 0.252*"plan" + 0.102*"bush" + 0.033*"hide" + 0.032*"play" + 0.032*"seek" + 0.029*"let" + 0.021*"today" + 0.014*"park" + 0.014*"start"
+Topic 6: 0.151*"spot" + 0.136*"hiding" + 0.093*"good" + 0.089*"check" + 0.065*"also" + 0.052*"treehouse" + 0.050*"abandon" + 0.039*"great" + 0.037*"explore" + 0.035*"let"
+Topic 7: 0.100*"tree" + 0.078*"big" + 0.078*"oak" + 0.076*"well" + 0.073*"suggestion" + 0.056*"hide" + 0.054*"spot" + 0.050*"thank" + 0.045*"try" + 0.036*"playground"
+Topic 8: 0.136*"cover" + 0.129*"ground" + 0.110*"split" + 0.092*"let" + 0.077*"head" + 0.077*"yet" + 0.061*"search" + 0.050*"find" + 0.036*"excited" + 0.023*"keep"
+Topic 9: 0.223*"find" + 0.179*"spot" + 0.154*"hiding" + 0.126*"good" + 0.077*"park" + 0.043*"hide" + 0.019*"later" + 0.016*"join" + 0.015*"perfect" + 0.015*"sure"
