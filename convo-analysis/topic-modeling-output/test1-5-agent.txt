@@ -1,0 +1,11 @@
+Topic Modeling Analysis:
+Topic 0: 0.110*"spot" + 0.087*"hide" + 0.082*"hiding" + 0.058*"come" + 0.058*"help" + 0.058*"appreciate" + 0.057*"know" + 0.057*"great" + 0.054*"let" + 0.030*"want"
+Topic 1: 0.123*"hide" + 0.123*"count" + 0.123*"start" + 0.083*"first" + 0.083*"go" + 0.043*"great" + 0.043*"sure" + 0.042*"seek" + 0.042*"round" + 0.042*"let"
+Topic 2: 0.094*"split" + 0.094*"minute" + 0.094*"meet" + 0.094*"back" + 0.094*"let" + 0.048*"share" + 0.048*"finding" + 0.048*"manage" + 0.048*"well" + 0.048*"hide"
+Topic 3: 0.067*"spot" + 0.067*"see" + 0.067*"luck" + 0.067*"wait" + 0.067*"want" + 0.067*"choose" + 0.067*"hide" + 0.067*"explore" + 0.067*"together" + 0.067*"good"
+Topic 4: 0.145*"spot" + 0.100*"find" + 0.095*"hiding" + 0.084*"good" + 0.034*"great" + 0.034*"let" + 0.034*"think" + 0.034*"sure" + 0.034*"glad" + 0.034*"tip"
+Topic 5: 0.056*"hide" + 0.056*"good" + 0.056*"spot" + 0.056*"oak" + 0.056*"park" + 0.056*"offer" + 0.056*"south" + 0.056*"side" + 0.056*"coverage" + 0.056*"fairly"
+Topic 6: 0.067*"trust" + 0.067*"probably" + 0.067*"overlook" + 0.067*"never" + 0.067*"abigail" + 0.067*"instinct" + 0.067*"feel" + 0.067*"other" + 0.067*"know" + 0.067*"great"
+Topic 7: 0.056*"immediately" + 0.056*"key" + 0.056*"avoid" + 0.056*"blend" + 0.056*"box" + 0.056*"consider" + 0.056*"look" + 0.056*"place" + 0.056*"other" + 0.056*"surrounding"
+Topic 8: 0.014*"let" + 0.013*"split" + 0.013*"meet" + 0.013*"back" + 0.013*"minute" + 0.013*"great" + 0.013*"spot" + 0.012*"know" + 0.011*"instinct" + 0.011*"feel"
+Topic 9: 0.124*"spot" + 0.095*"hiding" + 0.073*"check" + 0.058*"new" + 0.056*"thank" + 0.046*"let" + 0.036*"definitely" + 0.030*"find" + 0.030*"sure" + 0.030*"recently"

@@ -1,0 +1,11 @@
+Topic Modeling Analysis:
+Topic 0: 0.043*"seek" + 0.043*"book" + 0.043*"think" + 0.043*"hide" + 0.043*"definitely" + 0.029*"time" + 0.029*"historical" + 0.029*"context" + 0.029*"add" + 0.029*"anecdote"
+Topic 1: 0.072*"spot" + 0.065*"hiding" + 0.037*"find" + 0.029*"tip" + 0.022*"hear" + 0.022*"try" + 0.022*"also" + 0.022*"need" + 0.022*"help" + 0.022*"good"
+Topic 2: 0.006*"hiding" + 0.006*"oak" + 0.006*"tree" + 0.006*"spot" + 0.006*"hide" + 0.006*"definitely" + 0.006*"isabella" + 0.006*"good" + 0.006*"maria" + 0.006*"let"
+Topic 3: 0.065*"maria" + 0.065*"find" + 0.065*"meeting" + 0.065*"specific" + 0.065*"case" + 0.065*"spot" + 0.065*"establish" + 0.034*"split" + 0.033*"isabella" + 0.033*"meet"
+Topic 4: 0.070*"hide" + 0.070*"seek" + 0.057*"definitely" + 0.056*"great" + 0.043*"sound" + 0.036*"hiding" + 0.029*"spot" + 0.029*"time" + 0.029*"thank" + 0.029*"give"
+Topic 5: 0.007*"hide" + 0.007*"seek" + 0.007*"game" + 0.007*"play" + 0.007*"day" + 0.007*"see" + 0.007*"good" + 0.007*"maybe" + 0.007*"player" + 0.007*"come"
+Topic 6: 0.050*"seek" + 0.050*"hide" + 0.042*"park" + 0.042*"let" + 0.042*"find" + 0.034*"chance" + 0.034*"search" + 0.034*"different" + 0.034*"maria" + 0.026*"competition"
+Topic 7: 0.034*"thank" + 0.034*"incorporate" + 0.034*"abigail" + 0.034*"appreciate" + 0.034*"make" + 0.034*"much" + 0.034*"interesting" + 0.034*"sharing" + 0.034*"wait" + 0.034*"insight"
+Topic 8: 0.123*"tree" + 0.123*"big" + 0.123*"oak" + 0.077*"waterfall" + 0.077*"show" + 0.049*"thank" + 0.049*"isabella" + 0.042*"really" + 0.027*"sure" + 0.027*"way"
+Topic 9: 0.089*"hiding" + 0.065*"let" + 0.058*"eye" + 0.058*"maria" + 0.058*"keep" + 0.058*"really" + 0.057*"good" + 0.034*"find" + 0.034*"meet" + 0.034*"back"

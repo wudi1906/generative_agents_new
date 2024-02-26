@@ -6,20 +6,20 @@ import sys
 
 
 # Function to analyze conversations and search for specific keywords
-def raw_text_scrape(json_data):
+def raw_text_scrape(json_data, json_file):
+    raw_data = []
     # Iterate through each entry in the JSON data
     for entry in json_data:
         # Check each persona's conversation if available
         for persona, details in entry["persona"].items():
             if "chat" in details and details["chat"]:
                 for conversation in details["chat"]:
-                    print(f"{conversation}\n")
+                    raw_data.append(conversation[1])
+                    # print(f"{conversation[1]}\n")
 
-    # with open(f"convo-analysis/key-words/{json_file}.txt", "w") as newfile:
-    #     newfile.write("Keywords in Agent Conversations:\n")
-    #     for element in non_rep_convos:
-    #         newfile.write(f"{element}\n")
-    #     newfile.write("\n")
+    with open(f"convo-analysis/raw-text-convo/{json_file[:-5]}.txt", "w") as newfile:
+        for i in range(len(raw_data)):
+            newfile.write(f"{raw_data[i]}\n")
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
             json_data = json.load(file)
 
         # Analyze the conversations
-        raw_text_scrape(json_data)
+        raw_text_scrape(json_data, json_file)
 
     except IndexError:
         print("Error: No file name provided.")
