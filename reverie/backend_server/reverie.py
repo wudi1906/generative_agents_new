@@ -400,6 +400,20 @@ class ReverieServer:
                     with open(curr_move_file, "w") as outfile:
                         outfile.write(json.dumps(movements, indent=2))
 
+                    # Piero's hack to make this work without the frontend
+                    env_folder = f"{sim_folder}/environment"
+                    curr_env_file = f"{movement_folder}/{self.step + 1}.json"
+                    persona_positions = {}
+                    for persona_name in movements["persona"]:
+                        val_dict = {}
+                        move_to = movements["persona"][persona_name]["movement"]
+                        val_dict["x"] = move_to[0]
+                        val_dict["y"] = move_to[1]
+                        val_dict["maze"] = self.maze.maze_name
+                        persona_positions[persona_name] = val_dict
+                    with open(curr_env_file, "w") as outfile:
+                        outfile.write(json.dumps(persona_positions, indent=2))
+
                     # After this cycle, the world takes one step forward, and the
                     # current time moves by <sec_per_step> amount.
                     self.step += 1
