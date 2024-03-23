@@ -1081,7 +1081,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 6")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
