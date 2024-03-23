@@ -19,35 +19,79 @@ def temp_sleep(seconds=0.1):
 def ChatGPT_single_request(prompt): 
   temp_sleep()
 
-  completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
-    messages=[{"role": "user", "content": prompt}]
-  )
-  return completion["choices"][0]["message"]["content"]
+    completion = openai.ChatCompletion.create(
+        model="gpt-4-0125-preview", messages=[{"role": "user", "content": prompt}]
+    )
+    return completion["choices"][0]["message"]["content"]
 
 
 # ============================================================================
 # #####################[SECTION 1: CHATGPT-3 STRUCTURE] ######################
 # ============================================================================
 
-def GPT4_request(prompt): 
-  """
-  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
-  server and returns the response. 
-  ARGS:
-    prompt: a str prompt
-    gpt_parameter: a python dictionary with the keys indicating the names of  
-                   the parameter and the values indicating the parameter 
-                   values.   
-  RETURNS: 
-    a str of GPT-3's response. 
-  """
-  temp_sleep()
 
-  try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-4", 
-    messages=[{"role": "user", "content": prompt}]
+def GPT4_request(prompt):
+    """
+    Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
+    server and returns the response.
+    ARGS:
+      prompt: a str prompt
+      gpt_parameter: a python dictionary with the keys indicating the names of
+                     the parameter and the values indicating the parameter
+                     values.
+    RETURNS:
+      a str of GPT-3's response.
+    """
+    temp_sleep()
+
+    try:
+        completion = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview", messages=[{"role": "user", "content": prompt}]
+        )
+        return completion["choices"][0]["message"]["content"]
+
+    except:
+        print("ChatGPT ERROR")
+        return "ChatGPT ERROR"
+
+
+def ChatGPT_request(prompt):
+    """
+    Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
+    server and returns the response.
+    ARGS:
+      prompt: a str prompt
+      gpt_parameter: a python dictionary with the keys indicating the names of
+                     the parameter and the values indicating the parameter
+                     values.
+    RETURNS:
+      a str of GPT-3's response.
+    """
+    # temp_sleep()
+    try:
+        completion = openai.ChatCompletion.create(
+            model="gpt-4-0125-preview", messages=[{"role": "user", "content": prompt}]
+        )
+        return completion["choices"][0]["message"]["content"]
+
+    except:
+        print("ChatGPT ERROR")
+        return "ChatGPT ERROR"
+
+
+def GPT4_safe_generate_response(
+    prompt,
+    example_output,
+    special_instruction,
+    repeat=3,
+    fail_safe_response="error",
+    func_validate=None,
+    func_clean_up=None,
+    verbose=False,
+):
+    prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
+    prompt += (
+        f"Output the response to the prompt above in json. {special_instruction}\n"
     )
     return completion["choices"][0]["message"]["content"]
   
