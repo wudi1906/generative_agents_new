@@ -27,7 +27,7 @@ def ChatGPT_single_request(prompt):
     temp_sleep()
 
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo" if use_openai else model,
+        model="gpt-4-0125-preview" if use_openai else model,
         messages=[{"role": "user", "content": prompt}],
     )
     return completion.choices[0].message.content
@@ -54,7 +54,7 @@ def GPT4_request(prompt):
 
     try:
         completion = client.chat.completions.create(
-            model="gpt-4" if use_openai else model,
+            model="gpt-4-0125-preview" if use_openai else model,
             messages=[{"role": "user", "content": prompt}],
         )
         return completion.choices[0].message.content
@@ -79,7 +79,7 @@ def ChatGPT_request(prompt):
     # temp_sleep()
     try:
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo" if use_openai else model,
+            model="gpt-4-0125-preview" if use_openai else model,
             messages=[{"role": "user", "content": prompt}],
         )
         return completion.choices[0].message.content
@@ -311,7 +311,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
 
 if __name__ == "__main__":
     gpt_parameter = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
