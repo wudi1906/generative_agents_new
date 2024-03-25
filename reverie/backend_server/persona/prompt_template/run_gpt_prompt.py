@@ -82,7 +82,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 5,
         "temperature": 0.8,
         "top_p": 1,
@@ -169,7 +169,7 @@ def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=Fa
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 500,
         "temperature": 1,
         "top_p": 1,
@@ -312,7 +312,7 @@ def run_gpt_prompt_generate_hourly_schedule(
     # # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0.5,
         "top_p": 1,
@@ -499,7 +499,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 1000,
         "temperature": 0,
         "top_p": 1,
@@ -662,7 +662,7 @@ def run_gpt_prompt_action_sector(
     # # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -767,7 +767,7 @@ def run_gpt_prompt_action_arena(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -827,7 +827,7 @@ def run_gpt_prompt_action_game_object(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -907,7 +907,7 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -1014,7 +1014,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
     # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 30,
         "temperature": 0,
         "top_p": 1,
@@ -1154,7 +1154,7 @@ def run_gpt_prompt_act_obj_event_triple(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 30,
         "temperature": 0,
         "top_p": 1,
@@ -1325,7 +1325,7 @@ def run_gpt_prompt_new_decomp_schedule(
         return ret
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 1000,
         "temperature": 0,
         "top_p": 1,
@@ -1449,7 +1449,7 @@ def run_gpt_prompt_decide_to_talk(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 20,
         "temperature": 0,
         "top_p": 1,
@@ -1574,7 +1574,7 @@ def run_gpt_prompt_decide_to_react(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 20,
         "temperature": 0,
         "top_p": 1,
@@ -1728,7 +1728,7 @@ def run_gpt_prompt_create_conversation(
         return convo
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 1000,
         "temperature": 0.7,
         "top_p": 1,
@@ -1793,7 +1793,7 @@ def run_gpt_prompt_summarize_conversation(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 11")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -1879,7 +1879,7 @@ def run_gpt_prompt_extract_keywords(
         return []
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
@@ -1927,7 +1927,7 @@ def run_gpt_prompt_keyword_to_thoughts(
         return ""
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 40,
         "temperature": 0.7,
         "top_p": 1,
@@ -1989,7 +1989,7 @@ def run_gpt_prompt_convo_to_thoughts(
         return ""
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 40,
         "temperature": 0.7,
         "top_p": 1,
@@ -2057,7 +2057,7 @@ def run_gpt_prompt_event_poignancy(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 7")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2146,7 +2146,7 @@ def run_gpt_prompt_thought_poignancy(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 8")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2235,7 +2235,7 @@ def run_gpt_prompt_chat_poignancy(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 9")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2320,7 +2320,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2352,7 +2352,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
     # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 150,
         "temperature": 0,
         "top_p": 1,
@@ -2408,7 +2408,7 @@ def run_gpt_prompt_insight_and_guidance(
         return ["I am hungry"] * n
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 150,
         "temperature": 0.5,
         "top_p": 1,
@@ -2476,7 +2476,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 17")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2562,7 +2562,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 18")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2720,7 +2720,7 @@ def run_gpt_prompt_agent_chat(
 
     # print ("HERE JULY 23 -- ----- ") ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2811,7 +2811,7 @@ def run_gpt_prompt_summarize_ideas(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 16")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -2926,7 +2926,7 @@ def run_gpt_prompt_generate_next_convo_line(
     # # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 250,
         "temperature": 1,
         "top_p": 1,
@@ -2975,7 +2975,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(
         return "..."
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
@@ -3027,7 +3027,7 @@ def run_gpt_prompt_planning_thought_on_convo(
         return "..."
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
@@ -3089,7 +3089,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 15")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -3121,7 +3121,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
     # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
@@ -3183,7 +3183,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
     print(output)
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
@@ -3343,7 +3343,7 @@ def run_gpt_generate_iterative_chat_utt(
     print(output)
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 50,
         "temperature": 0,
         "top_p": 1,
