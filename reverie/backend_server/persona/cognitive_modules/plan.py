@@ -307,12 +307,12 @@ def generate_act_obj_desc(act_game_object, act_desp, persona):
         print("GNS FUNCTION: <generate_act_obj_desc>")
 
     result = run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)
-    # if result is not None:
-    #     act_obj_desp = result[0]
-    #     return act_obj_desp
-    # else:
-    #     return []
-    return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
+    if result is not None:
+        act_obj_desp = result[0]
+        return act_obj_desp
+    else:
+        return []
+    # return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
 
 
 def generate_act_obj_event_triple(act_game_object, act_obj_desc, persona):
@@ -703,6 +703,9 @@ def _determine_action(persona, maze):
     persona.scratch.f_daily_schedule += [["sleeping", 1440 - x_emergency]]
 
     act_desp, act_dura = persona.scratch.f_daily_schedule[curr_index]
+
+    if act_desp and act_dura is None:
+        act_desp, act_dura = ["playing hide-and-seek", 150]
 
     # Finding the target location of the action and creating action-related
     # variables.
