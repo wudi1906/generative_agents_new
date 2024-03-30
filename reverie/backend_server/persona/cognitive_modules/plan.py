@@ -311,7 +311,7 @@ def generate_act_obj_desc(act_game_object, act_desp, persona):
         act_obj_desp = result[0]
         return act_obj_desp
     else:
-        return []
+        return {}
     # return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
 
 
