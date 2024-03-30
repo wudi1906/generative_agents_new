@@ -201,6 +201,7 @@ def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
 
 
 def generate_action_game_object(act_desp, act_address, persona, maze):
+<<<<<<< HEAD
   """TODO
   Given the action description and the act address (the address where
   we expect the action to task place), choose one of the game objects. 
@@ -306,6 +307,129 @@ def generate_decide_to_talk(init_persona, target_persona, retrieved):
     return True
   else: 
     return False
+=======
+    """TODO
+    Given the action description and the act address (the address where
+    we expect the action to task place), choose one of the game objects.
+
+    Persona state: identity stable set, n-1 day schedule, daily plan
+
+    INPUT:
+      act_desp: the description of the action (e.g., "sleeping")
+      act_address: the arena where the action will take place:
+                 (e.g., "dolores double studio:double studio:bedroom 2")
+      persona: The Persona class instance
+    OUTPUT:
+      act_game_object:
+    EXAMPLE OUTPUT:
+      "bed"
+    """
+    if debug:
+        print("GNS FUNCTION: <generate_action_game_object>")
+    if not persona.s_mem.get_str_accessible_arena_game_objects(act_address):
+        return "<random>"
+    return run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)[0]
+
+
+def generate_action_pronunciatio(act_desp, persona):
+    """TODO
+    Given an action description, creates an emoji string description via a few
+    shot prompt.
+
+    Does not really need any information from persona.
+
+    INPUT:
+      act_desp: the description of the action (e.g., "sleeping")
+      persona: The Persona class instance
+    OUTPUT:
+      a string of emoji that translates action description.
+    EXAMPLE OUTPUT:
+      "🧈🍞"
+    """
+    if debug:
+        print("GNS FUNCTION: <generate_action_pronunciatio>")
+    try:
+        x = run_gpt_prompt_pronunciatio(act_desp, persona)[0]
+    except:
+        x = "🙂"
+
+    if not x:
+        return "🙂"
+    return x
+
+
+def generate_action_event_triple(act_desp, persona):
+    """TODO
+
+    INPUT:
+      act_desp: the description of the action (e.g., "sleeping")
+      persona: The Persona class instance
+    OUTPUT:
+      a string of emoji that translates action description.
+    EXAMPLE OUTPUT:
+      "🧈🍞"
+    """
+    if debug:
+        print("GNS FUNCTION: <generate_action_event_triple>")
+    return run_gpt_prompt_event_triple(act_desp, persona)[0]
+
+
+def generate_act_obj_desc(act_game_object, act_desp, persona):
+    if debug:
+        print("GNS FUNCTION: <generate_act_obj_desc>")
+
+    result = run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)
+    if result is not None:
+        act_obj_desp = result[0]
+        return act_obj_desp
+    else:
+        return {}
+    # return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
+
+
+def generate_act_obj_event_triple(act_game_object, act_obj_desc, persona):
+    if debug:
+        print("GNS FUNCTION: <generate_act_obj_event_triple>")
+    return run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona)[
+        0
+    ]
+
+
+def generate_convo(maze, init_persona, target_persona):
+    curr_loc = maze.access_tile(init_persona.scratch.curr_tile)
+
+    # convo = run_gpt_prompt_create_conversation(init_persona, target_persona, curr_loc)[0]
+    # convo = agent_chat_v1(maze, init_persona, target_persona)
+    convo = agent_chat_v2(maze, init_persona, target_persona)
+    all_utt = ""
+
+    for row in convo:
+        speaker = row[0]
+        utt = row[1]
+        all_utt += f"{speaker}: {utt}\n"
+
+    convo_length = math.ceil(int(len(all_utt) / 8) / 30)
+
+    if debug:
+        print("GNS FUNCTION: <generate_convo>")
+    return convo, convo_length
+
+
+def generate_convo_summary(persona, convo):
+    convo_summary = run_gpt_prompt_summarize_conversation(persona, convo)[0]
+    return convo_summary
+
+
+def generate_decide_to_talk(init_persona, target_persona, retrieved):
+    x = run_gpt_prompt_decide_to_talk(init_persona, target_persona, retrieved)[0]
+    if debug:
+        print("GNS FUNCTION: <generate_decide_to_talk>")
+
+    if x == "yes":
+        return True
+    else:
+        return False
+>>>>>>> Updating plan.py to send a {} instead of [] for default variables
 
 
 def generate_decide_to_react(init_persona, target_persona, retrieved): 
