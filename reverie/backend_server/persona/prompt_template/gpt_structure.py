@@ -312,7 +312,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
 if __name__ == "__main__":
     gpt_parameter = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,

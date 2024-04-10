@@ -376,15 +376,16 @@ class ReverieServer:
                             # We add that new object action event to the backend tile map.
                             # At its creation, it is stored in the persona's backend.
                             game_obj_cleanup[
-                                persona.scratch.get_curr_obj_event_and_desc()
+                                tuple(persona.scratch.get_curr_obj_event_and_desc())
                             ] = new_tile
                             self.maze.add_event_from_tile(
-                                persona.scratch.get_curr_obj_event_and_desc(), new_tile
+                                tuple(persona.scratch.get_curr_obj_event_and_desc()),
+                                new_tile,
                             )
                             # We also need to remove the temporary blank action for the
                             # object that is currently taking the action.
                             blank = (
-                                persona.scratch.get_curr_obj_event_and_desc()[0],
+                                tuple(persona.scratch.get_curr_obj_event_and_desc())[0],
                                 None,
                                 None,
                                 None,

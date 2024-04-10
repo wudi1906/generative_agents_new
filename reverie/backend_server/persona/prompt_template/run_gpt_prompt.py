@@ -83,7 +83,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 5,
+        "max_tokens": 4096,
         "temperature": 0.8,
         "top_p": 1,
         "stream": False,
@@ -170,7 +170,7 @@ def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=Fa
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 500,
+        "max_tokens": 4096,
         "temperature": 1,
         "top_p": 1,
         "stream": False,
@@ -313,7 +313,7 @@ def run_gpt_prompt_generate_hourly_schedule(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0.5,
         "top_p": 1,
         "stream": False,
@@ -500,7 +500,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 1000,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -663,7 +663,7 @@ def run_gpt_prompt_action_sector(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -768,7 +768,7 @@ def run_gpt_prompt_action_arena(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -828,7 +828,7 @@ def run_gpt_prompt_action_game_object(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -908,7 +908,7 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1015,7 +1015,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 30,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1082,7 +1082,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 6")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1155,7 +1155,7 @@ def run_gpt_prompt_act_obj_event_triple(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 30,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1326,7 +1326,7 @@ def run_gpt_prompt_new_decomp_schedule(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 1000,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1450,7 +1450,7 @@ def run_gpt_prompt_decide_to_talk(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 20,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1575,7 +1575,7 @@ def run_gpt_prompt_decide_to_react(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 20,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1729,7 +1729,7 @@ def run_gpt_prompt_create_conversation(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 1000,
+        "max_tokens": 4096,
         "temperature": 0.7,
         "top_p": 1,
         "stream": False,
@@ -1794,7 +1794,7 @@ def run_gpt_prompt_summarize_conversation(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 11")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1880,7 +1880,7 @@ def run_gpt_prompt_extract_keywords(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1928,7 +1928,7 @@ def run_gpt_prompt_keyword_to_thoughts(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 40,
+        "max_tokens": 4096,
         "temperature": 0.7,
         "top_p": 1,
         "stream": False,
@@ -1990,7 +1990,7 @@ def run_gpt_prompt_convo_to_thoughts(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 40,
+        "max_tokens": 4096,
         "temperature": 0.7,
         "top_p": 1,
         "stream": False,
@@ -2058,7 +2058,7 @@ def run_gpt_prompt_event_poignancy(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 7")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2147,7 +2147,7 @@ def run_gpt_prompt_thought_poignancy(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 8")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2236,7 +2236,7 @@ def run_gpt_prompt_chat_poignancy(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 9")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2321,7 +2321,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2353,7 +2353,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 150,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2409,7 +2409,7 @@ def run_gpt_prompt_insight_and_guidance(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 150,
+        "max_tokens": 4096,
         "temperature": 0.5,
         "top_p": 1,
         "stream": False,
@@ -2477,7 +2477,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 17")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2563,7 +2563,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 18")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2721,7 +2721,7 @@ def run_gpt_prompt_agent_chat(
     # print ("HERE JULY 23 -- ----- ") ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2812,7 +2812,7 @@ def run_gpt_prompt_summarize_ideas(
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 16")  ########
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 15,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2927,7 +2927,7 @@ def run_gpt_prompt_generate_next_convo_line(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 250,
+        "max_tokens": 4096,
         "temperature": 1,
         "top_p": 1,
         "stream": False,
@@ -2976,7 +2976,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3028,7 +3028,7 @@ def run_gpt_prompt_planning_thought_on_convo(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3122,7 +3122,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3184,7 +3184,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3344,7 +3344,7 @@ def run_gpt_generate_iterative_chat_utt(
 
     gpt_param = {
         "engine": "gpt-4-0125-preview",
-        "max_tokens": 50,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
