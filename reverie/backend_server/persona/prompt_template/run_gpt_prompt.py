@@ -1504,7 +1504,6 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
 
 
 
-
 def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
                                        test_input=None, verbose=False): 
   def create_prompt_input(init_persona, target_persona, curr_loc, 
