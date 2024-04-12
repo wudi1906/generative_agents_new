@@ -40,39 +40,52 @@
 		persona_names[x[0]] = [parseInt(x[1]), parseInt(x[2])]
 	}
 
+	// // addEventListener to interact with the people
+	// var button = document.getElementsByClassName('btn btn-primary');
+	// function displayBox(){
+	// 	let persona_names = document.getElementById('persona_name_list').innerHTML.split(",");
+    // 	var input = prompt("Geben Sie ein, was "+ persona_names +" als nächstes machen soll");
+    // 	//console.log(input);
+	// }
+	// //button.addEventListener('click', displayBox());
+	// persona = {}
+	// for(let i in persona_names){
+  	// 	let $name = persona_names[i];
+	// }
+
 
 	// Phaser 3.0 global settings. 
 	// Configuration meant to be passed to the main Phaser game instance. 
-	const config = {
-	  type: Phaser.AUTO,
-	  width: 1500,
-	  height: 800,
-	  parent: "game-container",
-	  pixelArt: true,
-	  physics: {
-	    default: "arcade",
-	    arcade: {
-	      gravity: { y: 0 } } },
-	  scene: {
-	    preload: preload,
-	    create: create,
-	    update: update } };
+	//const config = {
+	  //type: Phaser.AUTO,
+	  //width: 1500,
+	  //height: 800,
+	  //parent: "game-container",
+	  //pixelArt: true,
+	  //physics: {
+	    //default: "arcade",
+	    //arcade: {
+	      //gravity: { y: 0 } } },
+	  //scene: {
+	    //preload: preload,
+	    //create: create,
+	    //update: update } };
 
-	// const config = {
-	//   type: Phaser.AUTO,
-	//   width: 4480,
-	//   height: 3200,
-	//   parent: "game-container",
-	//   pixelArt: true,
-	//   physics: {
-	//     default: "arcade",
-	//     arcade: {
-	//       gravity: { y: 0 } } },
-	//   scene: {
-	//     preload: preload,
-	//     create: create,
-	//     update: update },
-	//   scale: {zoom: 0.5} };
+	 const config = {
+	   type: Phaser.AUTO,
+	   width: 4480,
+	   height: 3200,
+	   parent: "game-container",
+	   pixelArt: true,
+	   physics: {
+	     default: "arcade",
+	     arcade: {
+	       gravity: { y: 0 } } },
+	   scene: {
+	     preload: preload,
+	     create: create,
+	     update: update },
+	   scale: {zoom: 0.5} };
 
 	// Creating the game instance and setting up the main Phaser variables that  
 	// will be used in it. 
@@ -91,7 +104,7 @@
 	for (var key in persona_names){
 		spawn_tile_loc[key] = persona_names[key] ;
 	}
-	console.log(spawn_tile_loc);
+	//console.log(spawn_tile_loc);
 
 	var personas = {};
 	var pronunciatios = {};
@@ -381,7 +394,9 @@
 	      let persona_name = Object.keys(personas)[i];
 	      data["environment"][persona_name] = {"maze": curr_maze,
 	                                           "x": Math.ceil((personas[persona_name].body.position.x) / tile_width),
-	                                           "y": Math.ceil((personas[persona_name].body.position.y) / tile_width)}
+	                                           "y": Math.ceil((personas[persona_name].body.position.y) / tile_width),
+											   //"input": document.getElementById("current_action_input__${persona_name}").value
+											}
 	    }
 	    var json = JSON.stringify(data);
 	    // We then send this to the frontend server: 
@@ -536,8 +551,9 @@
 		      }
 	        // action_description += description_content + "<br>";
 
-	        document.getElementById("current_action__"+curr_persona_name_os).innerHTML = description_content.split("@")[0];
-	        document.getElementById("target_address__"+curr_persona_name_os).innerHTML = description_content.split("@")[1];
+	        //document.getElementById("current_action__"+curr_persona_name_os).innerHTML = description_content.split("@")[0];
+			document.getElementById("current_action_input__"+curr_persona_name_os).placeholder = description_content.split("@")[0];
+			document.getElementById("target_address__"+curr_persona_name_os).innerHTML = description_content.split("@")[1];
 	        document.getElementById("chat__"+curr_persona_name_os).innerHTML = chat_content;
 	      }
 	      
