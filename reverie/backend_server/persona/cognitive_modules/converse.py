@@ -114,13 +114,10 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
               f"is initiating a conversation with " +
               f"{target_persona.scratch.name}.")
 
-  print ("July 23 5")
   x = run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retrieved, curr_context, curr_chat)[0]
 
-  print ("July 23 6")
-
-  print ("adshfoa;khdf;fajslkfjald;sdfa HERE", x)
-
+  print("---->generate_one_utterance:")
+  print(x)
   return x["utterance"], x["end"]
 
 def agent_chat_v2(maze, init_persona, target_persona): 
@@ -131,7 +128,7 @@ def agent_chat_v2(maze, init_persona, target_persona):
     focal_points = [f"{target_persona.scratch.name}"]
     retrieved = new_retrieve(init_persona, focal_points, 50)
     relationship = generate_summarize_agent_relationship(init_persona, target_persona, retrieved)
-    print ("-------- relationshopadsjfhkalsdjf", relationship)
+    print ("--------relationship:", relationship)
     last_chat = ""
     for i in curr_chat[-4:]:
       last_chat += ": ".join(i) + "\n"
@@ -153,7 +150,7 @@ def agent_chat_v2(maze, init_persona, target_persona):
     focal_points = [f"{init_persona.scratch.name}"]
     retrieved = new_retrieve(target_persona, focal_points, 50)
     relationship = generate_summarize_agent_relationship(target_persona, init_persona, retrieved)
-    print ("-------- relationshopadsjfhkalsdjf", relationship)
+    print ("--------relationship", relationship)
     last_chat = ""
     for i in curr_chat[-4:]:
       last_chat += ": ".join(i) + "\n"
@@ -210,7 +207,6 @@ def generate_inner_thought(persona, whisper):
 
 def generate_action_event_triple(act_desp, persona): 
   """TODO 
-
   INPUT: 
     act_desp: the description of the action (e.g., "sleeping")
     persona: The Persona class instance
@@ -289,35 +285,3 @@ def open_convo_session(persona, convo_mode):
     persona.a_mem.add_thought(created, expiration, s, p, o, 
                               thought, keywords, thought_poignancy, 
                               thought_embedding_pair, None)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -92,18 +92,27 @@ class MemoryTree:
     INPUT
       temp_address: optional arena address
     OUTPUT 
-      str list of all accessible game objects in the gmae arena. 
+      str list of all accessible game objects in the game arena. 
     EXAMPLE STR OUTPUT
       "phone, charger, bed, nightstand"
     """
+    
     curr_world, curr_sector, curr_arena = arena.split(":")
 
     if not curr_arena: 
       return ""
-
+    print("---->self.tree:")
+    print(self.tree.keys())  # 查看树的顶层键
+    print(self.tree[curr_world].keys())  # 查看当前世界下的键
+    print(self.tree[curr_world][curr_sector].keys())  # 查看当前区域下的键
+    print("---->curr_world:")
+    print(curr_world)
+    print(curr_sector)
+    print(curr_arena)
     try: 
       x = ", ".join(list(self.tree[curr_world][curr_sector][curr_arena]))
     except: 
+      #lower()是一个字符串方法，用于将字符串转换为小写形式。
       x = ", ".join(list(self.tree[curr_world][curr_sector][curr_arena.lower()]))
     return x
 

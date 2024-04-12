@@ -34,7 +34,7 @@ def generate_wake_up_hour(persona):
   EXAMPLE OUTPUT: 
     8
   """
-  if debug: print ("GNS FUNCTION: <generate_wake_up_hour>")
+  if debug: print ("====GNS FUNCTION: <generate_wake_up_hour>====")
   return int(run_gpt_prompt_wake_up_hour(persona)[0])
 
 
@@ -64,11 +64,12 @@ def generate_first_daily_plan(persona, wake_up_hour):
      'work on painting project from 4:00 pm to 6:00 pm', 
      'have dinner at 6:00 pm', 'watch TV from 7:00 pm to 8:00 pm']
   """
-  if debug: print ("GNS FUNCTION: <generate_first_daily_plan>")
+  if debug: print ("====GNS FUNCTION: <generate_first_daily_plan>====")
   return run_gpt_prompt_daily_plan(persona, wake_up_hour)[0]
 
 
 def generate_hourly_schedule(persona, wake_up_hour): 
+  print("---->wake_up_hour:"+str(wake_up_hour))
   """
   Based on the daily req, creates an hourly schedule -- one hour at a time. 
   The form of the action for each of the hour is something like below: 
@@ -87,27 +88,30 @@ def generate_hourly_schedule(persona, wake_up_hour):
     [['sleeping', 360], ['waking up and starting her morning routine', 60], 
      ['eating breakfast', 60],..
   """
-  if debug: print ("GNS FUNCTION: <generate_hourly_schedule>")
+  if debug: print ("====GNS FUNCTION: <generate_hourly_schedule>====")
 
   hour_str = ["00:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", 
               "05:00 AM", "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", 
               "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", 
               "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM",
               "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM"]
+
   n_m1_activity = []
-  diversity_repeat_count = 3
-  for i in range(diversity_repeat_count): 
-    n_m1_activity_set = set(n_m1_activity)
-    if len(n_m1_activity_set) < 5: 
-      n_m1_activity = []
-      for count, curr_hour_str in enumerate(hour_str): 
-        if wake_up_hour > 0: 
-          n_m1_activity += ["sleeping"]
-          wake_up_hour -= 1
-        else: 
-          n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
+  n_m1_activity_set = set(n_m1_activity)
+  if len(n_m1_activity_set) < 1:#为啥5? 
+    n_m1_activity = []
+    for curr_hour_str in hour_str: #加count+配合索引
+      if wake_up_hour > 0: 
+        n_m1_activity += ["sleeping"]
+        wake_up_hour -= 1
+      else:
+        print("----->curr_hour_str:")
+        print(str(curr_hour_str) +",hour_str:"+str(hour_str))
+        n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
                           persona, curr_hour_str, n_m1_activity, hour_str)[0]]
-  
+        print("----->n_m1_activity:")
+        print(n_m1_activity)
+
   # Step 1. Compressing the hourly schedule to the following format: 
   # The integer indicates the number of hours. They should add up to 24. 
   # [['sleeping', 6], ['waking up and starting her morning routine', 1], 
@@ -134,7 +138,9 @@ def generate_hourly_schedule(persona, wake_up_hour):
   n_m1_hourly_compressed = []
   for task, duration in _n_m1_hourly_compressed: 
     n_m1_hourly_compressed += [[task, duration*60]]
-
+  
+  print("---->n_m1_hourly_compressed")
+  print(n_m1_hourly_compressed)
   return n_m1_hourly_compressed
 
 
@@ -160,7 +166,7 @@ def generate_task_decomp(persona, task, duration):
      ['starting to work on her painting', 15]] 
 
   """
-  if debug: print ("GNS FUNCTION: <generate_task_decomp>")
+  if debug: print ("====GNS FUNCTION: <generate_task_decomp>")
   return run_gpt_prompt_task_decomp(persona, task, duration)[0]
 
 
@@ -178,7 +184,7 @@ def generate_action_sector(act_desp, persona, maze):
   EXAMPLE OUTPUT: 
     "bedroom 2"
   """
-  if debug: print ("GNS FUNCTION: <generate_action_sector>")
+  if debug: print ("====GNS FUNCTION: <generate_action_sector>")
   return run_gpt_prompt_action_sector(act_desp, persona, maze)[0]
 
 
@@ -196,7 +202,7 @@ def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
   EXAMPLE OUTPUT: 
     "bedroom 2"
   """
-  if debug: print ("GNS FUNCTION: <generate_action_arena>")
+  if debug: print ("====GNS FUNCTION: <generate_action_arena>")
   return run_gpt_prompt_action_arena(act_desp, persona, maze, act_world, act_sector)[0]
 
 
@@ -217,7 +223,7 @@ def generate_action_game_object(act_desp, act_address, persona, maze):
   EXAMPLE OUTPUT: 
     "bed"
   """
-  if debug: print ("GNS FUNCTION: <generate_action_game_object>")
+  if debug: print ("====GNS FUNCTION: <generate_action_game_object>")
   if not persona.s_mem.get_str_accessible_arena_game_objects(act_address): 
     return "<random>"
   return run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)[0]
@@ -238,7 +244,7 @@ def generate_action_pronunciatio(act_desp, persona):
   EXAMPLE OUTPUT: 
     "🧈🍞"
   """
-  if debug: print ("GNS FUNCTION: <generate_action_pronunciatio>")
+  if debug: print ("====GNS FUNCTION: <generate_action_pronunciatio>")
   try: 
     x = run_gpt_prompt_pronunciatio(act_desp, persona)[0]
   except: 
@@ -260,17 +266,30 @@ def generate_action_event_triple(act_desp, persona):
   EXAMPLE OUTPUT: 
     "🧈🍞"
   """
-  if debug: print ("GNS FUNCTION: <generate_action_event_triple>")
+  if debug: print ("====GNS FUNCTION: <generate_action_event_triple>")
   return run_gpt_prompt_event_triple(act_desp, persona)[0]
 
 
 def generate_act_obj_desc(act_game_object, act_desp, persona): 
-  if debug: print ("GNS FUNCTION: <generate_act_obj_desc>")
+  print("---->act_game_object")
+  print(act_game_object)
+  print("---->act_desp")
+  print(act_desp)
+  print("---->persona")
+  print(persona)
+
+  if debug: print ("====GNS FUNCTION: <generate_act_obj_desc>")
   return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
 
 
 def generate_act_obj_event_triple(act_game_object, act_obj_desc, persona): 
-  if debug: print ("GNS FUNCTION: <generate_act_obj_event_triple>")
+  print("---->act_game_object")
+  print(act_game_object)
+  print("---->act_obj_desc")
+  print(act_obj_desc)
+  print("---->persona")
+  print(persona)
+  if debug: print ("====GNS FUNCTION: <generate_act_obj_event_triple>")
   return run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona)[0]
 
 
@@ -289,7 +308,7 @@ def generate_convo(maze, init_persona, target_persona):
 
   convo_length = math.ceil(int(len(all_utt)/8) / 30)
 
-  if debug: print ("GNS FUNCTION: <generate_convo>")
+  if debug: print ("====GNS FUNCTION: <generate_convo>")
   return convo, convo_length
 
 
@@ -300,8 +319,7 @@ def generate_convo_summary(persona, convo):
 
 def generate_decide_to_talk(init_persona, target_persona, retrieved): 
   x =run_gpt_prompt_decide_to_talk(init_persona, target_persona, retrieved)[0]
-  if debug: print ("GNS FUNCTION: <generate_decide_to_talk>")
-
+  if debug: print ("====GNS FUNCTION: <generate_decide_to_talk>")
   if x == "yes": 
     return True
   else: 
@@ -309,7 +327,7 @@ def generate_decide_to_talk(init_persona, target_persona, retrieved):
 
 
 def generate_decide_to_react(init_persona, target_persona, retrieved): 
-  if debug: print ("GNS FUNCTION: <generate_decide_to_react>")
+  if debug: print ("====GNS FUNCTION: <generate_decide_to_react>")
   return run_gpt_prompt_decide_to_react(init_persona, target_persona, retrieved)[0]
 
 
@@ -391,7 +409,7 @@ def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start
   end_time_hour = (datetime.datetime(2022, 10, 31, 0, 0) 
                    + datetime.timedelta(hours=end_hour))
 
-  if debug: print ("GNS FUNCTION: <generate_new_decomp_schedule>")
+  if debug: print ("====GNS FUNCTION: <generate_new_decomp_schedule>")
   return run_gpt_prompt_new_decomp_schedule(persona, 
                                             main_act_dur, 
                                             truncated_act_dur, 
@@ -459,6 +477,8 @@ def revise_identity(persona):
 
 
 def _long_term_planning(persona, new_day): 
+  print("---->_long_term_planning")
+
   """
   Formulates the persona's daily long-term plan if it is the start of a new 
   day. This basically has two components: first, we create the wake-up hour, 
@@ -475,6 +495,7 @@ def _long_term_planning(persona, new_day):
   # Note that the daily_req is a list of strings that describe the persona's
   # day in broad strokes.
   if new_day == "First day": 
+    print("---->new_day is First day")
     # Bootstrapping the daily plan for the start of then generation:
     # if this is the start of generation (so there is no previous day's 
     # daily requirement, or if we are on a new day, we want to create a new
@@ -482,6 +503,7 @@ def _long_term_planning(persona, new_day):
     persona.scratch.daily_req = generate_first_daily_plan(persona, 
                                                           wake_up_hour)
   elif new_day == "New day":
+    print("---->new_day not First day")
     revise_identity(persona)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - TODO
@@ -729,8 +751,7 @@ def _should_react(persona, retrieved, personas):
     if "<waiting>" in target_persona.scratch.act_address: 
       return False
 
-    if (target_persona.scratch.chatting_with 
-      or init_persona.scratch.chatting_with): 
+    if (target_persona.scratch.chatting_with or init_persona.scratch.chatting_with): 
       return False
 
     if (target_persona.name in init_persona.scratch.chatting_with_buffer): 
@@ -738,9 +759,8 @@ def _should_react(persona, retrieved, personas):
         return False
 
     if generate_decide_to_talk(init_persona, target_persona, retrieved): 
-
       return True
-
+      
     return False
 
   def lets_react(init_persona, target_persona, retrieved): 

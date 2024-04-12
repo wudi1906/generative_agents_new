@@ -1,6 +1,7 @@
 {% load staticfiles %}
 
 <script type="text/javascript">
+	console.log("--->Demo的assets/characters:" + "{% static 'assets/characters/' %}");
 	/*
 	  Main resources: 
 	  https://www.youtube.com/watch?v=cKIG1lKwLeo&t=401s&ab_channel=HongLy
@@ -56,7 +57,7 @@
 	//     preload: preload,
 	//     create: create,
 	//     update: update },
-	//   scale: {zoom: 1} };
+	//   scale: {zoom: 0.5} };
 
 
 	// Creating the game instance and setting up the main Phaser variables that  
@@ -64,6 +65,7 @@
 	const game = new Phaser.Game(config);
 	let cursors;
 	let player;
+	let showDebug = false;
 
 	// Persona related variables. This should have the name of the persona as its 
 	// keys, and the instances of the Persona class as the values.
@@ -146,26 +148,15 @@
 
 	  // Joon: This is the export json file you get from Tiled. 
 	  this.load.tilemapTiledJSON("map", "{% static 'assets/the_ville/visuals/the_ville_jan7.json' %}");
-
-	  // An atlas is a way to pack multiple images together into one texture. I'm 
-	  // using it to load all the player animations (walking left, walking right, 
-	  // etc.) in one image. For more info see:
-	  // https://labs.phaser.io/view.html?src=src/animation/texture%20atlas%20animation.js
-	  // If you don't use an atlas, you can do the same thing with a spritesheet, 
-	  // see: https://labs.phaser.io/view.html?src=src/animation/single%20sprite%20sheet.js
-	  // Joon: Technically, I think this guy had the best tutorial for atlas: 
-	  //       https://www.youtube.com/watch?v=fdXcD9X4NrQ&ab_channel=MorganPage
-	  this.load.atlas("atlas", "{% static 'assets/characters/Yuriko_Yamamoto.png' %}", 
-	  												     "{% static 'assets/characters/atlas.json' %}");
-
-	  {% for p in persona_names %}
-		  {% with 'assets/characters/'|add:p.underscore|add:'.png' as image_static %}
-			  this.load.atlas("{{p.underscore}}", "{% static image_static %}", 
-		  										  		     "{% static 'assets/characters/atlas.json' %}");
-			{% endwith %}
-	  {% endfor %}
-
-	  this.load.image('speech_bubble', "{% static 'assets/speech_bubble/v3.png' %}");
+	  
+	  this.load.atlas("atlas", "{% static 'assets/characters/Yuriko_Yamamoto.png' %}");
+		{% for p in persona_names %}
+		{% with 'assets/characters/'|add:p.underscore|add:'.png' as image_static %}
+			this.load.atlas("{{p.underscore}}","{% static image_static %}","{% static 'assets/characters/atlas.json' %}");
+			console.log("p.underscore: " + "{{p.underscore}}");
+		{% endwith %}
+		{% endfor %}
+		this.load.image('speech_bubble', "{% static 'assets/speech_bubble/v3.png' %}");
 	}
 
 	function create() {  
@@ -293,7 +284,7 @@
 	                                   borderRadius:"10px"}).setDepth(3);
 	  }
 
-	  // Create the player's walking animations from the texture atlas. These are
+	  // Create the player's walking animations from the texture. These are
 	  // stored in the global animation manager so any sprite can access them.
 	  const anims = this.anims;
 		for (let i=0; i<Object.keys(persona_names).length; i++) { 
@@ -495,40 +486,3 @@
 	var play_button=document.getElementById("play_button");
 	var pause_button=document.getElementById("pause_button");
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

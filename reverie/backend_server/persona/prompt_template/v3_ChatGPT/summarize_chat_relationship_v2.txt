@@ -9,7 +9,4 @@ Variables:
 [Statements]
 !<INPUT 0>!
 
-Based on the statements above, summarize !<INPUT 1>! and !<INPUT 2>!'s relationship. What do they feel or know about each other?
-
-
-"
+Based on the statements above, What's the relationship between !<INPUT 1>! and !<INPUT 2>!? Answer in one word from {intimate,family,friend,acquaintance,stranger}:

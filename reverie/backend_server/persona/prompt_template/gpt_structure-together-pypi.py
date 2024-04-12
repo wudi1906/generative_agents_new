@@ -1,5 +1,6 @@
 """
 Author: Joon Sung Park (joonspk@stanford.edu)
+
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
@@ -7,70 +8,49 @@ import json
 import random
 import openai
 import time 
-import os, requests
+import os
+from utils import *
 import textwrap
 import logging
+import together
+import datetime
 
 from utils import *
 from typing import Any, Dict, List, Mapping, Optional
 
 from pydantic import Extra, Field, root_validator
+from langchain.memory import ConversationBufferMemory
 from gpt4all import GPT4All, Embed4All
-import datetime
-import global_config
 
 # ============================================================================
-#                   SECTION 1: Together API STRUCTURE
+#                   SECTION 1: Together PYPI STRUCTURE
 # ============================================================================
-URL = "https://api.together.xyz/inference"
-def run_rest_api(question,model_name,max_tokens,temperature):
-  prompt_template = global_config.current_prompt_template
-  print("---->count_request:"+str(global_config.count_request))
+def run_rest_api(question, temperature, max_new_tokens,stop, model_name):
+  import global_config
+  print("---->"+model_name+"---->count_request:"+str(global_config.count_request))
   global_config.count_request += 1
-
+  
   prompt = question.replace('\n\n', '\n') #clean换行符2->1;这里暂时不用template
   prompt = prompt.strip() #clean去掉前后空格
-  prompt = choose_prompt_tag(prompt_template,prompt)
-
-  temperature = choose_temperature(prompt_template,temperature)
-  repetition_penalty = choose_repetition_penalty(prompt_template)
-  stop = choose_stop_str(prompt_template),
-
-  print("---->model:"+model_name)
-  print("---->prompt_template:"+prompt_template)
-  print("---->max_tokens:"+str(max_tokens)+
-        "---->temperature:"+str(temperature)+
-        "---->repetition_penalty:"+str(repetition_penalty))
-  payload = {
-    "prompt": prompt,
-    "model": model_name,
-    "max_tokens": max_tokens,
-    "stop": stop,
-    "temperature": temperature, #0.7
-    "top_p": 0.7,
-    "top_k": 50,
-    "repetition_penalty": repetition_penalty
-  }
-  headers = {
-    "accept": "application/json",
-    "content-type": "application/json",
-    "Authorization": "Bearer your_together_API_KEY"
-  }
-
-  response = requests.post(URL, json=payload, headers=headers)
-  result = None 
-  if response.status_code == 200:
-    result = response.json()['output']['choices'][0]['text']
-    result = result.strip() #clean开头结尾空格
-    print("---->full prompt start-------------->")
-    print(prompt)
-    print("---->full prompt end---------------->")
-    print("---->result start------------------->")
-    print(result)
-    print("---->result end--------------------->")
-  else:
-    print("---->status not 200---->")
-    print(response.content)
+  
+  together.Complete.create(
+    model = model_name,
+    prompt = prompt,
+    max_tokens = max_new_tokens,
+    stop = stop,
+    temperature = 0.1,
+    top_p = 0.8,
+    top_k = 90,
+    repetition_penalty = 1.1
+  )  
+  result = output['output']['choices'][0]['text'])
+  result = result.strip() #clean开头结尾空格
+  print("---->full prompt start-------------->")
+  print(prompt)
+  print("---->full prompt end---------------->")
+  print("---->result start------------------->")
+  print(result)
+  print("---->result end--------------------->")
       
   write_log_file("prompt",prompt)
   write_log_file("result",result)
@@ -84,90 +64,47 @@ def write_log_file(title,text):
   file.writelines(text)
   #file.close()
 
-
 def llm_inference_single(question):
-  print("---->llm_inference_single---->")
+  print("---->single,temperature to 0.1,max_token to 500----->")
   result = run_rest_api(
-    question = question,
-    model_name = "togethercomputer/llama-2-70b-chat",
-    max_tokens = 500,
-    temperature = 0.5)
+    question=question,
+    temperature=0.1,
+    max_new_tokens=500,
+    stop="\n",
+    model_name = "togethercomputer/llama-2-70b-chat")
   if result == "":
-      print("---->change llm due to empty results---->")
+      print("---->change stop to .----->")#只尝试一次
       result = run_rest_api(
-        question = question,
-        model_name = "togethercomputer/mpt-30b-chat",
-        max_tokens = 500,
-        temperature = 0.5)
+        question=question,
+        temperature=0.1,
+        max_new_tokens=500,
+        stop=".",
+        model_name = "togethercomputer/mpt-30b-chat")
   return result
 
-def llm_inference(question,temperature,max_tokens):#用自带的temperature
-  print("---->llm_inference_with_temp&tokens---->")
-  if max_tokens < 500:
+def llm_inference(question,temperature,max_tokens):
+  #太大了会比较乱, 太小了无法step by step reasoning
+  if max_tokens < 1000:
     max_tokens = max_tokens*2
+  print("---->temp:"+str(0.01)+",tokens:"+str(max_tokens)+"---->")
   result = run_rest_api(
-    question = question,
-    model_name = "togethercomputer/llama-2-70b-chat",
-    max_tokens = max_tokens,
-    temperature = temperature)
+    question=question,
+    temperature=0.01,
+    max_new_tokens=max_tokens,
+    stop="\n",
+    model_name = "togethercomputer/llama-2-70b-chat")
   if result == "":
-      print("---->change llm due to empty results---->")
+      print("---->change stop to .----->")
       result = run_rest_api(
-        question = question,
-        model_name = "togethercomputer/mpt-30b-chat",
-        max_tokens = max_tokens,
-        temperature = temperature)        
+        question=question,
+        temperature=0.01,
+        max_new_tokens=max_tokens,
+        stop=".",
+        model_name = "togethercomputer/mpt-30b-chat")
   return result
-
-
-def choose_stop_str(prompt_template):
-  if "decide_to_talk" in prompt_template:
-    print("---->stop_str: decide_to_talk")
-    stop_str="</s>"
-  elif "iterative_convo" in prompt_template:
-    print("---->stop_str: iterative_convo")
-    stop_str="</s>"
-  elif "generate_hourly_schedule" in prompt_template:
-    print("---->stop_str: generate_hourly_schedule")
-    stop_str="\n"
-  elif "relationship" in prompt_template:
-    print("---->stop_str: relationship")
-    stop_str="\n"
-  else:
-    print("---->stop_str: none")
-    stop_str="\n"
-  return stop_str
-
-def choose_prompt_tag(prompt_template, prompt): #需要合成, 所以双参数
-  if "decide_to_talk" in prompt_template:
-    print("---->prompt_tag: decide_to_talk")
-    prompt = "[INST]{"+prompt+"}[/INST]"
-  elif "iterative_convo" in prompt_template:
-    print("---->prompt_tag: iterative_convo")
-    prompt = "[INST]{"+prompt+"}[/INST]"
-  else:
-    print("---->prompt_tag: none") #加上INST会导致plan异常
-  return prompt
-
-def choose_temperature(prompt_template, temperature):#部分自带了temperature
-  if "iterative_convo" in prompt_template:
-    print("---->choose_temperature: iterative_convo")
-    temperature = 1
-  else:
-    print("---->choose_temperature: default")
-  return temperature
-
-def choose_repetition_penalty(prompt_template):
-  if "iterative_convo" in prompt_template:
-    print("---->repetition_penalty: iterative_convo")
-    repetition_penalty = 1.3
-  else:
-    print("---->repetition_penalty: default")
-    repetition_penalty = 1 #对于routine来说, 重复才是正常
-  return repetition_penalty
-
+  
 # ============================================================================
-#                   SECTION 1: Together API END
+#                   SECTION 1: Together PYPI END
 # ============================================================================
 
 # 避免API请求过于频繁, 自己的API无所谓
@@ -314,9 +251,8 @@ def ChatGPT_safe_generate_response_OLD(prompt,
     except Exception as e:
       print ("---->ChatGPT_safe_generate_response_OLD error--->\n"+str(e))
       pass
-  print ("---->ChatGPT_safe_generate_response_OLD:FAIL SAFE TRIGGERED") 
+  print ("---->FAIL SAFE TRIGGERED") 
   return fail_safe_response
-
 
 # ============================================================================
 # ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
@@ -348,8 +284,6 @@ def GPT_request(prompt, gpt_parameter):
 
 
 def generate_prompt(curr_input, prompt_lib_file): 
-  import global_config
-  global_config.current_prompt_template = prompt_lib_file
   """
   Takes in the current input (e.g. comment that you want to classifiy) and 
   the path to a prompt file. The prompt file contains the raw str prompt that

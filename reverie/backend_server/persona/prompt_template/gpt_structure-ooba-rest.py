@@ -1,5 +1,6 @@
 """
 Author: Joon Sung Park (joonspk@stanford.edu)
+
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
@@ -16,162 +17,82 @@ from typing import Any, Dict, List, Mapping, Optional
 
 from pydantic import Extra, Field, root_validator
 from gpt4all import GPT4All, Embed4All
-import datetime
-import global_config
 
 # ============================================================================
-#                   SECTION 1: Together API STRUCTURE
+#                   SECTION 1: Rest API STRUCTURE
 # ============================================================================
-URL = "https://api.together.xyz/inference"
-def run_rest_api(question,model_name,max_tokens,temperature):
-  prompt_template = global_config.current_prompt_template
-  print("---->count_request:"+str(global_config.count_request))
-  global_config.count_request += 1
+# For local streaming, the websockets are hosted without ssl - http://
 
-  prompt = question.replace('\n\n', '\n') #clean换行符2->1;这里暂时不用template
-  prompt = prompt.strip() #clean去掉前后空格
-  prompt = choose_prompt_tag(prompt_template,prompt)
+HOST='your vps IP:51506'
+URI=f'http://{HOST}/api/v1/generate'
 
-  temperature = choose_temperature(prompt_template,temperature)
-  repetition_penalty = choose_repetition_penalty(prompt_template)
-  stop = choose_stop_str(prompt_template),
-
-  print("---->model:"+model_name)
-  print("---->prompt_template:"+prompt_template)
-  print("---->max_tokens:"+str(max_tokens)+
-        "---->temperature:"+str(temperature)+
-        "---->repetition_penalty:"+str(repetition_penalty))
-  payload = {
-    "prompt": prompt,
-    "model": model_name,
-    "max_tokens": max_tokens,
-    "stop": stop,
-    "temperature": temperature, #0.7
-    "top_p": 0.7,
-    "top_k": 50,
-    "repetition_penalty": repetition_penalty
-  }
-  headers = {
-    "accept": "application/json",
-    "content-type": "application/json",
-    "Authorization": "Bearer your_together_API_KEY"
-  }
-
-  response = requests.post(URL, json=payload, headers=headers)
-  result = None 
-  if response.status_code == 200:
-    result = response.json()['output']['choices'][0]['text']
-    result = result.strip() #clean开头结尾空格
-    print("---->full prompt start-------------->")
+def run_rest_api(question, temperature, max_new_tokens):
+    print("---->rest API start----->")  
+    template = """{question}"""
+    combined_text = f"{template.format(question=question)}"
+    prompt = combined_text
+    print("---->full prompt start----------------------->")
     print(prompt)
-    print("---->full prompt end---------------->")
-    print("---->result start------------------->")
-    print(result)
-    print("---->result end--------------------->")
-  else:
-    print("---->status not 200---->")
-    print(response.content)
-      
-  write_log_file("prompt",prompt)
-  write_log_file("result",result)
-  return result
-
-def write_log_file(title,text):
-  import global_config
-  path = global_config.CURRENT_WORK_FOLDER
-  file = open(f"{path}/write_llm.log", 'a')
-  file.writelines(f"\n---->{title}---->"+str(datetime.datetime.now().strftime("%H:%M:%S.%f"))+"\n")
-  file.writelines(text)
-  #file.close()
-
+    print("---->full prompt end------------------------->")
+    request = {
+        'prompt': prompt,
+        'max_new_tokens': max_new_tokens,
+        'temperature': 0.01,
+        "do_sample": True,
+        "top_p": 0.1,
+        "typical_p": 1,
+        "epsilon_cutoff": 0,
+        "eta_cutoff": 0,
+        "repetition_penalty": 1.18,
+        "top_k": 40,
+        "min_length": 0,
+        "no_repeat_ngram_size": 0,
+        "num_beams": 1,
+        "penalty_alpha": 0,
+        "length_penalty": 1,
+        "early_stopping": False,
+        "seed": -1,
+        "add_bos_token": True,
+        "truncation_length": 2048,
+        "ban_eos_token": False,
+        "skip_special_tokens": True,
+        "stopping_strings": ["\n"],
+        "stop": []    
+        }
+    response = requests.post(URI, json=request)
+    result = None 
+    if response.status_code == 200:
+        result = response.json()['results'][0]['text']
+        print("---->raw result start--------------------->")
+        print(result)
+        print("---->raw result end----------------------->")
+    else:
+      print("---->status not 200---->")
+      print(response.content)
+    return result
 
 def llm_inference_single(question):
-  print("---->llm_inference_single---->")
+  print("---->single,temperature to 0.1,max_token to 500----->")
   result = run_rest_api(
-    question = question,
-    model_name = "togethercomputer/llama-2-70b-chat",
-    max_tokens = 500,
-    temperature = 0.5)
-  if result == "":
-      print("---->change llm due to empty results---->")
-      result = run_rest_api(
-        question = question,
-        model_name = "togethercomputer/mpt-30b-chat",
-        max_tokens = 500,
-        temperature = 0.5)
+    question=question,
+    temperature=0.01,
+    max_new_tokens=500)
   return result
 
-def llm_inference(question,temperature,max_tokens):#用自带的temperature
-  print("---->llm_inference_with_temp&tokens---->")
-  if max_tokens < 500:
-    max_tokens = max_tokens*2
+def llm_inference(question,temperature,max_tokens):
+  print("---->temp:"+str(0.01)+",tokens:"+str(max_tokens)+"---->")#太大了会比较乱 
   result = run_rest_api(
-    question = question,
-    model_name = "togethercomputer/llama-2-70b-chat",
-    max_tokens = max_tokens,
-    temperature = temperature)
-  if result == "":
-      print("---->change llm due to empty results---->")
-      result = run_rest_api(
-        question = question,
-        model_name = "togethercomputer/mpt-30b-chat",
-        max_tokens = max_tokens,
-        temperature = temperature)        
+    question=question,
+    temperature=0.01,
+    max_new_tokens=max_tokens)
   return result
-
-
-def choose_stop_str(prompt_template):
-  if "decide_to_talk" in prompt_template:
-    print("---->stop_str: decide_to_talk")
-    stop_str="</s>"
-  elif "iterative_convo" in prompt_template:
-    print("---->stop_str: iterative_convo")
-    stop_str="</s>"
-  elif "generate_hourly_schedule" in prompt_template:
-    print("---->stop_str: generate_hourly_schedule")
-    stop_str="\n"
-  elif "relationship" in prompt_template:
-    print("---->stop_str: relationship")
-    stop_str="\n"
-  else:
-    print("---->stop_str: none")
-    stop_str="\n"
-  return stop_str
-
-def choose_prompt_tag(prompt_template, prompt): #需要合成, 所以双参数
-  if "decide_to_talk" in prompt_template:
-    print("---->prompt_tag: decide_to_talk")
-    prompt = "[INST]{"+prompt+"}[/INST]"
-  elif "iterative_convo" in prompt_template:
-    print("---->prompt_tag: iterative_convo")
-    prompt = "[INST]{"+prompt+"}[/INST]"
-  else:
-    print("---->prompt_tag: none") #加上INST会导致plan异常
-  return prompt
-
-def choose_temperature(prompt_template, temperature):#部分自带了temperature
-  if "iterative_convo" in prompt_template:
-    print("---->choose_temperature: iterative_convo")
-    temperature = 1
-  else:
-    print("---->choose_temperature: default")
-  return temperature
-
-def choose_repetition_penalty(prompt_template):
-  if "iterative_convo" in prompt_template:
-    print("---->repetition_penalty: iterative_convo")
-    repetition_penalty = 1.3
-  else:
-    print("---->repetition_penalty: default")
-    repetition_penalty = 1 #对于routine来说, 重复才是正常
-  return repetition_penalty
-
+  
 # ============================================================================
-#                   SECTION 1: Together API END
+#                   SECTION 1: Rest API END
 # ============================================================================
 
 # 避免API请求过于频繁, 自己的API无所谓
-def temp_sleep(seconds=1):
+def temp_sleep(seconds=0.1):
   time.sleep(seconds)
 
 def ChatGPT_single_request(prompt):
@@ -232,18 +153,18 @@ def ChatGPT_request(prompt):
 
 
 def GPT4_safe_generate_response(prompt, 
-                                example_output,
-                                special_instruction,
-                                repeat=3,
-                                fail_safe_response="error",
-                                func_validate=None,
-                                func_clean_up=None,
-                                verbose=False): 
+                                   example_output,
+                                   special_instruction,
+                                   repeat=3,
+                                   fail_safe_response="error",
+                                   func_validate=None,
+                                   func_clean_up=None,
+                                   verbose=False): 
   print("---->GPT4_safe_generate_response")
   prompt_new = f"Output the response to the prompt above in json. {special_instruction}\n"
   prompt_new += "Example output json:\n"
   prompt_new += '{"output": "' + str(example_output) + '"}'
-  prompt_new = 'Question:\n"""\n' + prompt + '\n"""\n'
+  prompt_new = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
 
   for i in range(repeat): 
     try: 
@@ -272,16 +193,10 @@ def ChatGPT_safe_generate_response(prompt,
                                    func_clean_up=None,
                                    verbose=False): 
   print("---->ChatGPT_safe_generate_response")
-  prompt_new = f"{special_instruction}\n"
-  prompt_new += "Example output:\n"
-  prompt_new += f"{example_output}\n"
-  prompt_new = 'Question:\n"""\n' + prompt + '\n"""\n'
-
   for i in range(repeat): #跑3遍就是失败了重试
     try: 
-      curr_gpt_response = ChatGPT_request(prompt)
-      curr_gpt_response = curr_gpt_response.replace('\n', '') #去除换行符
-      curr_gpt_response = '{"output": "'+curr_gpt_response+'"}'#手动改为json格式
+      curr_gpt_response = ChatGPT_request(prompt).strip()
+      curr_gpt_response = '{"output": "'+curr_gpt_response+'"}'
       end_index = curr_gpt_response.rfind('}') + 1
       curr_gpt_response = curr_gpt_response[:end_index]
       curr_gpt_response = json.loads(curr_gpt_response)["output"]
@@ -314,7 +229,7 @@ def ChatGPT_safe_generate_response_OLD(prompt,
     except Exception as e:
       print ("---->ChatGPT_safe_generate_response_OLD error--->\n"+str(e))
       pass
-  print ("---->ChatGPT_safe_generate_response_OLD:FAIL SAFE TRIGGERED") 
+  print ("---->FAIL SAFE TRIGGERED") 
   return fail_safe_response
 
 
@@ -348,8 +263,6 @@ def GPT_request(prompt, gpt_parameter):
 
 
 def generate_prompt(curr_input, prompt_lib_file): 
-  import global_config
-  global_config.current_prompt_template = prompt_lib_file
   """
   Takes in the current input (e.g. comment that you want to classifiy) and 
   the path to a prompt file. The prompt file contains the raw str prompt that
@@ -384,7 +297,7 @@ def safe_generate_response(prompt,
                            func_validate=None,
                            func_clean_up=None,
                            verbose=False): 
-  print ("---->safe_generate_response---->")
+  print ("--->safe_generate_response---->")
   for i in range(repeat): 
     curr_gpt_response = GPT_request(prompt, gpt_parameter)  
     if func_validate(curr_gpt_response, prompt=prompt): 
@@ -396,13 +309,12 @@ def safe_generate_response(prompt,
 
 #这里使用GPT4ALL的embeding
 def get_embedding(text):
-  print ("--->get_embedding---->")
-  text = text.replace("\n", " ")
-  if not text:
-    text = "this is blank"
-  embedder = Embed4All()
-  embedding = embedder.embed(text)
-  return embedding
+    text = text.replace("\n", " ")
+    if not text:
+        text = "this is blank"
+    embedder = Embed4All()
+    embedding = embedder.embed(text)
+    return embedding
 
 
 if __name__ == '__main__':

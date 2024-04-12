@@ -14,4 +14,4 @@ On the scale of 1 to 10, where 1 is purely mundane (e.g., routine morning greeti
 Conversation: 
 !<INPUT 3>!
 
-Rate (return a number between 1 to 10):
+Rate (return ONLY a number between 1 to 10):

@@ -34,7 +34,6 @@ from global_methods import *
 from utils import *
 from maze import *
 from persona.persona import *
-
 ##############################################################################
 #                                  REVERIE                                   #
 ##############################################################################
@@ -49,13 +48,14 @@ class ReverieServer:
     # simulation, where the first simulation is "hand-crafted".
     self.fork_sim_code = fork_sim_code
     fork_folder = f"{fs_storage}/{self.fork_sim_code}"
-
     # <sim_code> indicates our current simulation. The first step here is to 
     # copy everything that's in <fork_sim_code>, but edit its 
     # reverie/meta/json's fork variable. 
     self.sim_code = sim_code
     sim_folder = f"{fs_storage}/{self.sim_code}"
     copyanything(fork_folder, sim_folder)
+    import global_config
+    global_config.CURRENT_WORK_FOLDER = sim_folder
 
     with open(f"{sim_folder}/reverie/meta.json") as json_file:  
       reverie_meta = json.load(json_file)
@@ -272,7 +272,6 @@ class ReverieServer:
 
       except:
         pass
-
       time.sleep(self.server_sleep * 10)
 
 
@@ -291,7 +290,6 @@ class ReverieServer:
     """
     # <sim_folder> points to the current simulation folder.
     sim_folder = f"{fs_storage}/{self.sim_code}"
-
     # When a persona arrives at a game object, we give a unique event
     # to that object. 
     # e.g., ('double studio[...]:bed', 'is', 'unmade', 'unmade')
@@ -305,15 +303,21 @@ class ReverieServer:
     # The main while loop of Reverie. 
     while (True): 
       # Done with this iteration if <int_counter> reaches 0. 
-      if int_counter == 0: 
+      if int_counter == 0:
+        print("---->start_server int_counter:0")
         break
-
       # <curr_env_file> file is the file that our frontend outputs. When the
       # frontend has done its job and moved the personas, then it will put a 
       # new environment file that matches our step count. That's when we run 
       # the content of this for loop. Otherwise, we just wait. 
+      print("---->start_server int_counter:"+str(int_counter)+",step:"+str(self.step))
+      import global_config
+      line = "current step:"+str(self.step)+",count request:"+str(global_config.count_request)
+      rs.write_log_file(sim_folder,line)
+      
       curr_env_file = f"{sim_folder}/environment/{self.step}.json"
       if check_if_file_exists(curr_env_file):
+        print("---->start_server check_if_file_exists yes")
         # If we have an environment file, it means we have a new perception
         # input to our personas. So we first retrieve it.
         try: 
@@ -332,10 +336,11 @@ class ReverieServer:
             self.maze.turn_event_from_tile_idle(key, val)
           # Then we initialize game_obj_cleanup for this cycle. 
           game_obj_cleanup = dict()
-
+          print("---->start_server 1:")
           # We first move our personas in the backend environment to match 
           # the frontend environment. 
           for persona_name, persona in self.personas.items(): 
+            print("---->start_server 2:")
             # <curr_tile> is the tile that the persona was at previously. 
             curr_tile = self.personas_tile[persona_name]
             # <new_tile> is the tile that the persona will move to right now,
@@ -368,9 +373,11 @@ class ReverieServer:
           # move. The movement for each of the personas comes in the form of
           # x y coordinates where the persona will move towards. e.g., (50, 34)
           # This is where the core brains of the personas are invoked. 
+          print("---->start_server 3:")
           movements = {"persona": dict(), 
                        "meta": dict()}
           for persona_name, persona in self.personas.items(): 
+            print("---->start_server 4:")
             # <next_tile> is a x,y coordinate. e.g., (58, 9)
             # <pronunciatio> is an emoji. e.g., "\ud83d\udca4"
             # <description> is a string description of the movement. e.g., 
@@ -385,7 +392,7 @@ class ReverieServer:
             movements["persona"][persona_name]["description"] = description
             movements["persona"][persona_name]["chat"] = (persona
                                                           .scratch.chat)
-
+          print("---->start_server 5:")
           # Include the meta information about the current stage in the 
           # movements dictionary. 
           movements["meta"]["curr_time"] = (self.curr_time 
@@ -397,20 +404,29 @@ class ReverieServer:
           # {"persona": {"Maria Lopez": {"movement": [58, 9]}},
           #  "persona": {"Klaus Mueller": {"movement": [38, 12]}}, 
           #  "meta": {curr_time: <datetime>}}
+          curr_move_path = f"{sim_folder}/movement"
+          # If the folder doesn't exist, we create it.
+          if not os.path.exists(curr_move_path):
+            os.makedirs(curr_move_path)
           curr_move_file = f"{sim_folder}/movement/{self.step}.json"
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
-
           # After this cycle, the world takes one step forward, and the 
           # current time moves by <sec_per_step> amount. 
+          print("---->start_server before int_counter-1:" + str(int_counter))
           self.step += 1
           self.curr_time += datetime.timedelta(seconds=self.sec_per_step)
-
           int_counter -= 1
-          
+      else:
+        print("---->start_server check_if_file_exists No")
       # Sleep so we don't burn our machines. 
       time.sleep(self.server_sleep)
 
+  def write_log_file(self, path, text):
+    file = open(f"{path}/write_count.log", 'a')
+    file.writelines(str(datetime.datetime.now().strftime("%H:%M:%S.%f"))+text)
+    file.writelines("\n")
+    file.close()
 
   def open_server(self): 
     """
