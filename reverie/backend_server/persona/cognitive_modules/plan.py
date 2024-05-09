@@ -600,15 +600,21 @@ def _determine_action(persona, maze):
     print(persona.scratch.name)
     print("------")
 
-    # 1440
-    x_emergency = 0
+    # Piero comment:
+    # the next block of code is useful if the f_daily_schedule
+    # is shorter (in minutes) that 1440, which is the amount of minutes in 24 hours.
+    # If the f_daily_schedule contains less than 1440 minutes,
+    # one additional spleepign acticity is added at the end of the f_daily_schedule
+    # with a duration in minutes equal to the missing minutes
+    minutes_in_f_daily_schedule = 0
     for i in persona.scratch.f_daily_schedule:
-        x_emergency += i[1]
+        minutes_in_f_daily_schedule += i[1]
     # print ("x_emergency", x_emergency)
+    missing_minutes = 1440 - minutes_in_f_daily_schedule
+    if missing_minutes > 0:
+        print("missing_minutes", minutes_in_f_daily_schedule)
+    persona.scratch.f_daily_schedule += [["sleeping", missing_minutes]]
 
-    if 1440 - x_emergency > 0:
-        print("x_emergency__AAA", x_emergency)
-    persona.scratch.f_daily_schedule += [["sleeping", 1440 - x_emergency]]
 
     act_desp, act_dura = persona.scratch.f_daily_schedule[curr_index]
 
