@@ -273,13 +273,13 @@ def safe_generate_response(prompt,
       print ("~~~~")
   return fail_safe_response
 
+import ollama
 
 def get_embedding(text, model="nomic-embed-text"):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return openai.Embedding.create(
-          input=[text], model=model)['data'][0]['embedding']
+  return ollama.embeddings(model=model,prompt=text)
 
 
 if __name__ == '__main__':
