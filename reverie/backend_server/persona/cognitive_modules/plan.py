@@ -39,7 +39,8 @@ def generate_wake_up_hour(persona):
     """
     if debug:
         print("GNS FUNCTION: <generate_wake_up_hour>")
-    return int(run_gpt_prompt_wake_up_hour(persona)[0])
+    # return int(run_gpt_prompt_wake_up_hour(persona)[0])
+    return 0
 
 
 def generate_first_daily_plan(persona, wake_up_hour):

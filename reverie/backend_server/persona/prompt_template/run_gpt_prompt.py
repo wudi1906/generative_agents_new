@@ -80,7 +80,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
         return True
 
     def get_fail_safe():
-        fs = 8
+        fs = 0
         return fs
 
     gpt_param = {
@@ -277,7 +277,7 @@ def run_gpt_prompt_generate_hourly_schedule(
         return True
 
     def get_fail_safe():
-        fs = "asleep"
+        fs = "idle"
         return fs
 
     # # ChatGPT Plugin ===========================================================
