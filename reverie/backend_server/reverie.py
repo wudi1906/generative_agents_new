@@ -455,6 +455,29 @@ class ReverieServer:
                     with open(curr_move_file, "w") as outfile:
                         outfile.write(json.dumps(movements, indent=2))
 
+                    # Run any plugins that are in the plugin folder.
+                    plugins = os.listdir(f"{sim_folder}/plugins")
+
+                    for plugin in plugins:
+                        plugin_path = f"{sim_folder}/plugins/{plugin}"
+                        prompt_files = os.listdir(f"{plugin_path}/prompt_template")
+
+                        for prompt_file in prompt_files:
+                            prompt_file_path = (
+                                f"{plugin_path}/prompt_template/{prompt_file}"
+                            )
+                            response = run_plugin(
+                                prompt_file_path,
+                                movements,
+                                self.personas,
+                            )
+
+                            with open(
+                                f"{plugin_path}/output/{self.step}-{prompt_file}.json",
+                                "w",
+                            ) as outfile:
+                                outfile.write(json.dumps(response, indent=2))
+
                     # If we're running in headless mode, also create the environment file
                     # to immediately trigger the next simulation step
                     if headless:
