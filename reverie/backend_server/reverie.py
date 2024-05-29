@@ -486,6 +486,7 @@ class ReverieServer:
 
         # <sim_folder> points to the current simulation folder.
         sim_folder = f"{fs_storage}/{self.sim_code}"
+        headless = None
 
         while True:
             sim_command = input("Enter option: ")
@@ -522,6 +523,14 @@ class ReverieServer:
                 elif sim_command[:3].lower() == "run":
                     # Runs the number of steps specified in the prompt.
                     # Example: run 1000
+                    if headless is None:
+                        headless = False
+                        print("Setting headless to False.")
+                    elif headless:
+                        print(
+                            "Invalid command: Headless mode is on. Use 'headless' instead."
+                        )
+                        continue
                     int_count = int(sim_command.split()[-1])
                     rs.start_server(int_count)
 
@@ -529,6 +538,14 @@ class ReverieServer:
                     # Runs the simulation in headless mode, which means that it will
                     # run without the frontend server.
                     # Example: headless 1000
+                    if headless is None:
+                        headless = True
+                        print("Setting headless to True.")
+                    elif not headless:
+                        print(
+                            "Invalid command: Headless mode is off. Use 'run' instead."
+                        )
+                        continue
                     int_count = int(sim_command.split()[-1])
                     self.start_server(int_count, headless=True)
 
