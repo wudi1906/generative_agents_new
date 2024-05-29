@@ -349,7 +349,9 @@ def generate_action_pronunciatio(act_desp, persona):
     if debug:
         print("GNS FUNCTION: <generate_action_pronunciatio>")
     try:
-        x = run_gpt_prompt_pronunciatio(act_desp, persona)[0]
+        response = run_gpt_prompt_pronunciatio(act_desp, persona)
+        if response:
+            x = response[0]
     except:
         x = "🙂"
 
@@ -416,8 +418,13 @@ def generate_convo(maze, init_persona, target_persona):
 
 
 def generate_convo_summary(persona, convo):
-    convo_summary = run_gpt_prompt_summarize_conversation(persona, convo)[0]
-    return convo_summary
+    response = run_gpt_prompt_summarize_conversation(persona, convo)
+    if response:
+        convo_summary = response[0]
+        return convo_summary
+    else:
+        print("ERROR: <generate_convo_summary>")
+        return ""
 
 
 def generate_decide_to_talk(init_persona, target_persona, retrieved):
@@ -982,11 +989,11 @@ def _create_react(persona, inserted_act, inserted_act_dur,
 
 
 def _chat_react(maze, persona, focused_event, reaction_mode, personas):
-  # There are two personas -- the persona who is initiating the conversation
-  # and the persona who is the target. We get the persona instances here. 
-  init_persona = persona
-  target_persona = personas[reaction_mode[9:].strip()]
-  curr_personas = [init_persona, target_persona]
+    # There are two personas -- the persona who is initiating the conversation
+    # and the persona who is the target. We get the persona instances here.
+    init_persona = persona
+    target_persona = personas[reaction_mode[9:].strip()]
+    # curr_personas = [init_persona, target_persona]
 
   # Actually creating the conversation here. 
   convo, duration_min = generate_convo(maze, init_persona, target_persona)

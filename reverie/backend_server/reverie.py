@@ -18,6 +18,7 @@ term "personas" to refer to generative agents, "associative memory" to refer
 to the memory stream, and "reverie" to refer to the overarching simulation 
 framework.
 """
+
 import json
 import numpy
 import datetime
@@ -374,20 +375,29 @@ class ReverieServer:
             self.maze.add_event_from_tile(persona.scratch
                                          .get_curr_event_and_desc(), new_tile)
 
-            # Now, the persona will travel to get to their destination. *Once*
-            # the persona gets there, we activate the object action.
-            if not persona.scratch.planned_path: 
-              # We add that new object action event to the backend tile map. 
-              # At its creation, it is stored in the persona's backend. 
-              game_obj_cleanup[persona.scratch
-                               .get_curr_obj_event_and_desc()] = new_tile
-              self.maze.add_event_from_tile(persona.scratch
-                                     .get_curr_obj_event_and_desc(), new_tile)
-              # We also need to remove the temporary blank action for the 
-              # object that is currently taking the action. 
-              blank = (persona.scratch.get_curr_obj_event_and_desc()[0], 
-                       None, None, None)
-              self.maze.remove_event_from_tile(blank, new_tile)
+                        # Now, the persona will travel to get to their destination. *Once*
+                        # the persona gets there, we activate the object action.
+                        if not persona.scratch.planned_path:
+                            # We add that new object action event to the backend tile map.
+                            # At its creation, it is stored in the persona's backend.
+                            curr_obj_event_and_desc = freeze(
+                                persona.scratch.get_curr_obj_event_and_desc()
+                            )
+                            print("curr_obj_event_and_desc", curr_obj_event_and_desc)
+                            game_obj_cleanup[curr_obj_event_and_desc] = new_tile
+                            self.maze.add_event_from_tile(
+                                curr_obj_event_and_desc,
+                                new_tile,
+                            )
+                            # We also need to remove the temporary blank action for the
+                            # object that is currently taking the action.
+                            blank = (
+                                tuple(persona.scratch.get_curr_obj_event_and_desc())[0],
+                                None,
+                                None,
+                                None,
+                            )
+                            self.maze.remove_event_from_tile(blank, new_tile)
 
           # Then we need to actually have each of the personas perceive and
           # move. The movement for each of the personas comes in the form of

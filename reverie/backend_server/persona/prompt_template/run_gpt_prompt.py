@@ -5,10 +5,12 @@ File: run_gpt_prompt.py
 Description: Defines all run gpt prompt functions. These functions directly
 interface with the safe_generate_response function.
 """
+
 import re
 import datetime
 import sys
 import ast
+import copy
 
 sys.path.append('../../')
 
