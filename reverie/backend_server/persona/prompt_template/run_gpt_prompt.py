@@ -5,10 +5,12 @@ File: run_gpt_prompt.py
 Description: Defines all run gpt prompt functions. These functions directly
 interface with the safe_generate_response function.
 """
+
 import re
 import datetime
 import sys
 import ast
+import copy
 
 sys.path.append("../../")
 
@@ -406,20 +408,20 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         print(gpt_response)
         print("-==- -==- -==- ")
         pattern = r"^(?:\d*\) )?.+ \(duration in minutes: \d+, minutes left: \d+\)\n?((?:\d+\) .+ \(duration in minutes: \d+, minutes left: \d+\)\n?)*)"
-        raw_activities_list = re.search(pattern, gpt_response).group()
+        raw_activities_str = re.search(pattern, gpt_response).group()
 
         # TODO SOMETHING HERE sometimes fails... See screenshot
-        temp = [i.strip() for i in raw_activities_list.split("\n")]
-        _cr = []
-        cr = []
-        for count, i in enumerate(temp):
+        activities_list = [i.strip() for i in raw_activities_str.split("\n")]
+        temp_clean_response = []
+        clean_response = []
+        for count, i in enumerate(activities_list):
             if count != 0:
                 # Get rid of "2) Isabella is" line starts, only retaining task and timeframe
                 # like "making breakfast at home. (duration in minutes: 30, minutes left: 30)"
-                _cr += [" ".join([j.strip() for j in i.split(" ")][3:])]
+                temp_clean_response += [" ".join([j.strip() for j in i.split(" ")][3:])]
             else:
-                _cr += [i]
-        for count, i in enumerate(_cr):
+                temp_clean_response += [i]
+        for count, i in enumerate(temp_clean_response):
             k = [j.strip() for j in i.split("(duration in minutes:")]
             # Ensure there are enough elements in k
             if len(k) < 2:
@@ -443,7 +445,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
                 duration = 0
                 continue
 
-            cr += [[task, duration]]
+            clean_response += [[task, duration]]
 
         total_expected_min = int(
             prompt.split("(total duration in minutes")[-1].split("):")[0].strip()
@@ -454,7 +456,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         curr_min_slot = [
             ["dummy", -1],
         ]  # (task_name, task_index)
-        for count, i in enumerate(cr):
+        for count, i in enumerate(clean_response):
             i_task = i[0]
             i_duration = i[1]
 
@@ -473,17 +475,17 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
             for i in range(total_expected_min - len(curr_min_slot)):
                 curr_min_slot += [last_task]
 
-        cr_ret = [
+        clean_response_to_return = [
             ["dummy", -1],
         ]
         for task, task_index in curr_min_slot:
-            if task != cr_ret[-1][0]:
-                cr_ret += [[task, 1]]
+            if task != clean_response_to_return[-1][0]:
+                clean_response_to_return += [[task, 1]]
             else:
-                cr_ret[-1][1] += 1
-        cr = cr_ret[1:]
+                clean_response_to_return[-1][1] += 1
+        clean_response_to_return = clean_response_to_return[1:]
 
-        return cr
+        return clean_response_to_return
 
     def __func_validate(gpt_response, prompt=""):
         # TODO -- this sometimes generates error
@@ -495,7 +497,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         return gpt_response
 
     def get_fail_safe():
-        fs = ["asleep"]
+        fs = [["idle", 5]]
         return fs
 
     gpt_param = {

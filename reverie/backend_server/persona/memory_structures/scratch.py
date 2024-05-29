@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: scratch.py
 Description: Defines the short-term memory module for generative agents.
 """
+
 import datetime
 import json
 import sys
@@ -252,7 +253,8 @@ class Scratch:
         scratch["att_bandwidth"] = self.att_bandwidth
         scratch["retention"] = self.retention
 
-        scratch["curr_time"] = self.curr_time.strftime("%B %d, %Y, %H:%M:%S")
+        if self.curr_time:
+            scratch["curr_time"] = self.curr_time.strftime("%B %d, %Y, %H:%M:%S")
         scratch["curr_tile"] = self.curr_tile
         scratch["daily_plan_req"] = self.daily_plan_req
 
@@ -287,7 +289,10 @@ class Scratch:
         scratch["f_daily_schedule_hourly_org"] = self.f_daily_schedule_hourly_org
 
         scratch["act_address"] = self.act_address
-        scratch["act_start_time"] = self.act_start_time.strftime("%B %d, %Y, %H:%M:%S")
+        if self.act_start_time:
+            scratch["act_start_time"] = self.act_start_time.strftime(
+                "%B %d, %Y, %H:%M:%S"
+            )
         scratch["act_duration"] = self.act_duration
         scratch["act_description"] = self.act_description
         scratch["act_pronunciatio"] = self.act_pronunciatio
@@ -330,29 +335,34 @@ class Scratch:
         OUTPUT
           an integer value for the current index of f_daily_schedule.
         """
-        # We first calculate teh number of minutes elapsed today.
-        today_min_elapsed = 0
-        today_min_elapsed += self.curr_time.hour * 60
-        today_min_elapsed += self.curr_time.minute
-        today_min_elapsed += advance
+        if self.curr_time:
+            # We first calculate the number of minutes elapsed today.
+            today_min_elapsed = 0
+            today_min_elapsed += self.curr_time.hour * 60
+            today_min_elapsed += self.curr_time.minute
+            today_min_elapsed += advance
 
-        x = 0
-        for task, duration in self.f_daily_schedule:
-            x += duration
-        x = 0
-        for task, duration in self.f_daily_schedule_hourly_org:
-            x += duration
+            x = 0
+            for task, duration in self.f_daily_schedule:
+                x += duration
+            x = 0
+            for task, duration in self.f_daily_schedule_hourly_org:
+                x += duration
 
-        # We then calculate the current index based on that.
-        curr_index = 0
-        elapsed = 0
-        for task, duration in self.f_daily_schedule:
-            elapsed += duration
-            if elapsed > today_min_elapsed:
-                return curr_index
-            curr_index += 1
+            # We then calculate the current index based on that.
+            curr_index = 0
+            elapsed = 0
+            for task, duration in self.f_daily_schedule:
+                elapsed += duration
+                if elapsed > today_min_elapsed:
+                    return curr_index
+                curr_index += 1
 
-        return curr_index
+            return curr_index
+        else:
+            print(
+                "ERROR: <get_f_daily_schedule_index> in scratch.py: self.curr_time is None."
+            )
 
     def get_f_daily_schedule_hourly_org_index(self, advance=0):
         """
@@ -365,20 +375,25 @@ class Scratch:
         OUTPUT
           an integer value for the current index of f_daily_schedule.
         """
-        # We first calculate teh number of minutes elapsed today.
-        today_min_elapsed = 0
-        today_min_elapsed += self.curr_time.hour * 60
-        today_min_elapsed += self.curr_time.minute
-        today_min_elapsed += advance
-        # We then calculate the current index based on that.
-        curr_index = 0
-        elapsed = 0
-        for task, duration in self.f_daily_schedule_hourly_org:
-            elapsed += duration
-            if elapsed > today_min_elapsed:
-                return curr_index
-            curr_index += 1
-        return curr_index
+        if self.curr_time:
+            # We first calculate teh number of minutes elapsed today.
+            today_min_elapsed = 0
+            today_min_elapsed += self.curr_time.hour * 60
+            today_min_elapsed += self.curr_time.minute
+            today_min_elapsed += advance
+            # We then calculate the current index based on that.
+            curr_index = 0
+            elapsed = 0
+            for task, duration in self.f_daily_schedule_hourly_org:
+                elapsed += duration
+                if elapsed > today_min_elapsed:
+                    return curr_index
+                curr_index += 1
+            return curr_index
+        else:
+            print(
+                "ERROR: <get_f_daily_schedule_hourly_org_index> in scratch.py: self.curr_time is None."
+            )
 
     def get_str_iss(self):
         """
@@ -411,7 +426,7 @@ class Scratch:
         commonset += f"Currently: {self.currently}\n"
         commonset += f"Lifestyle: {self.lifestyle}\n"
         commonset += f"Daily plan requirement: {self.daily_plan_req}\n"
-        commonset += f"Current Date: {self.curr_time.strftime('%A %B %d')}\n"
+        commonset += f"Current Date: {self.curr_time.strftime('%A %B %d') if self.curr_time else ''}\n"
         return commonset
 
     def get_str_name(self):
@@ -442,7 +457,7 @@ class Scratch:
         return self.daily_plan_req
 
     def get_str_curr_date_str(self):
-        return self.curr_time.strftime("%A %B %d")
+        return self.curr_time.strftime("%A %B %d") if self.curr_time else ""
 
     def get_curr_event(self):
         if not self.act_address:
@@ -519,7 +534,7 @@ class Scratch:
         EXAMPLE STR OUTPUT
           "14:05 P.M."
         """
-        return self.act_start_time.strftime("%H:%M %p")
+        return self.act_start_time.strftime("%H:%M %p") if self.act_start_time else ""
 
     def act_check_finished(self):
         """
@@ -539,14 +554,26 @@ class Scratch:
             end_time = self.chatting_end_time
         else:
             x = self.act_start_time
-            if x.second != 0:
-                x = x.replace(second=0)
-                x = x + datetime.timedelta(minutes=1)
-            end_time = x + datetime.timedelta(minutes=self.act_duration)
+            if x and self.act_duration:
+                if x.second != 0:
+                    x = x.replace(second=0)
+                    x = x + datetime.timedelta(minutes=1)
+                end_time = x + datetime.timedelta(minutes=self.act_duration)
+            else:
+                print(
+                    "ERROR: <act_check_finished> in scratch.py: Either self.act_start_time or self.act_duration is None."
+                )
+                return
 
-        if end_time.strftime("%H:%M:%S") == self.curr_time.strftime("%H:%M:%S"):
-            return True
-        return False
+        if end_time and self.curr_time:
+            if end_time.strftime("%H:%M:%S") == self.curr_time.strftime("%H:%M:%S"):
+                return True
+            return False
+        else:
+            print(
+                "ERROR: <act_check_finished> in scratch.py: Either end_time or self.curr_time is None."
+            )
+            return
 
     def act_summarize(self):
         """
@@ -576,7 +603,11 @@ class Scratch:
         OUTPUT
           ret: A human readable summary of the action.
         """
-        start_datetime_str = self.act_start_time.strftime("%A %B %d -- %H:%M %p")
+        start_datetime_str = (
+            self.act_start_time.strftime("%A %B %d -- %H:%M %p")
+            if self.act_start_time
+            else ""
+        )
         ret = f"[{start_datetime_str}]\n"
         ret += f"Activity: {self.name} is {self.act_description}\n"
         ret += f"Address: {self.act_address}\n"

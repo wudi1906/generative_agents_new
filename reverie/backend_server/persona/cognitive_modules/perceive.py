@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: perceive.py
 Description: This defines the "Perceive" module for generative agents. 
 """
+
 import sys
 
 sys.path.append("../../")
@@ -19,11 +20,21 @@ def generate_poig_score(persona, event_type, description):
         return 1
 
     if event_type == "event":
-        return run_gpt_prompt_event_poignancy(persona, description)[0]
+        response = run_gpt_prompt_event_poignancy(persona, description)
+        if response:
+            return response[0]
+        else:
+            print("ERROR: <generate_poig_score>: Could not get event poignancy score.")
+            return 0
     elif event_type == "chat":
-        return run_gpt_prompt_chat_poignancy(persona, persona.scratch.act_description)[
-            0
-        ]
+        response = run_gpt_prompt_chat_poignancy(
+            persona, persona.scratch.act_description
+        )
+        if response:
+            return response[0]
+        else:
+            print("ERROR: <generate_poig_score>: Could not get chat poignancy score.")
+            return 0
 
 
 def perceive(persona, maze):

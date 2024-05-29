@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: global_methods.py
 Description: Contains functions used throughout my projects.
 """
+
 import random
 import string
 import csv
@@ -254,6 +255,15 @@ class Logger(object):
     def __del__(self):
         self.flush()
         self.logfile.close()
+
+
+def freeze(value):
+    if isinstance(value, list) or isinstance(value, tuple):
+        return tuple(freeze(x) for x in value)
+    elif isinstance(value, dict):
+        return tuple((k, freeze(v)) for k, v in value.items())
+    else:
+        return value
 
 
 if __name__ == "__main__":

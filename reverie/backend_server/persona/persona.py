@@ -8,6 +8,7 @@ Note (May 1, 2023) -- this is effectively GenerativeAgent class. Persona was
 the term we used internally back in 2022, taking from our Social Simulacra 
 paper.
 """
+
 import math
 import sys
 import datetime
@@ -30,7 +31,7 @@ from persona.cognitive_modules.converse import *
 
 
 class Persona:
-    def __init__(self, name, folder_mem_saved=False):
+    def __init__(self, name: str, folder_mem_saved: str):
         # PERSONA BASE STATE
         # <name> is the full name of the persona. This is a unique identifier for
         # the persona within Reverie.

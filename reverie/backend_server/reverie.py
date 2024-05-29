@@ -18,6 +18,7 @@ term "personas" to refer to generative agents, "associative memory" to refer
 to the memory stream, and "reverie" to refer to the overarching simulation 
 framework.
 """
+
 import json
 import numpy
 import datetime
@@ -375,11 +376,13 @@ class ReverieServer:
                         if not persona.scratch.planned_path:
                             # We add that new object action event to the backend tile map.
                             # At its creation, it is stored in the persona's backend.
-                            game_obj_cleanup[
-                                tuple(persona.scratch.get_curr_obj_event_and_desc())
-                            ] = new_tile
+                            curr_obj_event_and_desc = freeze(
+                                persona.scratch.get_curr_obj_event_and_desc()
+                            )
+                            print("curr_obj_event_and_desc", curr_obj_event_and_desc)
+                            game_obj_cleanup[curr_obj_event_and_desc] = new_tile
                             self.maze.add_event_from_tile(
-                                tuple(persona.scratch.get_curr_obj_event_and_desc()),
+                                curr_obj_event_and_desc,
                                 new_tile,
                             )
                             # We also need to remove the temporary blank action for the

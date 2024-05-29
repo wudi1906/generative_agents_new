@@ -33,9 +33,16 @@ def generate_agent_chat_summarize_ideas(
         all_embedding_key_str += f"{i}\n"
 
     try:
-        summarized_idea = run_gpt_prompt_agent_chat_summarize_ideas(
+        response = run_gpt_prompt_agent_chat_summarize_ideas(
             init_persona, target_persona, all_embedding_key_str, curr_context
-        )[0]
+        )
+        if response:
+            summarized_idea = response[0]
+        else:
+            print(
+                "ERROR: <generate_agent_chat_summarize_ideas>: Could not get summarized idea"
+            )
+            summarized_idea = ""
     except:
         summarized_idea = ""
     return summarized_idea
@@ -50,23 +57,33 @@ def generate_summarize_agent_relationship(init_persona, target_persona, retrieve
     for i in all_embedding_keys:
         all_embedding_key_str += f"{i}\n"
 
-    summarized_relationship = run_gpt_prompt_agent_chat_summarize_relationship(
+    response = run_gpt_prompt_agent_chat_summarize_relationship(
         init_persona, target_persona, all_embedding_key_str
-    )[0]
+    )
+    if response:
+        summarized_relationship = response[0]
+    else:
+        print("ERROR: Could not get summarized relationship")
+        summarized_relationship = ""
     return summarized_relationship
 
 
 def generate_agent_chat(
     maze, init_persona, target_persona, curr_context, init_summ_idea, target_summ_idea
 ):
-    summarized_idea = run_gpt_prompt_agent_chat(
+    response = run_gpt_prompt_agent_chat(
         maze,
         init_persona,
         target_persona,
         curr_context,
         init_summ_idea,
         target_summ_idea,
-    )[0]
+    )
+    if response:
+        summarized_idea = response[0]
+    else:
+        print("ERROR: <generate_agent_chat>: Could not get summarized idea")
+        summarized_idea = []
     for i in summarized_idea:
         print(i)
     return summarized_idea
@@ -141,7 +158,11 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
 
     print("adshfoa;khdf;fajslkfjald;sdfa HERE", x)
 
-    return x["utterance"], x["end"]
+    try:
+        return x["utterance"], x["end"]  # type: ignore
+    except:
+        print("ERROR: <generate_one_utterance>: Could not get utterance")
+        return "", True
 
 
 def agent_chat_v2(maze, init_persona, target_persona):
@@ -219,7 +240,12 @@ def generate_summarize_ideas(persona, nodes, question):
     statements = ""
     for n in nodes:
         statements += f"{n.embedding_key}\n"
-    summarized_idea = run_gpt_prompt_summarize_ideas(persona, statements, question)[0]
+    response = run_gpt_prompt_summarize_ideas(persona, statements, question)
+    if response:
+        summarized_idea = response[0]
+    else:
+        print("ERROR: <generate_summarize_ideas>: Could not get summarized idea")
+        summarized_idea = ""
     return summarized_idea
 
 
@@ -264,11 +290,23 @@ def generate_poig_score(persona, event_type, description):
         return 1
 
     if event_type == "event" or event_type == "thought":
-        return run_gpt_prompt_event_poignancy(persona, description)[0]
+        response = run_gpt_prompt_event_poignancy(persona, description)
+        if response:
+            return response[0]
+        else:
+            print(
+                "ERROR: <generate_poig_score>: Could not get event/thought poignancy score"
+            )
+            return 0
     elif event_type == "chat":
-        return run_gpt_prompt_chat_poignancy(persona, persona.scratch.act_description)[
-            0
-        ]
+        response = run_gpt_prompt_chat_poignancy(
+            persona, persona.scratch.act_description
+        )
+        if response:
+            return response[0]
+        else:
+            print("ERROR: <generate_poig_score>: Could not get chat poignancy score")
+            return 0
 
 
 def load_history_via_whisper(personas, whispers):
