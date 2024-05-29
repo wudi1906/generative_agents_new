@@ -3,19 +3,16 @@
   "att_bandwidth": 8,
   "retention": 8,
   "curr_time": "February 13, 2023, 00:00:00",
-  "curr_tile": [
-    30,
-    46
-  ],
-  "daily_plan_req": "Klaus Mueller plays hide and seek at 0:00 am, spends his days playing hide and seek, where he is the seeker and looks for Maria and Isabella all over Smallville.",
+  "curr_tile": [30, 46],
+  "daily_plan_req": "Klaus Mueller starts playing hide and seek at 1am. He is the seeker and looks for Isabella all over town.",
   "name": "Klaus Mueller",
   "first_name": "Klaus",
   "last_name": "Mueller",
   "age": 20,
   "innate": "resourceful, intelligent, perseverant",
-  "learned": "Hide-and-Seek Game Rules: Important for the game*: The seekers and hiders must not converse with each other. NEVER do this! If the seeker interacts anyway with the hiders that would mean that they have been found. If the hidder is in the near vicinity to the seeker, the hider has been found. Once the hiders have found a spot to hide, they must remain there for the rest of the game, unless they have been found. Counting: The seeker covers their eyes at the home base, Johnson Park's Big Oak Tree, and counts to number 50 with their eyes closed, giving hiders time to hide around Smallville away from the seeker. Hiding: While the seeker is counting, the other players scatter and hide around the Smallville area. Hiders must find a spot where they cannot be seen but still within Smallville. Seeking: Once the counting is done, the seeker shouts 'Ready or not, here I come!' and starts looking for the hiders without returning to the home base, Johnson Park's Big Oak Tree, to peek. The Chase: When a hider is spotted, the seeker can call out their name and hiding spot. The hider then has to race back to the home base before being tagged by the seeker. If the seeker tags the hider before they reach home base, the hider becomes caught. Then they will have to go to Cafe in Smallville where they will remain there stil and not move. Safe Calls: If a hider reaches the home base without being tagged by the seeker, they shout 'safe!' and will remain there for the rest of the round and are free from being caught. They cannot be sought after again for this round. Winning the Game: The game continues until all hiders are found and caught or return safely to the home base. The time constrain is 7 minutes games. The first person caught or the last to return becomes the next round's seeker. Klaus Mueller is the seeker in the game of hide and seek in Smallville. He is passionate about being the seeker and wants to find all the people hiding in Smallville all costs.",
-  "currently": "Klaus Mueller is searching for the other 2 women players who are hiding in Smallville. If Klauss finds one of them, the game is over. He has 15 minutes to find them",
-  "lifestyle": "Klaus Mueller awakes up around 0:00 am and immdiately plays hide and seek in Smallville.",
+  "learned": "Klaus Mueller is the seeker in the game of hide and seek. He is passionate about being the seeker and wants to find all the people hiding in town at all costs.",
+  "currently": "Klaus has agreed to meet Isabella at Johnson Park at 1am to start their first game of hide-and-seek of the day.",
+  "lifestyle": "Klaus Mueller awakes up at 00:00 am and immediately plays hide and seek.",
   "living_area": "the Ville:Dorm for Oak Hill College:Klaus Mueller's room",
   "concept_forget": 100,
   "daily_reflection_time": 180,
@@ -31,76 +28,22 @@
   "importance_trigger_curr": 143,
   "importance_ele_n": 7,
   "thought_count": 5,
-  "daily_req": [
-    "wake up at 0:00 am and immdiately play hide and seek by searching for the other players at the Johnson Park indefinitely",
-    "look for the playes hiding and if you find them say out loud 'I found you' and start the game again and again",
-    "stay quiet, vigligiant, and perseverant. Also, once you find one of players, keep repeating the game over and over. "
-  ],
-  "f_daily_schedule": [
-    [
-      "go search for the players that are hiding in Smallville",
-      150
-    ],
-    [
-      "go search for the players that are hiding in Smallville",
-      150
-    ],
-    [
-      "stay quite and sneaky, so the other players that are hiding cannot see you",
-      150
-    ],
-    [
-      "go search for the players that are hiding",
-      150
-    ],
-    [
-      "go search for the players that are hiding.",
-      150
-    ],
-    [
-      "go search for the players that are hiding.",
-      150
-    ]
-  ],
-  "f_daily_schedule_hourly_org": [
-    [
-      "go search for the players that are hiding",
-      150
-    ],
-    [
-      "go search for the players that are hiding",
-      150
-    ],
-    [
-      "stay quiet and be sneaky, so the players hiding cannot see you",
-      150
-    ],
-    [
-      "go search for the players that are hiding",
-      150
-    ],
-    [
-      "go search for the players that are hiding all over Smallville",
-      150
-    ],
-    [
-      "go search for the players that are hiding in Smallville. You have 7 minutes to find them",
-      150
-    ]
-  ],
+  "daily_req": [],
+  "f_daily_schedule": [],
+  "f_daily_schedule_hourly_org": [],
   "act_address": null,
-  "act_start_time": "February 13, 2023, 00:00:00",
-  "act_duration": 420,
-  "act_description": "searching",
-  "act_pronunciatio": "\ud83d\udca4",
-  "act_event": ["Klaus Mueller", null, null], 
+  "act_start_time": null,
+  "act_duration": null,
+  "act_description": null,
+  "act_pronunciatio": null,
+  "act_event": ["Klaus Mueller", null, null],
   "act_obj_description": null,
-  "act_obj_pronunciatio": "\ud83d\ude34",
-  "act_obj_event": [null, null, null], 
+  "act_obj_pronunciatio": null,
+  "act_obj_event": [null, null, null],
   "chatting_with": null,
   "chat": null,
   "chatting_with_buffer": {},
   "chatting_end_time": null,
-  "act_path_set": true,
+  "act_path_set": false,
   "planned_path": []
 }
