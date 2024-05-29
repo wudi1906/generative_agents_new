@@ -359,63 +359,122 @@ def run_gpt_prompt_task_decomp(persona,
         prompt_input += [persona.scratch.get_str_firstname()]
         return prompt_input
 
-    def __func_clean_up(gpt_response, prompt=""):
+    def __func_clean_up(model_response, prompt=""):
+        """
+        Model Response:
+        Kelly is reviewing the kindergarten curriculum standards. (duration in minutes: 15, minutes left: 165)
+        2) Kelly is brainstorming ideas for the lesson. (duration in minutes: 30, minutes left: 135)
+        3) Kelly is creating the lesson plan. (duration in minutes: 30, minutes left: 105)
+        4) Kelly is creating materials for the lesson. (duration in minutes: 30, minutes left: 75)
+        5) Kelly is taking a break. (duration in minutes: 15, minutes left: 60)
+        6) Kelly is reviewing the lesson plan. (duration in minutes: 30, minutes left: 30)
+        7) Kelly is making final changes to the lesson plan. (duration in minutes: 15, minutes left: 15)
+        8) Kelly is printing the lesson plan. (duration in minutes: 10, minutes left: 5)
+        9) Kelly is putting the lesson plan in her bag. (duration in minutes: 5, minutes left: 0)
+
+        Prompt:
+        [something]...In 5 min increments, list the subtasks Kelly does when
+        Kelly is working on the next day's kindergarten
+        lesson plan from 09:00am ~ 12:00pm (total duration in minutes 280):...[something]
+
+        Output:
+
+        [['Kelly is reviewing the kindergarten curriculum standards', 15],
+         ['brainstorming ideas for the lesson', 30],
+         ['creating the lesson plan', 30],
+         ['creating materials for the lesson', 30],
+         ['taking a break', 15],
+         ['reviewing the lesson plan', 30],
+         ['making final changes to the lesson plan', 15],
+         ['printing the lesson plan', 10],
+         ['putting the lesson plan in her bag', 105]]
+        """
         print("TOODOOOOOO")
-        print(gpt_response)
+        print(model_response)
         print("-==- -==- -==- ")
 
-        # TODO SOMETHING HERE sometimes fails... See screenshot
-        temp = [i.strip() for i in gpt_response.split("\n")]
-        _cr = []
-        cr = []
+        temp = [i.strip() for i in model_response.split("\n")]
+        actions_without_the_enumeration_at_the_start = []
+
+        activities_and_durations = []
+
+        # we remove 1), 2) ....
         for count, i in enumerate(temp):
             if count != 0:
-                _cr += [" ".join([j.strip() for j in i.split(" ")][3:])]
+                actions_without_the_enumeration_at_the_start += [" ".join([j.strip() for j in i.split(" ")][3:])]
             else:
-                _cr += [i]
-        for count, i in enumerate(_cr):
-            k = [j.strip() for j in i.split("(duration in minutes:")]
-            task = k[0]
-            if task[-1] == ".":
-                task = task[:-1]
-            duration = int(k[1].split(",")[0].strip())
-            cr += [[task, duration]]
+                actions_without_the_enumeration_at_the_start += [i]
 
+        for count, i in enumerate(actions_without_the_enumeration_at_the_start):
+            # extract duration in minutes
+            activity_duration_temporary = [j.strip() for j in i.split("(duration in minutes:")]
+            activity_temp = activity_duration_temporary[0]
+
+            # remove full stop
+            if activity_temp[-1] == ".":
+                activity_temp = activity_temp[:-1]
+
+            # get the duration
+            duration = int(activity_duration_temporary[1].split(",")[0].strip())
+
+            activities_and_durations += [[activity_temp, duration]]
+
+        # get how long the task was supposed to last
         total_expected_min = int(prompt.split("(total duration in minutes")[-1]
                                  .split("):")[0].strip())
 
         # TODO -- now, you need to make sure that this is the same as the sum of
         #         the current action sequence.
-        curr_min_slot = [["dummy", -1], ]  # (task_name, task_index)
-        for count, i in enumerate(cr):
-            i_task = i[0]
+        accumulates_all_activites = [["dummy", -1], ]  # (task_name, task_index)
+
+        for activity_number, i in enumerate(activities_and_durations):
+            i_activity = i[0]
             i_duration = i[1]
 
+            # just normalize to a multiple of 5 e.g., 23%5 = 3 so 23 - 3 = 20
             i_duration -= (i_duration % 5)
+
+            # guess this filters out bad activities and adding one activity
+            # accumulates_all_activites is going to contain N activites where N is the
+            # number of minutes (if gpt was good gpt)
             if i_duration > 0:
                 for j in range(i_duration):
-                    curr_min_slot += [(i_task, count)]
-        curr_min_slot = curr_min_slot[1:]
+                    accumulates_all_activites += [(i_activity, activity_number)]
 
-        if len(curr_min_slot) > total_expected_min:
-            last_task = curr_min_slot[60]
+        # remove... dummy?
+        accumulates_all_activites = accumulates_all_activites[1:]
+
+        # if we gpt was bad, we might have more activities than the required minutes
+        if len(accumulates_all_activites) > total_expected_min:
+            # we get the last task...
+            # is this right? maybe the variable name is just wrong
+            last_task = accumulates_all_activites[60]
+
+            # from minute -1 to minute -6 we are going to set the
+            # activities to last task?
             for i in range(1, 6):
-                curr_min_slot[-1 * i] = last_task
-        elif len(curr_min_slot) < total_expected_min:
-            last_task = curr_min_slot[-1]
-            for i in range(total_expected_min - len(curr_min_slot)):
-                curr_min_slot += [last_task]
+                accumulates_all_activites[-1 * i] = last_task
 
-        cr_ret = [["dummy", -1], ]
-        for task, task_index in curr_min_slot:
-            if task != cr_ret[-1][0]:
-                cr_ret += [[task, 1]]
+        # if we gpt was bad, we might have fewer activities than the required minutes
+        elif len(accumulates_all_activites) < total_expected_min:
+
+            # ok now we get last task for real
+            last_task = accumulates_all_activites[-1]
+
+            # and we are just going to make it longer
+            for i in range(total_expected_min - len(accumulates_all_activites)):
+                accumulates_all_activites += [last_task]
+
+        # manual group by
+        final_list_of_activities = [["dummy", -1], ]
+        for task, task_index in accumulates_all_activites:
+            if task != final_list_of_activities[-1][0]:
+                final_list_of_activities += [[task, 1]]
             else:
-                cr_ret[-1][1] += 1
-        cr = cr_ret[1:]
+                final_list_of_activities[-1][1] += 1
+        final_list_of_activities = final_list_of_activities[1:]
 
-        return cr
-
+        return final_list_of_activities
     def __func_validate(gpt_response, prompt=""):
         # TODO -- this sometimes generates error
         try:
