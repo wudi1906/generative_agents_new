@@ -3355,3 +3355,93 @@ def run_gpt_generate_iterative_chat_utt(
         "stop": None,
     }
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+
+
+# Takes a plugin prompt template filepath and returns an LLM response string
+def run_plugin(
+    plugin_template,
+    current_movements,
+    personas,
+    verbose=False,
+):
+    def create_prompt_input(
+        persona1,
+        persona2,
+        movements,
+        test_input=None,
+    ):
+        if test_input:
+            return test_input
+
+        game_state = copy.deepcopy(movements)
+        personas = game_state["persona"]
+        for persona in personas:
+            persona_state = personas[persona]
+            del persona_state["chat"]
+            personas[persona] = persona_state
+        game_state["persona"] = personas
+
+        conversation = list(movements["persona"].values())[0]["chat"]
+
+        prompt_input = [
+            persona1.scratch.get_str_learned(),
+            persona2.scratch.get_str_learned(),
+            game_state,
+            conversation,
+            persona1.scratch.get_str_firstname(),
+            persona2.scratch.get_str_firstname(),
+        ]
+
+        return prompt_input
+
+    def __chat_func_clean_up(gpt_response, prompt=""):
+        gpt_response = extract_first_json_dict(gpt_response)
+        cleaned_dict = dict()
+
+        for key, val in gpt_response.items():
+            cleaned_dict[key] = False
+
+            if "t" in str(val) or "T" in str(val):
+                cleaned_dict[key] = True
+
+        return cleaned_dict
+
+    def __chat_func_validate(gpt_response, prompt=""):
+        print("Validating...")
+
+        try:
+            print(extract_first_json_dict(gpt_response))
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        cleaned_dict = {"error": "error"}
+        return cleaned_dict
+
+    persona_list = list(personas.values())
+
+    prompt_input = create_prompt_input(
+        persona1=persona_list[0],
+        persona2=persona_list[1],
+        movements=current_movements,
+    )
+    prompt = generate_prompt(prompt_input, plugin_template)
+    print(prompt)
+    fail_safe = get_fail_safe()
+    output = ChatGPT_safe_generate_response_OLD(
+        prompt, 3, fail_safe, __chat_func_validate, __chat_func_clean_up, verbose
+    )
+    print(output)
+
+    gpt_param = {
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": False,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+        "stop": None,
+    }
+    return output, [output, prompt, gpt_param, prompt_input, fail_safe]
