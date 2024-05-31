@@ -360,61 +360,105 @@ def run_gpt_prompt_task_decomp(persona,
         return prompt_input
 
     def __func_clean_up(gpt_response, prompt=""):
-        print("TOODOOOOOO")
         print(gpt_response)
         print("-==- -==- -==- ")
 
-        # TODO SOMETHING HERE sometimes fails... See screenshot
-        temp = [i.strip() for i in gpt_response.split("\n")]
-        _cr = []
-        cr = []
-        for count, i in enumerate(temp):
-            if count != 0:
-                _cr += [" ".join([j.strip() for j in i.split(" ")][3:])]
+        model_response_lines = [line.strip() for line in gpt_response.split("\n")]
+        activities_and_durations = []
+        total_cumulative_activity_duration = 0
+
+        for i, model_response_line in enumerate(model_response_lines):
+            # remove ordered list number if it's not the first line
+            if i != 0:
+                model_response_line_words = [s.strip() for s in model_response_line.split(" ")]
+                model_response_line_words_wo_ordered_list_num = model_response_line_words[3:]
+                model_response_line_wo_ordered_list_num = " ".join(model_response_line_words_wo_ordered_list_num)
             else:
-                _cr += [i]
-        for count, i in enumerate(_cr):
-            k = [j.strip() for j in i.split("(duration in minutes:")]
-            task = k[0]
-            if task[-1] == ".":
-                task = task[:-1]
-            duration = int(k[1].split(",")[0].strip())
-            cr += [[task, duration]]
+                model_response_line_wo_ordered_list_num = model_response_line
 
-        total_expected_min = int(prompt.split("(total duration in minutes")[-1]
-                                 .split("):")[0].strip())
+            # extract duration in minutes
+            activity_duration_temp = model_response_line_wo_ordered_list_num.split("(duration in minutes:")
+            activity_temp = activity_duration_temp[0].strip()
+            # remove full stop
+            curr_activity = activity_temp[:-1] if activity_temp[-1] == "." else activity_temp
 
-        # TODO -- now, you need to make sure that this is the same as the sum of
-        #         the current action sequence.
-        curr_min_slot = [["dummy", -1], ]  # (task_name, task_index)
-        for count, i in enumerate(cr):
-            i_task = i[0]
-            i_duration = i[1]
+            # get the duration
+            duration_temp = activity_duration_temp[1].strip()
+            # remove whatever is after the comma
+            duration_temp = duration_temp.split(",")[0].strip()
+            duration_temp = int(duration_temp)
+            # just normalize to a multiple of 5 e.g., 23%5 = 3 so 23 - 3 = 20
+            curr_duration = duration_temp - (duration_temp % 5)
 
-            i_duration -= (i_duration % 5)
-            if i_duration > 0:
-                for j in range(i_duration):
-                    curr_min_slot += [(i_task, count)]
-        curr_min_slot = curr_min_slot[1:]
+            activities_and_durations.append({"activity": curr_activity, "duration": curr_duration})
 
-        if len(curr_min_slot) > total_expected_min:
-            last_task = curr_min_slot[60]
-            for i in range(1, 6):
-                curr_min_slot[-1 * i] = last_task
-        elif len(curr_min_slot) < total_expected_min:
-            last_task = curr_min_slot[-1]
-            for i in range(total_expected_min - len(curr_min_slot)):
-                curr_min_slot += [last_task]
+            total_cumulative_activity_duration += curr_duration
 
-        cr_ret = [["dummy", -1], ]
-        for task, task_index in curr_min_slot:
-            if task != cr_ret[-1][0]:
-                cr_ret += [[task, 1]]
-            else:
-                cr_ret[-1][1] += 1
-        cr = cr_ret[1:]
+        # get how long the task was supposed to last
+        total_expected_duration = int(
+            prompt.split("(total duration in minutes")[-1].split("):")[0].strip()
+        )
 
-        return cr
+        # now, you need to make sure that this is the same as the sum of
+        # the current activity sequence.
+
+        # if we gpt was bad, we might have more activities than the required minutes
+        if total_cumulative_activity_duration > total_expected_duration:
+
+            cumulative_activity_duration = 0
+            trimmed_activities_and_durations = []
+            for curr_activity_duration in activities_and_durations:
+                prev_cumulative_activity_duration = cumulative_activity_duration
+                cumulative_activity_duration += curr_activity_duration["duration"]
+                if cumulative_activity_duration == total_expected_duration:
+                    # heuristic: if there's only 0 mins left add the current activity
+                    # and discard all others.
+                    trimmed_activities_and_durations.append(curr_activity_duration)
+
+                    # As the above heuristic may not be great because it lacks the last activity
+                    # that handles the transition to the next macroactivity to decompose,
+                    # an alternative heuristic could be to add the last activity
+                    # for the current activity duration instead,
+                    # actively discusrind the current activity and all the following ones
+                    # until the last one
+
+                    # last_activity = activities_and_durations[-1]["activity"]
+                    # trimmed_activities_and_durations.append(
+                    #     {"activity": last_activity, "duration": curr_activity_duration["duration"]}
+                    # )
+
+                    break
+
+                elif cumulative_activity_duration > total_expected_duration:
+                    duration_left = total_expected_duration - prev_cumulative_activity_duration
+                    if duration_left == 5:
+                        # heuristic: if there's only 5 mins left, skip the current activity
+                        # and just add the last activity with 5 min duration
+                        (last_activity, _) = activities_and_durations[-1]
+                        trimmed_activities_and_durations.append(
+                            {"activity": last_activity, "duration": duration_left}
+                        )
+                    elif duration_left > 5:
+                        # heuristic: split the duration left between the current and last activity
+                        # discarding all the activities in between
+                        trimmed_activities_and_durations.append(
+                            {"activity": curr_activity_duration["activity"], "duration": duration_left // 2}
+                        )
+                        last_activity = activities_and_durations[-1]["activity"]
+                        trimmed_activities_and_durations.append(
+                            {"activity": last_activity, "duration": duration_left // 2}
+                        )
+                    break
+                else:  # base case where we are not esceeding total_expected_duration
+                    trimmed_activities_and_durations.append(curr_activity_duration)
+
+            activities_and_durations = trimmed_activities_and_durations
+
+        # if we gpt was bad, we might have less activities than the required minutes
+        elif total_cumulative_activity_duration < total_expected_duration:
+            activities_and_durations[-1]["duration"] += total_expected_duration - total_cumulative_activity_duration
+
+        return activities_and_durations
 
     def __func_validate(gpt_response, prompt=""):
         # TODO -- this sometimes generates error
