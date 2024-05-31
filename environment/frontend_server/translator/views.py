@@ -14,7 +14,8 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 from global_methods import *
 
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.templatetags.static import static
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 def landing(request): 
@@ -313,11 +314,40 @@ def path_tester_update(request):
 
   return HttpResponse("received")
 
+#Qian
+def save_message(request):
+    data = json.loads(request.body)
+    message = data["message"]
+    sim_code = data["sim_code"]
+    message_path = f"storage/{sim_code}/environment/player_chat_message.json"
+    with open(message_path, "w") as message_file:
+      json.dump(message, message_file, indent=2)
+    return JsonResponse({'status': 'success', 'message': 'message saved'})
 
+def save_player_position(request):
+    data = json.loads(request.body)
+    player_position = data["playerPosition"]
+    sim_code = data["sim_code"]
+    file_path = f"storage/{sim_code}/environment/player_position.json"
+    with open(file_path, "w") as outfile:
+        json.dump(player_position, outfile, indent=2)
+    return JsonResponse({'status': 'success', 'message': 'Player position saved'})
 
-
-
-
-
-
-
+def get_npc_reply(request):
+    if request.method == "POST":
+        npc_name = request.POST.get("npc_name")
+        file_path = "/Users/qian/GitHub-Project/generative_agents/reverie/reply/reply.json"
+        try:
+            with open(file_path, "r") as file:
+                data = json.load(file)
+                # Find the NPC's reply based on the given npc_name
+                npc_reply = next((item for item in data if item["npc"] == npc_name), None)
+                if npc_reply:
+                    return JsonResponse(npc_reply)
+                else:
+                    return JsonResponse({'error': 'NPC not found'}, status=404)
+        except FileNotFoundError:
+            return JsonResponse({'error': 'File not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+#Qian

@@ -12,6 +12,19 @@ from global_methods import *
 from persona.prompt_template.gpt_structure import *
 from persona.prompt_template.run_gpt_prompt import *
 
+#Qian
+def get_player_position(file_path):
+    with open(file_path, 'r') as json_file:
+        player_position = json.load(json_file)
+        x_coor = player_position['x']
+        y_coor = player_position['y'] 
+    # Print the coordinates
+    print(f"X Coordinate: {x_coor}")
+    print(f"Y Coordinate: {y_coor}")
+    return x_coor, y_coor
+#Qian
+
+
 def generate_poig_score(persona, event_type, description): 
   if "is idle" in description: 
     return 1
@@ -23,6 +36,8 @@ def generate_poig_score(persona, event_type, description):
                            persona.scratch.act_description)[0]
 
 def perceive(persona, maze): 
+  # x_coor, y_coor = get_player_position(file_path)
+
   """
   Perceives events around the persona and saves it to the memory, both events 
   and spaces. 
@@ -180,10 +195,6 @@ def perceive(persona, maze):
 
   return ret_events
 
-
-
-
-  
 
 
 
