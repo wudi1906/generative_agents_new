@@ -4,56 +4,85 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: gpt_structure.py
 Description: Wrapper functions for calling OpenAI APIs.
 """
-import json
-import random
-import openai
 import time 
+import json
+from pathlib import Path
+from openai import AzureOpenAI, OpenAI
 
 from utils import *
+from openai_cost_logger import DEFAULT_LOG_PATH
+from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 
-openai.api_key = openai_api_key
+config_path = Path("../../openai_config.json")
+with open(config_path, "r") as f:
+    openai_config = json.load(f) 
+
+def setup_client(type: str, config: dict):
+  """Setup the OpenAI client.
+
+  Args:
+      type (str): the type of client. Either "azure" or "openai".
+      config (dict): the configuration for the client.
+
+  Raises:
+      ValueError: if the client is invalid.
+
+  Returns:
+      The client object created, either AzureOpenAI or OpenAI.
+  """
+  if type == "azure":
+    client = AzureOpenAI(
+        azure_endpoint=config["endpoint"],
+        api_key=config["key"],
+        api_version=config["api-version"],
+    )
+  elif type == "openai":
+    client = OpenAI(
+        api_key=config["key"],
+    )
+  else:
+    raise ValueError("Invalid client")
+  return client
+
+if openai_config["client"] == "azure":
+  client = setup_client("azure", {
+      "endpoint": openai_config["model-endpoint"],
+      "key": openai_config["model-key"],
+      "api-version": openai_config["model-api-version"],
+  })
+elif openai_config["client"] == "openai":
+  client = setup_client("openai", { "key": openai_config["model-key"] })
+
+if openai_config["embeddings-client"] == "azure":  
+  embeddings_client = setup_client("azure", {
+      "endpoint": openai_config["embeddings-endpoint"],
+      "key": openai_config["embeddings-key"],
+      "api-version": openai_config["embeddings-api-version"],
+  })
+elif openai_config["embeddings-client"] == "openai":
+  embeddings_client = setup_client("openai", { "key": openai_config["embeddings-key"] })
+else:
+  raise ValueError("Invalid embeddings client")
+
+cost_logger = OpenAICostLogger_Singleton(
+  experiment_name = openai_config["experiment-name"],
+  log_folder = DEFAULT_LOG_PATH,
+  cost_upperbound = openai_config["cost-upperbound"]
+)
+
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
 
+
 def ChatGPT_single_request(prompt): 
   temp_sleep()
-
-  completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+  completion = client.chat.completions.create(
+    model=openai_config["model"],
     messages=[{"role": "user", "content": prompt}]
   )
-  return completion["choices"][0]["message"]["content"]
-
-
-# ============================================================================
-# #####################[SECTION 1: CHATGPT-3 STRUCTURE] ######################
-# ============================================================================
-
-def GPT4_request(prompt): 
-  """
-  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
-  server and returns the response. 
-  ARGS:
-    prompt: a str prompt
-    gpt_parameter: a python dictionary with the keys indicating the names of  
-                   the parameter and the values indicating the parameter 
-                   values.   
-  RETURNS: 
-    a str of GPT-3's response. 
-  """
-  temp_sleep()
-
-  try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-4", 
-    messages=[{"role": "user", "content": prompt}]
-    )
-    return completion["choices"][0]["message"]["content"]
-  
-  except: 
-    print ("ChatGPT ERROR")
-    return "ChatGPT ERROR"
+  cost_logger.update_cost(completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"])
+  return completion.choices[0].message.content
 
 
 def ChatGPT_request(prompt): 
@@ -70,54 +99,16 @@ def ChatGPT_request(prompt):
   """
   # temp_sleep()
   try: 
-    completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    completion = client.chat.completions.create(
+    model=openai_config["model"],
     messages=[{"role": "user", "content": prompt}]
     )
-    return completion["choices"][0]["message"]["content"]
+    cost_logger.update_cost(completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"])
+    return completion.choices[0].message.content
   
-  except: 
-    print ("ChatGPT ERROR")
+  except Exception as e: 
+    print(f"Error: {e}")
     return "ChatGPT ERROR"
-
-
-def GPT4_safe_generate_response(prompt, 
-                                   example_output,
-                                   special_instruction,
-                                   repeat=3,
-                                   fail_safe_response="error",
-                                   func_validate=None,
-                                   func_clean_up=None,
-                                   verbose=False): 
-  prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
-  prompt += f"Output the response to the prompt above in json. {special_instruction}\n"
-  prompt += "Example output json:\n"
-  prompt += '{"output": "' + str(example_output) + '"}'
-
-  if verbose: 
-    print ("CHAT GPT PROMPT")
-    print (prompt)
-
-  for i in range(repeat): 
-
-    try: 
-      curr_gpt_response = GPT4_request(prompt).strip()
-      end_index = curr_gpt_response.rfind('}') + 1
-      curr_gpt_response = curr_gpt_response[:end_index]
-      curr_gpt_response = json.loads(curr_gpt_response)["output"]
-      
-      if func_validate(curr_gpt_response, prompt=prompt): 
-        return func_clean_up(curr_gpt_response, prompt=prompt)
-      
-      if verbose: 
-        print ("---- repeat count: \n", i, curr_gpt_response)
-        print (curr_gpt_response)
-        print ("~~~~")
-
-    except: 
-      pass
-
-  return False
 
 
 def ChatGPT_safe_generate_response(prompt, 
@@ -145,10 +136,6 @@ def ChatGPT_safe_generate_response(prompt,
       end_index = curr_gpt_response.rfind('}') + 1
       curr_gpt_response = curr_gpt_response[:end_index]
       curr_gpt_response = json.loads(curr_gpt_response)["output"]
-
-      # print ("---ashdfaf")
-      # print (curr_gpt_response)
-      # print ("000asdfhia")
       
       if func_validate(curr_gpt_response, prompt=prompt): 
         return func_clean_up(curr_gpt_response, prompt=prompt)
@@ -190,10 +177,6 @@ def ChatGPT_safe_generate_response_OLD(prompt,
   return fail_safe_response
 
 
-# ============================================================================
-# ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
-# ============================================================================
-
 def GPT_request(prompt, gpt_parameter): 
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
@@ -208,9 +191,12 @@ def GPT_request(prompt, gpt_parameter):
   """
   temp_sleep()
   try: 
-    response = openai.Completion.create(
+    messages = [{
+      "role": "system", "content": prompt
+    }]
+    response = client.chat.completions.create(
                 model=gpt_parameter["engine"],
-                prompt=prompt,
+                messages=messages,
                 temperature=gpt_parameter["temperature"],
                 max_tokens=gpt_parameter["max_tokens"],
                 top_p=gpt_parameter["top_p"],
@@ -218,9 +204,10 @@ def GPT_request(prompt, gpt_parameter):
                 presence_penalty=gpt_parameter["presence_penalty"],
                 stream=gpt_parameter["stream"],
                 stop=gpt_parameter["stop"],)
-    return response.choices[0].text
-  except: 
-    print ("TOKEN LIMIT EXCEEDED")
+    cost_logger.update_cost(response=response, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"])
+    return response.choices[0].message.content
+  except Exception as e:
+    print(f"Error: {e}")
     return "TOKEN LIMIT EXCEEDED"
 
 
@@ -264,25 +251,29 @@ def safe_generate_response(prompt,
 
   for i in range(repeat): 
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
-    if func_validate(curr_gpt_response, prompt=prompt): 
-      return func_clean_up(curr_gpt_response, prompt=prompt)
-    if verbose: 
-      print ("---- repeat count: ", i, curr_gpt_response)
-      print (curr_gpt_response)
-      print ("~~~~")
+    try:
+      if func_validate(curr_gpt_response, prompt=prompt): 
+        return func_clean_up(curr_gpt_response, prompt=prompt)
+      if verbose: 
+        print ("---- repeat count: ", i, curr_gpt_response)
+        print (curr_gpt_response)
+        print ("~~~~")
+    except:
+      pass
   return fail_safe_response
 
 
-def get_embedding(text, model="text-embedding-ada-002"):
+def get_embedding(text, model=openai_config["embeddings"]):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return openai.Embedding.create(
-          input=[text], model=model)['data'][0]['embedding']
+  response = embeddings_client.embeddings.create(input=[text], model=model)
+  cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
+  return response.data[0].embedding
 
 
 if __name__ == '__main__':
-  gpt_parameter = {"engine": "text-davinci-003", "max_tokens": 50, 
+  gpt_parameter = {"engine": openai_config["model"], "max_tokens": 50, 
                    "temperature": 0, "top_p": 1, "stream": False,
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}
@@ -309,8 +300,6 @@ if __name__ == '__main__':
                                  True)
 
   print (output)
-
-
 
 
 

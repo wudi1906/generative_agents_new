@@ -231,8 +231,11 @@ class Persona:
     return self.execute(maze, personas, plan)
 
 
-  def open_convo_session(self, convo_mode): 
-    open_convo_session(self, convo_mode)
+  def open_convo_session(self, convo_mode, safe_mode=True, direct=False, question=None): 
+    if direct:
+      return open_convo_session(self, convo_mode, safe_mode, direct, question)
+    else: 
+      return open_convo_session(self, convo_mode, safe_mode, direct)
     
 
 
