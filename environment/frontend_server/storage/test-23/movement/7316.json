@@ -1,0 +1,34 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        80,
+        21
+      ],
+      "pronunciatio": "\ud83e\uddf9\ud83e\ude91",
+      "description": "closing Hobbs Cafe (cleaning the tables and chairs) @ the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      "chat": null
+    },
+    "Maria Lopez": {
+      "movement": [
+        114,
+        51
+      ],
+      "pronunciatio": "\ud83d\udcac\ud83c\udfe2",
+      "description": "Twitch streaming or gaming (conversing about conversing about organizations and initiatives working to address the negative impacts of gentrification) @ the Ville:Dorm for Oak Hill College:common room:common room sofa",
+      "chat": null
+    },
+    "Klaus Mueller": {
+      "movement": [
+        87,
+        37
+      ],
+      "pronunciatio": "\ud83d\udcac",
+      "description": "taking a break from writing his paper (conversing about conversing about organizations and initiatives working to address the negative impacts of gentrification) @ the Ville:The Rose and Crown Pub:pub:microphone",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 20:19:20"
+  }
+}
