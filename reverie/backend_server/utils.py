@@ -1,7 +1,7 @@
 # Copy and paste your OpenAI API Key
-openai_api_key = "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"
+openai_api_key = "sk-proj-teW407SpqUChK9zNAzbVT3BlbkFJcdNfTRoAgCQn7wAa0AAt"
 # Put your name
-key_owner = "Jonathan Granda Acaro"
+key_owner = "Connor Howington"
 
 maze_assets_loc = "../../environment/frontend_server/static_dirs/assets"
 env_matrix = f"{maze_assets_loc}/the_ville/matrix"
