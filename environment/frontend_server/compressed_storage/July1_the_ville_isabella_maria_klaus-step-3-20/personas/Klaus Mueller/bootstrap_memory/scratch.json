@@ -2,20 +2,20 @@
   "vision_r": 8,
   "att_bandwidth": 8,
   "retention": 8,
-  "curr_time": "February 13, 2023, 00:00:20",
+  "curr_time": "February 14, 2023, 00:02:20",
   "curr_tile": [
-    127,
+    126,
     46
   ],
-  "daily_plan_req": "Klaus Mueller goes to the park early in the morning, spends his days playing hide and seek, where he is the seeker and looks for the hidder in the park.",
+  "daily_plan_req": "1. Wake up and complete the morning routine at 7:00 am. 2. Go to the library at Oak Hill College to study and research from 8:00 am to 12:00 pm. 3. Take a break and have lunch at Hobbs Cafe from 12:00 pm to 1:00 pm. 4. Continue studying and writing at the library from 1:00 pm to 4:30 pm. 5. Get ready for Isabella Rodriguez's Valentine's Day party from 4:30 pm to 5:00 pm. 6. Attend Isabella Rodriguez's Valentine's Day party at Hobbs Cafe from 5:00 pm to 7:00 pm",
   "name": "Klaus Mueller",
   "first_name": "Klaus",
   "last_name": "Mueller",
   "age": 20,
-  "innate": "resourceful, intelligent, perseverant",
-  "learned": "Klaus Mueller is the seeker in the game of hide and seek at the park. He is passionate about being the seeker and loves to strategize new searching locations in the park.",
-  "currently": "Klaus Mueller is searching for Isabella Rodriguez and Maria Lopez, who is hidding.",
-  "lifestyle": "Klaus Mueller goes to bed around 11pm, awakes up around 6am and immdiately plays hide and seek.",
+  "innate": "kind, inquisitive, passionate",
+  "learned": "Klaus Mueller is a student at Oak Hill College studying sociology. He is passionate about social justice and loves to explore different perspectives.",
+  "currently": "Status: Klaus Mueller is excited to attend Isabella Rodriguez's Valentine's Day party today, on February 14th, 2023, from 5pm to 7pm at Hobbs Cafe. He has it carefully planned out in his schedule and is looking forward to celebrating with Isabella and their friends.",
+  "lifestyle": "Klaus Mueller goes to bed around 11pm, awakes up around 7am, eats dinner around 5pm.",
   "living_area": "the Ville:Dorm for Oak Hill College:Klaus Mueller's room",
   "concept_forget": 100,
   "daily_reflection_time": 180,
@@ -28,106 +28,161 @@
   "importance_w": 1,
   "recency_decay": 0.99,
   "importance_trigger_max": 150,
-  "importance_trigger_curr": 143,
-  "importance_ele_n": 7,
+  "importance_trigger_curr": 41,
+  "importance_ele_n": 64,
   "thought_count": 5,
   "daily_req": [
-    "wake up and immdiately play hide and seek by searching for Isabella Rodriguez at 6:00 am",
-    "go to the park and look for Isabella Rodriguez from 6:00 am to 11:00 pm",
-    "have meeting with Isabella Rodriguez at 12:00 pm to discuss the hide and seek game",
-    "go search for Isabella Rodriguez in the park again from 12:30pm",
-    "move around the park to find the best hidding spot to check if Isabella is hidding there",
-    "If Isabella Rodriguez is not at a hidding spot go to the next one and do not search there again", 
-    "stay quiet, vigligiant, and perseverant"
+    "wake up and complete the morning routine at 7:00 am",
+    "go to the library at Oak Hill College and work on his research paper from 8:00 am to 1:00 pm",
+    "have lunch at Hobbs Cafe at 12:00 pm",
+    "continue work at the library from 2:00 pm to 5:00 pm",
+    "Eat dinner at 5:00 pm",
+    "Watch TV for an hour from 7:00 pm to 8:00 pm",
+    "read a Sociology-related book from 8:00 pm to 9:00 pm"
   ],
   "f_daily_schedule": [
     [
       "sleeping",
-      360
+      420
     ],
     [
-      "waking up and go search for the Isabella Rodriguez in the park",
-      150
+      "waking up and completing his morning routine (brushing his teeth)",
+      5
     ],
     [
-      "look for the best hidding place in the park",
-      150
+      "waking up and completing his morning routine (taking a shower)",
+      10
     ],
     [
-      "stay quite and still, so no one can see you",
-      150
+      "waking up and completing his morning routine (getting dressed)",
+      10
     ],
     [
-      "look around and check each hidding spot if Isabella Rodriguez is not there go to the next hidding spot",
-      150
+      "waking up and completing his morning routine (making breakfast)",
+      10
     ],
     [
-      "go to the next hidding spot",
-      150
+      "waking up and completing his morning routine (eating breakfast)",
+      10
     ],
     [
-      "repeat same process as you just did until you need to sleep or until you found Isabella",
-      150
+      "waking up and completing his morning routine (packing his bag)",
+      10
+    ],
+    [
+      "waking up and completing his morning routine (checking his schedule)",
+      5
+    ],
+    [
+      "heading to the library at Oak Hill College to work on his research paper",
+      60
+    ],
+    [
+      "studying and researching at the library",
+      180
+    ],
+    [
+      "having lunch at Hobbs Cafe",
+      60
+    ],
+    [
+      "continuing to work on his research paper at the library",
+      180
+    ],
+    [
+      "getting ready for Isabella Rodriguez's Valentine's Day party",
+      60
+    ],
+    [
+      "eating dinner before the Valentine's Day party",
+      60
+    ],
+    [
+      "watching TV",
+      120
+    ],
+    [
+      "reading a Sociology-related book",
+      120
+    ],
+    [
+      "getting ready for bed",
+      120
     ],
     [
       "sleeping",
-      180
+      0
     ]
   ],
   "f_daily_schedule_hourly_org": [
     [
       "sleeping",
-      360
+      420
     ],
     [
-      "waking up and go search for the Isabella Rodriguez in the park",
-      150
+      "waking up and completing his morning routine",
+      60
     ],
     [
-      "look for the best hidding place in the park",
-      150
+      "heading to the library at Oak Hill College to work on his research paper",
+      60
     ],
     [
-      "stay quite and still, so no one can see you",
-      150
-    ],
-    [
-      "look around and check each hidding spot if Isabella Rodriguez is not there go to the next hidding spot",
-      150
-    ],
-    [
-      "go to the next hidding spot",
-      150
-    ],
-    [
-      "repeat same process as you just did until you need to sleep or until you found Isabella",
-      150
-    ],
-    [
-      "sleeping",
+      "studying and researching at the library",
       180
+    ],
+    [
+      "having lunch at Hobbs Cafe",
+      60
+    ],
+    [
+      "continuing to work on his research paper at the library",
+      180
+    ],
+    [
+      "getting ready for Isabella Rodriguez's Valentine's Day party",
+      60
+    ],
+    [
+      "eating dinner before the Valentine's Day party",
+      60
+    ],
+    [
+      "watching TV",
+      120
+    ],
+    [
+      "reading a Sociology-related book",
+      120
+    ],
+    [
+      "getting ready for bed",
+      120
     ]
   ],
   "act_address": "the Ville:Dorm for Oak Hill College:Klaus Mueller's room:bed",
-  "act_start_time": "February 13, 2023, 00:00:00",
+  "act_start_time": "February 14, 2023, 00:02:00",
   "act_duration": 420,
   "act_description": "sleeping",
-  "act_pronunciatio": "\ud83d\udca4",
+  "act_pronunciatio": "\ud83d\ude34",
   "act_event": [
     "Klaus Mueller",
     "is",
     "sleep"
   ],
-  "act_obj_description": "being slept on",
-  "act_obj_pronunciatio": "\ud83d\ude34",
+  "act_obj_description": "being used",
+  "act_obj_pronunciatio": "\ud83d\udec1\ud83e\uddd6\u200d",
   "act_obj_event": [
     "bed",
     "be",
-    "slept"
+    "used"
   ],
   "chatting_with": null,
   "chat": null,
-  "chatting_with_buffer": {},
+  "chatting_with_buffer": {
+    "Maria Lopez": -943,
+    "Isabella Rodriguez": -1525
+  },
   "chatting_end_time": null,
   "act_path_set": true,
   "planned_path": []
