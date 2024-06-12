@@ -1,0 +1,34 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        77,
+        30
+      ],
+      "pronunciatio": "\ud83d\uded2\ud83c\udf74",
+      "description": "serving lunch to customers at Hobbs Cafe (restocking the kitchen) @ the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      "chat": null
+    },
+    "Maria Lopez": {
+      "movement": [
+        112,
+        30
+      ],
+      "pronunciatio": "\ud83d\udcac",
+      "description": "studying physics at Hobbs Cafe (conversing about This is a conversation between Maria Lopez and Klaus Mueller about researching and discussing various organizations and initiatives working to address the negative impacts of gentrification in low-income communities.) @ the Ville:Dorm for Oak Hill College:common room:common room table",
+      "chat": null
+    },
+    "Klaus Mueller": {
+      "movement": [
+        113,
+        30
+      ],
+      "pronunciatio": "\ud83d\udcac\ud83d\udcda",
+      "description": "writing his paper at the library (conversing about This is a conversation between Maria Lopez and Klaus Mueller about researching and discussing various organizations and initiatives working to address the negative impacts of gentrification in low-income communities.) @ the Ville:Dorm for Oak Hill College:common room:common room table",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "February 13, 2023, 14:32:30"
+  }
+}
