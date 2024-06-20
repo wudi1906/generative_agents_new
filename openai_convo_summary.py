@@ -6,7 +6,7 @@ import sys
 from openai import OpenAI
 from reverie.backend_server.utils import *
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="Your API Key Here")
 
 
 # Function declaration
