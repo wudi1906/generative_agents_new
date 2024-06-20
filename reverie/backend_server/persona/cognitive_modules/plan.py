@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: plan.py
 Description: This defines the "Plan" module for generative agents. 
 """
+
 import datetime
 import math
 import random
@@ -38,7 +39,8 @@ def generate_wake_up_hour(persona):
     """
     if debug:
         print("GNS FUNCTION: <generate_wake_up_hour>")
-    return int(run_gpt_prompt_wake_up_hour(persona)[0])
+    # return int(run_gpt_prompt_wake_up_hour(persona)[0])
+    return 0
 
 
 def generate_first_daily_plan(persona, wake_up_hour):
@@ -127,15 +129,11 @@ def generate_hourly_schedule(persona, wake_up_hour):
         if len(n_m1_activity_set) < 5:
             n_m1_activity = []
             for count, curr_hour_str in enumerate(hour_str):
-                if wake_up_hour > 0:
-                    n_m1_activity += ["sleeping"]
-                    wake_up_hour -= 1
-                else:
-                    n_m1_activity += [
-                        run_gpt_prompt_generate_hourly_schedule(
-                            persona, curr_hour_str, n_m1_activity, hour_str
-                        )[0]
-                    ]
+                n_m1_activity += [
+                    run_gpt_prompt_generate_hourly_schedule(
+                        persona, curr_hour_str, n_m1_activity, hour_str
+                    )[0]
+                ]
 
     # Step 1. Compressing the hourly schedule to the following format:
     # The integer indicates the number of hours. They should add up to 24.
@@ -276,7 +274,9 @@ def generate_action_pronunciatio(act_desp, persona):
     if debug:
         print("GNS FUNCTION: <generate_action_pronunciatio>")
     try:
-        x = run_gpt_prompt_pronunciatio(act_desp, persona)[0]
+        response = run_gpt_prompt_pronunciatio(act_desp, persona)
+        if response:
+            x = response[0]
     except:
         x = "🙂"
 
@@ -304,7 +304,14 @@ def generate_action_event_triple(act_desp, persona):
 def generate_act_obj_desc(act_game_object, act_desp, persona):
     if debug:
         print("GNS FUNCTION: <generate_act_obj_desc>")
-    return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
+
+    # result = run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)[0]
+    # if result is not None:
+    #     act_obj_desp = result
+    #     return act_obj_desp
+    # else:
+    #     return {}
+    return run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona)
 
 
 def generate_act_obj_event_triple(act_game_object, act_obj_desc, persona):
@@ -336,8 +343,13 @@ def generate_convo(maze, init_persona, target_persona):
 
 
 def generate_convo_summary(persona, convo):
-    convo_summary = run_gpt_prompt_summarize_conversation(persona, convo)[0]
-    return convo_summary
+    response = run_gpt_prompt_summarize_conversation(persona, convo)
+    if response:
+        convo_summary = response[0]
+        return convo_summary
+    else:
+        print("ERROR: <generate_convo_summary>")
+        return ""
 
 
 def generate_decide_to_talk(init_persona, target_persona, retrieved):
@@ -696,6 +708,9 @@ def _determine_action(persona, maze):
 
     act_desp, act_dura = persona.scratch.f_daily_schedule[curr_index]
 
+    # if act_desp and act_dura is None:
+    #     act_desp, act_dura = ["playing hide-and-seek", 150]
+
     # Finding the target location of the action and creating action-related
     # variables.
     act_world = maze.access_tile(persona.scratch.curr_tile)["world"]
@@ -985,7 +1000,7 @@ def _chat_react(maze, persona, focused_event, reaction_mode, personas):
     # and the persona who is the target. We get the persona instances here.
     init_persona = persona
     target_persona = personas[reaction_mode[9:].strip()]
-    curr_personas = [init_persona, target_persona]
+    # curr_personas = [init_persona, target_persona]
 
     # Actually creating the conversation here.
     convo, duration_min = generate_convo(maze, init_persona, target_persona)

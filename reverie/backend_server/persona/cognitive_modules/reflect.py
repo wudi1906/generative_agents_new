@@ -4,15 +4,17 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: reflect.py
 Description: This defines the "Reflect" module for generative agents. 
 """
+
 import sys
 
 sys.path.append("../../")
 
 import datetime
-import random
 
-from numpy import dot
-from numpy.linalg import norm
+# import random
+
+# from numpy import dot
+# from numpy.linalg import norm
 
 from global_methods import *
 from persona.prompt_template.run_gpt_prompt import *
@@ -52,10 +54,13 @@ def generate_insights_and_evidence(persona, nodes, n=5):
 
     print(ret)
     try:
-        for thought, evi_raw in ret.items():
-            evidence_node_id = [nodes[i].node_id for i in evi_raw]
-            ret[thought] = evidence_node_id
-        return ret
+        if type(ret) == dict:
+            for thought, evi_raw in ret.items():
+                evidence_node_id = [nodes[i].node_id for i in evi_raw]
+                ret[thought] = evidence_node_id
+            return ret
+        else:
+            return {"this is blank": "node_1"}
     except:
         return {"this is blank": "node_1"}
 
@@ -84,11 +89,23 @@ def generate_poig_score(persona, event_type, description):
         return 1
 
     if event_type == "event" or event_type == "thought":
-        return run_gpt_prompt_event_poignancy(persona, description)[0]
+        response = run_gpt_prompt_event_poignancy(persona, description)
+        if response:
+            return response[0]
+        else:
+            print(
+                "ERROR: <generate_poig_score> in reflect.py: Could not get event/thought poignancy."
+            )
     elif event_type == "chat":
-        return run_gpt_prompt_chat_poignancy(persona, persona.scratch.act_description)[
-            0
-        ]
+        response = run_gpt_prompt_chat_poignancy(
+            persona, persona.scratch.act_description
+        )
+        if response:
+            return response[0]
+        else:
+            print(
+                "ERROR: <generate_poig_score> in reflect.py: Could not get chat poignancy."
+            )
 
 
 def generate_planning_thought_on_convo(persona, all_utt):

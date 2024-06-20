@@ -5,10 +5,12 @@ File: run_gpt_prompt.py
 Description: Defines all run gpt prompt functions. These functions directly
 interface with the safe_generate_response function.
 """
+
 import re
 import datetime
 import sys
 import ast
+import copy
 
 sys.path.append("../../")
 
@@ -82,8 +84,8 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 5,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0.8,
         "top_p": 1,
         "stream": False,
@@ -169,8 +171,8 @@ def run_gpt_prompt_daily_plan(persona, wake_up_hour, test_input=None, verbose=Fa
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 500,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 1,
         "top_p": 1,
         "stream": False,
@@ -275,7 +277,7 @@ def run_gpt_prompt_generate_hourly_schedule(
         return True
 
     def get_fail_safe():
-        fs = "asleep"
+        fs = "idle"
         return fs
 
     # # ChatGPT Plugin ===========================================================
@@ -312,8 +314,8 @@ def run_gpt_prompt_generate_hourly_schedule(
     # # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0.5,
         "top_p": 1,
         "stream": False,
@@ -406,20 +408,20 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         print(gpt_response)
         print("-==- -==- -==- ")
         pattern = r"^(?:\d*\) )?.+ \(duration in minutes: \d+, minutes left: \d+\)\n?((?:\d+\) .+ \(duration in minutes: \d+, minutes left: \d+\)\n?)*)"
-        raw_activities_list = re.search(pattern, gpt_response).group()
+        raw_activities_str = re.search(pattern, gpt_response).group()
 
         # TODO SOMETHING HERE sometimes fails... See screenshot
-        temp = [i.strip() for i in raw_activities_list.split("\n")]
-        _cr = []
-        cr = []
-        for count, i in enumerate(temp):
+        activities_list = [i.strip() for i in raw_activities_str.split("\n")]
+        temp_clean_response = []
+        clean_response = []
+        for count, i in enumerate(activities_list):
             if count != 0:
                 # Get rid of "2) Isabella is" line starts, only retaining task and timeframe
                 # like "making breakfast at home. (duration in minutes: 30, minutes left: 30)"
-                _cr += [" ".join([j.strip() for j in i.split(" ")][3:])]
+                temp_clean_response += [" ".join([j.strip() for j in i.split(" ")][3:])]
             else:
-                _cr += [i]
-        for count, i in enumerate(_cr):
+                temp_clean_response += [i]
+        for count, i in enumerate(temp_clean_response):
             k = [j.strip() for j in i.split("(duration in minutes:")]
             # Ensure there are enough elements in k
             if len(k) < 2:
@@ -443,7 +445,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
                 duration = 0
                 continue
 
-            cr += [[task, duration]]
+            clean_response += [[task, duration]]
 
         total_expected_min = int(
             prompt.split("(total duration in minutes")[-1].split("):")[0].strip()
@@ -454,7 +456,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         curr_min_slot = [
             ["dummy", -1],
         ]  # (task_name, task_index)
-        for count, i in enumerate(cr):
+        for count, i in enumerate(clean_response):
             i_task = i[0]
             i_duration = i[1]
 
@@ -473,17 +475,17 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
             for i in range(total_expected_min - len(curr_min_slot)):
                 curr_min_slot += [last_task]
 
-        cr_ret = [
+        clean_response_to_return = [
             ["dummy", -1],
         ]
         for task, task_index in curr_min_slot:
-            if task != cr_ret[-1][0]:
-                cr_ret += [[task, 1]]
+            if task != clean_response_to_return[-1][0]:
+                clean_response_to_return += [[task, 1]]
             else:
-                cr_ret[-1][1] += 1
-        cr = cr_ret[1:]
+                clean_response_to_return[-1][1] += 1
+        clean_response_to_return = clean_response_to_return[1:]
 
-        return cr
+        return clean_response_to_return
 
     def __func_validate(gpt_response, prompt=""):
         # TODO -- this sometimes generates error
@@ -495,12 +497,12 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         return gpt_response
 
     def get_fail_safe():
-        fs = ["asleep"]
+        fs = [["idle", 5]]
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 1000,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -662,8 +664,8 @@ def run_gpt_prompt_action_sector(
     # # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -767,8 +769,8 @@ def run_gpt_prompt_action_arena(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -827,8 +829,8 @@ def run_gpt_prompt_action_game_object(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -907,8 +909,8 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1014,8 +1016,8 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
     # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 30,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1081,8 +1083,8 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 6")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1154,8 +1156,8 @@ def run_gpt_prompt_act_obj_event_triple(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 30,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1325,8 +1327,8 @@ def run_gpt_prompt_new_decomp_schedule(
         return ret
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 1000,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1449,8 +1451,8 @@ def run_gpt_prompt_decide_to_talk(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 20,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1574,8 +1576,8 @@ def run_gpt_prompt_decide_to_react(
         return fs
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 20,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1728,8 +1730,8 @@ def run_gpt_prompt_create_conversation(
         return convo
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 1000,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0.7,
         "top_p": 1,
         "stream": False,
@@ -1793,8 +1795,8 @@ def run_gpt_prompt_summarize_conversation(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 11")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1879,8 +1881,8 @@ def run_gpt_prompt_extract_keywords(
         return []
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -1927,8 +1929,8 @@ def run_gpt_prompt_keyword_to_thoughts(
         return ""
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 40,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0.7,
         "top_p": 1,
         "stream": False,
@@ -1989,8 +1991,8 @@ def run_gpt_prompt_convo_to_thoughts(
         return ""
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 40,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0.7,
         "top_p": 1,
         "stream": False,
@@ -2057,8 +2059,8 @@ def run_gpt_prompt_event_poignancy(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 7")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2146,8 +2148,8 @@ def run_gpt_prompt_thought_poignancy(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 8")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2235,8 +2237,8 @@ def run_gpt_prompt_chat_poignancy(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 9")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2320,8 +2322,8 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2352,8 +2354,8 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
     # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 150,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2408,8 +2410,8 @@ def run_gpt_prompt_insight_and_guidance(
         return ["I am hungry"] * n
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 150,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0.5,
         "top_p": 1,
         "stream": False,
@@ -2476,8 +2478,8 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 17")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2562,8 +2564,8 @@ def run_gpt_prompt_agent_chat_summarize_relationship(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 18")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2720,8 +2722,8 @@ def run_gpt_prompt_agent_chat(
 
     # print ("HERE JULY 23 -- ----- ") ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2811,8 +2813,8 @@ def run_gpt_prompt_summarize_ideas(
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 16")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 15,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -2926,8 +2928,8 @@ def run_gpt_prompt_generate_next_convo_line(
     # # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 250,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 1,
         "top_p": 1,
         "stream": False,
@@ -2975,8 +2977,8 @@ def run_gpt_prompt_generate_whisper_inner_thought(
         return "..."
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3027,8 +3029,8 @@ def run_gpt_prompt_planning_thought_on_convo(
         return "..."
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3089,7 +3091,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
 
     print("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 15")  ########
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
+        "engine": "gpt-4-0125-preview",
         "max_tokens": 15,
         "temperature": 0,
         "top_p": 1,
@@ -3121,8 +3123,8 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
     # ChatGPT Plugin ===========================================================
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3183,8 +3185,8 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
     print(output)
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -3343,8 +3345,98 @@ def run_gpt_generate_iterative_chat_utt(
     print(output)
 
     gpt_param = {
-        "engine": "gpt-3.5-turbo",
-        "max_tokens": 50,
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": False,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+        "stop": None,
+    }
+    return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+
+
+# Takes a plugin prompt template filepath and returns an LLM response string
+def run_plugin(
+    plugin_template,
+    current_movements,
+    personas,
+    verbose=False,
+):
+    def create_prompt_input(
+        persona1,
+        persona2,
+        movements,
+        test_input=None,
+    ):
+        if test_input:
+            return test_input
+
+        game_state = copy.deepcopy(movements)
+        personas = game_state["persona"]
+        for persona in personas:
+            persona_state = personas[persona]
+            del persona_state["chat"]
+            personas[persona] = persona_state
+        game_state["persona"] = personas
+
+        conversation = list(movements["persona"].values())[0]["chat"]
+
+        prompt_input = [
+            persona1.scratch.get_str_learned(),
+            persona2.scratch.get_str_learned(),
+            game_state,
+            conversation,
+            persona1.scratch.get_str_firstname(),
+            persona2.scratch.get_str_firstname(),
+        ]
+
+        return prompt_input
+
+    def __chat_func_clean_up(gpt_response, prompt=""):
+        gpt_response = extract_first_json_dict(gpt_response)
+        cleaned_dict = dict()
+
+        for key, val in gpt_response.items():
+            cleaned_dict[key] = False
+
+            if "t" in str(val) or "T" in str(val):
+                cleaned_dict[key] = True
+
+        return cleaned_dict
+
+    def __chat_func_validate(gpt_response, prompt=""):
+        print("Validating...")
+
+        try:
+            print(extract_first_json_dict(gpt_response))
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        cleaned_dict = {"error": "error"}
+        return cleaned_dict
+
+    persona_list = list(personas.values())
+
+    prompt_input = create_prompt_input(
+        persona1=persona_list[0],
+        persona2=persona_list[1],
+        movements=current_movements,
+    )
+    prompt = generate_prompt(prompt_input, plugin_template)
+    print(prompt)
+    fail_safe = get_fail_safe()
+    output = ChatGPT_safe_generate_response_OLD(
+        prompt, 3, fail_safe, __chat_func_validate, __chat_func_clean_up, verbose
+    )
+    print(output)
+
+    gpt_param = {
+        "engine": "gpt-4-0125-preview",
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,

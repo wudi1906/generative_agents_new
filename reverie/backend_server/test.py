@@ -29,7 +29,7 @@ def ChatGPT_request(prompt):
     # temp_sleep()
     try:
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
+            model="gpt-4-0125-preview", messages=[{"role": "user", "content": prompt}]
         )
         return completion.choices[0].message.content
 

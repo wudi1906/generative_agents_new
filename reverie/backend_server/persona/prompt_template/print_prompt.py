@@ -4,6 +4,7 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: print_prompt.py
 Description: For printing prompts when the setting for verbose is set to True.
 """
+
 import sys
 
 sys.path.append("../")
@@ -32,7 +33,7 @@ def print_run_prompts(
 ):
     print(f"=== {prompt_template}")
     print("~~~ persona    ---------------------------------------------------")
-    print(persona.name, "\n")
+    print(persona.name if persona else "None", "\n")
     print("~~~ gpt_param ----------------------------------------------------")
     print(gpt_param, "\n")
     print("~~~ prompt_input    ----------------------------------------------")

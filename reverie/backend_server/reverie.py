@@ -18,6 +18,7 @@ term "personas" to refer to generative agents, "associative memory" to refer
 to the memory stream, and "reverie" to refer to the overarching simulation 
 framework.
 """
+
 import json
 import numpy
 import datetime
@@ -375,16 +376,19 @@ class ReverieServer:
                         if not persona.scratch.planned_path:
                             # We add that new object action event to the backend tile map.
                             # At its creation, it is stored in the persona's backend.
-                            game_obj_cleanup[
+                            curr_obj_event_and_desc = freeze(
                                 persona.scratch.get_curr_obj_event_and_desc()
-                            ] = new_tile
+                            )
+                            print("curr_obj_event_and_desc", curr_obj_event_and_desc)
+                            game_obj_cleanup[curr_obj_event_and_desc] = new_tile
                             self.maze.add_event_from_tile(
-                                persona.scratch.get_curr_obj_event_and_desc(), new_tile
+                                curr_obj_event_and_desc,
+                                new_tile,
                             )
                             # We also need to remove the temporary blank action for the
                             # object that is currently taking the action.
                             blank = (
-                                persona.scratch.get_curr_obj_event_and_desc()[0],
+                                tuple(persona.scratch.get_curr_obj_event_and_desc())[0],
                                 None,
                                 None,
                                 None,
@@ -447,6 +451,29 @@ class ReverieServer:
                     with open(curr_move_file, "w") as outfile:
                         outfile.write(json.dumps(movements, indent=2))
 
+                    # Run any plugins that are in the plugin folder.
+                    plugins = os.listdir(f"{sim_folder}/plugins")
+
+                    for plugin in plugins:
+                        plugin_path = f"{sim_folder}/plugins/{plugin}"
+                        prompt_files = os.listdir(f"{plugin_path}/prompt_template")
+
+                        for prompt_file in prompt_files:
+                            prompt_file_path = (
+                                f"{plugin_path}/prompt_template/{prompt_file}"
+                            )
+                            response = run_plugin(
+                                prompt_file_path,
+                                movements,
+                                self.personas,
+                            )
+
+                            with open(
+                                f"{plugin_path}/output/{self.step}-{prompt_file}.json",
+                                "w",
+                            ) as outfile:
+                                outfile.write(json.dumps(response, indent=2))
+
                     # If we're running in headless mode, also create the environment file
                     # to immediately trigger the next simulation step
                     if headless:
@@ -482,6 +509,7 @@ class ReverieServer:
 
         # <sim_folder> points to the current simulation folder.
         sim_folder = f"{fs_storage}/{self.sim_code}"
+        headless = None
 
         while True:
             sim_command = input("Enter option: ")
@@ -518,6 +546,14 @@ class ReverieServer:
                 elif sim_command[:3].lower() == "run":
                     # Runs the number of steps specified in the prompt.
                     # Example: run 1000
+                    if headless is None:
+                        headless = False
+                        print("Setting headless to False.")
+                    elif headless:
+                        print(
+                            "Invalid command: Headless mode is on. Use 'headless' instead."
+                        )
+                        continue
                     int_count = int(sim_command.split()[-1])
                     rs.start_server(int_count)
 
@@ -525,6 +561,14 @@ class ReverieServer:
                     # Runs the simulation in headless mode, which means that it will
                     # run without the frontend server.
                     # Example: headless 1000
+                    if headless is None:
+                        headless = True
+                        print("Setting headless to True.")
+                    elif not headless:
+                        print(
+                            "Invalid command: Headless mode is off. Use 'run' instead."
+                        )
+                        continue
                     int_count = int(sim_command.split()[-1])
                     self.start_server(int_count, headless=True)
 
