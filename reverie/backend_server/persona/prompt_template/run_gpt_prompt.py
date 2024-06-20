@@ -80,7 +80,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
         return True
 
     def get_fail_safe():
-        fs = 0
+        fs = 8
         return fs
 
     gpt_param = {

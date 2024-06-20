@@ -4,7 +4,6 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: compress_sim_storage.py
 Description: Compresses a simulation for replay demos. 
 """
-
 import shutil
 import json
 from global_methods import *
@@ -73,4 +72,4 @@ def compress(sim_code):
 
 
 if __name__ == "__main__":
-    compress("test-12")
+    compress("July1_the_ville_isabella_maria_klaus-step-3-9")

@@ -129,10 +129,6 @@ def generate_hourly_schedule(persona, wake_up_hour):
         if len(n_m1_activity_set) < 5:
             n_m1_activity = []
             for count, curr_hour_str in enumerate(hour_str):
-                # #if wake_up_hour > 0:
-                #   n_m1_activity += ["sleeping"]
-                #   wake_up_hour -= 1
-                # else: commented on 10/27 4:59 pm to remove sleeping
                 n_m1_activity += [
                     run_gpt_prompt_generate_hourly_schedule(
                         persona, curr_hour_str, n_m1_activity, hour_str
@@ -712,8 +708,8 @@ def _determine_action(persona, maze):
 
     act_desp, act_dura = persona.scratch.f_daily_schedule[curr_index]
 
-    if act_desp and act_dura is None:
-        act_desp, act_dura = ["playing hide-and-seek", 150]
+    # if act_desp and act_dura is None:
+    #     act_desp, act_dura = ["playing hide-and-seek", 150]
 
     # Finding the target location of the action and creating action-related
     # variables.
