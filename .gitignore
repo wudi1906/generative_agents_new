@@ -18,6 +18,9 @@ logs/*
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters_swapped_personalities
 !environment/frontend_server/storage/test-22/
 !environment/frontend_server/storage/test-23/
+environment/frontend_server/storage/*/environment/*
+!environment/frontend_server/storage/*/environment/0.json
+environment/frontend_server/storage/*/movement/*
 
 # Keep the skip-morning-s simulation
 !environment/frontend_server/storage/skip-morning-s-14
