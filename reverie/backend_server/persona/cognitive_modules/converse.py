@@ -89,57 +89,74 @@ def generate_agent_chat(
     return summarized_idea
 
 
-def agent_chat_v1(maze, init_persona, target_persona): 
-  # Chat version optimized for speed via batch generation
-  curr_context = (f"{init_persona.scratch.name} " + 
-              f"was {init_persona.scratch.act_description} " + 
-              f"when {init_persona.scratch.name} " + 
-              f"saw {target_persona.scratch.name} " + 
-              f"in the middle of {target_persona.scratch.act_description}.\n")
-  curr_context += (f"{init_persona.scratch.name} " +
-              f"is thinking of initating a conversation with " +
-              f"{target_persona.scratch.name}.")
+def agent_chat_v1(maze, init_persona, target_persona):
+    # Chat version optimized for speed via batch generation
+    curr_context = (
+        f"{init_persona.scratch.name} "
+        + f"was {init_persona.scratch.act_description} "
+        + f"when {init_persona.scratch.name} "
+        + f"saw {target_persona.scratch.name} "
+        + f"in the middle of {target_persona.scratch.act_description}.\n"
+    )
+    curr_context += (
+        f"{init_persona.scratch.name} "
+        + f"is thinking of initating a conversation with "
+        + f"{target_persona.scratch.name}."
+    )
 
-  summarized_ideas = []
-  part_pairs = [(init_persona, target_persona), 
-                (target_persona, init_persona)]
-  for p_1, p_2 in part_pairs: 
-    focal_points = [f"{p_2.scratch.name}"]
-    ###JSG: If there are no focal points, we will add a default value to it
-    if not focal_points: 
-      for i in range(len(focal_points)): 
-        focal_points[i] = "play hide-and-seek"
-    retrieved = new_retrieve(p_1, focal_points, 50)
-    relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
-    focal_points = [f"{relationship}", 
-                    f"{p_2.scratch.name} is {p_2.scratch.act_description}"]
-    retrieved = new_retrieve(p_1, focal_points, 25)
-    summarized_idea = generate_agent_chat_summarize_ideas(p_1, p_2, retrieved, curr_context)
-    summarized_ideas += [summarized_idea]
+    summarized_ideas = []
+    part_pairs = [(init_persona, target_persona), (target_persona, init_persona)]
+    for p_1, p_2 in part_pairs:
+        focal_points = [f"{p_2.scratch.name}"]
+        ###JSG: If there are no focal points, we will add a default value to it
+        # if not focal_points:
+        #     for i in range(len(focal_points)):
+        #         focal_points[i] = "play hide-and-seek"
+        retrieved = new_retrieve(p_1, focal_points, 50)
+        relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
+        focal_points = [
+            f"{relationship}",
+            f"{p_2.scratch.name} is {p_2.scratch.act_description}",
+        ]
+        retrieved = new_retrieve(p_1, focal_points, 25)
+        summarized_idea = generate_agent_chat_summarize_ideas(
+            p_1, p_2, retrieved, curr_context
+        )
+        summarized_ideas += [summarized_idea]
 
-  return generate_agent_chat(maze, init_persona, target_persona, 
-                      curr_context, 
-                      summarized_ideas[0], 
-                      summarized_ideas[1])
+    return generate_agent_chat(
+        maze,
+        init_persona,
+        target_persona,
+        curr_context,
+        summarized_ideas[0],
+        summarized_ideas[1],
+    )
 
 
-def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat): 
-  # Chat version optimized for speed via batch generation
-  curr_context = (f"{init_persona.scratch.name} " + 
-              f"was {init_persona.scratch.act_description} " + 
-              f"when {init_persona.scratch.name} " + 
-              f"saw {target_persona.scratch.name} " + 
-              f"in the middle of {target_persona.scratch.act_description}.\n")
-  curr_context += (f"{init_persona.scratch.name} " +
-              f"is initiating a conversation with " +
-              f"{target_persona.scratch.name}.")
+def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat):
+    # Chat version optimized for speed via batch generation
+    curr_context = (
+        f"{init_persona.scratch.name} "
+        + f"was {init_persona.scratch.act_description} "
+        + f"when {init_persona.scratch.name} "
+        + f"saw {target_persona.scratch.name} "
+        + f"in the middle of {target_persona.scratch.act_description}.\n"
+    )
+    curr_context += (
+        f"{init_persona.scratch.name} "
+        + f"is initiating a conversation with "
+        + f"{target_persona.scratch.name}."
+    )
 
-  print ("July 23 5")
-  x = run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retrieved, curr_context, curr_chat)[0]
+    print("July 23 5")
+    x = run_gpt_generate_iterative_chat_utt(
+        maze, init_persona, target_persona, retrieved, curr_context, curr_chat
+    )[0]
 
-  print ("July 23 6")
+    print("July 23 6")
 
-  print ("adshfoa;khdf;fajslkfjald;sdfa HERE", x)
+    print("adshfoa;khdf;fajslkfjald;sdfa HERE", x)
 
     try:
         return x["utterance"], x["end"]  # type: ignore
