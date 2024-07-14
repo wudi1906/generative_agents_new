@@ -40,6 +40,13 @@ def setup_client(type: str, config: dict):
     client = OpenAI(
         api_key=config["key"],
     )
+  elif type == "ollama":
+    # ollama can use the OpenAI interface
+    client = OpenAI(
+        api_key=config["key"],
+        base_url=config["base_url"]
+    )
+
   else:
     raise ValueError("Invalid client")
   return client
@@ -52,6 +59,11 @@ if openai_config["client"] == "azure":
   })
 elif openai_config["client"] == "openai":
   client = setup_client("openai", { "key": openai_config["model-key"] })
+elif openai_config["client"] == "ollama":
+  client = setup_client("ollama", { "key": openai_config["model-key"],
+                                               "base_url": openai_config["base_url"] })
+else:
+  raise Exception("No valid client selected!")
 
 if openai_config["embeddings-client"] == "azure":  
   embeddings_client = setup_client("azure", {
@@ -60,9 +72,13 @@ if openai_config["embeddings-client"] == "azure":
       "api-version": openai_config["embeddings-api-version"],
   })
 elif openai_config["embeddings-client"] == "openai":
-  embeddings_client = setup_client("openai", { "key": openai_config["embeddings-key"] })
+  embeddings_client = setup_client("openai",{ "key": openai_config["embeddings-key"] })
+elif openai_config["embeddings-client"] == "ollama":
+  embeddings_client = setup_client("ollama", { "key": openai_config["embeddings-key"],
+                                               "base_url": openai_config["base_url"] })
 else:
   raise ValueError("Invalid embeddings client")
+
 
 cost_logger = OpenAICostLogger_Singleton(
   experiment_name = openai_config["experiment-name"],
@@ -191,8 +207,10 @@ def GPT_request(prompt, gpt_parameter):
   """
   temp_sleep()
   try: 
+    # for the llama3 model system doesn't give great results
+    # and assistant is much better
     messages = [{
-      "role": "system", "content": prompt
+      "role": "assistant", "content": prompt
     }]
     response = client.chat.completions.create(
                 model=gpt_parameter["engine"],
@@ -246,30 +264,42 @@ def safe_generate_response(prompt,
                            func_validate=None,
                            func_clean_up=None,
                            verbose=False): 
+  if debug:
+    verbose = True
   if verbose: 
     print (prompt)
 
   for i in range(repeat): 
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
-    try:
-      if func_validate(curr_gpt_response, prompt=prompt): 
-        return func_clean_up(curr_gpt_response, prompt=prompt)
-      if verbose: 
-        print ("---- repeat count: ", i, curr_gpt_response)
-        print (curr_gpt_response)
-        print ("~~~~")
-    except:
-      pass
+    if func_validate(curr_gpt_response, prompt=prompt): 
+      return func_clean_up(curr_gpt_response, prompt=prompt)
+    if verbose: 
+      print ("---- repeat count: ", i)
+      print("---- prompt: ", prompt)
+      print("---- curr_gpt_response: ", curr_gpt_response)
+      print("---- func_validate: ", func_validate(curr_gpt_response))
+      try:
+          print("----  func_clean_up: ", func_clean_up(curr_gpt_response))
+      except Exception as e:
+          print("ERROR func_clean_up: ", e)
+      print ("~~~~")
   return fail_safe_response
-
 
 def get_embedding(text, model=openai_config["embeddings"]):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  response = embeddings_client.embeddings.create(input=[text], model=model)
-  cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
-  return response.data[0].embedding
+
+  # ollama does not support the client interface for embeddings 
+  # so this needs to be managed separately 
+  if openai_config["client"] == "ollama":
+    import ollama
+    return ollama.embeddings(model=model,prompt=text)
+  else:
+    response = embeddings_client.embeddings.create(input=[text], model=model)
+    cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
+    return response.data[0].embedding
+
 
 
 if __name__ == '__main__':
