@@ -85,9 +85,33 @@ OpenAI example:
     "cost-upperbound": 10
 }
 ```
+Ollama example:
+```json
+{
+    "client": "ollama", 
+    "base_url": "http://localhost:11434/v1",
+    "model": "llama3-chatqa:8b",
+    "model-key": "dummy_key_needed_but_not_used",
+    "model-costs": {
+        "input":  0.0,
+        "output": 0.0
+    },
+    "embeddings-client": "ollama",
+    "embeddings": "nomic-embed-text",
+    "embeddings-key": "dummy_key_needed_but_not_used",
+    "embeddings-costs": {
+        "input": 0.00,
+        "output": 0.0
+    },
+    "experiment-name": "simulacra-test-ollama",
+    "cost-upperbound": 1000000
+}
+```
 
 Feel free to change and test also other models (and change accordingly the input and output costs).\
-Be aware that the only supported clients are **azure** and **openai**.\
+Be aware that the only fully-supported clients are **azure** and **openai**.\
+The ollama client supports local models, but many of the prompts do not full work with local models yet.
+Make sure to first install ollama, and to pull any models you plan on using, see "[ollama-openai-compatibility](https://ollama.com/blog/openai-compatibility)"\
 The generation and the embedding models are configured separately to be able to use different clients.\
 Change also the `cost-upperbound` according to your needs (the cost computation is done using "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)" and the costs are specified per million tokens).
 
