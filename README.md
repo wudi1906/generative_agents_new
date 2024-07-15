@@ -93,18 +93,18 @@ Ollama example:
     "model": "llama3-chatqa:8b",
     "model-key": "dummy_key_needed_but_not_used",
     "model-costs": {
-        "input":  0.0,
-        "output": 0.0
+        "input":  0.001,
+        "output": 0.001
     },
     "embeddings-client": "ollama",
     "embeddings": "nomic-embed-text",
     "embeddings-key": "dummy_key_needed_but_not_used",
     "embeddings-costs": {
-        "input": 0.00,
-        "output": 0.0
+        "input":  0.0001,
+        "output": 0.0001
     },
     "experiment-name": "simulacra-test-ollama",
-    "cost-upperbound": 1000000
+    "cost-upperbound": 10000000000000
 }
 ```
 

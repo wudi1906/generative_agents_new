@@ -266,7 +266,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
   # example_output = "studying for her music classes" ########
   # special_instruction = "The output should ONLY include the part of the sentence that completes the last line in the schedule above." ########
   # fail_safe = get_fail_safe() ########
-  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
   #                                         __chat_func_validate, __chat_func_clean_up, True)
   # if output != False: 
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -641,7 +641,7 @@ def run_gpt_prompt_action_sector(action_description,
   # example_output = "Johnson Park" ########
   # special_instruction = "The value for the output must contain one of the area options above verbatim (including lower/upper case)." ########
   # fail_safe = get_fail_safe() ########
-  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
   #                                         __chat_func_validate, __chat_func_clean_up, True)
   # if output != False: 
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -883,7 +883,7 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   example_output = "🛁🧖‍♀️" ########
   special_instruction = "The value for the output must ONLY contain the emojis." ########
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -973,7 +973,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   # example_output = "(Jane Doe, cooking, breakfast)" ########
   # special_instruction = "The value for the output must ONLY contain the triple. If there is an incomplete element, just say 'None' but there needs to be three elements no matter what." ########
   # fail_safe = get_fail_safe(persona) ########
-  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
   #                                         __chat_func_validate, __chat_func_clean_up, True)
   # if output != False: 
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -1059,7 +1059,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   example_output = "being fixed" ########
   special_instruction = "The output should ONLY contain the phrase that should go in <fill in>." ########
   fail_safe = get_fail_safe(act_game_object) ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -1352,16 +1352,30 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
     prompt_input += [target_persona.name]
     return prompt_input
   
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      if gpt_response.split("Answer in yes or no:")[-1].strip().lower() in ["yes", "no"]: 
-        return True
-      return False     
-    except:
-      return False 
-
+  def __func_validate(gpt_response, prompt=""):
+      try:
+          response = gpt_response.split("Answer in yes or no:")[-1].strip().lower()
+          if "yes" in response or "no" in response:
+              return True
+          return False
+      except:
+          return False
+  
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split("Answer in yes or no:")[-1].strip().lower()
+      response = gpt_response.split("Answer in yes or no:")[-1].strip().lower()
+      
+      # Find the positions of 'yes' and 'no' in the response
+      pos_yes = response.find("yes")
+      pos_no = response.find("no")
+      
+      # Determine which keyword appears first and return that word
+      if pos_yes == -1 and pos_no == -1:
+          return "invalid"  # Neither 'yes' nor 'no' found
+      elif pos_no == -1 or (pos_yes != -1 and pos_yes < pos_no):
+          return "yes"  # 'Yes' is found and either 'no' is not found or 'yes' comes first
+      else:
+          return "no"  # 'No' is found and it comes before 'yes'
+
 
   def get_fail_safe(): 
     fs = "yes"
@@ -1684,7 +1698,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
   example_output = "conversing about what to eat for lunch" ########
   special_instruction = "The output must continue the sentence above by filling in the <fill in> tag. Don't start with 'this is a conversation about...' Just finish the sentence but do not miss any important details (including who are chatting)." ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -1916,11 +1930,11 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     gpt_response = int(gpt_response)
     return gpt_response
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1935,10 +1949,14 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   prompt_input = create_prompt_input(persona, event_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
   example_output = "5" ########
-  special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
+  #special_instruction = "Make sure to use Json format, see example" ########
+  special_instruction = "The output should be json-formatted and ONLY contain ONE integer value on the scale of 1 to 10." ########
+  #special_instruction = "The output (inside the json file) should ONLY contain ONE integer value on the scale of 1 to 10." ########
+  #special_instruction += "Again, please write your output in JSON format, see example below" ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  # I could not get GPT to json here for some reason...
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
@@ -1946,7 +1964,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
 
 
-  # gpt_param = {"engine": model, "max_tokens": 3, 
+  # gpt_param = {"engine": model, "max_tokens": 5, 
   #              "temperature": 0, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   # prompt_template = "persona/prompt_template/v2/poignancy_event_v1.txt"
@@ -2006,9 +2024,11 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
   prompt_input = create_prompt_input(persona, event_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
   example_output = "5" ########
-  special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
+  #special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
+  special_instruction = "The output should be json-formatted and ONLY contain ONE integer value on the scale of 1 to 10." ########
+  #special_instruction = "Make sure to use Json format, see example" ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2016,7 +2036,7 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
 
 
 
-  # gpt_param = {"engine": model, "max_tokens": 3, 
+  # gpt_param = {"engine": model, "max_tokens": 5, 
   #              "temperature": 0, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   # prompt_template = "persona/prompt_template/v2/poignancy_thought_v1.txt"
@@ -2078,9 +2098,9 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
   prompt_input = create_prompt_input(persona, event_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
   example_output = "5" ########
-  special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
+  special_instruction = "The output should be json-formatted and ONLY contain ONE integer value on the scale of 1 to 10." ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2089,7 +2109,7 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
 
 
 
-  # gpt_param = {"engine": model, "max_tokens": 3, 
+  # gpt_param = {"engine": model, "max_tokens": 5, 
   #              "temperature": 0, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   # prompt_template = "persona/prompt_template/v2/poignancy_chat_v1.txt"
@@ -2156,7 +2176,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
   example_output = '["What should Jane do for lunch", "Does Jane like strawberry", "Who is Jane"]' ########
   special_instruction = "Output must be a list of str." ########
   fail_safe = get_fail_safe(n) ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2283,7 +2303,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
   example_output = 'Jane Doe is working on a project' ########
   special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2351,7 +2371,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
   example_output = 'Jane Doe is working on a project' ########
   special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2479,7 +2499,7 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   example_output = '[["Jane Doe", "Hi!"], ["John Doe", "Hello there!"] ... ]' ########
   special_instruction = 'The output should be a list of list where the inner lists are in the form of ["<Name>", "<Utterance>"].' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   # print ("HERE END JULY 23 -- ----- ") ########
   if output != False: 
@@ -2560,7 +2580,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
   example_output = 'Jane Doe is working on a project' ########
   special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2634,7 +2654,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
   # example_output = 'Hello' ########
   # special_instruction = 'The output should be a string that responds to the question. Again, only use the context included in the "Note" to generate the response' ########
   # fail_safe = get_fail_safe() ########
-  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
   #                                         __chat_func_validate, __chat_func_clean_up, True)
   # if output != False: 
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2779,7 +2799,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   example_output = 'Jane Doe was interesting to talk to.' ########
   special_instruction = 'The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2835,7 +2855,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
   prompt = generate_prompt(prompt_input, prompt_template)
   print (prompt)
   fail_safe = get_fail_safe() 
-  output = ChatGPT_safe_generate_response_OLD(prompt, 3, fail_safe,
+  output = ChatGPT_safe_generate_response_OLD(prompt, 5, fail_safe,
                         __chat_func_validate, __chat_func_clean_up, verbose)
   print (output)
   
@@ -2950,7 +2970,7 @@ def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retr
   prompt = generate_prompt(prompt_input, prompt_template)
   print (prompt)
   fail_safe = get_fail_safe() 
-  output = ChatGPT_safe_generate_response_OLD(prompt, 3, fail_safe,
+  output = ChatGPT_safe_generate_response_OLD(prompt, 5, fail_safe,
                         __chat_func_validate, __chat_func_clean_up, verbose)
   print (output)
   
