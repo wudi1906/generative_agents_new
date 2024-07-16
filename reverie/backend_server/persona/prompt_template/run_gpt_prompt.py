@@ -119,14 +119,15 @@ def run_gpt_prompt_daily_plan(persona,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    cr = []
-    _cr = gpt_response.split(")")
-    for i in _cr: 
-      if i[-1].isdigit(): 
-        i = i[:-1].strip()
-        if i[-1] == "." or i[-1] == ",": 
-          cr += [i[:-1].strip()]
-    return cr
+    # I find it cleaner just to split on the right 
+    cleaned_response =  gpt_response.split("||")
+    return cleaned_response
+
+  def __func_clean_up(gpt_response, prompt=""):
+    # Split the response on '||' and strip whitespace
+    activities = re.split(r'\|\||\n', gpt_response)
+    cleaned_activities = [x for x in activities if len(x) > 3]  #no plan less than 4 letters
+    return cleaned_activities
 
   def __func_validate(gpt_response, prompt=""):
     try: __func_clean_up(gpt_response, prompt="")
@@ -149,7 +150,7 @@ def run_gpt_prompt_daily_plan(persona,
   gpt_param = {"engine": model, "max_tokens": 2200, 
                "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v2/daily_planning_v6.txt"
+  prompt_template = "persona/prompt_template/v2/daily_planning_v7.txt"
   prompt_input = create_prompt_input(persona, wake_up_hour, test_input)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
@@ -1383,10 +1384,14 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
 
 
 
-  gpt_param = {"engine": model, "max_tokens": 20, 
-               "temperature": 0, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v2/decide_to_talk_v2.txt"
+  #gpt_param = {"engine": model, "max_tokens": 20, 
+  #             "temperature": 0, "top_p": 1, "stream": False,
+  #             "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  gpt_param = {"engine": model, "max_tokens": 2000, 
+             "temperature": 0.8, "top_p": 1, "stream": False,
+             "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  prompt_template = "persona/prompt_template/v2/decide_to_talk_v3.txt"
+  #prompt_template = "persona/prompt_template/vdebug/debug_always_yes.txt"
   prompt_input = create_prompt_input(persona, target_persona, retrieved,
                                      test_input)
   prompt = generate_prompt(prompt_input, prompt_template)
@@ -1930,9 +1935,15 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
 
   # ChatGPT Plugin ===========================================================
-  def __func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+  def __func_clean_up(gpt_response, prompt=""):
+    # Search for the first sequence of digits in the gpt_response
+    match = re.search(r'\d+', gpt_response)
+    if match:
+        # If a sequence of digits is found, convert it to an integer
+        return int(match.group())
+    else:
+        # If no digits are found, return a default value or raise an error
+        return None 
 
   def __func_validate(gpt_response, prompt=""): ############
     try: 

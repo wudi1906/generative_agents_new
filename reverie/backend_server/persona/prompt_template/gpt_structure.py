@@ -223,7 +223,7 @@ def GPT_request(prompt, gpt_parameter):
     # for the llama3 model system doesn't give great results
     # and assistant is much better
     messages = [{
-      "role": "assistant", "content": prompt
+      "role": "user", "content": prompt
     }]
     response = client.chat.completions.create(
                 model=gpt_parameter["engine"],
@@ -280,8 +280,6 @@ def safe_generate_response(prompt,
                            verbose=False): 
   if debug:
     verbose = True
-  if verbose: 
-    print (prompt)
 
   for i in range(repeat): 
     if verbose: 
@@ -314,7 +312,7 @@ def get_embedding(text, model=openai_config["embeddings"]):
   # so this needs to be managed separately 
   if openai_config["client"] == "ollama":
     import ollama
-    return ollama.embeddings(model=model,prompt=text)
+    return ollama.embeddings(model=model,prompt=text)['embedding']
   else:
     response = embeddings_client.embeddings.create(input=[text], model=model)
     cost_logger.update_cost(response=response, input_cost=openai_config["embeddings-costs"]["input"], output_cost=openai_config["embeddings-costs"]["output"])
