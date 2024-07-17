@@ -369,30 +369,31 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  try: 
-    # if use_openai:
-    messages = [{
-      "role": "system", "content": prompt
-    }]
-    response = client.chat.completions.create(
-                model=gpt_parameter["engine"],
-                messages=messages,
-                temperature=gpt_parameter["temperature"],
-                max_tokens=gpt_parameter["max_tokens"],
-                top_p=gpt_parameter["top_p"],
-                frequency_penalty=gpt_parameter["frequency_penalty"],
-                presence_penalty=gpt_parameter["presence_penalty"],
-                stream=gpt_parameter["stream"],
-                stop=gpt_parameter["stop"],
-            )
-        else:
-            response = client.completions.create(model=model, prompt=prompt)
+  
+  try:
+    if use_openai:
+      messages = [{
+        "role": "system", "content": prompt
+      }]
+      response = client.chat.completions.create(
+                  model=gpt_parameter["engine"],
+                  messages=messages,
+                  temperature=gpt_parameter["temperature"],
+                  max_tokens=gpt_parameter["max_tokens"],
+                  top_p=gpt_parameter["top_p"],
+                  frequency_penalty=gpt_parameter["frequency_penalty"],
+                  presence_penalty=gpt_parameter["presence_penalty"],
+                  stream=gpt_parameter["stream"],
+                  stop=gpt_parameter["stop"],
+              )
+    else:
+      response = client.completions.create(model=model, prompt=prompt)
 
-        return response.choices[0].message.content
-    except Exception as e:
-        print("REQUEST ERROR")
-        print(e)
-        return "REQUEST ERROR"
+      return response.choices[0].message.content
+  except Exception as e:
+      print("REQUEST ERROR")
+      print(e)
+      return "REQUEST ERROR"
 
 
 def generate_prompt(curr_input, prompt_lib_file): 

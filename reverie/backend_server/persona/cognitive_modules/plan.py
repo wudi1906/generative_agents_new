@@ -910,11 +910,11 @@ def _create_react(persona, inserted_act, inserted_act_dur,
 
 
 def _chat_react(maze, persona, focused_event, reaction_mode, personas):
-    # There are two personas -- the persona who is initiating the conversation
-    # and the persona who is the target. We get the persona instances here.
-    init_persona = persona
-    target_persona = personas[reaction_mode[9:].strip()]
-    # curr_personas = [init_persona, target_persona]
+  # There are two personas -- the persona who is initiating the conversation
+  # and the persona who is the target. We get the persona instances here.
+  init_persona = persona
+  target_persona = personas[reaction_mode[9:].strip()]
+  # curr_personas = [init_persona, target_persona]
 
   # Actually creating the conversation here. 
   convo, duration_min = generate_convo(maze, init_persona, target_persona)
