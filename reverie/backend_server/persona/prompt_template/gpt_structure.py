@@ -13,8 +13,6 @@ from utils import *
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 
-EXCEPT_ON_FAILSAFE=True
-
 config_path = Path("../../llm_config.json")
 with open(config_path, "r") as f:
     openai_config = json.load(f) 
@@ -348,21 +346,3 @@ if __name__ == '__main__':
                                  True)
 
   print (output)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
