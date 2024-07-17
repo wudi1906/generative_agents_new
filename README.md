@@ -91,7 +91,7 @@ Ollama example:
     "client": "ollama", 
     "base_url": "http://localhost:11434/v1",
     "model": "llama3-chatqa:8b",
-    "template_dir": "prompts_llama3"
+    "prompt_template": "prompts_llama3",
     "model-key": "dummy_key_needed_but_not_used",
     "model-costs": {
         "input":  0.001,
