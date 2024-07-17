@@ -31,7 +31,7 @@ def get_random_alphanumeric(i=6, j=6):
   x = ''.join(random.choices(string.ascii_letters + string.digits, k=k))
   return x
 
-config_path = Path("../../openai_config.json")
+config_path = Path("../../llm_config.json")
 with open(config_path, "r") as f:
     openai_config = json.load(f) 
 model = openai_config["model"]

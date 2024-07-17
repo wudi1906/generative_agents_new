@@ -15,7 +15,7 @@ from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Sin
 
 EXCEPT_ON_FAILSAFE=True
 
-config_path = Path("../../openai_config.json")
+config_path = Path("../../llm_config.json")
 with open(config_path, "r") as f:
     openai_config = json.load(f) 
 

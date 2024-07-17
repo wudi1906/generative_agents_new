@@ -38,7 +38,7 @@ Do not change the env name to be able to use the bash scripts later.
 
 ### Step 2. OpenAI Config
 
-Create a file called `openai_config.json` in the root directory.\
+Create a file called `llm_config.json` in the root directory.\
 Azure example:
 ```json
 {
