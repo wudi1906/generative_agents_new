@@ -91,6 +91,7 @@ Ollama example:
     "client": "ollama", 
     "base_url": "http://localhost:11434/v1",
     "model": "llama3-chatqa:8b",
+    "template_dir": "prompts_llama3"
     "model-key": "dummy_key_needed_but_not_used",
     "model-costs": {
         "input":  0.001,
@@ -113,6 +114,8 @@ Be aware that the only fully-supported clients are **azure** and **openai**.\
 The ollama client supports local models, but many of the prompts do not full work with local models yet.
 Make sure to first install ollama, and to pull any models you plan on using, see "[ollama-openai-compatibility](https://ollama.com/blog/openai-compatibility)"\
 The generation and the embedding models are configured separately to be able to use different clients.\
+The llama3 models require different prompts than the chatgpt, and these different prompts are specified via the template_dir argument.
+If you are testing a new model you can use either the prompts_chagpt or the prompts_llama3 as starting points.
 Change also the `cost-upperbound` according to your needs (the cost computation is done using "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)" and the costs are specified per million tokens).
 
 
