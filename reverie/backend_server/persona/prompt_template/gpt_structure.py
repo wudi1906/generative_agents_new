@@ -254,6 +254,9 @@ def generate_prompt(curr_input, prompt_lib_file):
   RETURNS: 
     a str prompt that will be sent to OpenAI's GPT server.  
   """
+  if debug:
+    print("curr_input: ", curr_input)
+    print("prompt_lib_file: ", prompt_lib_file)
   if type(curr_input) == type("string"): 
     curr_input = [curr_input]
   curr_input = [str(i) for i in curr_input]
@@ -261,8 +264,12 @@ def generate_prompt(curr_input, prompt_lib_file):
   f = open(prompt_lib_file, "r")
   prompt = f.read()
   f.close()
+  if debug:
+    print("---- prompt template inputs")
   for count, i in enumerate(curr_input):   
     prompt = prompt.replace(f"!<INPUT {count}>!", i)
+    if debug:
+      print(f"        !<INPUT {count}>!", i)
   if "<commentblockmarker>###</commentblockmarker>" in prompt: 
     prompt = prompt.split("<commentblockmarker>###</commentblockmarker>")[1]
   return prompt.strip()

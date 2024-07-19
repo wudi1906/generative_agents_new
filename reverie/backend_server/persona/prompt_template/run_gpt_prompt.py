@@ -39,7 +39,7 @@ model = openai_config["model"]
 if "prompt_template" in openai_config:
     prompt_template = openai_config["prompt_template"]
 else:
-    prompt_template = "gpt_prompts"
+    prompt_template = "prompts_gpt"
 
 prompt_dir = Path("./persona/prompt_template") / prompt_template 
 
@@ -67,12 +67,22 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    cr = int(gpt_response.strip().lower().split("am")[0])
-    return cr
+      # Use regular expressions to find the first sequence of digits in the response
+      match = re.search(r'\d+', gpt_response)
+      if match:
+          # Convert the found digits to an integer
+          cr = int(match.group(0))
+      else:
+          # Handle cases where no digits are found
+          cr = None  # or raise an exception, or handle it in another suitable way
+      return cr
   
   def __func_validate(gpt_response, prompt=""): 
-    try: __func_clean_up(gpt_response, prompt="")
-    except: return False
+    try: 
+      result = __func_clean_up(gpt_response, prompt="")
+      int(result)
+    except: 
+      return False
     return True
 
   def get_fail_safe(): 
@@ -235,6 +245,9 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     cr = gpt_response.strip()
     if cr[-1] == ".":
       cr = cr[:-1]
+    # in case the stupid AI decides to shove timestamps in remove it
+    cr = cr.split("Activity:")[-1]
+    cr = cr.split("]")[-1]
     return cr
 
   def __func_validate(gpt_response, prompt=""): 
@@ -256,6 +269,8 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
                                      hour_str, 
                                      intermission2,
                                      test_input)
+  for i, prompt_value in enumerate(prompt_input):
+    print("---- <INPUT {}> :".format(i), prompt_value)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
   
@@ -281,13 +296,6 @@ def run_gpt_prompt_task_decomp(persona,
                                test_input=None, 
                                verbose=False): 
   def create_prompt_input(persona, task, duration, test_input=None):
-
-    """
-    Today is Saturday June 25. From 00:00 ~ 06:00am, Maeve is 
-    planning on sleeping, 06:00 ~ 07:00am, Maeve is 
-    planning on waking up and doing her morning routine, 
-    and from 07:00am ~08:00am, Maeve is planning on having breakfast.  
-    """
       
     curr_f_org_index = persona.scratch.get_f_daily_schedule_hourly_org_index()
     all_indices = []
@@ -300,15 +308,9 @@ def run_gpt_prompt_task_decomp(persona,
       all_indices += [curr_f_org_index+2]
 
     curr_time_range = ""
-
-    print ("DEBUG")
-    print (persona.scratch.f_daily_schedule_hourly_org)
-    print (all_indices)
-
     summ_str = f'Today is {persona.scratch.curr_time.strftime("%B %d, %Y")}. '
     summ_str += f'From '
     for index in all_indices: 
-      print ("index", index)
       if index < len(persona.scratch.f_daily_schedule_hourly_org): 
         start_min = 0
         for i in range(index): 
@@ -337,107 +339,34 @@ def run_gpt_prompt_task_decomp(persona,
     prompt_input += [persona.scratch.get_str_firstname()]
     return prompt_input
 
-  def extract_numeric_part(k):
-    # Use regular expression to find all digits
-    numeric_part = re.findall(r'\d+', k)
-    # Join all found digits into a single string and convert to int
-    return int(numeric_part[0])
-
   def __func_clean_up(gpt_response, prompt=""):
+        # Split the response into lines
+    lines = gpt_response.strip().split('\n')
     
-    debug = True
+    # Define a regex pattern for extracting tasks
+    task_pattern = re.compile(r"\d+\)\s+([A-Za-z]+) is ([^(\.]+)(?:\.|\s)\(duration in minutes: (\d+)")
     
-    if debug: 
-      print (gpt_response)
-      print ("-==- -==- -==- ")
-      print("(cleanup func): Enter function")
-    # TODO SOMETHING HERE sometimes fails... See screenshot
-    temp = [i.strip() for i in gpt_response.split("\n")]
-    _cr = []
-    cr = []
-    for count, i in enumerate(temp): 
-      if count != 0: 
-        _cr += [" ".join([j.strip () for j in i.split(" ")][3:])]
-      else: 
-        _cr += [i]
-    for count, i in enumerate(_cr):
-      if debug:
-        print("(cleanup func) Unpacking: ", i)
-      
-      # Original version
-      # k = [j.strip() for j in i.split("(duration in minutes:")]
-      
-      # Sometimes the simulation fails because it doesn't contain
-      # `duration in minutes` but only `duration`.
-      if "duration in minutes" in i: 
-        k = [j.strip() for j in i.split("(duration in minutes:")]
-      else:
-        k = [j.strip() for j in i.split("(duration:")]
-        
-      if debug:
-        print("(cleanup func) Unpacked(k): ", k)
-      task = k[0]
-      if task[-1] == ".": 
-        task = task[:-1]
-      minutes = k[1].split(",")[0]
-      
-      if debug:
-        print("(cleanup func): Minutes: ", minutes)
-      duration = extract_numeric_part(minutes)
-      if debug:
-        print("(cleanup func): Duration: ", duration)
-      
-      # Original version
-      # duration = int(k[1].split(",")[0].strip())
-      
-      cr += [[task, duration]]
-      
-      if debug:
-        print("(cleanup func) Unpacked(cr): ", cr)
-
-    if debug:
-      print("(cleanup func) Prompt:", prompt)
-      
-    total_expected_min = int(prompt.split("(total duration in minutes")[-1]
-                                   .split("):")[0].strip())
+    # List to store decomposed tasks
+    decomposed_tasks = []
+    total_duration = 0
     
-    if debug:
-      print("(cleanup func) Expected Minutes:", total_expected_min)
-      
-    # TODO -- now, you need to make sure that this is the same as the sum of 
-    #         the current action sequence. 
-    curr_min_slot = [["dummy", -1],] # (task_name, task_index)
-    for count, i in enumerate(cr): 
-      i_task = i[0] 
-      i_duration = i[1]
+    # Process each line
+    for line in lines:
+      if re.match(r"\d+\)", line):  # Basic check for expected line structure
+        match = task_pattern.search(line)
+        if match:
+          name, task, duration = match.groups()
+          duration = int(duration)
+          decomposed_tasks.append([task.strip(), duration])
+          total_duration += duration
+        else:
+          print(f"Warning: No match found for line: {line}")
+    
+    return decomposed_tasks
 
-      i_duration -= (i_duration % 5)
-      if i_duration > 0: 
-        for j in range(i_duration): 
-          curr_min_slot += [(i_task, count)]       
-    curr_min_slot = curr_min_slot[1:]   
 
-    if len(curr_min_slot) > total_expected_min: 
-      last_task = curr_min_slot[60]
-      for i in range(1, 6): 
-        curr_min_slot[-1 * i] = last_task
-    elif len(curr_min_slot) < total_expected_min: 
-      last_task = curr_min_slot[-1]
-      for i in range(total_expected_min - len(curr_min_slot)):
-        curr_min_slot += [last_task]
-
-    cr_ret = [["dummy", -1],]
-    for task, task_index in curr_min_slot: 
-      if task != cr_ret[-1][0]: 
-        cr_ret += [[task, 1]]
-      else: 
-        cr_ret[-1][1] += 1
-    cr = cr_ret[1:]
-
-    return cr
 
   def __func_validate(gpt_response, prompt=""): 
-    # TODO -- this sometimes generates error 
     try: 
       __func_clean_up(gpt_response)
     except: 
@@ -460,29 +389,10 @@ def run_gpt_prompt_task_decomp(persona,
   output = safe_generate_response(prompt, gpt_param, 5, get_fail_safe(),
                                    __func_validate, __func_clean_up)
 
-  # TODO THERE WAS A BUG HERE... 
-  # This is for preventing overflows...
-  """
-  File "/Users/joonsungpark/Desktop/Stanford/Projects/
-  generative-personas/src_exploration/reverie_simulation/
-  brain/get_next_action_v3.py", line 364, in run_gpt_prompt_task_decomp
-  fin_output[-1][1] += (duration - ftime_sum)
-  IndexError: list index out of range
-  """
-
-  # Some debugging prints
-  # print ("DEBUG")  
-  # print("PROMPT:")
-  # print (prompt)
-  # print("\nOUTPUT:")
-  # print (output)
-
   fin_output = []
   time_sum = 0
   for i_task, i_duration in output: 
     time_sum += i_duration
-    # HM?????????
-    # if time_sum < duration: 
     if time_sum <= duration: 
       fin_output += [[i_task, i_duration]]
     else: 
@@ -491,7 +401,6 @@ def run_gpt_prompt_task_decomp(persona,
   for fi_task, fi_duration in fin_output: 
     ftime_sum += fi_duration
   
-  # print ("for debugging... line 365", fin_output)
   fin_output[-1][1] += (duration - ftime_sum)
   output = fin_output 
 
