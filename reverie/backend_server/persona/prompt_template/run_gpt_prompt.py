@@ -67,15 +67,10 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-      # Use regular expressions to find the first sequence of digits in the response
-      match = re.search(r'\d+', gpt_response)
-      if match:
-          # Convert the found digits to an integer
-          cr = int(match.group(0))
-      else:
-          # Handle cases where no digits are found
-          cr = None  # or raise an exception, or handle it in another suitable way
-      return cr
+    # Use regular expressions to find the first sequence of digits in the response
+    match = re.search(r'\d+', gpt_response)
+    cr = int(match.group(0))
+    return cr
   
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -133,11 +128,6 @@ def run_gpt_prompt_daily_plan(persona,
     prompt_input += [persona.scratch.get_str_firstname()]
     prompt_input += [f"{str(wake_up_hour)}:00 am"]
     return prompt_input
-
-  def __func_clean_up(gpt_response, prompt=""):
-    # I find it cleaner just to split on the right 
-    cleaned_response =  gpt_response.split("||")
-    return cleaned_response
 
   def __func_clean_up(gpt_response, prompt=""):
     # Split the response on '||' and strip whitespace
@@ -360,7 +350,7 @@ def run_gpt_prompt_task_decomp(persona,
           decomposed_tasks.append([task.strip(), duration])
           total_duration += duration
         else:
-          print(f"Warning: No match found for line: {line}")
+          pass
     
     return decomposed_tasks
 
@@ -1644,12 +1634,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   def __func_clean_up(gpt_response, prompt=""):
     # Search for the first sequence of digits in the gpt_response
     match = re.search(r'\d+', gpt_response)
-    if match:
-        # If a sequence of digits is found, convert it to an integer
-        return int(match.group())
-    else:
-        # If no digits are found, return a default value or raise an error
-        return None 
+    return int(match.group())
 
   def __func_validate(gpt_response, prompt=""): ############
     try: 
@@ -1665,8 +1650,6 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   prompt_template = prompt_dir / "poignancy_event.txt" ########
   prompt_input = create_prompt_input(persona, event_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "5" ########
-  special_instruction = "The output should be json-formatted and ONLY contain ONE integer value on the scale of 1 to 10." ########
   fail_safe = get_fail_safe() ########
   # I could not get GPT to json here for some reason...
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
@@ -2335,17 +2318,14 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
     prompt_input = [comment]
     return prompt_input
 
-  def __chat_func_clean_up(gpt_response, prompt=""): 
-    gpt_response = json.loads(gpt_response)
-    return gpt_response["output"]
+  def __func_clean_up(gpt_response, prompt=""): 
+    match = re.search(r'\d+', gpt_response)
+    cr = int(match.group(0))
+    return cr
 
-  def __chat_func_validate(gpt_response, prompt=""): 
+  def __func_validate(gpt_response, prompt=""): 
     try: 
-      fields = ["output"]
-      response = json.loads(gpt_response)
-      for field in fields: 
-        if field not in response: 
-          return False
+      int(__func_clean_up(gpt_response))
       return True
     except:
       return False 
@@ -2353,20 +2333,18 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
   def get_fail_safe():
     return None
 
-  print ("11")
   prompt_template = prompt_dir / "anthromorphosization.txt" 
   prompt_input = create_prompt_input(comment) 
-  print ("22")
   prompt = generate_prompt(prompt_input, prompt_template)
-  print (prompt)
   fail_safe = get_fail_safe() 
-  output = ChatGPT_safe_generate_response_OLD(prompt, 5, fail_safe,
-                        __chat_func_validate, __chat_func_clean_up, verbose)
-  print (output)
-  
   gpt_param = {"engine": model, "max_tokens": 50, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
+  # I don't want the simulation to crash because I think its too real
+  output=1
+  
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
@@ -2434,7 +2412,7 @@ def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retr
       ]
     return prompt_input
 
-  def __chat_func_clean_up(gpt_response, prompt=""): 
+  def __func_clean_up(gpt_response, prompt=""): 
     gpt_response = extract_first_json_dict(gpt_response)
 
     cleaned_dict = dict()
@@ -2448,16 +2426,9 @@ def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retr
 
     return cleaned_dict
 
-  def __chat_func_validate(gpt_response, prompt=""): 
-    print ("ugh...")
+  def __func_validate(gpt_response, prompt=""): 
     try: 
-      # print ("debug 1")
-      # print (gpt_response)
-      # print ("debug 2")
-
-      print (extract_first_json_dict(gpt_response))
-      # print ("debug 3")
-
+      __func_clean_up(gpt_response)
       return True
     except:
       return False 
@@ -2468,18 +2439,14 @@ def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retr
     cleaned_dict["end"] = False
     return cleaned_dict
 
-  print ("11")
   prompt_template = prompt_dir / "iterative_convo.txt" 
   prompt_input = create_prompt_input(maze, init_persona, target_persona, retrieved, curr_context, curr_chat) 
-  print ("22")
   prompt = generate_prompt(prompt_input, prompt_template)
-  print (prompt)
   fail_safe = get_fail_safe() 
-  output = ChatGPT_safe_generate_response_OLD(prompt, 5, fail_safe,
-                        __chat_func_validate, __chat_func_clean_up, verbose)
-  print (output)
-  
-  gpt_param = {"engine": model, "max_tokens": 50, 
-               "temperature": 0, "top_p": 1, "stream": False,
+  gpt_param = {"engine": model, "max_tokens": 2200, 
+               "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
+  
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]

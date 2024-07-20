@@ -666,6 +666,8 @@ class ReverieServer:
               clean_whispers += [[agent_name, whisper]]
 
           load_history_via_whisper(self.personas, clean_whispers)
+        else:
+          print("Unrecognized command: ", sim_command)
 
         print (ret_str)
         
