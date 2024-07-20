@@ -485,6 +485,7 @@ def run_gpt_prompt_action_sector(action_description,
 
   def __func_clean_up(gpt_response, prompt=""):
     cleaned_response = gpt_response.split("}")[0]
+    cleaned_response = gpt_response.split("{")[-1]
     return cleaned_response
 
   def __func_validate(gpt_response, prompt=""): 
@@ -533,14 +534,10 @@ def run_gpt_prompt_action_arena(action_description,
                                 verbose=False):
   def create_prompt_input(action_description, persona, maze, act_world, act_sector, test_input=None): 
     prompt_input = []
-    # prompt_input += [persona.scratch.get_str_name()]
-    # prompt_input += [maze.access_tile(persona.scratch.curr_tile)["arena"]]
-    # prompt_input += [maze.access_tile(persona.scratch.curr_tile)["sector"]]
     prompt_input += [persona.scratch.get_str_name()]
     x = f"{act_world}:{act_sector}"
     prompt_input += [act_sector]
 
-    # MAR 11 TEMP
     accessible_arena_str = persona.s_mem.get_str_accessible_sector_arenas(x)
     curr = accessible_arena_str.split(", ")
     fin_accessible_arenas = []
@@ -551,37 +548,26 @@ def run_gpt_prompt_action_arena(action_description,
       else: 
         fin_accessible_arenas += [i]
     accessible_arena_str = ", ".join(fin_accessible_arenas)
-    # END MAR 11 TEMP
-
-
     prompt_input += [accessible_arena_str]
-
 
     action_description_1 = action_description
     action_description_2 = action_description
     if "(" in action_description: 
       action_description_1 = action_description.split("(")[0].strip()
       action_description_2 = action_description.split("(")[-1][:-1]
+
     prompt_input += [persona.scratch.get_str_name()]
     prompt_input += [action_description_1]
-
     prompt_input += [action_description_2]
     prompt_input += [persona.scratch.get_str_name()]
-
-    
-
     prompt_input += [act_sector]
-
     prompt_input += [accessible_arena_str]
-    # prompt_input += [maze.access_tile(persona.scratch.curr_tile)["arena"]]
-    # x = f"{maze.access_tile(persona.scratch.curr_tile)['world']}:{maze.access_tile(persona.scratch.curr_tile)['sector']}:{maze.access_tile(persona.scratch.curr_tile)['arena']}"
-    # prompt_input += [persona.s_mem.get_str_accessible_arena_game_objects(x)]
 
-    
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
     cleaned_response = gpt_response.split("}")[0]
+    cleaned_response = cleaned_response.split("{")[-1]
     return cleaned_response
 
   def __func_validate(gpt_response, prompt=""): 
@@ -607,11 +593,6 @@ def run_gpt_prompt_action_arena(action_description,
   fail_safe = get_fail_safe()
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
                                    __func_validate, __func_clean_up)
-  print (output)
-  # y = f"{act_world}:{act_sector}"
-  # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
-  # if output not in x: 
-  #   output = random.choice(x)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -707,20 +688,19 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     cr = gpt_response.strip()
     if len(cr) > 3:
       cr = cr[:3]
     return cr
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) == 0: 
         return False
     except: return False
     return True 
-    return True
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4") ########
   gpt_param = {"engine": model, "max_tokens": 15, 
@@ -729,11 +709,9 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   prompt_template = prompt_dir / "generate_pronunciatio.txt" ########
   prompt_input = create_prompt_input(action_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "🛁🧖‍♀️" ########
-  special_instruction = "The value for the output must ONLY contain the emojis." ########
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
@@ -750,6 +728,8 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   def __func_clean_up(gpt_response, prompt=""):
     cr = gpt_response.strip()
     cr = [i.strip() for i in cr.split(")")[0].split(",")]
+    if len(cr) == 3 and '(' in cr[0]:
+      cr = cr[1:]
     return cr
 
   def __func_validate(gpt_response, prompt=""): 
@@ -819,12 +799,12 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
     return fs
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     cr = gpt_response.strip()
     if cr[-1] == ".": cr = cr[:-1]
     return cr
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       gpt_response = __func_clean_up(gpt_response, prompt="")
     except: 
@@ -838,11 +818,11 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   prompt_template = prompt_dir / "generate_obj_event.txt" ########
   prompt_input = create_prompt_input(act_game_object, act_desp, persona)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "being fixed" ########
-  special_instruction = "The output should ONLY contain the phrase that should go in <fill in>." ########
   fail_safe = get_fail_safe(act_game_object) ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
+
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
@@ -857,6 +837,8 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
   def __func_clean_up(gpt_response, prompt=""):
     cr = gpt_response.strip()
     cr = [i.strip() for i in cr.split(")")[0].split(",")]
+    if len(cr) == 3 and "(" in cr[0]:
+      cr = cr[1:]
     return cr
 
   def __func_validate(gpt_response, prompt=""): 

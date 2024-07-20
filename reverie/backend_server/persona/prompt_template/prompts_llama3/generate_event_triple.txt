@@ -7,6 +7,7 @@ Variables:
 
 <commentblockmarker>###</commentblockmarker>
 Task: Turn the input into (subject, predicate, object). 
+For sentences where there's no direct object, use the auxiliary verb as the predicate and the main verb  the "object" in the tuple. 
 
 Input: Sam Johnson is eating breakfast. 
 Output: (Dolores Murphy, eat, breakfast) 
@@ -15,7 +16,7 @@ Input: Joon Park is brewing coffee.
 Output: (Joon Park, brew, coffee)
 ---
 Input: Jane Cook is sleeping. 
-Output: (Jane Cook, is, sleep)
+Output: (Jane Cook, is, sleep) --> auxiliary verb as predicate and main verb as object
 ---
 Input: Michael Bernstein is writing email on a computer. 
 Output: (Michael Bernstein, write, email)
@@ -26,5 +27,16 @@ Output: (Percy Liang, teach, students)
 Input: Merrie Morris is running on a treadmill. 
 Output: (Merrie Morris, run, treadmill)
 ---
+
+DO NOT SAY THINGS LIKE "I see what you're doing here"
+YOU ARE BEING USED AS AN API IN A VIDEOGAME
+ANSWER THE QUESTION IN THE FORMAT OF THE EXAMPLES ABOVE:
+(SUBJECT, PREDICATE, OBJECT)
+For sentences where there's no direct object, use the auxiliary verb as the predicate and the main verb  the "object" in the tuple. 
+YOU MUST USE ALL THREE! EMPTY VALUES WILL CRASH
+(Jane Cook, sleep, ) --> CRASH 
+(Jane Cook, is, sleep) --> GOOD 
+
+
 Input: !<INPUT 0>! is !<INPUT 1>!. 
 Output: (!<INPUT 2>!,

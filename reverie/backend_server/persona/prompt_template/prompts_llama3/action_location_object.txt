@@ -22,9 +22,24 @@ Stay in the current area if the activity can be done there. Never go into other 
 For getting coffee, Tom Watson should go to the following area in Hobbs Cafe:
 Answer: {cafe}
 ---
+Mike Johnson is in the lobby in Mike Johnson's office building.
+Mike Johnson is going to Mike Johnson's office that has the following areas: {office, meeting room, cafeteria}
+Stay in the current area if the activity can be done there. Never go into other people's rooms unless necessary.
+For a business meeting, Mike Johnson should go to the following area in Mike Johnson's office:
+Answer: {meeting room}
+---
+Sara Lee is in the dining room in Sara Lee's home.
+Sara Lee is going to Sara Lee's home that has the following areas: {kitchen, dining room, bedroom}
+Stay in the current area if the activity can be done there. Never go into other people's rooms unless necessary.
+For eating dinner, Sara Lee should go to the following area in Sara Lee's home:
+Answer: {dining room}
+
+
 
 !<INPUT 0>! is going to !<INPUT 1>! that has the following areas: {!<INPUT 2>!}
 * Stay in the current area if the activity can be done there. 
 * NEVER go into other people's rooms unless necessary.
 !<INPUT 3>! is !<INPUT 4>!. For !<INPUT 5>!, !<INPUT 6>! should go to the following area in !<INPUT 7>! (MUST pick one of {!<INPUT 8>!}):
+YOUR ANSWER IS BEING USED IN CODE DON"T EXPLAIN YOUR REASONING JUST DUMP YOUR VERY SHORT ANSWER DIRECTLY HERE!
+YOU MUST USE THE } SYMBOL TO FINISH YOUR ANSWER!
 Answer: {
