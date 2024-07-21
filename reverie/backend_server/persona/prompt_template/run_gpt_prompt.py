@@ -918,13 +918,16 @@ def run_gpt_prompt_new_decomp_schedule(persona,
   
   def __func_clean_up(gpt_response, prompt=""):
     new_schedule = prompt + " " + gpt_response.strip()
-    new_schedule = new_schedule.split("The revised schedule:")[-1].strip()
+    # llm really is weird about phrasing of revised schedule
+    new_schedule = new_schedule.split("revised schedule:")[-1].strip()  
     new_schedule = new_schedule.split("\n")
-
+  
     ret_temp = []
-    for i in new_schedule: 
-      ret_temp += [i.split(" -- ")]
-
+    for i in new_schedule:
+      split_line =  i.split(" -- ")
+      if len(split_line) > 1:
+        ret_temp += [split_line]
+ 
     ret = []
     for time_str, action in ret_temp:
       start_time = time_str.split(" ~ ")[0].strip()
@@ -933,7 +936,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
       delta_min = int(delta.total_seconds()/60)
       if delta_min < 0: delta_min = 0
       ret += [[action, delta_min]]
-
+  
     return ret
 
   def __func_validate(gpt_response, prompt=""): 
@@ -1196,23 +1199,45 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
     prompt_input += [init_act_desc]
     return prompt_input
   
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      if gpt_response.split("Answer: Option")[-1].strip().lower() in ["3", "2", "1"]: 
-        return True
-      return False     
-    except:
-      return False 
+  ## I think once upon a time this function contained three options but now it seems
+  ## pretty clear that its only for two options 
+  #def __func_validate(gpt_response, prompt=""): 
+  #  try: 
+  #    if gpt_response.split("Answer: Option")[-1].strip().lower() in ["3", "2", "1"]: 
+  #      return True
+  #    return False     
+  #  except:
+  #    return False 
 
+  #def __func_clean_up(gpt_response, prompt=""):
+  #  return gpt_response.split("Answer: Option")[-1].strip().lower() 
+  
+  # Define the improved validation and clean-up functions
+  def __func_validate(gpt_response, prompt=""):
+    try:
+      # Search for the pattern "Answer: Option X" where X is 1 or 2
+      match = re.search(r"Answer: Option\s+([12])", gpt_response)
+      # If a match is found and the number is directly following "Answer: Option"
+      if match:
+        return True
+      else:
+        return False
+    except Exception as e:
+      # Log the error or handle it as needed
+      print(f"Error during validation: {e}")
+      return False
+  
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split("Answer: Option")[-1].strip().lower() 
+    match = re.search(r"Answer: Option\s+([12])", gpt_response)
+    return match.group(1)  # Return the number (1 or 2)
+
 
   def get_fail_safe(): 
-    fs = "3"
+    fs = "1"
     return fs
 
 
-  gpt_param = {"engine": model, "max_tokens": 20, 
+  gpt_param = {"engine": model, "max_tokens": 500, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "decide_to_react.txt"
@@ -1407,11 +1432,11 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     ret = "conversing about " + gpt_response.strip()
     return ret
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1426,11 +1451,9 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
   prompt_template = prompt_dir / "summarize_conversation.txt" ########
   prompt_input = create_prompt_input(conversation, test_input)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "conversing about what to eat for lunch" ########
-  special_instruction = "The output must continue the sentence above by filling in the <fill in> tag. Don't start with 'this is a conversation about...' Just finish the sentence but do not miss any important details (including who are chatting)." ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
@@ -1681,11 +1704,11 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
     return 4
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     gpt_response = int(gpt_response)
     return gpt_response
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1699,13 +1722,9 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
   prompt_template = prompt_dir / "poignancy_thought.txt" ########
   prompt_input = create_prompt_input(persona, event_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "5" ########
-  #special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
-  special_instruction = "The output should be json-formatted and ONLY contain ONE integer value on the scale of 1 to 10." ########
-  #special_instruction = "Make sure to use Json format, see example" ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
@@ -1733,11 +1752,11 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     gpt_response = int(gpt_response)
     return gpt_response
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1751,11 +1770,9 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
   prompt_template = prompt_dir / "poignancy_chat.txt" ########
   prompt_input = create_prompt_input(persona, event_description)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "5" ########
-  special_instruction = "The output should be json-formatted and ONLY contain ONE integer value on the scale of 1 to 10." ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
@@ -1893,7 +1910,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split('"')[0].strip()
+    return gpt_response
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1907,10 +1924,10 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     return gpt_response.split('"')[0].strip()
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1924,11 +1941,9 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
   prompt_template = prompt_dir / "summarize_chat_ideas.txt" ########
   prompt_input = create_prompt_input(persona, target_persona, statements, curr_context)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = 'Jane Doe is working on a project' ########
-  special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
@@ -1938,7 +1953,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split('"')[0].strip()
+    return gpt_response
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1952,10 +1967,10 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
+  def __func_clean_up(gpt_response, prompt=""): ############
     return gpt_response.split('"')[0].strip()
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1969,11 +1984,9 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
   prompt_template = prompt_dir / "summarize_chat_relationship.txt" ########
   prompt_input = create_prompt_input(persona, target_persona, statements)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = 'Jane Doe is working on a project' ########
-  special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
@@ -2105,10 +2118,10 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
-    return gpt_response.split('"')[0].strip()
+  def __func_clean_up(gpt_response, prompt=""): ############
+    return gpt_response
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -2122,11 +2135,9 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
   prompt_template = prompt_dir / "summarize_ideas.txt" ########
   prompt_input = create_prompt_input(persona, statements, question)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = 'Jane Doe is working on a project' ########
-  special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 

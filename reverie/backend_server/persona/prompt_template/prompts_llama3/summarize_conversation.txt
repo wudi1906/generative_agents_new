@@ -8,4 +8,5 @@ Conversation:
 !<INPUT 0>!
 
 Summarize the conversation above in one sentence:
+GIVE A BRIEF ANSWER CLEARLY ANSWERING THE QUESTION WIHTOUT INTRODUCTION, PREAMBLE OR CONCLUSION 
 This is a conversation about

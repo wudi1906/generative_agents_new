@@ -17,3 +17,4 @@ Currently: !<INPUT 2>!
 
 !<INPUT 3>!
 Summarize the most relevant statements above that can inform !<INPUT 4>! in his conversation with !<INPUT 5>!.
+GIVE A BRIEF ANSWER CLEARLY ANSWERING THE QUESTION WIHTOUT INTRODUCTION, PREAMBLE OR CONCLUSION 
