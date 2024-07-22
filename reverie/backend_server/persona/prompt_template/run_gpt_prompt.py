@@ -1007,7 +1007,8 @@ def run_gpt_prompt_new_decomp_schedule(persona,
                                      test_input)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(main_act_dur, truncated_act_dur)
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+  # this task is unusually complicated so I give it more retries
+  output = safe_generate_response(prompt, gpt_param, 10, fail_safe,
                                    __func_validate, __func_clean_up)
   
   # print ("* * * * output")
@@ -1807,11 +1808,14 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
 
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
-    ret = ast.literal_eval(gpt_response)
+  def __func_clean_up(gpt_response, prompt=""): ############
+    begin_index = begin_index = gpt_response.find("BEGIN") + len("BEGIN")
+    end_index =  gpt_response.find("END")
+    content = gpt_response[begin_index:end_index].strip()
+    ret = [x.strip().replace("\n"," ") for x in content.split(",")[0:3]]
     return ret
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
+  def __func_validate(gpt_response, prompt=""): ############
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
@@ -1819,21 +1823,21 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
       return False 
 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
-               "temperature": 0.1, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = prompt_dir / "generate_focal_pt.txt" ########
-  prompt_input = create_prompt_input(persona, statements, n)  ########
-  prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = '["What should Jane do for lunch", "Does Jane like strawberry", "Who is Jane"]' ########
-  special_instruction = "Output must be a list of str." ########
-  fail_safe = get_fail_safe(n) ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
-  if output != False: 
-    return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # ChatGPT Plugin ===========================================================
+  #print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12") ########
+  #gpt_param = {"engine": model, "max_tokens": 15, 
+  #             "temperature": 0.1, "top_p": 1, "stream": False,
+  #             "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  #prompt_template = prompt_dir / "generate_focal_pt.txt" ########
+  #prompt_input = create_prompt_input(persona, statements, n)  ########
+  #prompt = generate_prompt(prompt_input, prompt_template)
+  #example_output = '["What should Jane do for lunch", "Does Jane like strawberry", "Who is Jane"]' ########
+  #special_instruction = "Output must be a list of str." ########
+  #fail_safe = get_fail_safe(n) ########
+  #output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
+  #                                        __chat_func_validate, __chat_func_clean_up, True)
+  #if output != False: 
+  #  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+  ## ChatGPT Plugin ===========================================================
 
   gpt_param = {"engine": model, "max_tokens": 150, 
                "temperature": 0.1, "top_p": 1, "stream": False,
