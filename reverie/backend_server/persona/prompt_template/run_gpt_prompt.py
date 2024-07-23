@@ -563,9 +563,33 @@ def run_gpt_prompt_action_arena(action_description,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
+    # Clean the response from any surrounding formatting or unwanted characters
     cleaned_response = gpt_response.split("}")[0]
     cleaned_response = cleaned_response.split("{")[-1]
-    return cleaned_response
+    cleaned_response = cleaned_response.strip().lower()  # Ensure it is in lower case for matching
+  
+    def _extract_rooms(prompt):
+      # Define the regex pattern to match the specific line and capture the list of rooms
+      pattern = r'\(MUST pick one of \{([^}]*)\}\):'
+    
+      # Search for the pattern in the provided text
+      match = re.search(pattern, prompt)
+    
+      if match:
+        # Extract the list of rooms and split by comma to create a list
+        rooms = match.group(1).split(', ')
+        return rooms
+      else:
+        return []
+  
+    # Extract rooms from the prompt
+    rooms = _extract_rooms(prompt)
+  
+    # Check each room in its original case to see if its lower case matches the cleaned response
+    for room in rooms:
+      if room.strip().lower() == cleaned_response:
+        return room  # Return the original case of the matched room
+    return "" 
 
   def __func_validate(gpt_response, prompt=""): 
     if len(gpt_response.strip()) < 1: 
@@ -574,9 +598,11 @@ def run_gpt_prompt_action_arena(action_description,
       return False
     if "," in gpt_response: 
       return False
+    
     return True
   
   def get_fail_safe(): 
+    # NOTE this fail safe is not robust
     fs = ("kitchen")
     return fs
 
@@ -2090,7 +2116,8 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   example_output = '[["Jane Doe", "Hi!"], ["John Doe", "Hello there!"] ... ]' ########
   special_instruction = 'The output should be a list of list where the inner lists are in the form of ["<Name>", "<Utterance>"].' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
+  # ChatGPT_safe tends to be unstable, giving it 20 chances before a crash
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 20, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   # print ("HERE END JULY 23 -- ----- ") ########
   if output != False: 
@@ -2298,7 +2325,8 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   example_output = 'Jane Doe was interesting to talk to.' ########
   special_instruction = 'The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 5, fail_safe,
+  # ChatGPT_safe tends to be unstable, giving it 20 chances before a crash
+  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 20, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
