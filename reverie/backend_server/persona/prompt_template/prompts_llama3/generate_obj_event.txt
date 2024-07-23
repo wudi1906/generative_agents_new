@@ -10,9 +10,7 @@ Variables:
 <commentblockmarker>###</commentblockmarker>
 Task: We want to understand the state of an object that is being used by someone. 
 
-YOU ARE BEING USED AS AN API IN A VIDEO GAME. 
-DO NOT GIVE RAMBLING INTRODUCTIONS.
-JUST FINISH THE SENTENCE DONT SAY ANYTHING BEFORE OR AFTER
+ANSWER SHORT AND CONCISE WITHOUT PREAMBLE INTRODUCTION OR CONCLUSION
 
 We want to know about !<INPUT 0>!'s state. 
 Step 1. !<INPUT 1>! is at/using the !<INPUT 2>!.

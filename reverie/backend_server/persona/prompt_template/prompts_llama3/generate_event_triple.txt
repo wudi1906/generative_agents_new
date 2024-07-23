@@ -6,37 +6,32 @@ Variables:
 !<INPUT 2>! -- Persona's full name. 
 
 <commentblockmarker>###</commentblockmarker>
-Task: Turn the input into (subject, predicate, object). 
-For sentences where there's no direct object, use the auxiliary verb as the predicate and the main verb  the "object" in the tuple. 
+Task: Turn the input into (subject || predicate || object).
+For sentences where there's no direct object, use the auxiliary verb as the predicate and the main verb  the "object" in the tuple.
 
-Input: Sam Johnson is eating breakfast. 
-Output: (Dolores Murphy, eat, breakfast) 
---- 
+Input: Sam Johnson is eating breakfast.
+Output: (Dolores Murphy || eat || breakfast)
+---
 Input: Joon Park is brewing coffee.
-Output: (Joon Park, brew, coffee)
+Output: (Joon Park || brew || coffee)
 ---
-Input: Jane Cook is sleeping. 
-Output: (Jane Cook, is, sleep) --> auxiliary verb as predicate and main verb as object
+Input: Jane Cook is sleeping.
+Output: (Jane Cook || is || sleep) --> auxiliary verb as predicate and main verb as object
 ---
-Input: Michael Bernstein is writing email on a computer. 
-Output: (Michael Bernstein, write, email)
+Input: Michael Bernstein is writing email on a computer.
+Output: (Michael Bernstein || write || email)
 ---
-Input: Percy Liang is teaching students in a classroom. 
-Output: (Percy Liang, teach, students)
+Input: Percy Liang is teaching students in a classroom.
+Output: (Percy Liang || teach || students)
 ---
-Input: Merrie Morris is running on a treadmill. 
-Output: (Merrie Morris, run, treadmill)
+Input: Merrie Morris is running on a treadmill.
+Output: (Merrie Morris || run || treadmill)
 ---
 
-DO NOT SAY THINGS LIKE "I see what you're doing here"
-YOU ARE BEING USED AS AN API IN A VIDEOGAME
-ANSWER THE QUESTION IN THE FORMAT OF THE EXAMPLES ABOVE:
-(SUBJECT, PREDICATE, OBJECT)
-For sentences where there's no direct object, use the auxiliary verb as the predicate and the main verb  the "object" in the tuple. 
-YOU MUST USE ALL THREE! EMPTY VALUES WILL CRASH
-(Jane Cook, sleep, ) --> CRASH 
-(Jane Cook, is, sleep) --> GOOD 
+YOU MUST ANSWER IN THREE SHORT  CLEAR PARTS. 
+YOU MUST NOT ANSWER IN MORE THAN THREE PARTS OR LESS THAN THREE PARTS
+YOU MUST ALWAYS START WITH THE SUBJECT OF THE INPUT
 
 
 Input: !<INPUT 0>! is !<INPUT 1>!. 
-Output: (!<INPUT 2>!,
+Output: (!<INPUT 2>! || 

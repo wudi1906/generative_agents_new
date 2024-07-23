@@ -595,7 +595,7 @@ def _determine_action(persona, maze):
   # Generate an <Action> instance from the action description and duration. By
   # this point, we assume that all the relevant actions are decomposed and 
   # ready in f_daily_schedule. 
-  print ("DEBUG LJSDLFSKJF")
+  print ("DEBUG SHOW SCHEDULE ")
   for i in persona.scratch.f_daily_schedule: print (i)
   print (curr_index)
   print (len(persona.scratch.f_daily_schedule))
@@ -636,6 +636,23 @@ def _determine_action(persona, maze):
   act_obj_pron = generate_action_pronunciatio(act_obj_desp, persona)
   act_obj_event = generate_act_obj_event_triple(act_game_object, 
                                                 act_obj_desp, persona)
+  if debug: 
+    print("GNS ADDING NEW ACTION: ")
+    print("----  persona_name: ", persona.scratch.name)
+    print("----  act_world:    ", act_world)
+    print("----  act_sector:   ", act_sector)
+    print("----  new_address: ", new_address)
+    print("----  act_desp:     ", act_desp)
+    print("----  act_dura:     ", act_dura)
+    print("----  act_game_object: ", act_game_object)
+    print("----  act_arena:    ", act_arena)
+    print("----  act_adress:   ", act_address)
+    print("----  act_pron:   ", act_pron)
+    print("----  act_event:   ", act_event)
+    print("----  act_obj_desp:   ", act_obj_desp)
+    print("----  act_obj_pron:   ", act_obj_pron)
+    print("----  act_obj_event:   ", act_obj_event)
+
 
   # Adding the action to persona's queue. 
   persona.scratch.add_new_action(new_address, 

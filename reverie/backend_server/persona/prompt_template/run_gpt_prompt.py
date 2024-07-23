@@ -724,7 +724,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   
   def __func_clean_up(gpt_response, prompt=""):
     cr = gpt_response.strip()
-    cr = [i.strip() for i in cr.split(")")[0].split(",")]
+    cr = [i.strip() for i in cr.split(")")[0].split("||")]
     if len(cr) == 3 and '(' in cr[0]:
       cr = cr[1:]
     return cr
@@ -778,22 +778,6 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
                     act_game_object,
                     act_game_object]
     return prompt_input
-  
-  def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.strip()
-    if cr[-1] == ".": cr = cr[:-1]
-    return cr
-
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      gpt_response = __func_clean_up(gpt_response, prompt="")
-    except: 
-      return False
-    return True 
-
-  def get_fail_safe(act_game_object): 
-    fs = f"{act_game_object} is idle"
-    return fs
 
   # ChatGPT Plugin ===========================================================
   def __func_clean_up(gpt_response, prompt=""): ############
@@ -808,7 +792,10 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
       return False
     return True 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 6") ########
+  def get_fail_safe(act_game_object): 
+    fs = f"{act_game_object} is idle"
+    return fs
+
   gpt_param = {"engine": model, "max_tokens": 15, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -822,7 +809,6 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
 
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # ChatGPT Plugin ===========================================================
 
 def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_obj_desc): 
@@ -833,7 +819,7 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
   
   def __func_clean_up(gpt_response, prompt=""):
     cr = gpt_response.strip()
-    cr = [i.strip() for i in cr.split(")")[0].split(",")]
+    cr = [i.strip() for i in cr.split(")")[0].split("||")]
     if len(cr) == 3 and "(" in cr[0]:
       cr = cr[1:]
     return cr
@@ -1866,10 +1852,13 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = "1. " + gpt_response.strip()
     ret = dict()
-    for i in gpt_response.split("\n"): 
-      row = i.split(". ")[-1]
+    for line in gpt_response.split("\n"): 
+      if re.match(r"^\s*insight", line.strip(), re.IGNORECASE):
+        pass
+      else:
+        continue
+      row = line.split("||")[-1]
       thought = row.split("(because of ")[0].strip()
       evi_raw = row.split("(because of ")[1].split(")")[0].strip()
       evi_raw = re.findall(r'\d+', evi_raw)
@@ -1885,12 +1874,12 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
       return False 
 
   def get_fail_safe(n): 
-    return ["I am hungry"] * n
+    return ["nothing",[0]] * n
 
 
 
 
-  gpt_param = {"engine": model, "max_tokens": 150, 
+  gpt_param = {"engine": model, "max_tokens": 500, 
                "temperature": 0.5, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "insight_and_evidence.txt"
