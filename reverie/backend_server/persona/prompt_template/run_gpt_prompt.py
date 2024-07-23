@@ -748,11 +748,20 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
                     persona.name]
     return prompt_input
   
+  #def __func_clean_up(gpt_response, prompt=""):
+  #  cr = gpt_response.strip()
+  #  cr = [i.strip() for i in cr.split(")")[0].split("||")]
+  #  if len(cr) == 3 and '(' in cr[0]:
+  #    cr = cr[1:]
+  #  return cr
   def __func_clean_up(gpt_response, prompt=""):
     cr = gpt_response.strip()
-    cr = [i.strip() for i in cr.split(")")[0].split("||")]
-    if len(cr) == 3 and '(' in cr[0]:
-      cr = cr[1:]
+    start_idx = cr.find("(")
+    end_idx = cr.find(")")
+    if start_idx == -1 or end_idx == -1 or start_idx >= end_idx:
+      return []
+    cr = cr[start_idx+1:end_idx].split("||")
+    cr = [i.strip() for i in cr][1:3]
     return cr
 
   def __func_validate(gpt_response, prompt=""): 
@@ -760,16 +769,20 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
       gpt_response = __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) != 2: 
         return False
+      for x in gpt_response:
+        if len(x) < 2:
+          return False
     except: return False
     return True 
+
 
   def get_fail_safe(persona): 
     fs = (persona.name, "is", "idle")
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 30, 
-               "temperature": 0.1, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
+  gpt_param = {"engine": model, "max_tokens": 1000, 
+               "temperature": 0.7, "top_p": 1, "stream": False,
+               "frequency_penalty": 0, "presence_penalty": 0, "stop": None} 
   prompt_template = prompt_dir / "generate_event_triple.txt"
   prompt_input = create_prompt_input(action_description, persona)
   prompt = generate_prompt(prompt_input, prompt_template)
@@ -843,11 +856,20 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
                     act_game_object]
     return prompt_input
   
+  #def __func_clean_up(gpt_response, prompt=""):
+  #  cr = gpt_response.strip()
+  #  cr = [i.strip() for i in cr.split(")")[0].split("||")]
+  #  if len(cr) == 3 and "(" in cr[0]:
+  #    cr = cr[1:]
+  #  return cr
   def __func_clean_up(gpt_response, prompt=""):
     cr = gpt_response.strip()
-    cr = [i.strip() for i in cr.split(")")[0].split("||")]
-    if len(cr) == 3 and "(" in cr[0]:
-      cr = cr[1:]
+    start_idx = cr.find("(")
+    end_idx = cr.find(")")
+    if start_idx == -1 or end_idx == -1 or start_idx >= end_idx:
+      return []
+    cr = cr[start_idx+1:end_idx].split("||")
+    cr = [i.strip() for i in cr][1:3]
     return cr
 
   def __func_validate(gpt_response, prompt=""): 
@@ -855,6 +877,9 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
       gpt_response = __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) != 2: 
         return False
+      for x in gpt_response:
+        if len(x) < 2:
+          return False
     except: return False
     return True 
 
@@ -862,9 +887,11 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
     fs = (act_game_object, "is", "idle")
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 30, 
-               "temperature": 0.1, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
+
+
+  gpt_param = {"engine": model, "max_tokens": 1000, 
+               "temperature": 0.7, "top_p": 1, "stream": False,
+               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "generate_event_triple.txt"
   prompt_input = create_prompt_input(act_game_object, act_obj_desc)
   prompt = generate_prompt(prompt_input, prompt_template)
@@ -1005,8 +1032,10 @@ def run_gpt_prompt_new_decomp_schedule(persona,
 
     return ret
 
+  # increased the temperature to prevent the llm getting 
+  # 'stuck' trying the wrong answer over and over
   gpt_param = {"engine": model, "max_tokens": 1000, 
-               "temperature": 0.1, "top_p": 1, "stream": False,
+               "temperature": 0.8, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "new_decomp_schedule.txt"
   prompt_input = create_prompt_input(persona, 
@@ -1020,7 +1049,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(main_act_dur, truncated_act_dur)
   # this task is unusually complicated so I give it more retries
-  output = safe_generate_response(prompt, gpt_param, 10, fail_safe,
+  output = safe_generate_response(prompt, gpt_param, 20, fail_safe,
                                    __func_validate, __func_clean_up)
   
   # print ("* * * * output")
