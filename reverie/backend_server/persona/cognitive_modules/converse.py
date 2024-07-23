@@ -209,16 +209,6 @@ def generate_inner_thought(persona, whisper):
   return inner_thought
 
 def generate_action_event_triple(act_desp, persona): 
-  """TODO 
-
-  INPUT: 
-    act_desp: the description of the action (e.g., "sleeping")
-    persona: The Persona class instance
-  OUTPUT: 
-    a string of emoji that translates action description.
-  EXAMPLE OUTPUT: 
-    "🧈🍞"
-  """
   if debug: print ("GNS FUNCTION: <generate_action_event_triple>")
   return run_gpt_prompt_event_triple(act_desp, persona)[0]
 
