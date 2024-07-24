@@ -8,5 +8,5 @@ Convert an action description to an emoji (important: use two or less emojis).
 
 Action description: !<INPUT 0>!
 The value for the output must ONLY contain the emojis.
-Example Output: 🛁🧖‍♀
+Example Output: 🛁🧖
 Emoji:
