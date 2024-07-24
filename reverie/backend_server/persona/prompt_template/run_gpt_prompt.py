@@ -425,7 +425,8 @@ def run_gpt_prompt_action_sector(action_description,
                                 verbose=False):
   def create_prompt_input(action_description, persona, maze, test_input=None): 
     act_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
-    
+    accessible_sector_str = persona.s_mem.get_str_accessible_sectors(act_world)
+
     prompt_input = []
     
     prompt_input += [persona.scratch.get_str_name()]
@@ -495,7 +496,7 @@ def run_gpt_prompt_action_sector(action_description,
     return True
   
   def get_fail_safe(): 
-    fs = ("kitchen")
+    fs = ("Dummy string to be swapped out later")
     return fs
 
   gpt_param = {"engine": model, "max_tokens": 15, 
@@ -511,10 +512,8 @@ def run_gpt_prompt_action_sector(action_description,
   y = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
   x = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(y).split(",")]
   if output not in x: 
-    # output = random.choice(x)
     output = persona.scratch.living_area.split(":")[1]
-
-  print ("DEBUG", random.choice(x), "------", output)
+    print("WARNING: COULD NOT SELECT AREA VIA PROMPT GOING TO: ", output)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -1247,19 +1246,6 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
 
     prompt_input += [init_act_desc]
     return prompt_input
-  
-  ## I think once upon a time this function contained three options but now it seems
-  ## pretty clear that its only for two options 
-  #def __func_validate(gpt_response, prompt=""): 
-  #  try: 
-  #    if gpt_response.split("Answer: Option")[-1].strip().lower() in ["3", "2", "1"]: 
-  #      return True
-  #    return False     
-  #  except:
-  #    return False 
-
-  #def __func_clean_up(gpt_response, prompt=""):
-  #  return gpt_response.split("Answer: Option")[-1].strip().lower() 
   
   # Define the improved validation and clean-up functions
   def __func_validate(gpt_response, prompt=""):
@@ -2088,6 +2074,7 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
                     persona.scratch.name]
     return prompt_input
   
+  # this is not getting used?
   def __func_clean_up(gpt_response, prompt=""):
     print (gpt_response)
 
@@ -2108,6 +2095,7 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
 
 
 
+  # this is not getting used?
   def __func_validate(gpt_response, prompt=""): 
     try: 
       __func_clean_up(gpt_response, prompt)
@@ -2118,24 +2106,13 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   def get_fail_safe(): 
     return "..."
 
-
-
-
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    # ret = ast.literal_eval(gpt_response)
-
-    print ("a;dnfdap98fh4p9enf HEREE!!!")
-    for row in gpt_response: 
-      print (row)
-
     return gpt_response
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     return True
 
-
-  # print ("HERE JULY 23 -- ----- ") ########
   gpt_param = {"engine": model, "max_tokens": 15, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2145,13 +2122,10 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   example_output = '[["Jane Doe", "Hi!"], ["John Doe", "Hello there!"] ... ]' ########
   special_instruction = 'The output should be a list of list where the inner lists are in the form of ["<Name>", "<Utterance>"].' ########
   fail_safe = get_fail_safe() ########
-  # ChatGPT_safe tends to be unstable, giving it 20 chances before a crash
   output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 20, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
-  # print ("HERE END JULY 23 -- ----- ") ########
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # ChatGPT Plugin ===========================================================
 
 
 def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=None, verbose=False): 
@@ -2184,7 +2158,6 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
     except:
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 16") ########
   gpt_param = {"engine": model, "max_tokens": 15, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}

@@ -278,6 +278,8 @@ def safe_generate_response(prompt,
   if EXCEPT_ON_FAILSAFE:
     raise Exception("Too many retries and failsafes are disabled!")
   else:
+    print("ERROR fail to succesfully retrieve response")
+    print("ERROR using fail_safe: ", fail_safe_response)
     return fail_safe_response
 
 def get_embedding(text, model=openai_config["embeddings"]):
