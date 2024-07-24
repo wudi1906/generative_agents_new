@@ -56,7 +56,6 @@ class ReverieServer:
   def __init__(self, 
                fork_sim_code,
                sim_code):
-    self.verbose = verbose
 
     def _validate_simulation_name(sim_code):
         # Define the regular expression pattern for validating simulation names
