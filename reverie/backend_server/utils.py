@@ -9,4 +9,4 @@ collision_block_id = "32125"
 
 # Verbose 
 debug = True
-EXCEPT_ON_FAILSAFE=True
+EXCEPT_ON_FAILSAFE=False
