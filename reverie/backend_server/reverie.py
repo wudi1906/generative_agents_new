@@ -56,6 +56,15 @@ class ReverieServer:
   def __init__(self, 
                fork_sim_code,
                sim_code):
+    self.verbose = verbose
+
+    def _validate_simulation_name(sim_code):
+        # Define the regular expression pattern for validating simulation names
+        pattern = re.compile(r'^[\w-]+$')
+        # Return True if the sim_code matches the pattern, else False
+        return bool(pattern.match(sim_code))
+    if not _validate_simulation_name(fork_sim_code) or not _validate_simulation_name(sim_code):
+      raise ValueError("Invalid simulation code. Only letters, digits, underscores and hyphens are allowed.")
     
     print ("(reverie): Temp storage: ", fs_temp_storage)
         
