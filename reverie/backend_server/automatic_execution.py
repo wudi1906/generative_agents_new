@@ -9,6 +9,7 @@ import reverie
 import argparse
 import webbrowser
 import subprocess
+import traceback
 from typing import Tuple
 from pathlib import Path
 from datetime import datetime
@@ -16,7 +17,7 @@ from multiprocessing import Process
 from openai_cost_logger import OpenAICostLoggerViz
 
 
-def parse_args() -> Tuple[str, str, int, bool]:
+def parse_args() -> Tuple[str, str, int]:
     """Parse bash arguments
 
     Returns:
@@ -28,16 +29,16 @@ def parse_args() -> Tuple[str, str, int, bool]:
     """
     parser = argparse.ArgumentParser(description='Reverie Server')
     parser.add_argument(
-    '--origin',
-    type=str,
-    default="base_the_ville_isabella_maria_klaus",
-    help='The name of the forked simulation'
+        '--origin',
+        type=str,
+        default="base_the_ville_isabella_maria_klaus",
+        help='The name of the forked simulation'
     )
     parser.add_argument(
-    '--target',
-    type=str,
-    default="test-simulation",
-    help='The name of the new simulation'
+        '--target',
+        type=str,
+        default="test-simulation",
+        help='The name of the new simulation'
     )
     parser.add_argument(
         '--steps',
@@ -49,6 +50,7 @@ def parse_args() -> Tuple[str, str, int, bool]:
         '--ui',
         type=str,
         default="True",
+        choices=["True", "False", "None"],
         help='Open the simulator UI'
     )
     parser.add_argument(
@@ -67,7 +69,7 @@ def parse_args() -> Tuple[str, str, int, bool]:
     target = parser.parse_args().target
     steps = parser.parse_args().steps
     ui = parser.parse_args().ui
-    ui = True if ui.lower() == "true" else False
+    ui = True if ui.lower() == "true" else False if ui.lower() == "false" else None
     browser_path = parser.parse_args().browser_path
     port = parser.parse_args().port
     
@@ -90,7 +92,7 @@ def get_starting_step(exp_name: str) -> int:
     return current_step
 
 
-def start_web_tab(ui: bool, browser_path: str, port: str) -> int:
+def start_web_tab(ui, browser_path: str, port: str) -> int:
     """Open a new tab in the browser with the simulator home page
     
     Args:
@@ -148,7 +150,7 @@ def get_new_checkpoint(step: int, tot_steps: int, checkpoint_freq: int) -> int:
     return new_checkpoint
 
 
-def save_checkpoint(rs, idx: int, th: Process) -> Tuple[str, int, int]:
+def save_checkpoint(rs, idx: int) -> Tuple[str, int, int]:
     """Save the checkpoint and return the data to start the new one.
 
     Args:
@@ -167,6 +169,8 @@ def save_checkpoint(rs, idx: int, th: Process) -> Tuple[str, int, int]:
 
 if __name__ == '__main__':
     checkpoint_freq = 200 # 1 step = 10 sec
+    max_stepbacks = 5
+    curr_stepbacks = 0
     log_path = "cost-logs" # where the simulations' prints are stored
     idx = 0
     origin, target, tot_steps, ui, browser_path, port = parse_args()
@@ -191,26 +195,40 @@ if __name__ == '__main__':
             rs = reverie.ReverieServer(origin, target)
             th, pid = None, None 
             # Headless chrome doesn't need a thread since it create a dedicated thread by itself
-            if ui:
+            if ui == True:
                 th = Process(target=start_web_tab, args=(ui, browser_path, port))
                 th.start()
-            else:
+                rs.open_server(input_command=f"run {steps_to_run}")
+            elif ui == False:
                 pid = start_web_tab(ui, browser_path, port)
-            rs.open_server(input_command=f"run {steps_to_run}")
+                rs.open_server(input_command=f"run {steps_to_run}")
+            elif ui is None:
+                rs.open_server(input_command=f"headless {steps_to_run}")
         except KeyboardInterrupt:
             print("(Auto-Exec): KeyboardInterrupt: Stopping the experiment.", flush=True)
             sys.exit(0)
         except Exception as e:
             print(e, flush=True)
+            traceback.print_exc()
+
+            if len(e.args) > 2 and e.args[2] == "stepback":
+                curr_stepbacks += 1
+                if curr_stepbacks > max_stepbacks:
+                    print(f"(Auto-Exec): Maximum consecutive stepbacks reached. Aborting the experiment.", flush=True)
+                    break
+            else:
+                curr_stepbacks = 0
+
             step = e.args[1]
             if step != 0:
-                origin, current_step, idx = save_checkpoint(rs, idx, th)
+                origin, current_step, idx = save_checkpoint(rs, idx)
             else:
                 shutil.rmtree(f"../../environment/frontend_server/storage/{target}") # Remove the experiment folder if no steps were run
+
             print(f"(Auto-Exec): Error at step {current_step}", flush=True)
             print(f"(Auto-Exec): Exception {e.args[0]}", flush=True)
         else:
-            origin, current_step, idx = save_checkpoint(rs, idx, th)
+            origin, current_step, idx = save_checkpoint(rs, idx)
             curr_checkpoint = get_new_checkpoint(current_step, tot_steps, checkpoint_freq)
         finally:
             time.sleep(10) # Wait for the server to finish and then kill the process

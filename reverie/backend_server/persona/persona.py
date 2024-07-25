@@ -29,11 +29,11 @@ from persona.cognitive_modules.execute import *
 from persona.cognitive_modules.converse import *
 
 class Persona:
-    def __init__(self, name: str, folder_mem_saved: str):
-        # PERSONA BASE STATE
-        # <name> is the full name of the persona. This is a unique identifier for
-        # the persona within Reverie.
-        self.name = name
+  def __init__(self, name: str, folder_mem_saved: str):
+    # PERSONA BASE STATE
+    # <name> is the full name of the persona. This is a unique identifier for
+    # the persona within Reverie.
+    self.name = name
 
     # PERSONA MEMORY 
     # If there is already memory in folder_mem_saved, we load that. Otherwise,

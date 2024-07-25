@@ -41,14 +41,14 @@ from persona.persona import *
 current_file = os.path.abspath(__file__)
 
 def trace_calls_and_lines(frame, event, arg):
-    if event == 'call':
-        code = frame.f_code
-        filename = code.co_filename
-        short_filename = os.path.relpath(filename)
-        if os.path.abspath(filename).startswith(os.getcwd()):
-        # # if os.path.abspath(filename).startswith():
-        # # if filename == current_file:
-            print(f"Calling function: {code.co_name} in {short_filename}:{code.co_firstlineno}")
+  if event == 'call':
+    code = frame.f_code
+    filename = code.co_filename
+    short_filename = os.path.relpath(filename)
+    if os.path.abspath(filename).startswith(os.getcwd()):
+    # # if os.path.abspath(filename).startswith():
+    # # if filename == current_file:
+      print(f"Calling function: {code.co_name} in {short_filename}:{code.co_firstlineno}")
 
 ##############################################################################
 #                                  REVERIE                                   #
@@ -383,7 +383,6 @@ class ReverieServer:
               curr_obj_event_and_desc = freeze(
                 persona.scratch.get_curr_obj_event_and_desc()
               )
-              print("curr_obj_event_and_desc", curr_obj_event_and_desc)
               game_obj_cleanup[curr_obj_event_and_desc] = new_tile
               self.maze.add_event_from_tile(
                 curr_obj_event_and_desc,
@@ -456,27 +455,28 @@ class ReverieServer:
             outfile.write(json.dumps(movements, indent=2))
 
           # Run any plugins that are in the plugin folder.
-          plugins = os.listdir(f"{sim_folder}/plugins")
+          if os.path.exists(f"{sim_folder}/plugins"):
+            plugins = os.listdir(f"{sim_folder}/plugins")
 
-          for plugin in plugins:
-            plugin_path = f"{sim_folder}/plugins/{plugin}"
-            prompt_files = os.listdir(f"{plugin_path}/prompt_template")
+            for plugin in plugins:
+              plugin_path = f"{sim_folder}/plugins/{plugin}"
+              prompt_files = os.listdir(f"{plugin_path}/prompt_template")
 
-            for prompt_file in prompt_files:
-              prompt_file_path = (
-                f"{plugin_path}/prompt_template/{prompt_file}"
-              )
-              response = run_plugin(
-                prompt_file_path,
-                movements,
-                self.personas,
-              )
+              for prompt_file in prompt_files:
+                prompt_file_path = (
+                  f"{plugin_path}/prompt_template/{prompt_file}"
+                )
+                response = run_plugin(
+                  prompt_file_path,
+                  movements,
+                  self.personas,
+                )
 
-              with open(
-                f"{plugin_path}/output/{self.step}-{prompt_file}.json",
-                "w",
-              ) as outfile:
-                outfile.write(json.dumps(response, indent=2))
+                with open(
+                  f"{plugin_path}/output/{self.step}-{prompt_file}.json",
+                  "w",
+                ) as outfile:
+                  outfile.write(json.dumps(response, indent=2))
 
           # If we're running in headless mode, also create the environment file
           # to immediately trigger the next simulation step
@@ -496,7 +496,7 @@ class ReverieServer:
       # Sleep so we don't burn our machines.
       time.sleep(self.server_sleep)
 
-  def open_server(self):
+  def open_server(self, input_command: str = None) -> None:
     """
     Open up an interactive terminal prompt that lets you run the simulation
     step by step and probe agent state.
@@ -516,7 +516,10 @@ class ReverieServer:
     headless = None
 
     while True:
-      sim_command = input("Enter option: ")
+      if not input_command:
+        sim_command = input("Enter option: ")
+      else:
+        sim_command = input_command
       sim_command = sim_command.strip()
       print(sim_command)
       ret_str = ""
@@ -559,7 +562,7 @@ class ReverieServer:
             )
             continue
           int_count = int(sim_command.split()[-1])
-          rs.start_server(int_count)
+          self.start_server(int_count)
 
         elif sim_command[:8].lower() == "headless":
           # Runs the simulation in headless mode, which means that it will
@@ -705,10 +708,24 @@ class ReverieServer:
 
         print(ret_str)
 
-      except:
-        traceback.print_exc()
-        print("Error.")
-        pass
+      except Exception as e:
+        print("(reverie): Error: ", e)
+        # remove movement file if it exists
+        movement_file = f"{sim_folder}/movement/{self.step}.json"
+        if os.path.exists(movement_file):
+          os.remove(movement_file)
+        # remove environment file if it exists
+        env_file = f"{sim_folder}/environment/{self.step}.json"
+        if os.path.exists(env_file):
+          os.remove(env_file)
+        print(f"(reverie): Error at step {self.step}")
+        self.step -= 1
+        self.curr_time -= datetime.timedelta(seconds=self.sec_per_step)
+        raise Exception(e, self.step, "stepback")
+      else:
+        # If an input command was passed, then execute one command and exit.
+        if input_command:
+          break
 
 
 if __name__ == "__main__":

@@ -31,18 +31,18 @@ def generate_agent_chat_summarize_ideas(init_persona,
     all_embedding_key_str += f"{i}\n"
 
     try:
-        response = run_gpt_prompt_agent_chat_summarize_ideas(
-            init_persona, target_persona, all_embedding_key_str, curr_context
+      response = run_gpt_prompt_agent_chat_summarize_ideas(
+        init_persona, target_persona, all_embedding_key_str, curr_context
+      )
+      if response:
+        summarized_idea = response[0]
+      else:
+        print(
+          "ERROR: <generate_agent_chat_summarize_ideas>: Could not get summarized idea"
         )
-        if response:
-            summarized_idea = response[0]
-        else:
-            print(
-                "ERROR: <generate_agent_chat_summarize_ideas>: Could not get summarized idea"
-            )
-            summarized_idea = ""
-    except:
         summarized_idea = ""
+    except:
+      summarized_idea = ""
     return summarized_idea
 
 
@@ -58,111 +58,111 @@ def generate_summarize_agent_relationship(init_persona,
     all_embedding_key_str += f"{i}\n"
 
     response = run_gpt_prompt_agent_chat_summarize_relationship(
-        init_persona, target_persona, all_embedding_key_str
+      init_persona, target_persona, all_embedding_key_str
     )
     if response:
-        summarized_relationship = response[0]
+      summarized_relationship = response[0]
     else:
-        print("ERROR: Could not get summarized relationship")
-        summarized_relationship = ""
+      print("ERROR: Could not get summarized relationship")
+      summarized_relationship = ""
     return summarized_relationship
 
 
 def generate_agent_chat(
     maze, init_persona, target_persona, curr_context, init_summ_idea, target_summ_idea
 ):
-    response = run_gpt_prompt_agent_chat(
-        maze,
-        init_persona,
-        target_persona,
-        curr_context,
-        init_summ_idea,
-        target_summ_idea,
-    )
-    if response:
-        summarized_idea = response[0]
-    else:
-        print("ERROR: <generate_agent_chat>: Could not get summarized idea")
-        summarized_idea = []
-    for i in summarized_idea:
-        print(i)
-    return summarized_idea
+  response = run_gpt_prompt_agent_chat(
+    maze,
+    init_persona,
+    target_persona,
+    curr_context,
+    init_summ_idea,
+    target_summ_idea,
+  )
+  if response:
+    summarized_idea = response[0]
+  else:
+    print("ERROR: <generate_agent_chat>: Could not get summarized idea")
+    summarized_idea = []
+  for i in summarized_idea:
+    print(i)
+  return summarized_idea
 
 
 def agent_chat_v1(maze, init_persona, target_persona):
-    # Chat version optimized for speed via batch generation
-    curr_context = (
-        f"{init_persona.scratch.name} "
-        + f"was {init_persona.scratch.act_description} "
-        + f"when {init_persona.scratch.name} "
-        + f"saw {target_persona.scratch.name} "
-        + f"in the middle of {target_persona.scratch.act_description}.\n"
-    )
-    curr_context += (
-        f"{init_persona.scratch.name} "
-        + f"is thinking of initating a conversation with "
-        + f"{target_persona.scratch.name}."
-    )
+  # Chat version optimized for speed via batch generation
+  curr_context = (
+    f"{init_persona.scratch.name} "
+    + f"was {init_persona.scratch.act_description} "
+    + f"when {init_persona.scratch.name} "
+    + f"saw {target_persona.scratch.name} "
+    + f"in the middle of {target_persona.scratch.act_description}.\n"
+  )
+  curr_context += (
+    f"{init_persona.scratch.name} "
+    + f"is thinking of initating a conversation with "
+    + f"{target_persona.scratch.name}."
+  )
 
-    summarized_ideas = []
-    part_pairs = [(init_persona, target_persona), (target_persona, init_persona)]
-    for p_1, p_2 in part_pairs:
-        focal_points = [f"{p_2.scratch.name}"]
-        ###JSG: If there are no focal points, we will add a default value to it
-        # if not focal_points:
-        #     for i in range(len(focal_points)):
-        #         focal_points[i] = "play hide-and-seek"
-        retrieved = new_retrieve(p_1, focal_points, 50)
-        relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
-        focal_points = [
-            f"{relationship}",
-            f"{p_2.scratch.name} is {p_2.scratch.act_description}",
-        ]
-        retrieved = new_retrieve(p_1, focal_points, 25)
-        summarized_idea = generate_agent_chat_summarize_ideas(
-            p_1, p_2, retrieved, curr_context
-        )
-        summarized_ideas += [summarized_idea]
-
-    return generate_agent_chat(
-        maze,
-        init_persona,
-        target_persona,
-        curr_context,
-        summarized_ideas[0],
-        summarized_ideas[1],
+  summarized_ideas = []
+  part_pairs = [(init_persona, target_persona), (target_persona, init_persona)]
+  for p_1, p_2 in part_pairs:
+    focal_points = [f"{p_2.scratch.name}"]
+    ###JSG: If there are no focal points, we will add a default value to it
+    # if not focal_points:
+    #     for i in range(len(focal_points)):
+    #         focal_points[i] = "play hide-and-seek"
+    retrieved = new_retrieve(p_1, focal_points, 50)
+    relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
+    focal_points = [
+      f"{relationship}",
+      f"{p_2.scratch.name} is {p_2.scratch.act_description}",
+    ]
+    retrieved = new_retrieve(p_1, focal_points, 25)
+    summarized_idea = generate_agent_chat_summarize_ideas(
+      p_1, p_2, retrieved, curr_context
     )
+    summarized_ideas += [summarized_idea]
+
+  return generate_agent_chat(
+    maze,
+    init_persona,
+    target_persona,
+    curr_context,
+    summarized_ideas[0],
+    summarized_ideas[1],
+  )
 
 
 def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat):
-    # Chat version optimized for speed via batch generation
-    curr_context = (
-        f"{init_persona.scratch.name} "
-        + f"was {init_persona.scratch.act_description} "
-        + f"when {init_persona.scratch.name} "
-        + f"saw {target_persona.scratch.name} "
-        + f"in the middle of {target_persona.scratch.act_description}.\n"
-    )
-    curr_context += (
-        f"{init_persona.scratch.name} "
-        + f"is initiating a conversation with "
-        + f"{target_persona.scratch.name}."
-    )
+  # Chat version optimized for speed via batch generation
+  curr_context = (
+    f"{init_persona.scratch.name} "
+    + f"was {init_persona.scratch.act_description} "
+    + f"when {init_persona.scratch.name} "
+    + f"saw {target_persona.scratch.name} "
+    + f"in the middle of {target_persona.scratch.act_description}.\n"
+  )
+  curr_context += (
+    f"{init_persona.scratch.name} "
+    + f"is initiating a conversation with "
+    + f"{target_persona.scratch.name}."
+  )
 
-    print("July 23 5")
-    x = run_gpt_generate_iterative_chat_utt(
-        maze, init_persona, target_persona, retrieved, curr_context, curr_chat
-    )[0]
+  print("July 23 5")
+  x = run_gpt_generate_iterative_chat_utt(
+    maze, init_persona, target_persona, retrieved, curr_context, curr_chat
+  )[0]
 
-    print("July 23 6")
+  print("July 23 6")
 
-    print("adshfoa;khdf;fajslkfjald;sdfa HERE", x)
+  print("adshfoa;khdf;fajslkfjald;sdfa HERE", x)
 
-    try:
-        return x["utterance"], x["end"]  # type: ignore
-    except:
-        print("ERROR: <generate_one_utterance>: Could not get utterance")
-        return "", True
+  try:
+    return x["utterance"], x["end"]  # type: ignore
+  except:
+    print("ERROR: <generate_one_utterance>: Could not get utterance")
+    return "", True
 
 def agent_chat_v2(maze, init_persona, target_persona): 
   curr_chat = []
@@ -225,16 +225,16 @@ def agent_chat_v2(maze, init_persona, target_persona):
 
 
 def generate_summarize_ideas(persona, nodes, question):
-    statements = ""
-    for n in nodes:
-        statements += f"{n.embedding_key}\n"
-    response = run_gpt_prompt_summarize_ideas(persona, statements, question)
-    if response:
-        summarized_idea = response[0]
-    else:
-        print("ERROR: <generate_summarize_ideas>: Could not get summarized idea")
-        summarized_idea = ""
-    return summarized_idea
+  statements = ""
+  for n in nodes:
+    statements += f"{n.embedding_key}\n"
+  response = run_gpt_prompt_summarize_ideas(persona, statements, question)
+  if response:
+    summarized_idea = response[0]
+  else:
+    print("ERROR: <generate_summarize_ideas>: Could not get summarized idea")
+    summarized_idea = ""
+  return summarized_idea
 
 
 def generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea):
@@ -275,24 +275,24 @@ def generate_poig_score(persona, event_type, description):
   if "is idle" in description: 
     return 1
 
-    if event_type == "event" or event_type == "thought":
-        response = run_gpt_prompt_event_poignancy(persona, description)
-        if response:
-            return response[0]
-        else:
-            print(
-                "ERROR: <generate_poig_score>: Could not get event/thought poignancy score"
-            )
-            return 0
-    elif event_type == "chat":
-        response = run_gpt_prompt_chat_poignancy(
-            persona, persona.scratch.act_description
-        )
-        if response:
-            return response[0]
-        else:
-            print("ERROR: <generate_poig_score>: Could not get chat poignancy score")
-            return 0
+  if event_type == "event" or event_type == "thought":
+    response = run_gpt_prompt_event_poignancy(persona, description)
+    if response:
+      return response[0]
+    else:
+      print(
+        "ERROR: <generate_poig_score>: Could not get event/thought poignancy score"
+      )
+      return 0
+  elif event_type == "chat":
+    response = run_gpt_prompt_chat_poignancy(
+      persona, persona.scratch.act_description
+    )
+    if response:
+      return response[0]
+    else:
+      print("ERROR: <generate_poig_score>: Could not get chat poignancy score")
+      return 0
 
 
 def load_history_via_whisper(personas, whispers):
@@ -355,35 +355,3 @@ def open_convo_session(persona, convo_mode, safe_mode=True, direct=False, questi
     persona.a_mem.add_thought(created, expiration, s, p, o, 
                               thought, keywords, thought_poignancy, 
                               thought_embedding_pair, None)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -169,8 +169,11 @@ def extract_importance(persona, nodes):
                     values are the float that represents the importance score.
   """
   importance_out = dict()
-  for count, node in enumerate(nodes): 
-    importance_out[node.node_id] = node.poignancy
+  for count, node in enumerate(nodes):
+    if type(node.poignancy) == int:
+      importance_out[node.node_id] = node.poignancy
+    else:
+      importance_out[node.node_id] = 4
 
   return importance_out
 
@@ -229,11 +232,13 @@ def new_retrieve(persona, focal_points, n_count=30):
               if "idle" not in i.embedding_key]
     nodes = sorted(nodes, key=lambda x: x[0])
     nodes = [i for created, i in nodes]
+    print("nodes: ", nodes)
 
     # Calculating the component dictionaries and normalizing them.
     recency_out = extract_recency(persona, nodes)
     recency_out = normalize_dict_floats(recency_out, 0, 1)
     importance_out = extract_importance(persona, nodes)
+    print("importance_out: ", importance_out)
     importance_out = normalize_dict_floats(importance_out, 0, 1)  
     relevance_out = extract_relevance(persona, nodes, focal_pt)
     relevance_out = normalize_dict_floats(relevance_out, 0, 1)
@@ -272,15 +277,3 @@ def new_retrieve(persona, focal_points, n_count=30):
     retrieved[focal_pt] = master_nodes
 
   return retrieved
-
-
-
-
-
-
-
-
-
-
-
-

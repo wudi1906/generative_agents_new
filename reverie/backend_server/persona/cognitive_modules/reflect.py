@@ -46,17 +46,17 @@ def generate_insights_and_evidence(persona, nodes, n=5):
 
   ret = run_gpt_prompt_insight_and_guidance(persona, statements, n)[0]
 
-    print(ret)
-    try:
-        if type(ret) == dict:
-            for thought, evi_raw in ret.items():
-                evidence_node_id = [nodes[i].node_id for i in evi_raw]
-                ret[thought] = evidence_node_id
-            return ret
-        else:
-            return {"this is blank": "node_1"}
-    except:
-        return {"this is blank": "node_1"}
+  print(ret)
+  try:
+    if type(ret) == dict:
+      for thought, evi_raw in ret.items():
+        evidence_node_id = [nodes[i].node_id for i in evi_raw]
+        ret[thought] = evidence_node_id
+      return ret
+    else:
+      return {"this is blank": "node_1"}
+  except:
+    return {"this is blank": "node_1"}
 
 
 def generate_action_event_triple(act_desp, persona): 

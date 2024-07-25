@@ -100,14 +100,14 @@ class MemoryTree:
 
     # Check for the presence of necessary components in the arena address
     if not curr_arena or not curr_sector or not curr_world: 
-        return ""
+      return ""
 
     # Attempt to access the arena, handling missing keys and case sensitivity
     try:
-        game_objects = self.tree[curr_world][curr_sector][curr_arena]
+      game_objects = self.tree[curr_world][curr_sector][curr_arena]
     except KeyError:
-        # If the exact key is not found, attempt with a lower case key
-        game_objects = self.tree[curr_world][curr_sector].get(curr_arena.lower(), [])
+      # If the exact key is not found, attempt with a lower case key
+      game_objects = self.tree[curr_world][curr_sector].get(curr_arena.lower(), [])
 
     # Convert the game objects to a string list, if available
     x = ", ".join(list(game_objects))
