@@ -476,24 +476,44 @@ def run_gpt_prompt_action_sector(action_description,
     return prompt_input
 
 
-    
-
-    
-
-
   def __func_clean_up(gpt_response, prompt=""):
+    # Clean the response from any surrounding formatting or unwanted characters
     cleaned_response = gpt_response.split("}")[0]
-    cleaned_response = gpt_response.split("{")[-1]
-    return cleaned_response
+    cleaned_response = cleaned_response.split("{")[-1]
+    cleaned_response = cleaned_response.replace("!","") #I get a lot of '!' in the simulation 
+    cleaned_response = cleaned_response.strip().lower()  # Ensure it is in lower case for matching
+  
+    # should maybe have the locator and the room selector be the same function?
+    def _extract_rooms(prompt):
+      # Define the regex pattern to match the specific line and capture the list of rooms
+      pattern = r'\(MUST pick one of \{([^}]*)\}\):'
+    
+      # Search for the pattern in the provided text
+      match = re.search(pattern, prompt)
+    
+      if match:
+        # Extract the list of rooms and split by comma to create a list
+        rooms = match.group(1).split(', ')
+        return rooms
+      else:
+        return []
+  
+    # Extract rooms from the prompt
+    rooms = _extract_rooms(prompt)
+  
+    # Check each room in its original case to see if its lower case matches the cleaned response
+    for room in rooms:
+      if room.strip().lower() == cleaned_response:
+        return room  # Return the original case of the matched room
+    return None 
+
+  #def __func_clean_up(gpt_response, prompt=""):
+  #  cleaned_response = gpt_response.split("}")[0]
+  #  cleaned_response = gpt_response.split("{")[-1]
+  #  return cleaned_response
 
   def __func_validate(gpt_response, prompt=""): 
-    if len(gpt_response.strip()) < 1: 
-      return False
-    if "}" not in gpt_response:
-      return False
-    if "," in gpt_response: 
-      return False
-    return True
+    return bool(__func_clean_up(gpt_response, prompt))
   
   def get_fail_safe(): 
     fs = ("Dummy string to be swapped out later")
@@ -507,13 +527,15 @@ def run_gpt_prompt_action_sector(action_description,
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+  output = safe_generate_response(prompt, gpt_param, 10, fail_safe,
                                    __func_validate, __func_clean_up)
-  y = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
-  x = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(y).split(",")]
-  if output not in x: 
-    output = persona.scratch.living_area.split(":")[1]
-    print("WARNING: COULD NOT SELECT AREA VIA PROMPT GOING TO: ", output)
+  world_name = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
+  accesible_zones = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(world_name).split(",")]
+
+  if output not in accesible_zones: 
+    new_zone = persona.scratch.living_area.split(":")[1]
+    print(f"ERROR: {output} not in {accesible_zones} defaulting to: {new_zone} ")
+    output = new_zone
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -561,6 +583,7 @@ def run_gpt_prompt_action_arena(action_description,
 
     return prompt_input
 
+
   def __func_clean_up(gpt_response, prompt=""):
     # Clean the response from any surrounding formatting or unwanted characters
     cleaned_response = gpt_response.split("}")[0]
@@ -568,21 +591,24 @@ def run_gpt_prompt_action_arena(action_description,
     cleaned_response = cleaned_response.strip().lower()  # Ensure it is in lower case for matching
   
     def _extract_rooms(prompt):
-      # Define the regex pattern to match the specific line and capture the list of rooms
-      pattern = r'\(MUST pick one of \{([^}]*)\}\):'
-    
-      # Search for the pattern in the provided text
-      match = re.search(pattern, prompt)
-    
-      if match:
-        # Extract the list of rooms and split by comma to create a list
-        rooms = match.group(1).split(', ')
-        return rooms
-      else:
-        return []
+        # Define the regex pattern to match the specific line and capture the list of rooms
+        pattern = r'\(MUST pick one of \{([^}]*)\}\):'
+        
+        # Search for the pattern in the provided text
+        match = re.search(pattern, prompt)
+        
+        if match:
+            # Extract the list of rooms
+            rooms = match.group(1)
+            # Split by comma and strip extra whitespace around room names
+            rooms_list = [room.strip() for room in rooms.split(',')]
+            return rooms_list
+        else:
+            return []
   
     # Extract rooms from the prompt
     rooms = _extract_rooms(prompt)
+    print(rooms)
   
     # Check each room in its original case to see if its lower case matches the cleaned response
     for room in rooms:
@@ -591,14 +617,7 @@ def run_gpt_prompt_action_arena(action_description,
     return "" 
 
   def __func_validate(gpt_response, prompt=""): 
-    if len(gpt_response.strip()) < 1: 
-      return False
-    if "}" not in gpt_response:
-      return False
-    if "," in gpt_response: 
-      return False
-    
-    return True
+    return bool(__func_clean_up(gpt_response, prompt))
   
   def get_fail_safe(): 
     # NOTE this fail safe is not robust
