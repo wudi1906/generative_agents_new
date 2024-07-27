@@ -246,12 +246,13 @@ def generate_prompt(curr_input, prompt_lib_file):
     prompt = prompt.split("<commentblockmarker>###</commentblockmarker>")[1]
   return prompt.strip()
 
-
 # this function is frustratingly similar to CHATGPT_safe_generate_response
 def safe_generate_response(prompt, 
                            gpt_parameter,
                            repeat=5,
                            fail_safe_response="error",
+                           prompt_input=[],
+                           prompt_template="",
                            func_validate=None,
                            func_clean_up=None,
                            verbose=False): 
@@ -260,8 +261,12 @@ def safe_generate_response(prompt,
 
   for i in range(repeat): 
     if verbose: 
+      print("------- BEGIN SAFE GENERATE --------")
       print ("---- repeat count: ", i)
+      for i, prompt_i in enumerate(prompt_input):
+        print("---- prompt_input_{}".format(i), prompt_i)
       print("---- prompt: ", prompt)
+      print("---- prompt_template: ", prompt_template)
       print("---- gpt_parameter: ", gpt_parameter)
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
     if verbose: 
@@ -270,9 +275,9 @@ def safe_generate_response(prompt,
       try:
           print("----  func_clean_up: ", func_clean_up(curr_gpt_response))
       except Exception as e:
-          print("ERROR func_clean_up: ", e)
-      print ("~~~~")
+          print("----  func_clean_up:  ERROR", e)
     if func_validate(curr_gpt_response, prompt=prompt): 
+      print("------- END SAFE GENERATE --------")
       return func_clean_up(curr_gpt_response, prompt=prompt)
   
   if EXCEPT_ON_FAILSAFE:
@@ -280,6 +285,7 @@ def safe_generate_response(prompt,
   else:
     print("ERROR fail to succesfully retrieve response")
     print("ERROR using fail_safe: ", fail_safe_response)
+    print("------- END SAFE GENERATE --------")
     return fail_safe_response
 
 def get_embedding(text, model=openai_config["embeddings"]):
