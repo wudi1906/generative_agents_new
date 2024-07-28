@@ -85,7 +85,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return fs
 
   # in general I need more max_tokens for llama3
-  gpt_param = {"engine": model, "max_tokens": 50, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
              "temperature": 0.8, "top_p": 1, "stream": False,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = prompt_dir / "wake_up_hour.txt"
@@ -153,7 +153,7 @@ def run_gpt_prompt_daily_plan(persona,
 
 
   
-  gpt_param = {"engine": model, "max_tokens": 2200, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "daily_planning.txt"
@@ -249,7 +249,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     fs = "asleep"
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 50, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.5, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = prompt_dir / "generate_hourly_schedule.txt"
@@ -355,12 +355,13 @@ def run_gpt_prompt_task_decomp(persona,
     return decomposed_tasks
 
 
-
   def __func_validate(gpt_response, prompt=""): 
     try: 
       result = __func_clean_up(gpt_response)
       str(result[0][0])
       int(result[0][1])
+      for x in result:
+        assert x[1] > 0
     except: 
       return False
     return True 
@@ -369,7 +370,7 @@ def run_gpt_prompt_task_decomp(persona,
     fs = ["nothing", duration]
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 1000, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
              "temperature": 0.1, "top_p": 1, "stream": False,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "task_decomp.txt"
@@ -380,15 +381,11 @@ def run_gpt_prompt_task_decomp(persona,
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe, prompt_input, prompt_template,
                                    __func_validate, __func_clean_up)
 
+
   fin_output = []
   time_sum = 0
-  print("TASK DECOMP OUTPUT: ", output)
-  print("duration ----: ", duration)
   for i_task, i_duration in output: 
-    print("i_task ----", i_task)
-    print("i_duration ----", i_duration)
     time_sum += i_duration
-    print("time_sum ----", time_sum)
     if time_sum <= duration: 
       fin_output += [[i_task, i_duration]]
     else: 
@@ -397,8 +394,12 @@ def run_gpt_prompt_task_decomp(persona,
   for fi_task, fi_duration in fin_output: 
     ftime_sum += fi_duration
   
-  print("fin_output ----", fin_output)
-  fin_output[-1][1] += (duration - ftime_sum)
+  # rescale times if allocated times don't match duration
+  if ftime_sum != duration:
+    duration_scale_factor = float(duration)/float(ftime_sum)
+    for i in range(len(fin_output)):
+      fin_output[i][1] *= duration_scale_factor
+      
   output = fin_output 
 
 
@@ -519,7 +520,7 @@ def run_gpt_prompt_action_sector(action_description,
     fs = ("Dummy string to be swapped out later")
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "action_location_sector.txt"
@@ -624,7 +625,7 @@ def run_gpt_prompt_action_arena(action_description,
     fs = ("kitchen")
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "action_location_object.txt"
@@ -675,7 +676,7 @@ def run_gpt_prompt_action_game_object(action_description,
     fs = ("bed")
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "action_object.txt"
@@ -744,7 +745,7 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
     return True 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "generate_pronunciatio.txt" ########
@@ -798,7 +799,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
     fs = (persona.name, "is", "idle")
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 1000, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.7, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None} 
   prompt_template = prompt_dir / "generate_event_triple.txt"
@@ -816,6 +817,57 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+def run_gpt_prompt_thought_triple(thought, persona, verbose=False): 
+  def create_prompt_input(thought, persona): 
+    if "(" in thought: 
+      thought = thought.split("(")[-1].split(")")[0]
+    prompt_input = [persona.name, 
+                    thought,
+                    persona.name]
+    return prompt_input
+  
+  def __func_clean_up(gpt_response, prompt=""):
+    cr = gpt_response.strip()
+    start_idx = cr.find("(")
+    end_idx = cr.find(")")
+    if start_idx == -1 or end_idx == -1 or start_idx >= end_idx:
+      return []
+    cr = cr[start_idx+1:end_idx].split("||")
+    cr = [i.strip() for i in cr][1:3]
+    return cr
+
+  def __func_validate(gpt_response, prompt=""): 
+    try: 
+      gpt_response = __func_clean_up(gpt_response, prompt="")
+      if len(gpt_response) != 2: 
+        return False
+      for x in gpt_response:
+        if len(x) < 2:
+          return False
+    except: return False
+    return True 
+
+
+  def get_fail_safe(persona): 
+    fs = (persona.name, "is", "idle")
+    return fs
+
+  gpt_param = {"engine": model, "max_tokens": 3000, 
+               "temperature": 0.7, "top_p": 1, "stream": False,
+               "frequency_penalty": 0, "presence_penalty": 0, "stop": None} 
+  prompt_template = prompt_dir / "generate_thought_triple.txt"
+  prompt_input = create_prompt_input(thought, persona)
+  prompt = generate_prompt(prompt_input, prompt_template)
+  fail_safe = get_fail_safe(persona) ########
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe, prompt_input, prompt_template,
+                                   __func_validate, __func_clean_up)
+  output = (persona.name, output[0], output[1])
+
+  if debug or verbose: 
+    print_run_prompts(prompt_template, persona, gpt_param, 
+                      prompt_input, prompt, output)
+  
+  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
 
@@ -853,7 +905,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
     fs = f"{act_game_object} is idle"
     return fs
 
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "generate_obj_event.txt" ########
@@ -907,10 +959,10 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
 
 
 
-  gpt_param = {"engine": model, "max_tokens": 1000, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.7, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = prompt_dir / "generate_event_triple.txt"
+  prompt_template = prompt_dir / "generate_action_obj_triple.txt"
   prompt_input = create_prompt_input(act_game_object, act_obj_desc)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(act_game_object)
@@ -1052,7 +1104,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
 
   # increased the temperature to prevent the llm getting 
   # 'stuck' trying the wrong answer over and over
-  gpt_param = {"engine": model, "max_tokens": 1000, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.8, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "new_decomp_schedule.txt"
@@ -1181,10 +1233,10 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
 
 
 
-  #gpt_param = {"engine": model, "max_tokens": 20, 
+  #gpt_param = {"engine": model, "max_tokens": 3000, 
   #             "temperature": 0, "top_p": 1, "stream": False,
   #             "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  gpt_param = {"engine": model, "max_tokens": 2000, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
              "temperature": 0.8, "top_p": 1, "stream": False,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "decide_to_talk.txt"
@@ -1291,7 +1343,7 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
     return fs
 
 
-  gpt_param = {"engine": model, "max_tokens": 500, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "decide_to_react.txt"
@@ -1434,7 +1486,7 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
     return convo
 
 
-  gpt_param = {"engine": model, "max_tokens": 1000, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.7, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "create_conversation.txt"
@@ -1499,7 +1551,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 11") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "summarize_conversation.txt" ########
@@ -1545,7 +1597,7 @@ def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbo
   def get_fail_safe(): 
     return []
 
-  gpt_param = {"engine": model, "max_tokens": 50, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "get_keywords.txt"
@@ -1582,7 +1634,7 @@ def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_i
   def get_fail_safe(): 
     return ""
 
-  gpt_param = {"engine": model, "max_tokens": 40, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.7, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "keyword_to_thoughts.txt"
@@ -1637,7 +1689,7 @@ def run_gpt_prompt_convo_to_thoughts(persona,
   def get_fail_safe(): 
     return ""
 
-  gpt_param = {"engine": model, "max_tokens": 40, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.7, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "convo_to_thoughts.txt"
@@ -1721,7 +1773,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
       return False 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 7") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "poignancy_event.txt" ########
@@ -1770,7 +1822,7 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
       return False 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 8") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "poignancy_thought.txt" ########
@@ -1805,6 +1857,8 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
     return 4
 
 
+
+
   # ChatGPT Plugin ===========================================================
   def __func_clean_up(gpt_response, prompt=""): ############
     gpt_response = int(gpt_response)
@@ -1818,7 +1872,7 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
       return False 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 9") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "poignancy_chat.txt" ########
@@ -1870,7 +1924,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
 
 
   #print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12") ########
-  #gpt_param = {"engine": model, "max_tokens": 15, 
+  #gpt_param = {"engine": model, "max_tokens": 3000, 
   #             "temperature": 0.1, "top_p": 1, "stream": False,
   #             "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   #prompt_template = prompt_dir / "generate_focal_pt.txt" ########
@@ -1885,7 +1939,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
   #  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   ## ChatGPT Plugin ===========================================================
 
-  gpt_param = {"engine": model, "max_tokens": 150, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "generate_focal_pt.txt"
@@ -1939,7 +1993,7 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
 
 
 
-  gpt_param = {"engine": model, "max_tokens": 500, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.5, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "insight_and_evidence.txt"
@@ -1995,7 +2049,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
       return False 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 17") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "summarize_chat_ideas.txt" ########
@@ -2038,7 +2092,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
       return False 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 18") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "summarize_chat_relationship.txt" ########
@@ -2093,56 +2147,56 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
                     persona.scratch.name]
     return prompt_input
   
-  # this is not getting used?
-  def __func_clean_up(gpt_response, prompt=""):
-    print (gpt_response)
+  ## this is not getting used?
+  #def __func_clean_up(gpt_response, prompt=""):
+  #  print (gpt_response)
 
-    gpt_response = (prompt + gpt_response).split("Here is their conversation.")[-1].strip()
-    content = re.findall('"([^"]*)"', gpt_response)
+  #  gpt_response = (prompt + gpt_response).split("Here is their conversation.")[-1].strip()
+  #  content = re.findall('"([^"]*)"', gpt_response)
 
-    speaker_order = []
-    for i in gpt_response.split("\n"): 
-      name = i.split(":")[0].strip() 
-      if name: 
-        speaker_order += [name]
+  #  speaker_order = []
+  #  for i in gpt_response.split("\n"): 
+  #    name = i.split(":")[0].strip() 
+  #    if name: 
+  #      speaker_order += [name]
 
-    ret = []
-    for count, speaker in enumerate(speaker_order): 
-      ret += [[speaker, content[count]]]
+  #  ret = []
+  #  for count, speaker in enumerate(speaker_order): 
+  #    ret += [[speaker, content[count]]]
 
-    return ret
+  #  return ret
 
 
-
-  # this is not getting used?
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      return False 
 
   def get_fail_safe(): 
-    return "..."
+    return []
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
-    return gpt_response
+  def __func_clean_up(gpt_response, prompt=""): ############
+    start_index = gpt_response.rfind('{')
+    end_index = gpt_response.rfind('}') + 1
+    curr_gpt_response = gpt_response[start_index:end_index]
+    curr_gpt_response = json.loads(curr_gpt_response)["output"]
+    return curr_gpt_response
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
-    return True
+  def __func_validate(gpt_response, prompt=""): ############
+    try:
+      cleaned = __func_clean_up(gpt_response)
+      for x in cleaned:
+        assert len(x) == 2
+      return True
+    except:
+      return False
 
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "agent_chat.txt" ########
   prompt_input = create_prompt_input(persona, target_persona, curr_context, init_summ_idea, target_summ_idea)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = '[["Jane Doe", "Hi!"], ["John Doe", "Hello there!"] ... ]' ########
-  special_instruction = 'The output should be a list of list where the inner lists are in the form of ["<Name>", "<Utterance>"].' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 20, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = safe_generate_response(prompt, gpt_param, 5, fail_safe, prompt_input, prompt_template,
+                                   __func_validate, __func_clean_up)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
@@ -2177,7 +2231,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
     except:
       return False 
 
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "summarize_ideas.txt" ########
@@ -2214,7 +2268,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
   def get_fail_safe(): 
     return "..."
 
-  gpt_param = {"engine": model, "max_tokens": 250, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "generate_next_convo_line.txt"
@@ -2249,7 +2303,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
   def get_fail_safe(): 
     return "..."
 
-  gpt_param = {"engine": model, "max_tokens": 50, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "whisper_inner_thought.txt"
@@ -2286,7 +2340,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
   def get_fail_safe(): 
     return "..."
 
-  gpt_param = {"engine": model, "max_tokens": 50, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "planning_thought_on_convo.txt"
@@ -2310,57 +2364,29 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
     prompt_input = [all_utt, persona.scratch.name, persona.scratch.name, persona.scratch.name]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split('"')[0].strip()
+  def __func_clean_up(gpt_response, prompt=""): ############
+    start_index = gpt_response.rfind('{')
+    end_index = gpt_response.rfind('}') + 1
+    curr_gpt_response = gpt_response[start_index:end_index]
+    curr_gpt_response = json.loads(curr_gpt_response)["output"]
+    return curr_gpt_response
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
+  def __func_validate(gpt_response, prompt=""): ############
+    try:
+      __func_clean_up(gpt_response)
       return True
     except:
-      return False 
-
-  def get_fail_safe(): 
-    return "..."
-
-
-  # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
-    return gpt_response.strip()
-
-  def __chat_func_validate(gpt_response, prompt=""): ############
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      return False 
+      return False
 
 
   print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 15") ########
-  gpt_param = {"engine": model, "max_tokens": 15, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = prompt_dir / "memo_on_convo.txt" ########
   prompt_input = create_prompt_input(persona, all_utt)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = 'Jane Doe was interesting to talk to.' ########
-  special_instruction = 'The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed' ########
-  fail_safe = get_fail_safe() ########
-  # ChatGPT_safe tends to be unstable, giving it 20 chances before a crash
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 20, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
-  if output != False: 
-    return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # ChatGPT Plugin ===========================================================
-
-  gpt_param = {"engine": model, "max_tokens": 50, 
-               "temperature": 0.1, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = prompt_dir / "memo_on_convo.txt"
-  prompt_input = create_prompt_input(persona, all_utt)
-  prompt = generate_prompt(prompt_input, prompt_template)
-
-  fail_safe = get_fail_safe()
+  fail_safe = "" ########
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe, prompt_input, prompt_template,
                                    __func_validate, __func_clean_up)
 
@@ -2397,7 +2423,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
   prompt_input = create_prompt_input(comment) 
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe() 
-  gpt_param = {"engine": model, "max_tokens": 50, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 0.1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe, prompt_input, prompt_template,
@@ -2503,7 +2529,7 @@ def run_gpt_generate_iterative_chat_utt(maze, init_persona, target_persona, retr
   prompt_input = create_prompt_input(maze, init_persona, target_persona, retrieved, curr_context, curr_chat) 
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe() 
-  gpt_param = {"engine": model, "max_tokens": 2200, 
+  gpt_param = {"engine": model, "max_tokens": 3000, 
                "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   output = safe_generate_response(prompt, gpt_param, 5, fail_safe, prompt_input, prompt_template,

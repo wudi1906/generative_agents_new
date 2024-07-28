@@ -260,6 +260,7 @@ def safe_generate_response(prompt,
     verbose = True
 
   for i in range(repeat): 
+
     if verbose: 
       print("------- BEGIN SAFE GENERATE --------")
       print ("---- repeat count: ", i)
@@ -268,18 +269,39 @@ def safe_generate_response(prompt,
       print("---- prompt: ", prompt)
       print("---- prompt_template: ", prompt_template)
       print("---- gpt_parameter: ", gpt_parameter)
+
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
+
     if verbose: 
       print("---- curr_gpt_response: ", curr_gpt_response)
-      print("---- func_validate: ", func_validate(curr_gpt_response))
-      try:
-          print("----  func_clean_up: ", func_clean_up(curr_gpt_response))
-      except Exception as e:
-          print("----  func_clean_up:  ERROR", e)
-    if func_validate(curr_gpt_response, prompt=prompt): 
+
+    try: 
+      response_cleanup = func_clean_up(curr_gpt_response, prompt=prompt)
+    except Exception as e:
+      if verbose:
+        print("----  func_clean_up:  ERROR", e)
+        print("---- func_validate: ", False)
+        print(f"------- END TRIAL {i} --------")
+      continue
+
+    try: 
+      response_valid = func_validate(curr_gpt_response, prompt=prompt)
+    except Exception as e:
+      if verbose:
+        print("----  func_clean_up: ", response_cleanup)
+        print("---- func_validate: ERROR", e)
+        print(f"------- END TRIAL {i} --------")
+      continue
+
+    if verbose:
+      print("----  func_clean_up: ", response_cleanup)
+      print("---- func_validate: ", response_valid)
+      print(f"------- END TRIAL {i} --------")
+    if response_valid:
       print("------- END SAFE GENERATE --------")
-      return func_clean_up(curr_gpt_response, prompt=prompt)
+      return response_cleanup
   
+  # behaviour if all retries are used up
   if EXCEPT_ON_FAILSAFE:
     raise Exception("Too many retries and failsafes are disabled!")
   else:

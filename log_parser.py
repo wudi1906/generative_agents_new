@@ -104,7 +104,7 @@ def read_large_file(input_file_path, output_directory, verbose=False):
             if "------- BEGIN SAFE GENERATE --------" in line:
                 in_section = True
                 section = line
-            elif "------- END SAFE GENERATE --------" in line and in_section:
+            elif "------- END TRIAL" in line and in_section:
                 section += line
                 result = parse_section(section, verbose)
                 if result:
