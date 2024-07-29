@@ -264,8 +264,8 @@ def safe_generate_response(prompt,
     if verbose: 
       print("------- BEGIN SAFE GENERATE --------")
       print ("---- repeat count: ", i)
-      for i, prompt_i in enumerate(prompt_input):
-        print("---- prompt_input_{}".format(i), prompt_i)
+      for j, prompt_j in enumerate(prompt_input):
+        print("---- prompt_input_{}".format(j), prompt_j)
       print("---- prompt: ", prompt)
       print("---- prompt_template: ", prompt_template)
       print("---- gpt_parameter: ", gpt_parameter)
