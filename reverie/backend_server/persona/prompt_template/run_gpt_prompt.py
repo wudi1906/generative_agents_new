@@ -238,6 +238,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     # in case the stupid AI decides to shove timestamps in remove it
     cr = cr.split("Activity:")[-1]
     cr = cr.split("]")[-1]
+    cr = cr.replace('"','')
     return cr
 
   def __func_validate(gpt_response, prompt=""): 
@@ -609,7 +610,6 @@ def run_gpt_prompt_action_arena(action_description,
   
     # Extract rooms from the prompt
     rooms = _extract_rooms(prompt)
-    print(rooms)
   
     # Check each room in its original case to see if its lower case matches the cleaned response
     for room in rooms:
@@ -1571,8 +1571,6 @@ def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbo
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    print ("???")
-    print (gpt_response)
     gpt_response = gpt_response.strip().split("Emotive keywords:")
     factual = [i.strip() for i in gpt_response[0].split(",")]
     emotive = [i.strip() for i in gpt_response[1].split(",")]
@@ -1584,7 +1582,6 @@ def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbo
         if i[-1] == ".": 
           i = i[:-1]
         ret += [i]
-    print (ret)
     return set(ret)
 
   def __func_validate(gpt_response, prompt=""): 
@@ -1755,7 +1752,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
       return False 
 
   def get_fail_safe(): 
-    return 4
+    return 1 # just going to ignore things that we can't understand
 
 
 
@@ -1763,11 +1760,14 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   def __func_clean_up(gpt_response, prompt=""):
     # Search for the first sequence of digits in the gpt_response
     match = re.search(r'\d+', gpt_response)
-    return int(match.group())
+    result = int(match.group())
+    return result 
 
   def __func_validate(gpt_response, prompt=""): ############
     try: 
-      __func_clean_up(gpt_response, prompt)
+      result = int(__func_clean_up(gpt_response, prompt))
+      if result < 1 or result > 10:
+        return False
       return True
     except:
       return False 
