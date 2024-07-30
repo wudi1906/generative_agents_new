@@ -13,3 +13,8 @@ Variables:
 Write down if there is anything from the conversation that !<INPUT 1>! might have found interesting from !<INPUT 2>!'s perspective, in a full sentence. 
 
 "!<INPUT 3>!
+
+Output the response to the prompt above in json. 'The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed'  
+So for example do not output 5 output {'output': 5}
+Example output json:
+{'output': 'Jane Doe was interesting to talk to.'}

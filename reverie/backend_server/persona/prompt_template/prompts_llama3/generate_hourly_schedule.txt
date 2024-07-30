@@ -15,6 +15,11 @@ Hourly schedule format:
 !<INPUT 1>!
 !<INPUT 3>!!<INPUT 4>!
 !<INPUT 2>!
-YOUR ANSWER SHOULD BE FOR ONLY ONE HOUR. DO NOT WRITE A TIMESTAMP IT WILL BE ADDED AUTOMATICALLY LATER!
-JUST FINISH THE QUESTION, DO NOT WRITE A TIMESTAMP!
+For each response, continue the sentence that describes Latoya Williams' activity without adding any timestamp or identifier. The timestamp and identifier will be added automatically later. 
+
+For example:
+Input: "[Monday February 13 -- 06:00 AM] Activity: PERSON is"
+Output: "completing their morning routine."
+
+Ensure that the response seamlessly continues from the prompt sentence, strictly adhering to the context provided.
 !<INPUT 5>! 
