@@ -98,6 +98,7 @@ def read_large_file(input_file_path, output_directory, verbose=False):
     section = ""
     file_count = 0
     in_section = False
+    count_dict = {}  # Dictionary to store file counts per directory
 
     with open(input_file_path, 'r') as file:
         for line in file:
@@ -108,7 +109,25 @@ def read_large_file(input_file_path, output_directory, verbose=False):
                 section += line
                 result = parse_section(section, verbose)
                 if result:
-                    json_filename = os.path.join(output_directory, f"{file_count + 1}.json")
+                    # Extracting the basename from the 'prompt_template' key
+                    template_path = result.get('prompt_template', 'ERROR')
+                    basename = os.path.basename(template_path)
+                    # Removing file extension
+                    basename = os.path.splitext(basename)[0]
+
+                    # Directory for the basename
+                    output_subdir = os.path.join(output_directory, basename)
+                    os.makedirs(output_subdir, exist_ok=True)
+
+                    # Check if we already have a count for this directory, otherwise count files
+                    if basename not in count_dict:
+                        existing_files = [f for f in os.listdir(output_subdir) if f.endswith('.json')]
+                        count_dict[basename] = len(existing_files) + 1
+                    else:
+                        count_dict[basename] += 1
+
+                    # Writing the result to the JSON file
+                    json_filename = os.path.join(output_subdir, f"{count_dict[basename]}.json")
                     with open(json_filename, 'w') as json_file:
                         json.dump(result, json_file, indent=4)
                     file_count += 1
