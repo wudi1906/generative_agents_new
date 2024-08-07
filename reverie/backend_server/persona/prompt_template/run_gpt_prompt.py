@@ -239,7 +239,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     return True
 
   def get_fail_safe(): 
-    fs = "asleep"
+    fs = "idle"
     return fs
 
   # # ChatGPT Plugin ===========================================================
@@ -488,7 +488,7 @@ def run_gpt_prompt_task_decomp(persona,
     return gpt_response
 
   def get_fail_safe(): 
-    fs = ["asleep"]
+    fs = ["idle"]
     return fs
 
   gpt_param = {"engine": "gpt-4-0125-preview", "max_tokens": 1000, 

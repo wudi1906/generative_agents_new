@@ -264,7 +264,7 @@ def run_gpt_prompt_generate_hourly_schedule(
         return True
 
     def get_fail_safe():
-        fs = "asleep"
+        fs = "idle"
         return fs
 
     gpt_param = {
@@ -429,7 +429,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
         return gpt_response
 
     def get_fail_safe():
-        fs = ["asleep"]
+        fs = ["idle"]
         return fs
 
     gpt_param = {
