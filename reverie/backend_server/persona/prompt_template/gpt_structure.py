@@ -120,7 +120,7 @@ cost_logger = OpenAICostLogger_Singleton(
 def ChatGPT_single_request(prompt): 
   temp_sleep()
 
-  completion = client.chat.completions.create(model= "gpt-3.5-turbo" if use_openai else model, 
+  completion = client.chat.completions.create(model= "gpt-4-turbo" if use_openai else model, 
   messages=[{"role": "user", "content": prompt}])
   return completion.choices[0].message.content
 

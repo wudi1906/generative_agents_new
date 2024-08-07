@@ -68,7 +68,7 @@ OpenAI example:
 ```json
 {
     "client": "openai", 
-    "model": "gpt-3.5-turbo-0125",
+    "model": "gpt-4-turbo",
     "model-key": "<API-KEY>",
     "model-costs": {
         "input":  0.5,
