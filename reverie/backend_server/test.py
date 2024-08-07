@@ -7,11 +7,11 @@ Description: Wrapper functions for calling OpenAI APIs.
 import json
 import random
 from openai import OpenAI
-
+from utils import *
 client = OpenAI(api_key=openai_api_key)
 import time 
 
-from utils import *
+
 
 def ChatGPT_request(prompt): 
   """
