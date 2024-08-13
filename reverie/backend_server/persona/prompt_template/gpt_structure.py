@@ -7,10 +7,8 @@ Description: Wrapper functions for calling OpenAI APIs.
 
 import json
 from pathlib import Path
-# import random
 import time
 from openai import OpenAI
-
 from utils import *
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
@@ -18,10 +16,6 @@ from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Sin
 config_path = Path("../../openai_config.json")
 with open(config_path, "r") as f:
   openai_config = json.load(f) 
-import random
-from typing import Dict, List
-
-import openai
 
 client = OpenAI(api_key=openai_api_key)
 
@@ -117,23 +111,6 @@ cost_logger = OpenAICostLogger_Singleton(
   cost_upperbound = openai_config["cost-upperbound"]
 )
 
-def ChatGPT_single_request(prompt): 
-  temp_sleep()
-
-  completion = client.chat.completions.create(model= "gpt-3.5-turbo" if use_openai else model, 
-  messages=[{"role": "user", "content": prompt}])
-  return completion.choices[0].message.content
-
-  # try:
-  #   response = llm(prompt)
-  # except:
-  #   print("Requested tokens exceed context window")
-  #   ### TODO: Add map-reduce or splitter to handle this error.
-  #   prompt = prompt.split(" ")[-1400:]
-  #   prompt = str(' '.join(prompt))
-  #   response = llm(prompt)
-  # return response
-
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
@@ -143,7 +120,7 @@ def ChatGPT_single_request(prompt):
   temp_sleep()
 
   completion = client.chat.completions.create(
-    model="gpt-4-0125-preview" if use_openai else model,
+    model=openai_config["model"],
     messages=[{"role": "user", "content": prompt}],
   )
 
@@ -170,30 +147,6 @@ def ChatGPT_single_request(prompt):
   #   response = llm(prompt)
   #   response = response.json()
   # return response
-
-
-def ChatGPT_request(prompt, parameters): 
-  """
-  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
-  server and returns the response. 
-  ARGS:
-    prompt: a str prompt
-    gpt_parameter: a python dictionary with the keys indicating the names of  
-                   the parameter and the values indicating the parameter 
-                   values.   
-  RETURNS: 
-    a str of GPT-3's response. 
-  """
-  temp_sleep()
-
-  try: 
-    completion = client.chat.completions.create(model="gpt-4" if use_openai else model, 
-    messages=[{"role": "user", "content": prompt}])
-    return completion.choices[0].message.content
-  
-  except: 
-    print ("ChatGPT ERROR")
-    return "ChatGPT ERROR"
 
 
 def ChatGPT_request(prompt): 
@@ -443,6 +396,8 @@ def safe_generate_response(prompt,
       try:
         if func_validate(curr_gpt_response, prompt=prompt):
           return func_clean_up(curr_gpt_response, prompt=prompt)
+        else:
+          print("Response validation failed.")
       except:
         print("Could not process response.")
       if verbose:
