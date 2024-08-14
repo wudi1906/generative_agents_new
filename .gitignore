@@ -1,6 +1,7 @@
 # OpenAI API key
 openai_config.json
-./reverie/backend_server/utils.py
+reverie/backend_server/utils.py
+environment/frontend_server/temp_storage/curr_sim_code.json
 
 environment/frontend_server/storage/*
 environment/frontend_server/temp_storage*/*
@@ -10,21 +11,22 @@ reverie/backend_server/cost-logs/*
 
 # Logs folder
 logs/*
+!logs/skip-morning_2024-05-15_13-54-44.txt
 
+### Add simulations to keep here ###
 !environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/*
 !environment/frontend_server/storage/base_the_ville_n25/*
 !environment/frontend_server/storage/July1_the_ville_isabella_maria_klaus-step-3-*/*
+!environment/frontend_server/storage/skip-morning-s-14/
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters
 !environment/frontend_server/storage/base_the_ville_smol_elections_5_voters_swapped_personalities
-!environment/frontend_server/storage/test-22/
-!environment/frontend_server/storage/test-23/
+!environment/frontend_server/storage/base_search_and_rescue/
+####################################
+
+# Ignore all environment and movement files except the starting environment file
 environment/frontend_server/storage/*/environment/*
 !environment/frontend_server/storage/*/environment/0.json
-environment/frontend_server/storage/*/movement/*
-
-# Keep the skip-morning-s simulation
-!environment/frontend_server/storage/skip-morning-s-14
-!logs/skip-morning_2024-05-15_13-54-44.txt
+environment/frontend_server/storage/*/movement/
 
 bin/
 include/

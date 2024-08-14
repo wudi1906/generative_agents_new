@@ -77,11 +77,6 @@ class ReverieServer:
     sim_folder = f"{fs_storage}/{self.sim_code}"
     copyanything(fork_folder, sim_folder)
 
-    # Overwrite stdout and stderr (!!!)
-    logfile_path = f"{sim_folder}/{logfile_name}"
-    sys.stdout = Logger(logfile_path, sys.stdout)
-    sys.stderr = Logger(logfile_path, sys.stderr)
-
     with open(f"{sim_folder}/reverie/meta.json") as json_file:  
       reverie_meta = json.load(json_file)
 
@@ -754,10 +749,4 @@ if __name__ == "__main__":
   target = input(target_prompt).strip()
 
   rs = ReverieServer(origin, target)
-
-  # Allow the server to create this folder above before writing to the logfile
-  sim_folder = f"{fs_storage}/{target}"
-  with open(f"{sim_folder}/{logfile_name}", "a") as outfile:
-    outfile.write(f"{origin_prompt}{origin}\n{target_prompt}{target}\n")
-
   rs.open_server()
