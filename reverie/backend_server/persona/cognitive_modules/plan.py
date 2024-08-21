@@ -140,13 +140,13 @@ def generate_hourly_schedule(persona, wake_up_hour):
   # ['taking a break', 2], ['working on her painting', 2],
   # ['relaxing and watching TV', 1], ['going to bed', 1], ['sleeping', 2]]
   _n_m1_hourly_compressed = []
-  prev = None
+  prev_task = None
   prev_count = 0
-  for i in n_m1_activity:
-    if i != prev:
+  for task in n_m1_activity:
+    if task != prev_task:
       prev_count = 1
-      _n_m1_hourly_compressed += [[i, prev_count]]
-      prev = i
+      _n_m1_hourly_compressed += [[task, prev_count]]
+      prev_task = task
     else:
       if _n_m1_hourly_compressed:
         _n_m1_hourly_compressed[-1][1] += 1
@@ -248,6 +248,8 @@ def generate_action_game_object(act_desp, act_address, persona, maze):
   if debug:
     print("GNS FUNCTION: <generate_action_game_object>")
   if not persona.s_mem.get_str_accessible_arena_game_objects(act_address):
+    print("ERROR: act_address not valid. Returning '<random>' as game object.")
+    print("act_address:", act_address)
     return "<random>"
   return run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)[0]
 
