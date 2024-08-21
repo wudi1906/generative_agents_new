@@ -11,8 +11,9 @@ Variables:
 !<INPUT 7>! -- Persona first names
 
 <commentblockmarker>###</commentblockmarker>
-Describe subtasks in 5 min increments. 
----
+Describe subtasks in 5 min increments.
+
+--- Example ---
 Name: Kelly Bronson
 Age: 35
 Backstory: Kelly always wanted to be a teacher, and now she teaches kindergarten. During the week, she dedicates herself to her students, but on the weekends, she likes to try out new restaurants and hang out with friends. She is very warm and friendly, and loves caring for others.
