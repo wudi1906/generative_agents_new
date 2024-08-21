@@ -352,6 +352,55 @@ def GPT_request(prompt, gpt_parameter):
     return "REQUEST ERROR"
 
 
+def structured_GPT_request(prompt, gpt_parameter, response_format):
+  """
+  Given a prompt, a dictionary of GPT parameters, and a response format, make a request to OpenAI
+  server and returns the response.
+  ARGS:
+    prompt: a str prompt
+    gpt_parameter: a python dictionary with the keys indicating the names of
+                   the parameter and the values indicating the parameter
+                   values.
+    response_format: a Pydantic model that defines the desired response format.
+  RETURNS:
+    a str of GPT-3's response.
+  """
+  temp_sleep()
+
+  try:
+    if use_openai:
+      messages = [{
+        "role": "system", "content": prompt
+      }]
+      response = client.beta.chat.completions.parse(
+        model=gpt_parameter["engine"],
+        messages=messages,
+        response_format=response_format,
+        temperature=gpt_parameter["temperature"],
+        max_tokens=gpt_parameter["max_tokens"],
+        top_p=gpt_parameter["top_p"],
+        frequency_penalty=gpt_parameter["frequency_penalty"],
+        presence_penalty=gpt_parameter["presence_penalty"],
+        # stream=gpt_parameter["stream"],
+        stop=gpt_parameter["stop"],
+      )
+    else:
+      response = client.completions.create(model=model, prompt=prompt)
+
+    print("Response: ", response)
+    message = response.choices[0].message
+
+    if message.parsed:
+      return message.parsed
+    if message.refusal:
+      raise ValueError("Request refused: " + message.refusal)
+    raise ValueError("No parsed content or refusal found.")
+  except Exception as e:
+    print("REQUEST ERROR")
+    print(e)
+    return "REQUEST ERROR"
+
+
 def generate_prompt(curr_input, prompt_lib_file): 
   """
   Takes in the current input (e.g. comment that you want to classifiy) and 
@@ -398,6 +447,40 @@ def safe_generate_response(prompt,
           return func_clean_up(curr_gpt_response, prompt=prompt)
         else:
           print("Response validation failed.")
+      except:
+        print("Could not process response.")
+      if verbose:
+        print("---- repeat count: ", i, curr_gpt_response)
+        print(curr_gpt_response)
+        print("~~~~")
+
+  print("FAIL SAFE TRIGGERED")
+  return fail_safe_response
+
+
+def generate_structured_response(
+  prompt,
+  gpt_parameter,
+  response_format,
+  repeat=5,
+  fail_safe_response="error",
+  func_validate=None,
+  func_clean_up=None,
+  verbose=False
+):
+  if verbose:
+    print(prompt)
+
+  if func_validate and func_clean_up:
+    for i in range(repeat):
+      curr_gpt_response = structured_GPT_request(prompt, gpt_parameter, response_format)
+      try:
+        if not isinstance(curr_gpt_response, str) and func_validate(
+          curr_gpt_response,
+          prompt=prompt
+        ):
+          return func_clean_up(curr_gpt_response, prompt=prompt)
+        print("Response validation failed.")
       except:
         print("Could not process response.")
       if verbose:
