@@ -118,18 +118,29 @@ def generate_hourly_schedule(persona, wake_up_hour):
     "10:00 PM",
     "11:00 PM",
   ]
+
+  # Flag to indicate whether we are generating the hourly schedule all in one
+  # shot, or grabbing one activity at a time.
+  all_in_one = True
+
   n_m1_activity = []
   diversity_repeat_count = 3
-  for i in range(diversity_repeat_count):
+
+  for task in range(diversity_repeat_count):
     n_m1_activity_set = set(n_m1_activity)
+
     if len(n_m1_activity_set) < 5:
       n_m1_activity = []
-      for count, curr_hour_str in enumerate(hour_str):
-        n_m1_activity += [
-          run_gpt_prompt_generate_hourly_schedule(
-            persona, curr_hour_str, n_m1_activity, hour_str
-          )[0]
-        ]
+
+      if not all_in_one:
+        for count, curr_hour_str in enumerate(hour_str):
+          n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
+            persona, curr_hour_str, n_m1_activity, hour_str, all_in_one=False
+          )[0]]
+      else:
+        n_m1_activity = run_gpt_prompt_generate_hourly_schedule(
+          persona, hour_str, n_m1_activity, hour_str, all_in_one=True
+        )[0]
 
   # Step 1. Compressing the hourly schedule to the following format:
   # The integer indicates the number of hours. They should add up to 24.

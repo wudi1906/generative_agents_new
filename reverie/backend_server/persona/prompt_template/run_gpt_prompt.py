@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import random
 import string
+from pydantic import BaseModel
 
 sys.path.append('../../')
 
@@ -48,6 +49,9 @@ def get_random_alphanumeric(i=6, j=6):
 # CHAPTER 1: Run GPT Prompt
 ##############################################################################
 
+class WakeUpHour(BaseModel):
+  wake_up_hour: int
+
 def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False): 
   """
   Given the persona, returns an integer that indicates the hour when the 
@@ -66,11 +70,9 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    if USE_REGEX:
-      return re.search(r'^\d{1,2}(?::\d{2})?[aA][mM]', gpt_response.strip()).group()[0]
-    else:
-      cr = int(gpt_response.strip().lower().split("am")[0])
-      return cr
+    if isinstance(gpt_response.wake_up_hour, int):
+      return gpt_response.wake_up_hour
+    raise TypeError("wake_up_hour of type int not found")
   
   def __func_validate(gpt_response, prompt=""): 
     try: __func_clean_up(gpt_response, prompt="")
@@ -81,7 +83,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     fs = 8
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 5, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
              "temperature": 0.8, "top_p": 1, "stream": False,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = "persona/prompt_template/v2/wake_up_hour_v1.txt"
@@ -89,8 +91,15 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    WakeUpHour,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -98,6 +107,9 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
+
+class DailyPlan(BaseModel):
+  daily_plan: list[str]
 
 def run_gpt_prompt_daily_plan(persona, 
                               wake_up_hour, 
@@ -124,20 +136,9 @@ def run_gpt_prompt_daily_plan(persona,
     prompt_input += [persona.scratch.get_str_firstname()]
     prompt_input += [f"{str(wake_up_hour)}:00 am"]
     return prompt_input
-### Need to fix daily plan generation
-  def __func_clean_up(gpt_response, prompt=""):
-    if USE_REGEX:
-      return re.findall(r'\d+\)\s+(.*?)(?=, \d+\)|\.|$)', ' '.join(gpt_response.split("\n")))
-    else:
-      cr = []
-      _cr = re.split(r'\d\)', gpt_response)
-      for i in _cr: 
-        if i[-1].isdigit(): 
-          i = i[:-1].strip()
-          if i[-1] == "." or i[-1] == ",": 
-            cr += [i[:-1].strip()]
-      return cr
 
+  def __func_clean_up(gpt_response, prompt=""):
+    return gpt_response.daily_plan
 
   def __func_validate(gpt_response, prompt=""):
     try: __func_clean_up(gpt_response, prompt="")
@@ -155,9 +156,7 @@ def run_gpt_prompt_daily_plan(persona,
           'go to bed at 11:00 pm'] 
     return fs
 
-
-  
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 500, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 2000, 
                "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/daily_planning_v6.txt"
@@ -165,10 +164,15 @@ def run_gpt_prompt_daily_plan(persona,
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
-  output = ([f"wake up and complete the morning routine at {wake_up_hour}:00 am"]
-              + output)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    DailyPlan,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -177,44 +181,70 @@ def run_gpt_prompt_daily_plan(persona,
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_generate_hourly_schedule(persona, 
-                                            curr_hour_str,
-                                            p_f_ds_hourly_org, 
-                                            hour_str,
-                                            intermission2=None,
-                                            test_input=None, 
-                                            verbose=False): 
-  def create_prompt_input(persona, 
-                          curr_hour_str, 
-                          p_f_ds_hourly_org,
-                          hour_str,
-                          intermission2=None,
-                          test_input=None): 
-    if test_input: return test_input
-    schedule_format = ""
-    for i in hour_str: 
-      schedule_format += f"[{persona.scratch.get_str_curr_date_str()} -- {i}]"
-      schedule_format += f" Activity: [Fill in]\n"
-    schedule_format = schedule_format[:-1]
+class Activity(BaseModel):
+  date_and_time: str
+  activity: str
 
-    intermission_str = f"Here is the originally intended hourly breakdown of"
+class HourlySchedule(BaseModel):
+  hourly_schedule: list[Activity]
+
+def run_gpt_prompt_generate_hourly_schedule(
+  persona,
+  curr_hour_str,
+  p_f_ds_hourly_org,
+  hour_str,
+  intermission2=None,
+  test_input=None,
+  verbose=False,
+  all_in_one=False,
+):
+  def create_prompt_input(
+    persona,
+    curr_hour_str,
+    p_f_ds_hourly_org,
+    hour_str,
+    intermission2=None,
+    test_input=None
+  ):
+    if test_input:
+      return test_input
+
+    schedule_format = '{"hourly_schedule": ['
+    for i in range(4):
+      hour = hour_str[i]
+      schedule_format += f"{{\"date_and_time\":\"{persona.scratch.get_str_curr_date_str()} -- {hour}\","
+      schedule_format += '"activity":"[Fill in]"},'
+    schedule_format += " ... , "
+    schedule_format += f"{{\"date_and_time\":\"{persona.scratch.get_str_curr_date_str()} -- 11:00 PM}}\","
+    schedule_format += '"activity":"[Fill in]"}]}'
+
+    if not all_in_one:
+      intermission_str = "Complete the given hourly schedule for the following person, filling out the whole rest of their day."
+    else:
+      intermission_str = "Create an hourly schedule for the following person to fill out their whole day."
+    intermission_str += "\nHere is the originally intended hourly breakdown of"
     intermission_str += f" {persona.scratch.get_str_firstname()}'s schedule today: "
     for count, task in enumerate(persona.scratch.daily_req): 
       intermission_str += f"{str(count+1)}) {task}, "
     intermission_str = intermission_str[:-2]
 
     prior_schedule = ""
-    if p_f_ds_hourly_org: 
-      prior_schedule = "\n"
-      for count, i in enumerate(p_f_ds_hourly_org): 
+    if p_f_ds_hourly_org and not all_in_one:
+      prior_schedule = "\nExisting schedule:\n"
+      for count, task in enumerate(p_f_ds_hourly_org): 
         prior_schedule += f"[{persona.scratch.get_str_curr_date_str()} --"
         prior_schedule += f" {hour_str[count]}] Activity:"
         prior_schedule += f" {persona.scratch.get_str_firstname()}"
-        prior_schedule += f" is {i}\n"
+        prior_schedule += f" is {task}\n"
+    # prior_schedule = ""
 
-    prompt_ending = f"[{persona.scratch.get_str_curr_date_str()}"
-    prompt_ending += f" -- {curr_hour_str}] Activity:"
-    prompt_ending += f" {persona.scratch.get_str_firstname()}"
+    # prompt_ending = f"[{persona.scratch.get_str_curr_date_str()}"
+    # prompt_ending += f" -- {curr_hour_str}] Activity:"
+    # prompt_ending += f" {persona.scratch.get_str_firstname()}"
+    if not all_in_one:
+      prompt_ending = "Completed hourly schedule (start from the hour after the existing schedule ends, and use present progressive tense, e.g. 'waking up and completing the morning routine'):"
+    else:
+      prompt_ending = "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
 
     if intermission2: 
       intermission2 = f"\n{intermission2}"
@@ -224,8 +254,10 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
 
     prompt_input += [persona.scratch.get_str_iss()]
 
-    prompt_input += [prior_schedule + "\n"]
     prompt_input += [intermission_str]
+
+    prompt_input += [prior_schedule + "\n"]
+
     if intermission2: 
       prompt_input += [intermission2]
     else: 
@@ -236,16 +268,18 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = gpt_response.strip()
-    if gpt_response[0] == "[":
-      index = gpt_response.find("]")
-      gpt_response = gpt_response[index + 1:].strip()
-    gpt_response = gpt_response.removeprefix("Activity: ")
-    gpt_response = gpt_response.removeprefix(persona.scratch.get_str_firstname())
-    activity = ''.join(gpt_response.split("[")[0]).strip()
-    if activity[:3] == "is ":
-      activity = activity[3:]
-    return activity
+    if not all_in_one:
+      activity = gpt_response.hourly_schedule[0].activity
+      activity = activity.removeprefix(persona.scratch.get_str_firstname()).strip()
+      activity = activity.removeprefix("is ")
+      return activity
+    else:
+      activities = []
+      for item in gpt_response.hourly_schedule:
+        activity = item.activity.removeprefix(persona.scratch.get_str_firstname()).strip()
+        activity = activity.removeprefix("is ")
+        activities += [activity]
+      return activities
 
   def __func_validate(gpt_response, prompt=""):
     try:
@@ -259,41 +293,7 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
     fs = "idle"
     return fs
 
-  # # ChatGPT Plugin ===========================================================
-  # def __chat_func_clean_up(gpt_response, prompt=""): ############
-  #   cr = gpt_response.strip()
-  #   if cr[-1] == ".":
-  #     cr = cr[:-1]
-  #   return cr
-
-  # def __chat_func_validate(gpt_response, prompt=""): ############
-  #   try: __func_clean_up(gpt_response, prompt="")
-  #   except: return False
-  #   return True
-
-  # print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 10") ########
-  # gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
-  #              "temperature": 0, "top_p": 1, "stream": False,
-  #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  # prompt_template = "persona/prompt_template/v3_ChatGPT/generate_hourly_schedule_v2.txt" ########
-  # prompt_input = create_prompt_input(persona, 
-  #                                    curr_hour_str, 
-  #                                    p_f_ds_hourly_org,
-  #                                    hour_str, 
-  #                                    intermission2,
-  #                                    test_input)  ########
-  # prompt = generate_prompt(prompt_input, prompt_template)
-  # example_output = "studying for her music classes" ########
-  # special_instruction = "The output should ONLY include the part of the sentence that completes the last line in the schedule above." ########
-  # fail_safe = get_fail_safe() ########
-  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-  #                                         __chat_func_validate, __chat_func_clean_up, True)
-  # if output != False: 
-  #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # # ChatGPT Plugin ===========================================================
-
-
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 50, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 5000, 
                "temperature": 0.5, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = "persona/prompt_template/v2/generate_hourly_schedule_v2.txt"
@@ -306,8 +306,15 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
   
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    HourlySchedule,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
