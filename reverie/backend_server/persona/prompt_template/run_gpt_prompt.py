@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import random
 import string
+from typing import Tuple
 from pydantic import BaseModel
 
 sys.path.append('../../')
@@ -902,10 +903,6 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
 
-
-
-
-
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
   #              "temperature": 0, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
@@ -925,6 +922,11 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class EventTriple(BaseModel):
+  subject: str
+  predicate: str
+  object: str
+
 def run_gpt_prompt_event_triple(action_description, persona, verbose=False): 
   def create_prompt_input(action_description, persona): 
     if "(" in action_description: 
@@ -934,8 +936,8 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
                     persona.name]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.split(")")[0].strip("(").split(',')
+  def __func_clean_up(gpt_response: EventTriple, prompt=""):
+    cr = [gpt_response.predicate, gpt_response.object]
     return [x.strip() for x in cr]
 
   def __func_validate(gpt_response, prompt=""): 
@@ -947,7 +949,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
     return True 
 
   def get_fail_safe(persona): 
-    fs = (persona.name, "is", "idle")
+    fs = ["is", "idle"]
     return fs
 
   # ChatGPT Plugin ===========================================================
@@ -987,8 +989,15 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   prompt_input = create_prompt_input(action_description, persona)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(persona) ########
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    EventTriple,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   output = (persona.name, output[0], output[1])
 
   if debug or verbose: 
@@ -1007,15 +1016,15 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
                     act_game_object]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    return ''.join(gpt_response.split("\n")[0].split(".")[0]).strip()
+  # def __func_clean_up(gpt_response, prompt=""):
+  #   return ''.join(gpt_response.split("\n")[0].split(".")[0]).strip()
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      gpt_response = __func_clean_up(gpt_response, prompt="")
-    except: 
-      return False
-    return True 
+  # def __func_validate(gpt_response, prompt=""): 
+  #   try: 
+  #     gpt_response = __func_clean_up(gpt_response, prompt="")
+  #   except: 
+  #     return False
+  #   return True 
 
   def get_fail_safe(act_game_object): 
     fs = f"{act_game_object} is idle"
@@ -1029,7 +1038,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
-      gpt_response = __func_clean_up(gpt_response, prompt="")
+      gpt_response = __chat_func_clean_up(gpt_response, prompt="")
     except: 
       return False
     return True 
@@ -1069,13 +1078,6 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-
-
-
-
-
-
-
 def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_obj_desc): 
     prompt_input = [act_game_object, 
@@ -1083,8 +1085,8 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
                     act_game_object]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.split(")")[0].split(',')
+  def __func_clean_up(gpt_response: EventTriple, prompt=""):
+    cr = [gpt_response.predicate, gpt_response.object]
     return [x.strip() for x in cr]
 
   def __func_validate(gpt_response, prompt=""): 
@@ -1096,7 +1098,7 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
     return True 
 
   def get_fail_safe(act_game_object): 
-    fs = (act_game_object, "is", "idle")
+    fs = ["is", "idle"]
     return fs
 
   gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
@@ -1106,8 +1108,15 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
   prompt_input = create_prompt_input(act_game_object, act_obj_desc)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(act_game_object)
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    EventTriple,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   output = (act_game_object, output[0], output[1])
 
   if debug or verbose: 
@@ -1115,9 +1124,6 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
                       prompt_input, prompt, output)
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-
 
 
 def run_gpt_prompt_new_decomp_schedule(persona, 
