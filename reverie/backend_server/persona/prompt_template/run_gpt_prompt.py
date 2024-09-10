@@ -1100,6 +1100,15 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class NewActivity(BaseModel):
+  start_time: str
+  end_time: str
+  main_task: str
+  subtask: str
+
+class NewSchedule(BaseModel):
+  schedule: list[NewActivity]
+
 def run_gpt_prompt_new_decomp_schedule(persona, 
                                        main_act_dur, 
                                        truncated_act_dur, 
@@ -1152,25 +1161,20 @@ def run_gpt_prompt_new_decomp_schedule(persona,
                     new_plan_init]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    new_schedule = prompt + " " + gpt_response.strip()
-    new_schedule = new_schedule.split("The revised schedule:")[-1].strip()
-    new_schedule = new_schedule.split("\n")
+  def __func_clean_up(gpt_response: NewSchedule, prompt=""):
+    new_schedule = []
 
-    ret_temp = []
-    for i in new_schedule: 
-      ret_temp += [i.split(" -- ")]
-
-    ret = []
-    for time_str, action in ret_temp:
-      start_time = time_str.split(" ~ ")[0].strip()
-      end_time = time_str.split(" ~ ")[1].strip()
+    for activity in gpt_response.schedule:
+      start_time = activity.start_time
+      end_time = activity.end_time
       delta = datetime.datetime.strptime(end_time, "%H:%M") - datetime.datetime.strptime(start_time, "%H:%M")
-      delta_min = int(delta.total_seconds()/60)
-      if delta_min < 0: delta_min = 0
-      ret += [[action, delta_min]]
+      delta_min = int(delta.total_seconds() / 60)
+      if delta_min < 0:
+        delta_min = 0
+      action = activity.main_task + f" ({activity.subtask})"
+      new_schedule += [[action, delta_min]]
 
-    return ret
+    return new_schedule
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1236,7 +1240,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
   output = generate_structured_response(
     prompt,
     gpt_param,
-    ,
+    NewSchedule,
     5,
     fail_safe,
     __func_validate,
@@ -1253,7 +1257,6 @@ def run_gpt_prompt_new_decomp_schedule(persona,
                       prompt_input, prompt, output)
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
 
 
 def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=None, 
