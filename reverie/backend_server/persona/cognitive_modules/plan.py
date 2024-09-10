@@ -659,7 +659,7 @@ def _determine_action(persona, maze):
   # Generate an <Action> instance from the action description and duration. By
   # this point, we assume that all the relevant actions are decomposed and 
   # ready in f_daily_schedule. 
-  print ("DEBUG LJSDLFSKJF")
+  print ("DEBUG here")
   for i in persona.scratch.f_daily_schedule: print (i)
   print (curr_index)
   print (len(persona.scratch.f_daily_schedule))
