@@ -78,7 +78,9 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
   
   def __func_validate(gpt_response, prompt=""): 
     try: __func_clean_up(gpt_response, prompt="")
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True
 
   def get_fail_safe(): 
@@ -144,7 +146,8 @@ def run_gpt_prompt_daily_plan(persona,
 
   def __func_validate(gpt_response, prompt=""):
     try: __func_clean_up(gpt_response, prompt="")
-    except: 
+    except:
+      traceback.print_exc()
       return False
     return True
 
@@ -849,7 +852,9 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
       __chat_func_clean_up(gpt_response, prompt="")
       if len(gpt_response) == 0: 
         return False
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True 
 
   print ("DEBUG 4") ########
@@ -921,7 +926,9 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
       gpt_response = __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) != 2: 
         return False
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True 
 
   def get_fail_safe(persona): 
@@ -1015,7 +1022,8 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
       gpt_response = __chat_func_clean_up(gpt_response, prompt="")
-    except: 
+    except:
+      traceback.print_exc()
       return False
     return True 
 
@@ -1068,7 +1076,9 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
       gpt_response = __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) != 2: 
         return False
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True 
 
   def get_fail_safe(act_game_object): 
@@ -1193,7 +1203,8 @@ def run_gpt_prompt_new_decomp_schedule(persona,
       if int(dur_sum) != int(delta_min): 
         return False
 
-    except: 
+    except:
+      traceback.print_exc()
       return False
     return True 
 
@@ -1223,7 +1234,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
 
     return ret
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 1000, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 10000, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/new_decomp_schedule_v1.txt"
@@ -1327,6 +1338,7 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
         return True
       return False     
     except:
+      traceback.print_exc()
       return False 
 
   def __func_clean_up(gpt_response, prompt=""):
@@ -1426,6 +1438,7 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
         return True
       return False     
     except:
+      traceback.print_exc()
       return False 
 
   def __func_clean_up(gpt_response, prompt=""):
@@ -1570,6 +1583,7 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(init_persona, target_persona): 
@@ -1623,6 +1637,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1639,6 +1654,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
 
@@ -1708,6 +1724,7 @@ def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbo
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1753,6 +1770,7 @@ def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_i
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1808,6 +1826,7 @@ def run_gpt_prompt_convo_to_thoughts(persona,
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1876,6 +1895,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1893,6 +1913,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   print ("DEBUG 7") ########
@@ -1949,6 +1970,7 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1964,6 +1986,7 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   print ("DEBUG 8") ########
@@ -2020,6 +2043,7 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2036,6 +2060,7 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   print ("DEBUG 9") ########
@@ -2095,6 +2120,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(n): 
@@ -2111,6 +2137,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
 
@@ -2178,6 +2205,7 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(n): 
@@ -2224,6 +2252,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2239,6 +2268,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   print ("DEBUG 17") ########
@@ -2292,6 +2322,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2307,6 +2338,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   print ("DEBUG 18") ########
@@ -2325,7 +2357,6 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
 
-
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 150, 
   #              "temperature": 0.5, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2342,9 +2373,6 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
   #                     prompt_input, prompt, output)
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-
 
 
 def run_gpt_prompt_agent_chat(maze, persona, target_persona,
@@ -2408,26 +2436,22 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
 
     return ret
 
-
-
   def __func_validate(gpt_response, prompt=""): 
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
     return "..."
 
-
-
-
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
     # ret = ast.literal_eval(gpt_response)
 
-    print ("a;dnfdap98fh4p9enf HEREE!!!")
+    print ("DEBUG HERE (run_gpt_prompt_agent_chat)")
     for row in gpt_response: 
       print (row)
 
@@ -2436,8 +2460,6 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   def __chat_func_validate(gpt_response, prompt=""): ############
     return True
 
-
-  # print ("HERE JULY 23 -- ----- ") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2449,15 +2471,10 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   fail_safe = get_fail_safe() ########
   output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
-  # print ("HERE END JULY 23 -- ----- ") ########
+
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
-
-
-
-
-
 
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 2000, 
   #              "temperature": 0.7, "top_p": 1, "stream": False,
@@ -2476,16 +2493,10 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
 # =======================
 # =======================
 # =======================
 # =======================
-
-
-
-
-
 
 
 def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=None, verbose=False): 
@@ -2501,6 +2512,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2516,6 +2528,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   print ("DEBUG 16") ########
@@ -2574,6 +2587,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2645,6 +2659,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2682,6 +2697,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2719,6 +2735,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2734,6 +2751,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
 
@@ -2791,6 +2809,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
           return False
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe():
@@ -2831,6 +2850,7 @@ def extract_first_json_dict(data_str):
         json_dict = json.loads(json_str)
         return json_dict
     except json.JSONDecodeError:
+        traceback.print_exc()
         # If parsing fails, return None
         return None
 
@@ -2939,6 +2959,7 @@ def run_gpt_generate_iterative_chat_utt(
 
             return True
         except:
+            traceback.print_exc()
             return False
 
     def get_fail_safe():
@@ -3030,6 +3051,7 @@ def run_plugin(
             print(extract_first_json_dict(gpt_response))
             return True
         except:
+            traceback.print_exc()
             return False
 
     def get_fail_safe():
