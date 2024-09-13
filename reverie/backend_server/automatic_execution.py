@@ -44,7 +44,7 @@ def parse_args() -> Tuple[str, str, int]:
         '--steps',
         type=str,
         default="8640", # 24 hours
-        help='Total steps to run'
+        help='Step to end after'
     )
     parser.add_argument(
         '--ui',
