@@ -34,7 +34,11 @@ def main():
     print(file_chunks[0])
 
     response = client.chat.completions.create(
+<<<<<<< HEAD
         model="gpt-4o-mini",
+=======
+        model="gpt-4-mini",
+>>>>>>> fd498e0b (adjusting for gpt-4-mini and setup)
         messages=[
             {
                 "role": "system",
