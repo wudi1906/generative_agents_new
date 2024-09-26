@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import time
 from openai import OpenAI
+import traceback
 from utils import *
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
@@ -119,12 +120,17 @@ def temp_sleep(seconds=0.1):
 def ChatGPT_single_request(prompt):
   temp_sleep()
 
+  print("--- ChatGPT_single_request() ---")
+  print("Prompt:", prompt)
+
   completion = client.chat.completions.create(
     model=openai_config["model"],
     messages=[{"role": "user", "content": prompt}],
   )
 
   content = completion.choices[0].message.content
+  print("Response content:", content)
+
   if content:
     return content
   else:
@@ -149,7 +155,7 @@ def ChatGPT_single_request(prompt):
   # return response
 
 
-def ChatGPT_request(prompt): 
+def ChatGPT_request(prompt):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -162,63 +168,71 @@ def ChatGPT_request(prompt):
     a str of GPT-3's response. 
   """
   # temp_sleep()
+  print("--- ChatGPT_request() ---")
+  print("Prompt:", prompt)
+
   try: 
     completion = client.chat.completions.create(
-    model=openai_config["model"],
-    messages=[{"role": "user", "content": prompt}]
+      model=openai_config["model"],
+      messages=[{"role": "user", "content": prompt}]
     )
-    cost_logger.update_cost(completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"])
-    return completion.choices[0].message.content
+    content = completion.choices[0].message.content
+    print("Response content:", content)
+    cost_logger.update_cost(
+      completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"]
+    )
+    return content
   
   except Exception as e: 
     print(f"Error: {e}")
-    return "ChatGPT ERROR"
+    traceback.print_exc()
+    return "LLM ERROR"
 
 
-def GPT4_safe_generate_response(
-  prompt,
-  example_output,
-  special_instruction,
-  repeat=3,
-  fail_safe_response="error",
-  func_validate=None,
-  func_clean_up=None,
-  verbose=False,
-):
-  if func_validate and func_clean_up:
-    prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
-    prompt += (
-      f"Output the response to the prompt above in json. {special_instruction}\n"
-    )
-    prompt += "Example output json:\n"
-    prompt += '{"output": "' + str(example_output) + '"}'
+# def GPT4_safe_generate_response(
+#   prompt,
+#   example_output,
+#   special_instruction,
+#   repeat=3,
+#   fail_safe_response="error",
+#   func_validate=None,
+#   func_clean_up=None,
+#   verbose=False,
+# ):
+#   if func_validate and func_clean_up:
+#     prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
+#     prompt += (
+#       f"Output the response to the prompt above in json. {special_instruction}\n"
+#     )
+#     prompt += "Example output json:\n"
+#     prompt += '{"output": "' + str(example_output) + '"}'
 
-    if verbose:
-      print("CHAT GPT PROMPT")
-      print(prompt)
+#     if verbose:
+#       print("CHAT GPT PROMPT")
+#       print(prompt)
 
-    for i in range(repeat):
-      try:
-        gpt4_response = GPT4_request(prompt)
-        if not gpt4_response:
-          raise Exception("No valid response from GPT-4.")
-        curr_gpt_response = gpt4_response.strip()
-        end_index = curr_gpt_response.rfind("}") + 1
-        curr_gpt_response = curr_gpt_response[:end_index]
-        curr_gpt_response = json.loads(curr_gpt_response)["output"]
+#     for i in range(repeat):
+#       try:
+#         gpt4_response = GPT4_request(prompt)
+#         if not gpt4_response:
+#           raise Exception("No valid response from GPT-4.")
+#         curr_gpt_response = gpt4_response.strip()
+#         end_index = curr_gpt_response.rfind("}") + 1
+#         curr_gpt_response = curr_gpt_response[:end_index]
+#         curr_gpt_response = json.loads(curr_gpt_response)["output"]
 
-        if func_validate(curr_gpt_response, prompt=prompt):
-          return func_clean_up(curr_gpt_response, prompt=prompt)
+#         if func_validate(curr_gpt_response, prompt=prompt):
+#           return func_clean_up(curr_gpt_response, prompt=prompt)
 
-        if verbose:
-          print("---- repeat count: \n", i, curr_gpt_response)
-          print(curr_gpt_response)
-          print("~~~~")
+#         if verbose:
+#           print("---- repeat count: \n", i, curr_gpt_response)
+#           print(curr_gpt_response)
+#           print("~~~~")
 
-      except Exception as e:
-        print("ERROR:", e)
+#       except Exception as e:
+#         print("ERROR:", e)
 
-  return False
+#   return False
 
 
 def ChatGPT_safe_generate_response(
@@ -241,22 +255,18 @@ def ChatGPT_safe_generate_response(
     prompt += '{"output": "' + str(example_output) + '"}'
 
     if verbose:
-      print("CHAT GPT PROMPT")
+      print("LLM PROMPT")
       print(prompt)
 
     for i in range(repeat):
       try:
         chatgpt_response = ChatGPT_request(prompt)
         if not chatgpt_response:
-          raise Exception("No valid response from ChatGPT.")
+          raise Exception("No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
         end_index = curr_gpt_response.rfind("}") + 1
         curr_gpt_response = curr_gpt_response[:end_index]
         curr_gpt_response = json.loads(curr_gpt_response)["output"]
-
-        # print ("---ashdfaf")
-        # print (curr_gpt_response)
-        # print ("000asdfhia")
 
         if verbose:
           print("---- repeat count:", i)
@@ -269,6 +279,7 @@ def ChatGPT_safe_generate_response(
 
       except Exception as e:
         print("ERROR:", e)
+        traceback.print_exc()
 
   return fail_safe_response
 
@@ -280,7 +291,7 @@ def ChatGPT_safe_generate_response_OLD(prompt,
                                    func_clean_up=None,
                                    verbose=False): 
   if verbose: 
-    print ("CHAT GPT PROMPT")
+    print ("LLM PROMPT")
     print (prompt)
 
   if func_validate and func_clean_up:
@@ -288,7 +299,7 @@ def ChatGPT_safe_generate_response_OLD(prompt,
       try:
         chatgpt_response = ChatGPT_request(prompt)
         if not chatgpt_response:
-          raise Exception("No valid response from ChatGPT.")
+          raise Exception("No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
         if func_validate(curr_gpt_response, prompt=prompt):
           return func_clean_up(curr_gpt_response, prompt=prompt)
@@ -308,7 +319,7 @@ def ChatGPT_safe_generate_response_OLD(prompt,
 # ============================================================================
 # ###################[SECTION 2: ORIGINAL GPT-3 STRUCTURE] ###################
 # ============================================================================
-def GPT_request(prompt, gpt_parameter): 
+def GPT_request(prompt, gpt_parameter):
   """
   Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
   server and returns the response. 
@@ -321,7 +332,7 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  
+
   try:
     if use_openai:
       messages = [{
@@ -346,6 +357,55 @@ def GPT_request(prompt, gpt_parameter):
     print("Content: ", content)
     return content
 
+  except Exception as e:
+    print("REQUEST ERROR")
+    print(e)
+    return "REQUEST ERROR"
+
+
+def structured_GPT_request(prompt, gpt_parameter, response_format):
+  """
+  Given a prompt, a dictionary of GPT parameters, and a response format, make a request to OpenAI
+  server and returns the response.
+  ARGS:
+    prompt: a str prompt
+    gpt_parameter: a python dictionary with the keys indicating the names of
+                   the parameter and the values indicating the parameter
+                   values.
+    response_format: a Pydantic model that defines the desired response format.
+  RETURNS:
+    a str of GPT-3's response.
+  """
+  temp_sleep()
+
+  try:
+    if use_openai:
+      messages = [{
+        "role": "system", "content": prompt
+      }]
+      response = client.beta.chat.completions.parse(
+        model=gpt_parameter["engine"],
+        messages=messages,
+        response_format=response_format,
+        temperature=gpt_parameter["temperature"],
+        max_tokens=gpt_parameter["max_tokens"],
+        top_p=gpt_parameter["top_p"],
+        frequency_penalty=gpt_parameter["frequency_penalty"],
+        presence_penalty=gpt_parameter["presence_penalty"],
+        # stream=gpt_parameter["stream"],
+        stop=gpt_parameter["stop"],
+      )
+    else:
+      response = client.completions.create(model=model, prompt=prompt)
+
+    print("Response: ", response)
+    message = response.choices[0].message
+
+    if message.parsed:
+      return message.parsed
+    if message.refusal:
+      raise ValueError("Request refused: " + message.refusal)
+    raise ValueError("No parsed content or refusal found.")
   except Exception as e:
     print("REQUEST ERROR")
     print(e)
@@ -398,6 +458,40 @@ def safe_generate_response(prompt,
           return func_clean_up(curr_gpt_response, prompt=prompt)
         else:
           print("Response validation failed.")
+      except:
+        print("Could not process response.")
+      if verbose:
+        print("---- repeat count: ", i, curr_gpt_response)
+        print(curr_gpt_response)
+        print("~~~~")
+
+  print("FAIL SAFE TRIGGERED")
+  return fail_safe_response
+
+
+def generate_structured_response(
+  prompt,
+  gpt_parameter,
+  response_format,
+  repeat=5,
+  fail_safe_response="error",
+  func_validate=None,
+  func_clean_up=None,
+  verbose=False
+):
+  if verbose:
+    print(prompt)
+
+  if func_validate and func_clean_up:
+    for i in range(repeat):
+      curr_gpt_response = structured_GPT_request(prompt, gpt_parameter, response_format)
+      try:
+        if not isinstance(curr_gpt_response, str) and func_validate(
+          curr_gpt_response,
+          prompt=prompt
+        ):
+          return func_clean_up(curr_gpt_response, prompt=prompt)
+        print("Response validation failed.")
       except:
         print("Could not process response.")
       if verbose:

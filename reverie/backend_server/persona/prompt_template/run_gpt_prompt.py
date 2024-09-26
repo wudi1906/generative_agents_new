@@ -15,6 +15,9 @@ import json
 from pathlib import Path
 import random
 import string
+from typing import Tuple
+import traceback
+from pydantic import BaseModel
 
 sys.path.append('../../')
 
@@ -48,6 +51,9 @@ def get_random_alphanumeric(i=6, j=6):
 # CHAPTER 1: Run GPT Prompt
 ##############################################################################
 
+class WakeUpHour(BaseModel):
+  wake_up_hour: int
+
 def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False): 
   """
   Given the persona, returns an integer that indicates the hour when the 
@@ -66,22 +72,22 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    if USE_REGEX:
-      return re.search(r'^\d{1,2}(?::\d{2})?[aA][mM]', gpt_response.strip()).group()[0]
-    else:
-      cr = int(gpt_response.strip().lower().split("am")[0])
-      return cr
+    if isinstance(gpt_response.wake_up_hour, int):
+      return gpt_response.wake_up_hour
+    raise TypeError("wake_up_hour of type int not found")
   
   def __func_validate(gpt_response, prompt=""): 
     try: __func_clean_up(gpt_response, prompt="")
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True
 
   def get_fail_safe(): 
     fs = 8
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 5, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
              "temperature": 0.8, "top_p": 1, "stream": False,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = "persona/prompt_template/v2/wake_up_hour_v1.txt"
@@ -89,8 +95,15 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    WakeUpHour,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -98,6 +111,9 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
     
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
+
+class DailyPlan(BaseModel):
+  daily_plan: list[str]
 
 def run_gpt_prompt_daily_plan(persona, 
                               wake_up_hour, 
@@ -124,24 +140,14 @@ def run_gpt_prompt_daily_plan(persona,
     prompt_input += [persona.scratch.get_str_firstname()]
     prompt_input += [f"{str(wake_up_hour)}:00 am"]
     return prompt_input
-### Need to fix daily plan generation
-  def __func_clean_up(gpt_response, prompt=""):
-    if USE_REGEX:
-      return re.findall(r'\d+\)\s+(.*?)(?=, \d+\)|\.|$)', ' '.join(gpt_response.split("\n")))
-    else:
-      cr = []
-      _cr = re.split(r'\d\)', gpt_response)
-      for i in _cr: 
-        if i[-1].isdigit(): 
-          i = i[:-1].strip()
-          if i[-1] == "." or i[-1] == ",": 
-            cr += [i[:-1].strip()]
-      return cr
 
+  def __func_clean_up(gpt_response, prompt=""):
+    return gpt_response.daily_plan
 
   def __func_validate(gpt_response, prompt=""):
     try: __func_clean_up(gpt_response, prompt="")
-    except: 
+    except:
+      traceback.print_exc()
       return False
     return True
 
@@ -155,9 +161,7 @@ def run_gpt_prompt_daily_plan(persona,
           'go to bed at 11:00 pm'] 
     return fs
 
-
-  
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 500, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 2000, 
                "temperature": 1, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/daily_planning_v6.txt"
@@ -165,10 +169,15 @@ def run_gpt_prompt_daily_plan(persona,
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
-  output = ([f"wake up and complete the morning routine at {wake_up_hour}:00 am"]
-              + output)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    DailyPlan,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -177,118 +186,122 @@ def run_gpt_prompt_daily_plan(persona,
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_generate_hourly_schedule(persona, 
-                                            curr_hour_str,
-                                            p_f_ds_hourly_org, 
-                                            hour_str,
-                                            intermission2=None,
-                                            test_input=None, 
-                                            verbose=False): 
-  def create_prompt_input(persona, 
-                          curr_hour_str, 
-                          p_f_ds_hourly_org,
-                          hour_str,
-                          intermission2=None,
-                          test_input=None): 
-    if test_input: return test_input
-    schedule_format = ""
-    for i in hour_str: 
-      schedule_format += f"[{persona.scratch.get_str_curr_date_str()} -- {i}]"
-      schedule_format += f" Activity: [Fill in]\n"
-    schedule_format = schedule_format[:-1]
+class Activity(BaseModel):
+  date_and_time: str
+  activity: str
 
-    intermission_str = f"Here is the originally intended hourly breakdown of"
+class HourlySchedule(BaseModel):
+  hourly_schedule: list[Activity]
+
+def run_gpt_prompt_generate_hourly_schedule(
+  persona,
+  curr_hour_str,
+  p_f_ds_hourly_org,
+  hour_str,
+  intermission2=None,
+  test_input=None,
+  verbose=False,
+  all_in_one=False,
+):
+  def create_prompt_input(
+    persona,
+    curr_hour_str,
+    p_f_ds_hourly_org,
+    hour_str,
+    intermission2=None,
+    test_input=None
+  ):
+    if test_input:
+      return test_input
+
+    schedule_format = '{"hourly_schedule": ['
+    for i in range(4):
+      hour = hour_str[i]
+      schedule_format += f"{{\"date_and_time\":\"{persona.scratch.get_str_curr_date_str()} -- {hour}\","
+      schedule_format += '"activity":"[Fill in]"},'
+    schedule_format += " ... , "
+    schedule_format += f"{{\"date_and_time\":\"{persona.scratch.get_str_curr_date_str()} -- 11:00 PM}}\","
+    schedule_format += '"activity":"[Fill in]"}]}'
+
+    if not all_in_one:
+      intermission_str = "Complete the given hourly schedule for the following person, filling out the whole rest of their day."
+    else:
+      intermission_str = "Create an hourly schedule for the following person to fill out their whole day."
+    intermission_str += "\nHere is the originally intended hourly breakdown of"
     intermission_str += f" {persona.scratch.get_str_firstname()}'s schedule today: "
-    for count, i in enumerate(persona.scratch.daily_req): 
-      intermission_str += f"{str(count+1)}) {i}, "
+    for count, task in enumerate(persona.scratch.daily_req): 
+      intermission_str += f"{str(count+1)}) {task}, "
     intermission_str = intermission_str[:-2]
 
     prior_schedule = ""
-    if p_f_ds_hourly_org: 
-      prior_schedule = "\n"
-      for count, i in enumerate(p_f_ds_hourly_org): 
+    if p_f_ds_hourly_org and not all_in_one:
+      prior_schedule = "\nExisting schedule:\n"
+      for count, task in enumerate(p_f_ds_hourly_org): 
         prior_schedule += f"[{persona.scratch.get_str_curr_date_str()} --"
         prior_schedule += f" {hour_str[count]}] Activity:"
         prior_schedule += f" {persona.scratch.get_str_firstname()}"
-        prior_schedule += f" is {i}\n"
+        prior_schedule += f" is {task}\n"
+    # prior_schedule = ""
 
-    prompt_ending = f"[{persona.scratch.get_str_curr_date_str()}"
-    prompt_ending += f" -- {curr_hour_str}] Activity:"
-    prompt_ending += f" {persona.scratch.get_str_firstname()}"
+    # prompt_ending = f"[{persona.scratch.get_str_curr_date_str()}"
+    # prompt_ending += f" -- {curr_hour_str}] Activity:"
+    # prompt_ending += f" {persona.scratch.get_str_firstname()}"
+    if not all_in_one:
+      prompt_ending = "Completed hourly schedule (start from the hour after the existing schedule ends, and use present progressive tense, e.g. 'waking up and completing the morning routine'):"
+    else:
+      prompt_ending = "Hourly schedule for the whole day (use present progressive tense, e.g. 'waking up and completing the morning routine'):"
 
     if intermission2: 
       intermission2 = f"\n{intermission2}"
 
-    prompt_input = []
-    prompt_input += [schedule_format]
+    # Construct the final prompt input
+    prompt_input = [schedule_format]
+
     prompt_input += [persona.scratch.get_str_iss()]
 
-    prompt_input += [prior_schedule + "\n"]
     prompt_input += [intermission_str]
+
+    prompt_input += [prior_schedule + "\n"]
+
     if intermission2: 
       prompt_input += [intermission2]
     else: 
       prompt_input += [""]
+
     prompt_input += [prompt_ending]
 
     return prompt_input
 
-  def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = gpt_response.strip()
-    if gpt_response[0] == "[":
-      index = gpt_response.find("]")
-      gpt_response = gpt_response[index + 1:].strip()
-    gpt_response = gpt_response.removeprefix("Activity: ")
-    gpt_response = gpt_response.removeprefix(persona.scratch.get_str_firstname())
-    activity = ''.join(gpt_response.split("[")[0]).strip()
-    if activity[:3] == "is ":
-      activity = activity[3:]
-    return activity
+  def __func_clean_up(gpt_response: HourlySchedule, prompt=""):
+    if not all_in_one:
+      activity = gpt_response.hourly_schedule[0].activity
+      activity = activity.strip("[]")
+      activity = activity.removeprefix(persona.scratch.get_str_firstname()).strip()
+      activity = activity.removeprefix("is ")
+      return activity
+    else:
+      activities = []
+      for item in gpt_response.hourly_schedule:
+        activity = item.activity.strip("[]")
+        activity = activity.removeprefix(persona.scratch.get_str_firstname()).strip()
+        activity = activity.removeprefix("is ")
+        activities += [activity]
+      return activities
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: __func_clean_up(gpt_response, prompt="")
-    except: return False
-    return True
+  def __func_validate(gpt_response, prompt=""):
+    try:
+      __func_clean_up(gpt_response, prompt)
+      return True
+    except Exception as e:
+      print("Validation failed: ", e)
+      traceback.print_exc()
+      return False
 
   def get_fail_safe(): 
     fs = "idle"
     return fs
 
-  # # ChatGPT Plugin ===========================================================
-  # def __chat_func_clean_up(gpt_response, prompt=""): ############
-  #   cr = gpt_response.strip()
-  #   if cr[-1] == ".":
-  #     cr = cr[:-1]
-  #   return cr
-
-  # def __chat_func_validate(gpt_response, prompt=""): ############
-  #   try: __func_clean_up(gpt_response, prompt="")
-  #   except: return False
-  #   return True
-
-  # print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 10") ########
-  # gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
-  #              "temperature": 0, "top_p": 1, "stream": False,
-  #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  # prompt_template = "persona/prompt_template/v3_ChatGPT/generate_hourly_schedule_v2.txt" ########
-  # prompt_input = create_prompt_input(persona, 
-  #                                    curr_hour_str, 
-  #                                    p_f_ds_hourly_org,
-  #                                    hour_str, 
-  #                                    intermission2,
-  #                                    test_input)  ########
-  # prompt = generate_prompt(prompt_input, prompt_template)
-  # example_output = "studying for her music classes" ########
-  # special_instruction = "The output should ONLY include the part of the sentence that completes the last line in the schedule above." ########
-  # fail_safe = get_fail_safe() ########
-  # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-  #                                         __chat_func_validate, __chat_func_clean_up, True)
-  # if output != False: 
-  #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # # ChatGPT Plugin ===========================================================
-
-
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 50, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 5000, 
                "temperature": 0.5, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = "persona/prompt_template/v2/generate_hourly_schedule_v2.txt"
@@ -301,8 +314,15 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
   
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    HourlySchedule,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -311,11 +331,13 @@ def run_gpt_prompt_generate_hourly_schedule(persona,
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class Subtask(BaseModel):
+  task: str
+  duration: int
+  minutes_left: int
 
-
-
-
-
+class TaskDecomposition(BaseModel):
+  subtasks: list[Subtask]
 
 def run_gpt_prompt_task_decomp(persona, 
                                task, 
@@ -379,131 +401,87 @@ def run_gpt_prompt_task_decomp(persona,
     prompt_input += [persona.scratch.get_str_firstname()]
     return prompt_input
 
-  def extract_numeric_part(k):
-    # Use regular expression to find all digits
-    numeric_part = re.findall(r'\d+', k)
-    # Join all found digits into a single string and convert to int
-    return int(numeric_part[0])
-
-  def __func_clean_up(gpt_response, prompt=""):
-    
+  def __func_clean_up(gpt_response: TaskDecomposition, prompt=""):
     debug = True
-    
-    if debug: 
+
+    if debug:
       print (gpt_response)
       print ("-==- -==- -==- ")
       print("(cleanup func): Enter function")
-    # TODO SOMETHING HERE sometimes fails... See screenshot
-    pattern = r'^(?:\d*\) )?.+ \(duration in minutes: \d+, minutes left: \d+\)\n?((?:\d+\) .+ \(duration in minutes: \d+, minutes left: \d+\)\n?)*)'
-    raw_activities_list = re.search(pattern, gpt_response).group()
 
-    temp = [i.strip() for i in raw_activities_list.split("\n")]
-    _cr = []
-    cr = []
-    for count, i in enumerate(temp): 
-      if count != 0: 
-        # Get rid of "2) Isabella is" line starts, only retaining task and timeframe
-        # like "making breakfast at home. (duration in minutes: 30, minutes left: 30)"
-        _cr += [" ".join([j.strip () for j in i.split(" ")][3:])]
-      else: 
-        _cr += [i]
-    for count, i in enumerate(_cr):
-      if debug:
-        print("(cleanup func) Unpacking: ", i)
-      
-      # Original version
-      # k = [j.strip() for j in i.split("(duration in minutes:")]
-      
-      # Sometimes the simulation fails because it doesn't contain
-      # `duration in minutes` but only `duration`.
-      if "duration in minutes" in i: 
-        k = [j.strip() for j in i.split("(duration in minutes:")]
-      else:
-        k = [j.strip() for j in i.split("(duration:")]
-        
-      if debug:
-        print("(cleanup func) Unpacked(k): ", k)
+    final_task_list = []
 
-      # Ensure there are enough elements in k
-      if len(k) < 2:
-          print(f"Warning: Unexpected string structure in '{i}'. Missing '(duration in minutes:' delimiter.")
-          continue
-    
-      task = k[0]
-      # Error thrown when task string is empty 
-      if task and task[-1] == ".": 
-        task = task[:-1]
-      minutes = k[1].split(",")[0]
-      
-      if debug:
-        print("(cleanup func): Minutes: ", minutes)
-      duration = extract_numeric_part(minutes)
-      if debug:
-        print("(cleanup func): Duration: ", duration)
-      
-      # Original version
-      # duration = int(k[1].split(",")[0].strip())
-      
-      cr += [[task, duration]]
-      
-      if debug:
-        print("(cleanup func) Unpacked(cr): ", cr)
+    for count, subtask in enumerate(gpt_response.subtasks):
+      task = subtask.task.strip().strip('.')
+
+      # Get rid of "1)", "2)", etc. at start of string if it exists
+      if task[1] == ")":
+        task = task[2:].strip()
+      # Get rid of "Isabella is " at start of string if it exists
+      if task.startswith(persona.scratch.get_str_firstname()):
+        task = " is ".join(task.split(" is ")[1:])
+
+      final_task_list += [[task, subtask.duration]]
 
     if debug:
+      print("(cleanup func) Unpacked (final_task_list)): ", final_task_list)
       print("(cleanup func) Prompt:", prompt)
-      
-    total_expected_min = int(prompt.split("(total duration in minutes")[-1]
-                                   .split("):")[0].strip())
-    
+
+    total_expected_min = int(
+      prompt.split(
+        "(total duration in minutes"
+      )[-1].split("):")[0].strip()
+    )
+
     if debug:
       print("(cleanup func) Expected Minutes:", total_expected_min)
-      
+
     # TODO -- now, you need to make sure that this is the same as the sum of 
-    #         the current action sequence. 
+    #         the current action sequence.
     curr_min_slot = [["dummy", -1],] # (task_name, task_index)
-    for count, i in enumerate(cr): 
-      i_task = i[0] 
-      i_duration = i[1]
+    for count, split_task in enumerate(final_task_list):
+      i_task = split_task[0]
+      i_duration = split_task[1]
 
       i_duration -= (i_duration % 5)
-      if i_duration > 0: 
-        for j in range(i_duration): 
-          curr_min_slot += [(i_task, count)]       
-    curr_min_slot = curr_min_slot[1:]   
+      if i_duration > 0:
+        for _j in range(i_duration):
+          curr_min_slot += [(i_task, count)]
+    curr_min_slot = curr_min_slot[1:]
 
-    if len(curr_min_slot) > total_expected_min: 
+    if len(curr_min_slot) > total_expected_min:
       last_task = curr_min_slot[60]
-      for i in range(1, 6): 
+      for i in range(1, 6):
         curr_min_slot[-1 * i] = last_task
-    elif len(curr_min_slot) < total_expected_min: 
+    elif len(curr_min_slot) < total_expected_min:
       last_task = curr_min_slot[-1]
       for i in range(total_expected_min - len(curr_min_slot)):
         curr_min_slot += [last_task]
 
-    cr_ret = [["dummy", -1],]
-    for task, task_index in curr_min_slot: 
-      if task != cr_ret[-1][0]: 
-        cr_ret += [[task, 1]]
-      else: 
-        cr_ret[-1][1] += 1
-    cr = cr_ret[1:]
+    return_task_list = [["dummy", -1],]
+    for task, _task_index in curr_min_slot:
+      if task != return_task_list[-1][0]:
+        return_task_list += [[task, 1]]
+      else:
+        return_task_list[-1][1] += 1
+    final_task_list = return_task_list[1:]
 
-    return cr
+    return final_task_list
 
   def __func_validate(gpt_response, prompt=""): 
-    # TODO -- this sometimes generates error 
     try: 
-      __func_clean_up(gpt_response)
-    except: 
-      pass
-      # return False
+      __func_clean_up(gpt_response, prompt)
+    except Exception as e:
+      print("Validation failed: ", e)
+      traceback.print_exc()
+      return False
     return gpt_response
 
   def get_fail_safe(): 
-    fs = ["idle"]
+    fs = ["idle", 5]
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 1000, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 5000, 
              "temperature": 0, "top_p": 1, "stream": False,
              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/task_decomp_v3.txt"
@@ -511,20 +489,16 @@ def run_gpt_prompt_task_decomp(persona,
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
 
-  output = safe_generate_response(prompt, gpt_param, 5, get_fail_safe(),
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    TaskDecomposition,
+    5,
+    get_fail_safe(),
+    __func_validate,
+    __func_clean_up
+  )
 
-  # TODO THERE WAS A BUG HERE... 
-  # This is for preventing overflows...
-  """
-  File "/Users/joonsungpark/Desktop/Stanford/Projects/
-  generative-personas/src_exploration/reverie_simulation/
-  brain/get_next_action_v3.py", line 364, in run_gpt_prompt_task_decomp
-  fin_output[-1][1] += (duration - ftime_sum)
-  IndexError: list index out of range
-  """
-
-  # Some debugging prints
   # print ("DEBUG")  
   # print("PROMPT:")
   # print (prompt)
@@ -535,21 +509,18 @@ def run_gpt_prompt_task_decomp(persona,
   time_sum = 0
   for i_task, i_duration in output: 
     time_sum += i_duration
-    # HM?????????
+
     # if time_sum < duration: 
     if time_sum <= duration: 
       fin_output += [[i_task, i_duration]]
     else: 
       break
   ftime_sum = 0
-  for fi_task, fi_duration in fin_output: 
+  for _fi_task, fi_duration in fin_output: 
     ftime_sum += fi_duration
   
-  # print ("for debugging... line 365", fin_output)
   fin_output[-1][1] += (duration - ftime_sum)
   output = fin_output 
-
-
 
   task_decomp = output
   ret = []
@@ -557,13 +528,11 @@ def run_gpt_prompt_task_decomp(persona,
     ret += [[f"{task} ({decomp_task})", duration]]
   output = ret
 
-
-  if debug or verbose: 
+  if verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
                       prompt_input, prompt, output)
     
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
 
 
 def run_gpt_prompt_action_sector(action_description, 
@@ -622,14 +591,8 @@ def run_gpt_prompt_action_sector(action_description,
     prompt_input += [persona.scratch.get_str_name()]
     return prompt_input
 
-
-    
-
-    
-
-
   def __func_clean_up(gpt_response, prompt=""):
-    return ''.join(gpt_response.split("}")[0]).strip()
+    return ''.join(gpt_response.split("}")[0]).strip().strip("{").strip()
 
   def __func_validate(gpt_response, prompt=""): 
     if len(gpt_response.strip()) < 1: 
@@ -643,7 +606,6 @@ def run_gpt_prompt_action_sector(action_description,
   def get_fail_safe(): 
     fs = ("main room")
     return fs
-
 
   # # ChatGPT Plugin ===========================================================
   # def __chat_func_clean_up(gpt_response, prompt=""): ############
@@ -673,10 +635,6 @@ def run_gpt_prompt_action_sector(action_description,
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # # ChatGPT Plugin ===========================================================
 
-
-
-
-
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -693,14 +651,13 @@ def run_gpt_prompt_action_sector(action_description,
     # output = random.choice(x)
     output = persona.scratch.living_area.split(":")[1]
 
-  print ("DEBUG", random.choice(x), "------", output)
+  # print ("DEBUG", random.choice(x), "------", output)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
                       prompt_input, prompt, output)
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
 
 
 def run_gpt_prompt_action_arena(action_description, 
@@ -758,7 +715,8 @@ def run_gpt_prompt_action_arena(action_description,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    return ''.join(gpt_response.split("}")[0]).strip()
+    arena = gpt_response.strip().strip("Answer:").strip().strip("{}").strip()
+    return arena
 
   def __func_validate(gpt_response, prompt=""): 
     if len(gpt_response.strip()) < 1: 
@@ -862,19 +820,19 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
     prompt_input = [action_description]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.strip()
-    if len(cr) > 3:
-      cr = cr[:3]
-    return cr
+  # def __func_clean_up(gpt_response, prompt=""):
+  #   cr = gpt_response.strip()
+  #   if len(cr) > 3:
+  #     cr = cr[:3]
+  #   return cr
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt="")
-      if len(gpt_response) == 0: 
-        return False
-    except: return False
-    return True 
+  # def __func_validate(gpt_response, prompt=""): 
+  #   try: 
+  #     __func_clean_up(gpt_response, prompt="")
+  #     if len(gpt_response) == 0: 
+  #       return False
+  #   except: return False
+  #   return True 
 
   def get_fail_safe(): 
     fs = "😋"
@@ -884,18 +842,22 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
     pattern = r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F700-\U0001F77F\U0001F780-\U0001F7FF\U0001F800-\U0001F8FF\U0001F900-\U0001F9FF\U0001FA00-\U0001FA6F\U0001FA70-\U0001FAFF]'
-    return re.search(pattern, gpt_response).group()
+    result = re.search(pattern, gpt_response)
+    if result:
+      return result.group()
+    raise ValueError("No emoji found in the response.")
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
-      __func_clean_up(gpt_response, prompt="")
+      __chat_func_clean_up(gpt_response, prompt="")
       if len(gpt_response) == 0: 
         return False
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True 
-    return True
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 4") ########
+  print ("DEBUG 4") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -907,13 +869,20 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   fail_safe = get_fail_safe()
   output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
+  
+  if verbose:
+    print_run_prompts(
+      prompt_template,
+      persona,
+      gpt_param,
+      prompt_input,
+      prompt,
+      output
+    )
+
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
-
-
-
-
 
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
   #              "temperature": 0, "top_p": 1, "stream": False,
@@ -934,15 +903,10 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-
-
-
-
-
-
-
-
-
+class EventTriple(BaseModel):
+  subject: str
+  predicate: str
+  object: str
 
 def run_gpt_prompt_event_triple(action_description, persona, verbose=False): 
   def create_prompt_input(action_description, persona): 
@@ -953,8 +917,8 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
                     persona.name]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.split(")")[0].split(',')
+  def __func_clean_up(gpt_response: EventTriple, prompt=""):
+    cr = [gpt_response.predicate, gpt_response.object]
     return [x.strip() for x in cr]
 
   def __func_validate(gpt_response, prompt=""): 
@@ -962,13 +926,14 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
       gpt_response = __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) != 2: 
         return False
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True 
 
   def get_fail_safe(persona): 
-    fs = (persona.name, "is", "idle")
+    fs = ["is", "idle"]
     return fs
-
 
   # ChatGPT Plugin ===========================================================
   # def __chat_func_clean_up(gpt_response, prompt=""): ############
@@ -1000,9 +965,6 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
 
-
-
-
   gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
@@ -1010,8 +972,15 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   prompt_input = create_prompt_input(action_description, persona)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(persona) ########
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    EventTriple,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   output = (persona.name, output[0], output[1])
 
   if debug or verbose: 
@@ -1019,17 +988,6 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
                       prompt_input, prompt, output)
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-
-
-
-
-
-
-
-
-
 
 
 def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False): 
@@ -1041,15 +999,15 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
                     act_game_object]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    return ''.join(gpt_response.split("\n")[0].split(".")[0]).strip()
+  # def __func_clean_up(gpt_response, prompt=""):
+  #   return ''.join(gpt_response.split("\n")[0].split(".")[0]).strip()
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      gpt_response = __func_clean_up(gpt_response, prompt="")
-    except: 
-      return False
-    return True 
+  # def __func_validate(gpt_response, prompt=""): 
+  #   try: 
+  #     gpt_response = __func_clean_up(gpt_response, prompt="")
+  #   except: 
+  #     return False
+  #   return True 
 
   def get_fail_safe(act_game_object): 
     fs = f"{act_game_object} is idle"
@@ -1063,12 +1021,13 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
-      gpt_response = __func_clean_up(gpt_response, prompt="")
-    except: 
+      gpt_response = __chat_func_clean_up(gpt_response, prompt="")
+    except:
+      traceback.print_exc()
       return False
     return True 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 6") ########
+  print ("DEBUG 6") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -1083,8 +1042,6 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
-
-
 
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
   #              "temperature": 0, "top_p": 1, "stream": False,
@@ -1103,13 +1060,6 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-
-
-
-
-
-
-
 def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_obj_desc): 
     prompt_input = [act_game_object, 
@@ -1117,8 +1067,8 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
                     act_game_object]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    cr = gpt_response.split(")")[0].split(',')
+  def __func_clean_up(gpt_response: EventTriple, prompt=""):
+    cr = [gpt_response.predicate, gpt_response.object]
     return [x.strip() for x in cr]
 
   def __func_validate(gpt_response, prompt=""): 
@@ -1126,11 +1076,13 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
       gpt_response = __func_clean_up(gpt_response, prompt="")
       if len(gpt_response) != 2: 
         return False
-    except: return False
+    except:
+      traceback.print_exc()
+      return False
     return True 
 
   def get_fail_safe(act_game_object): 
-    fs = (act_game_object, "is", "idle")
+    fs = ["is", "idle"]
     return fs
 
   gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
@@ -1140,8 +1092,15 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
   prompt_input = create_prompt_input(act_game_object, act_obj_desc)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(act_game_object)
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    EventTriple,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   output = (act_game_object, output[0], output[1])
 
   if debug or verbose: 
@@ -1151,8 +1110,14 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class NewActivity(BaseModel):
+  start_time: str
+  end_time: str
+  main_task: str
+  subtask: str
 
-
+class NewSchedule(BaseModel):
+  schedule: list[NewActivity]
 
 def run_gpt_prompt_new_decomp_schedule(persona, 
                                        main_act_dur, 
@@ -1206,25 +1171,20 @@ def run_gpt_prompt_new_decomp_schedule(persona,
                     new_plan_init]
     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    new_schedule = prompt + " " + gpt_response.strip()
-    new_schedule = new_schedule.split("The revised schedule:")[-1].strip()
-    new_schedule = new_schedule.split("\n")
+  def __func_clean_up(gpt_response: NewSchedule, prompt=""):
+    new_schedule = []
 
-    ret_temp = []
-    for i in new_schedule: 
-      ret_temp += [i.split(" -- ")]
-
-    ret = []
-    for time_str, action in ret_temp:
-      start_time = time_str.split(" ~ ")[0].strip()
-      end_time = time_str.split(" ~ ")[1].strip()
+    for activity in gpt_response.schedule:
+      start_time = activity.start_time
+      end_time = activity.end_time
       delta = datetime.datetime.strptime(end_time, "%H:%M") - datetime.datetime.strptime(start_time, "%H:%M")
-      delta_min = int(delta.total_seconds()/60)
-      if delta_min < 0: delta_min = 0
-      ret += [[action, delta_min]]
+      delta_min = int(delta.total_seconds() / 60)
+      if delta_min < 0:
+        delta_min = 0
+      action = activity.main_task + f" ({activity.subtask})"
+      new_schedule += [[action, delta_min]]
 
-    return ret
+    return new_schedule
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1243,7 +1203,8 @@ def run_gpt_prompt_new_decomp_schedule(persona,
       if int(dur_sum) != int(delta_min): 
         return False
 
-    except: 
+    except:
+      traceback.print_exc()
       return False
     return True 
 
@@ -1273,7 +1234,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
 
     return ret
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 1000, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 10000, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/new_decomp_schedule_v1.txt"
@@ -1287,25 +1248,26 @@ def run_gpt_prompt_new_decomp_schedule(persona,
                                      test_input)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe(main_act_dur, truncated_act_dur)
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
-  
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    NewSchedule,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
+
   # print ("* * * * output")
   # print (output)
   # print ('* * * * fail_safe')
   # print (fail_safe)
-
-
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
                       prompt_input, prompt, output)
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-
-
 
 
 def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=None, 
@@ -1376,6 +1338,7 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
         return True
       return False     
     except:
+      traceback.print_exc()
       return False 
 
   def __func_clean_up(gpt_response, prompt=""):
@@ -1475,6 +1438,7 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
         return True
       return False     
     except:
+      traceback.print_exc()
       return False 
 
   def __func_clean_up(gpt_response, prompt=""):
@@ -1619,6 +1583,7 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(init_persona, target_persona): 
@@ -1672,6 +1637,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1688,10 +1654,11 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 11") ########
+  print ("DEBUG 11") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -1757,6 +1724,7 @@ def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbo
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1802,6 +1770,7 @@ def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_i
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1857,6 +1826,7 @@ def run_gpt_prompt_convo_to_thoughts(persona,
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1925,6 +1895,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -1942,9 +1913,10 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 7") ########
+  print ("DEBUG 7") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -1998,6 +1970,7 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2013,9 +1986,10 @@ def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 8") ########
+  print ("DEBUG 8") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2069,6 +2043,7 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2085,9 +2060,10 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 9") ########
+  print ("DEBUG 9") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2144,6 +2120,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(n): 
@@ -2160,10 +2137,11 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 12") ########
+  print ("DEBUG 12") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2227,6 +2205,7 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(n): 
@@ -2273,6 +2252,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2288,9 +2268,10 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 17") ########
+  print ("DEBUG 17") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2341,6 +2322,7 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2356,9 +2338,10 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 18") ########
+  print ("DEBUG 18") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2373,7 +2356,6 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
-
 
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 150, 
   #              "temperature": 0.5, "top_p": 1, "stream": False,
@@ -2391,9 +2373,6 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
   #                     prompt_input, prompt, output)
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-
 
 
 def run_gpt_prompt_agent_chat(maze, persona, target_persona,
@@ -2457,26 +2436,22 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
 
     return ret
 
-
-
   def __func_validate(gpt_response, prompt=""): 
     try: 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
     return "..."
 
-
-
-
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
     # ret = ast.literal_eval(gpt_response)
 
-    print ("a;dnfdap98fh4p9enf HEREE!!!")
+    print ("DEBUG HERE (run_gpt_prompt_agent_chat)")
     for row in gpt_response: 
       print (row)
 
@@ -2485,8 +2460,6 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   def __chat_func_validate(gpt_response, prompt=""): ############
     return True
 
-
-  # print ("HERE JULY 23 -- ----- ") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2498,15 +2471,10 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   fail_safe = get_fail_safe() ########
   output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
                                           __chat_func_validate, __chat_func_clean_up, True)
-  # print ("HERE END JULY 23 -- ----- ") ########
+
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
-
-
-
-
-
 
   # gpt_param = {"engine": openai_config["model"], "max_tokens": 2000, 
   #              "temperature": 0.7, "top_p": 1, "stream": False,
@@ -2525,16 +2493,10 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
 # =======================
 # =======================
 # =======================
 # =======================
-
-
-
-
-
 
 
 def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=None, verbose=False): 
@@ -2550,6 +2512,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2565,9 +2528,10 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 16") ########
+  print ("DEBUG 16") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2623,6 +2587,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2694,6 +2659,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2731,6 +2697,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2768,6 +2735,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe(): 
@@ -2783,10 +2751,11 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
       __func_clean_up(gpt_response, prompt)
       return True
     except:
+      traceback.print_exc()
       return False 
 
 
-  print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 15") ########
+  print ("DEBUG 15") ########
   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
@@ -2840,6 +2809,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
           return False
       return True
     except:
+      traceback.print_exc()
       return False 
 
   def get_fail_safe():
@@ -2880,6 +2850,7 @@ def extract_first_json_dict(data_str):
         json_dict = json.loads(json_str)
         return json_dict
     except json.JSONDecodeError:
+        traceback.print_exc()
         # If parsing fails, return None
         return None
 
@@ -2988,6 +2959,7 @@ def run_gpt_generate_iterative_chat_utt(
 
             return True
         except:
+            traceback.print_exc()
             return False
 
     def get_fail_safe():
@@ -3079,6 +3051,7 @@ def run_plugin(
             print(extract_first_json_dict(gpt_response))
             return True
         except:
+            traceback.print_exc()
             return False
 
     def get_fail_safe():

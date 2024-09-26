@@ -705,6 +705,7 @@ class ReverieServer:
 
       except Exception as e:
         print("(reverie): Error: ", e)
+        traceback.print_exc()
         # remove movement file if it exists
         movement_file = f"{sim_folder}/movement/{self.step}.json"
         if os.path.exists(movement_file):
