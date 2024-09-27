@@ -518,7 +518,7 @@ def revise_identity(persona):
 
   new_daily_req = ChatGPT_single_request(daily_req_prompt)
   new_daily_req = new_daily_req.replace('\n', ' ')
-  print ("WE ARE HERE!!!", new_daily_req)
+  print ("DEBUG new_daily_req:", new_daily_req)
   persona.scratch.daily_plan_req = new_daily_req
 
 
@@ -659,7 +659,7 @@ def _determine_action(persona, maze):
   # Generate an <Action> instance from the action description and duration. By
   # this point, we assume that all the relevant actions are decomposed and 
   # ready in f_daily_schedule. 
-  print ("DEBUG LJSDLFSKJF")
+  print ("DEBUG here")
   for i in persona.scratch.f_daily_schedule: print (i)
   print (curr_index)
   print (len(persona.scratch.f_daily_schedule))

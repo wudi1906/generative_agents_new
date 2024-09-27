@@ -135,8 +135,10 @@ The following script offer a range of enhanced features:
 
 For more details, refer to: [run_backend_automatic.sh](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/run_backend_automatic.sh) and [automatic_execution.py](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/reverie/backend_server/automatic_execution.py).
 ```bash
-    ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEPS> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
+    ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
 ```
+Note: The step argument means the simulation will **end after** step number `<STEP>`, not necessarily **run for** that number of steps.
+
 Example:
 ```bash
     ./run_backend_automatic.sh -o base_the_ville_isabella_maria_klaus -t test_1 -s 4 --ui None
