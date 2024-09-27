@@ -27,7 +27,7 @@ def ChatGPT_request(prompt):
   """
   # temp_sleep()
   try: 
-    completion = client.chat.completions.create(model="gpt-4-0125-preview", 
+    completion = client.chat.completions.create(model="gpt-4o-mini", 
     messages=[{"role": "user", "content": prompt}])
     return completion.choices[0].message.content
   

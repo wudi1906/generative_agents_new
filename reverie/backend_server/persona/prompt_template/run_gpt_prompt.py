@@ -18,6 +18,7 @@ import string
 from typing import Tuple
 import traceback
 from pydantic import BaseModel
+from typing import List
 
 sys.path.append('../../')
 
@@ -113,7 +114,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
 
 
 class DailyPlan(BaseModel):
-  daily_plan: list[str]
+  daily_plan: List[str]
 
 def run_gpt_prompt_daily_plan(persona, 
                               wake_up_hour, 
@@ -191,7 +192,7 @@ class Activity(BaseModel):
   activity: str
 
 class HourlySchedule(BaseModel):
-  hourly_schedule: list[Activity]
+  hourly_schedule: List[Activity]
 
 def run_gpt_prompt_generate_hourly_schedule(
   persona,
@@ -337,7 +338,7 @@ class Subtask(BaseModel):
   minutes_left: int
 
 class TaskDecomposition(BaseModel):
-  subtasks: list[Subtask]
+  subtasks: List[Subtask]
 
 def run_gpt_prompt_task_decomp(persona, 
                                task, 
@@ -1117,7 +1118,7 @@ class NewActivity(BaseModel):
   subtask: str
 
 class NewSchedule(BaseModel):
-  schedule: list[NewActivity]
+  schedule: List[NewActivity]
 
 def run_gpt_prompt_new_decomp_schedule(persona, 
                                        main_act_dur, 

@@ -1,0 +1,7 @@
+Work sessions 9/27/24
+Changes
+- pulled Connor's branch 
+- updated to gpt-4o-mini 
+- added type hinting to run_gpt_prompt.py using List[str] rather than list[str] and other places in there
+- installed the new requirement.txt 
+- added new gpt-key
