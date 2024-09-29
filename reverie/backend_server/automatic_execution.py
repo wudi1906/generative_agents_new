@@ -15,6 +15,8 @@ from datetime import datetime
 from multiprocessing import Process
 from openai_cost_logger import OpenAICostLoggerViz
 
+MAX_RESTARTS = 10 # risk of overflowing system memory otherwise
+
 
 def parse_args() -> Tuple[str, str, int, bool]:
     """Parse bash arguments
@@ -169,7 +171,7 @@ def save_checkpoint(rs, idx: int, th: Process) -> Tuple[str, int, int]:
     
 
 if __name__ == '__main__':
-    checkpoint_freq = 200 # 1 step = 10 sec
+    checkpoint_freq = 1000 # 1 step = 10 sec
     log_path = "cost-logs" # where the simulations' prints are stored
     idx = 0
     origin, target, tot_steps, ui, browser_path, port = parse_args()
@@ -186,7 +188,7 @@ if __name__ == '__main__':
     print(f"(Auto-Exec): Checkpoint Freq: {checkpoint_freq}", flush=True)    
 
 
-        
+    number_restarts = 0 
     while current_step < tot_steps:
         try:
             steps_to_run = curr_checkpoint - current_step
@@ -212,8 +214,13 @@ if __name__ == '__main__':
                 origin, current_step, idx = save_checkpoint(rs, idx, th)
             else:
                 shutil.rmtree(f"../../environment/frontend_server/storage/{target}") # Remove the experiment folder if no steps were run
+            number_restarts += 1
             print(f"(Auto-Exec): Error at step {current_step}", flush=True)
             print(f"(Auto-Exec): Exception {e.args[0]}", flush=True)
+            print(f"(Auto-Exec): Restart:{number_restarts} max: {MAX_RESTARTS}", flush=True)
+            if number_restarts > MAX_RESTARTS:
+                print(f"(Auto-Exec): Too many restarts, shutting down!", flush=True)
+                sys.exit(0)
         else:
             origin, current_step, idx = save_checkpoint(rs, idx, th)
             curr_checkpoint = get_new_checkpoint(current_step, tot_steps, checkpoint_freq)
