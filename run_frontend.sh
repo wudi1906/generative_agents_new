@@ -7,7 +7,7 @@ CONDA_ENV="simulacra"
 FILE_NAME="Bash-Script-Frontend"
 echo "(${FILE_NAME}): Running frontend server"
 cd ${FRONTEND_SCRIPT_PATH}
-source /home/${USER}/anaconda3/bin/activate ${CONDA_ENV}
+source /Users/danielfinch/miniforge3/bin/activate ${CONDA_ENV} #/home/${USER}/anaconda3/bin/activate ${CONDA_ENV}
 
 PORT=8000
 if [ -z "$1" ]
