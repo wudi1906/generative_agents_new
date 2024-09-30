@@ -1,21 +1,12 @@
 
 
-# Generative Agents: Interactive Simulacra of Human Behavior 
+# Generative Agents Collaboratively Mission Planning 
 
 <p align="center" width="100%">
 <img src="cover.png" alt="Smallville" style="width: 80%; min-width: 300px; display: block; margin: auto;">
 </p>
 
-This repository contains fixes and improvements for the repository "[generative_agents](https://github.com/joonspk-research/generative_agents)" that accompanies the paper "[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)."
-
-Since the project is no longer officially supported, I decided to develop some new features:
-- [x] Easy configuration + **Azure support**
-- [x] **Cost tracking** using [openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)
-- [x] Set **cost upperbound** and stop the experiment when it is reached
-- [x] New models and OpenAI API support
-- [x] Added [skip-morning-s-14](https://github.com/drudilorenzo/generative_agents/tree/fix-and-improve/environment/frontend_server/storage/skip-morning-s-14): a simulation based on `base_the_ville_n25` that starts after 3000 steps (~8:00am). That permits us to save time and see interactions and actions earlier.
-- [x] **Zoom in**/**Zoom out** using Z and X
-- [x] [Powerful automated script](#step-3-automatic-execution) for enhanced simulation performance.
+This repository is an evolution of the repository based on the paper "[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)."
 
 _______________________________________
 ## Index:
