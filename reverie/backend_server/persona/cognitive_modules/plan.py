@@ -36,8 +36,7 @@ def generate_wake_up_hour(persona):
   """
   if debug:
     print("GNS FUNCTION: <generate_wake_up_hour>")
-  # return int(run_gpt_prompt_wake_up_hour(persona)[0])
-  return 0
+  return int(run_gpt_prompt_wake_up_hour(persona)[0])
 
 
 def generate_first_daily_plan(persona, wake_up_hour):
@@ -119,18 +118,29 @@ def generate_hourly_schedule(persona, wake_up_hour):
     "10:00 PM",
     "11:00 PM",
   ]
+
+  # Flag to indicate whether we are generating the hourly schedule all in one
+  # shot, or grabbing one activity at a time.
+  all_in_one = True
+
   n_m1_activity = []
   diversity_repeat_count = 3
-  for i in range(diversity_repeat_count):
+
+  for task in range(diversity_repeat_count):
     n_m1_activity_set = set(n_m1_activity)
+
     if len(n_m1_activity_set) < 5:
       n_m1_activity = []
-      for count, curr_hour_str in enumerate(hour_str):
-        n_m1_activity += [
-          run_gpt_prompt_generate_hourly_schedule(
-            persona, curr_hour_str, n_m1_activity, hour_str
-          )[0]
-        ]
+
+      if not all_in_one:
+        for count, curr_hour_str in enumerate(hour_str):
+          n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
+            persona, curr_hour_str, n_m1_activity, hour_str, all_in_one=False
+          )[0]]
+      else:
+        n_m1_activity = run_gpt_prompt_generate_hourly_schedule(
+          persona, hour_str, n_m1_activity, hour_str, all_in_one=True
+        )[0]
 
   # Step 1. Compressing the hourly schedule to the following format:
   # The integer indicates the number of hours. They should add up to 24.
@@ -141,13 +151,13 @@ def generate_hourly_schedule(persona, wake_up_hour):
   # ['taking a break', 2], ['working on her painting', 2],
   # ['relaxing and watching TV', 1], ['going to bed', 1], ['sleeping', 2]]
   _n_m1_hourly_compressed = []
-  prev = None
+  prev_task = None
   prev_count = 0
-  for i in n_m1_activity:
-    if i != prev:
+  for task in n_m1_activity:
+    if task != prev_task:
       prev_count = 1
-      _n_m1_hourly_compressed += [[i, prev_count]]
-      prev = i
+      _n_m1_hourly_compressed += [[task, prev_count]]
+      prev_task = task
     else:
       if _n_m1_hourly_compressed:
         _n_m1_hourly_compressed[-1][1] += 1
@@ -249,6 +259,8 @@ def generate_action_game_object(act_desp, act_address, persona, maze):
   if debug:
     print("GNS FUNCTION: <generate_action_game_object>")
   if not persona.s_mem.get_str_accessible_arena_game_objects(act_address):
+    print("ERROR: act_address not valid. Returning '<random>' as game object.")
+    print("act_address:", act_address)
     return "<random>"
   return run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)[0]
 
@@ -506,7 +518,7 @@ def revise_identity(persona):
 
   new_daily_req = ChatGPT_single_request(daily_req_prompt)
   new_daily_req = new_daily_req.replace('\n', ' ')
-  print ("WE ARE HERE!!!", new_daily_req)
+  print ("DEBUG new_daily_req:", new_daily_req)
   persona.scratch.daily_plan_req = new_daily_req
 
 
@@ -647,7 +659,7 @@ def _determine_action(persona, maze):
   # Generate an <Action> instance from the action description and duration. By
   # this point, we assume that all the relevant actions are decomposed and 
   # ready in f_daily_schedule. 
-  print ("DEBUG LJSDLFSKJF")
+  print ("DEBUG here")
   for i in persona.scratch.f_daily_schedule: print (i)
   print (curr_index)
   print (len(persona.scratch.f_daily_schedule))
@@ -683,8 +695,10 @@ def _determine_action(persona, maze):
   new_address = f"{act_world}:{act_sector}:{act_arena}:{act_game_object}"
   act_pron = generate_action_pronunciatio(act_desp, persona)
   act_event = generate_action_event_triple(act_desp, persona)
-  # Persona's actions also influence the object states. We set those up here. 
-  act_obj_desp = generate_act_obj_desc(act_game_object, act_desp, persona)
+  # Persona's actions also influence the object states. We set those up here.
+  act_obj_desp_response = generate_act_obj_desc(act_game_object, act_desp, persona)
+  act_obj_desp = act_obj_desp_response[0] if act_obj_desp_response else None
+
   act_obj_pron = generate_action_pronunciatio(act_obj_desp, persona)
   act_obj_event = generate_act_obj_event_triple(act_game_object, 
                                                 act_obj_desp, persona)
