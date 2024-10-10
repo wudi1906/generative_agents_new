@@ -29,7 +29,30 @@ Note: If you change the environment name from `simulacra`, you'll need to update
 
 ### Step 2. OpenAI Config
 
-Create a file called `openai_config.json` in the root directory.\
+Create a file called `openai_config.json` in the root directory.
+
+OpenAI example:
+```json
+{
+    "client": "openai", 
+    "model": "gpt-4o-mini",
+    "model-key": "<API-KEY>",
+    "model-costs": {
+        "input":  0.5,
+        "output": 1.5
+    },
+    "embeddings-client": "openai",
+    "embeddings": "text-embedding-3-small",
+    "embeddings-key": "<API-KEY>",
+    "embeddings-costs": {
+        "input": 0.02,
+        "output": 0.0
+    },
+    "experiment-name": "simulacra-test",
+    "cost-upperbound": 10
+}
+```
+
 Azure example:
 ```json
 {
@@ -77,7 +100,7 @@ OpenAI example:
 }
 ```
 
-Feel free to change and test also other models (and change accordingly the input and output costs).\
+Feel free to change and test also other models (and change accordingly the input and output costs). Note that this repo uses OpenAI's Structured Outputs feature, which is currently only available for certain models, like the GPT-4o series. Check the OpenAI docs for more info. \
 Be aware that the only supported clients are **azure** and **openai**.\
 The generation and the embedding models are configured separately to be able to use different clients.\
 Change also the `cost-upperbound` according to your needs (the cost computation is done using "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)" and the costs are specified per million tokens).
