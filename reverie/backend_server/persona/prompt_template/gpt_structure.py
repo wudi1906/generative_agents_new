@@ -266,6 +266,7 @@ def ChatGPT_safe_generate_response(
         curr_gpt_response = chatgpt_response.strip()
         end_index = curr_gpt_response.rfind("}") + 1
         curr_gpt_response = curr_gpt_response[:end_index]
+        print(curr_gpt_response)
         curr_gpt_response = json.loads(curr_gpt_response)["output"]
 
         if verbose:

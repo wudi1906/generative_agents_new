@@ -34,7 +34,7 @@ Azure example:
 ```json
 {
     "client": "azure", 
-    "model": "gpt-4-turbo",
+    "model": "gpt-4o-mini",
     "model-key": "<API-KEY>",
     "model-endpoint": "<MODEL-ENDPOINT>",
     "model-api-version": "<API-VERSION>",
@@ -59,7 +59,7 @@ OpenAI example:
 ```json
 {
     "client": "openai", 
-    "model": "gpt-4-turbo",
+    "model": "gpt-4o-mini",
     "model-key": "<API-KEY>",
     "model-costs": {
         "input":  0.5,
@@ -153,7 +153,7 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](https:
 
 ### 1. base_the_ville_isabella_maria_klaus
 
-- **Model**: "gpt-4-turbo"
+- **Model**: "gpt-4o-mini"
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 3
 - **Steps**: ~5000
@@ -162,7 +162,7 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](https:
 ### 2. base_the_ville_n25
 
 - See the simulation saved: [skip-morning-s-14](https://github.com/drudilorenzo/generative_agents/tree/fix-and-improve/environment/frontend_server/storage/skip-morning-s-14)
-- **Model**: "gpt-4-turbo"
+- **Model**: "gpt-4o-mini"
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 25
 - **Steps**: ~3000 (until ~8 a.m.)
@@ -170,7 +170,7 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](https:
 
 ### 3. base_the_ville_n25
 
-- **Model**: "gpt-4-turbo"
+- **Model**: "gpt-4o-mini"
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 25 
 - **Steps**: ~8650 (full day)
