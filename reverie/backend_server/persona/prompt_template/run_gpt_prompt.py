@@ -966,7 +966,7 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 200, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = "persona/prompt_template/v2/generate_event_triple_v1.txt"
@@ -1086,7 +1086,7 @@ def run_gpt_prompt_act_obj_event_triple(act_game_object, act_obj_desc, persona, 
     fs = ["is", "idle"]
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 200, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   prompt_template = "persona/prompt_template/v2/generate_event_triple_v1.txt"
