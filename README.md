@@ -120,17 +120,24 @@ See the [original README](README_origin.md) for commands to pass to the server w
 
 #### Option 2. Automatic Execution
 The following script offer a range of enhanced features:
-- `Automatic Saving`: The simulation automatically saves progress every 200 steps, ensuring you never lose data.
-- `Error Recovery`: In the event of an error, the simulation automatically resumes by stepping back and restarting from the last successful point. This is crucial as the model relies on formatted answers, which can sometimes cause exceptions.
-- `Automatic Tab Opening`: A new browser tab will automatically open when necessary.
-- `Headless Mode`: The scripts support running simulations in headless mode, enabling execution on a server without a UI. There are two different headless modes: Passing "None" runs in pure headless mode (no browser needed), whereas passing "False" runs in Chrome's builtin headless mode (needs [headless-chrome](https://developer.chrome.com/blog/headless-chrome) installed). Prefer "None" over "False" in normal cases.
-- `Configurable Port Number`: You can configure the port number as needed.
+- **Automatic Saving**: The simulation automatically saves progress every 200 steps, ensuring you never lose data.
+- **Error Recovery**: In the event of an error, the simulation automatically resumes by stepping back and restarting from the last successful point. This is crucial as the model relies on formatted answers, which can sometimes cause exceptions.
+- **Automatic Tab Opening**: A new browser tab will automatically open when necessary.
+- **Headless Mode**: The scripts support running simulations in headless mode, enabling execution on a server without a UI.
+- **Configurable Port Number**: You can configure the port number as needed.
 
 For more details, refer to: [run_backend_automatic.sh](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/run_backend_automatic.sh) and [automatic_execution.py](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/reverie/backend_server/automatic_execution.py).
 ```bash
     ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
 ```
-Note: The step argument means the simulation will **end after** step number `<STEP>`, not necessarily **run for** that number of steps.
+
+Arguments taken by `run_backend_automatic.sh`:
+- `-o <ORIGIN>`: The name of an existing simulation to use as the base for the new simulation.
+- `-t <TARGET>`: The new simulation name (Note: you cannot have multiple simulations of the same name).
+- `-s <STEP>`: The step number to end on (NOT necessarily the number of steps to run for!).
+- `--ui <True|None|False>`: Whether to run the UI or run the simulation headless (no UI). There are two different headless modes: "None" runs in pure headless mode (no browser needed), whereas "False" runs in Chrome's builtin headless mode (needs [headless-chrome](https://developer.chrome.com/blog/headless-chrome) installed). Prefer "None" over "False" in normal cases.
+- `-p <PORT>`: The port to run the simulation on.
+- `--browser_path <BROWSER-PATH>`: The path to the UI in the browser.
 
 Example:
 ```bash
