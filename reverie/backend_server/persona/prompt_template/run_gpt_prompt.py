@@ -1630,7 +1630,8 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
 
 
 
-
+class SummarizeConversation(BaseModel):
+  summary: string
 
 def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None, verbose=False): 
   def create_prompt_input(conversation, test_input=None): 
@@ -1642,7 +1643,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    ret = "conversing about " + gpt_response.strip()
+    ret = "conversing about " + gpt_response.summary.strip()
     return ret
 
   def __func_validate(gpt_response, prompt=""): 
@@ -1659,7 +1660,7 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    ret = "conversing about " + gpt_response.strip()
+    ret = "conversing about " + gpt_response.summary.strip()
     return ret
 
   def __chat_func_validate(gpt_response, prompt=""): ############
