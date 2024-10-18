@@ -4,13 +4,12 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 File: execute.py
 Description: This defines the "Act" module for generative agents. 
 """
-import sys
 import random
-sys.path.append('../../')
 
-from global_methods import *
-from path_finder import *
-from utils import *
+import sys
+sys.path.append('../../')
+from path_finder import path_finder
+from utils import collision_block_id
 
 def execute(persona, maze, personas, plan): 
   """

@@ -8,22 +8,26 @@ interface with the safe_generate_response function.
 
 import re
 import datetime
-import sys
 import ast
 import copy
 import json
 from pathlib import Path
 import random
 import string
-from typing import Tuple
 import traceback
 from pydantic import BaseModel
 
+import sys
 sys.path.append('../../')
-
-from global_methods import *
-from persona.prompt_template.gpt_structure import *
-from persona.prompt_template.print_prompt import *
+from utils import debug
+from persona.prompt_template.gpt_structure import (
+  ChatGPT_safe_generate_response,
+  ChatGPT_safe_generate_response_OLD,
+  generate_prompt,
+  safe_generate_response,
+  generate_structured_response,
+)
+from persona.prompt_template.print_prompt import print_run_prompts
 
 config_path = Path("../../openai_config.json")
 with open(config_path, "r") as f:
