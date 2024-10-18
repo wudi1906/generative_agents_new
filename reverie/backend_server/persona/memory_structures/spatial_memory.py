@@ -119,10 +119,3 @@ if __name__ == '__main__':
   x.print_tree()
 
   print (x.get_str_accessible_sector_arenas("dolores double studio:double studio"))
-
-
-
-
-
-
-

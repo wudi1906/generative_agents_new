@@ -326,30 +326,3 @@ class AssociativeMemory:
       return self.kw_to_chat[target_persona_name.lower()][0]
     else: 
       return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
