@@ -1370,16 +1370,16 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-
+class DecideToReact(BaseModel):
+  decision: int
 
 def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input=None, 
                                        verbose=False): 
   def create_prompt_input(init_persona, target_persona, retrieved, 
                           test_input=None): 
 
+
     
-
-
     context = ""
     for c_node in retrieved["events"]: 
       curr_desc = c_node.description.split(" ")
@@ -1435,7 +1435,8 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
   
   def __func_validate(gpt_response, prompt=""): 
     try: 
-      if gpt_response.split("Answer: Option")[-1].strip().lower() in ["3", "2", "1"]: 
+      #if gpt_response.split("Answer: Option")[-1].strip().lower() in ["3", "2", "1"]: 
+      if gpt_response.decision in [1,2,3]:
         return True
       return False     
     except:
@@ -1443,10 +1444,11 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
       return False 
 
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split("Answer: Option")[-1].strip().lower() 
-
+    #return gpt_response.split("Answer: Option")[-1].strip().lower() 
+    return gpt_response.decision
   def get_fail_safe(): 
-    fs = "3"
+    #fs = "3"
+    fs = 3
     return fs
 
 
@@ -1459,9 +1461,16 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
-
+  #output = safe_generate_response(prompt, gpt_param, 5, fail_safe, __func_validate, __func_clean_up)
+  output = generate_structured_response(
+        prompt,
+        gpt_param,
+        DecideToReact,
+        5,
+        fail_safe,
+        __func_validate,
+        __func_clean_up
+    )
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
                       prompt_input, prompt, output)
