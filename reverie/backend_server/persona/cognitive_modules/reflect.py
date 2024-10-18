@@ -86,24 +86,24 @@ def generate_poig_score(persona, event_type, description):
   if "is idle" in description: 
     return 1
 
-    if event_type == "event" or event_type == "thought":
-        response = run_gpt_prompt_event_poignancy(persona, description)
-        if response:
-            return response[0]
-        else:
-            print(
-                "ERROR: <generate_poig_score> in reflect.py: Could not get event/thought poignancy."
-            )
-    elif event_type == "chat":
-        response = run_gpt_prompt_chat_poignancy(
-            persona, persona.scratch.act_description
-        )
-        if response:
-            return response[0]
-        else:
-            print(
-                "ERROR: <generate_poig_score> in reflect.py: Could not get chat poignancy."
-            )
+  if event_type == "event" or event_type == "thought":
+    response = run_gpt_prompt_event_poignancy(persona, description)
+    if response:
+      return response[0]
+    else:
+      print(
+        "ERROR: <generate_poig_score> in reflect.py: Could not get event/thought poignancy."
+      )
+  elif event_type == "chat":
+    response = run_gpt_prompt_chat_poignancy(
+      persona, persona.scratch.act_description
+    )
+    if response:
+      return response[0]
+    else:
+      print(
+        "ERROR: <generate_poig_score> in reflect.py: Could not get chat poignancy."
+      )
 
 
 def generate_planning_thought_on_convo(persona, all_utt):
