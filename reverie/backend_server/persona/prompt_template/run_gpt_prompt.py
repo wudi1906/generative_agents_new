@@ -1889,7 +1889,8 @@ def run_gpt_prompt_convo_to_thoughts(persona,
 
 
 
-
+class EventPoignancy(BaseModel):
+    rating: int  # Expecting an integer between 1 and 10
 
 def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, verbose=False): 
   def create_prompt_input(persona, event_description, test_input=None): 
@@ -1900,8 +1901,8 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = int(gpt_response.strip())
-    return gpt_response
+    #gpt_response = int(gpt_response)
+    return gpt_response.rating
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1918,8 +1919,8 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+    #gpt_response = int(gpt_response)
+    return gpt_response.rating
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
@@ -1939,8 +1940,8 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   example_output = "5" ########
   special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  #output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,__chat_func_validate, __chat_func_clean_up, True)
+  output = generate_structured_response(prompt, example_output, special_instruction, 3, fail_safe,__chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
