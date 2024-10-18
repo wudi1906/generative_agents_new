@@ -7,14 +7,10 @@ world in a 2-dimensional matrix.
 """
 
 import json
-import numpy
-import datetime
-import pickle
-import time
 import math
 
-from global_methods import *
-from utils import *
+from global_methods import read_file_to_list
+from utils import env_matrix
 
 class Maze: 
   def __init__(self, maze_name): 
@@ -381,37 +377,3 @@ class Maze:
     for event in curr_tile_ev_cp: 
       if event[0] == subject:  
         self.tiles[tile[1]][tile[0]]["events"].remove(event)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
