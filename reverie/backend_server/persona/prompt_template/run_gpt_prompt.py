@@ -1906,8 +1906,11 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
+      rating = __func_clean_up(gpt_response, prompt)
+      if rating>=1 and rating <=10:
+        return True
+      else:
+        return False
     except:
       traceback.print_exc()
       return False 
@@ -1924,8 +1927,11 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
+      rating = __func_clean_up(gpt_response, prompt)
+      if rating>=1 and rating <=10:
+        return True
+      else:
+        return False
     except:
       traceback.print_exc()
       return False 
