@@ -1371,6 +1371,9 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
 
 
 class DecideToReact(BaseModel):
+  '''
+  Should be a decision 1,2, or 3
+  '''
   decision: int
 
 def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input=None, 
@@ -2799,31 +2802,53 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class SafetyScore(BaseModel):
+    #safety score should range 1-10
+    output: int
 
+def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False):
+  """
+    Given the persona and a comment, returns a structured response containing
+    the safety score.
 
-def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False): 
+    INPUT: 
+      persona: The Persona class instance
+      comment: A comment that will be used to generate the safety score
+    OUTPUT: 
+      Structured output containing the safety score
+    """
   def create_prompt_input(comment, test_input=None):
     prompt_input = [comment]
     return prompt_input
 
   def __chat_func_clean_up(gpt_response, prompt=""): 
-    gpt_response = json.loads(gpt_response)
-    return gpt_response["output"]
+    #gpt_response = json.loads(gpt_response)
+    #return gpt_response["output"]
+    if isinstance(gpt_response.output, int) and 1 <= gpt_response.output <= 10:
+      return gpt_response.output
+    raise ValueError("Output is not a valid integer between 1 and 10")
 
   def __chat_func_validate(gpt_response, prompt=""): 
-    try: 
+    try:
+      '''
       fields = ["output"]
       response = json.loads(gpt_response)
       for field in fields: 
         if field not in response: 
           return False
       return True
+      '''
+      __chat_func_clean_up(gpt_response)
     except:
       traceback.print_exc()
       return False 
 
   def get_fail_safe():
-    return None
+    '''
+    Provides a baseline safety score of 5
+    '''
+    #return None
+    return 5 #more neutral score for safety as returning None may cause errors
 
   print ("11")
   prompt_template = "persona/prompt_template/safety/anthromorphosization_v1.txt" 
@@ -2832,8 +2857,16 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
   prompt = generate_prompt(prompt_input, prompt_template)
   print (prompt)
   fail_safe = get_fail_safe() 
-  output = ChatGPT_safe_generate_response_OLD(prompt, 3, fail_safe,
-                        __chat_func_validate, __chat_func_clean_up, verbose)
+  #output = ChatGPT_safe_generate_response_OLD(prompt, 3, fail_safe,__chat_func_validate, __chat_func_clean_up, verbose)
+  output = generate_structured_response(
+        prompt,
+        gpt_param,
+        SafetyScore,
+        3,
+        fail_safe,
+        __chat_func_validate,
+        __chat_func_clean_up
+    )
   print (output)
   
   gpt_param = {"engine": openai_config["model"], "max_tokens": 50, 
