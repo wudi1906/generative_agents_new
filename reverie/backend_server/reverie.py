@@ -102,7 +102,8 @@ class ReverieServer:
     # <maze> is the main Maze instance. Note that we pass in the maze_name
     # (e.g., "double_studio") to instantiate Maze. 
     # e.g., Maze("double_studio")
-    self.maze = Maze(reverie_meta['maze_name'])
+    self.block_remaps = reverie_meta['block_remaps'] if 'block_remaps' in reverie_meta else None
+    self.maze = Maze(reverie_meta['maze_name'], self.block_remaps)
     
     # <step> denotes the number of steps that our game has taken. A step here
     # literally translates to the number of moves our personas made in terms
@@ -193,6 +194,7 @@ class ReverieServer:
     reverie_meta["maze_name"] = self.maze.maze_name
     reverie_meta["persona_names"] = list(self.personas.keys())
     reverie_meta["step"] = self.step
+    reverie_meta["block_remaps"] = self.block_remaps
     reverie_meta_f = f"{sim_folder}/reverie/meta.json"
     with open(reverie_meta_f, "w") as outfile: 
       outfile.write(json.dumps(reverie_meta, indent=2))
@@ -452,22 +454,38 @@ class ReverieServer:
             for plugin in plugins:
               plugin_path = f"{sim_folder}/plugins/{plugin}"
               prompt_files = os.listdir(f"{plugin_path}/prompt_template")
+              plugin_config_path = f"{plugin_path}/config.json"
 
-              for prompt_file in prompt_files:
-                prompt_file_path = (
-                  f"{plugin_path}/prompt_template/{prompt_file}"
-                )
-                response = run_plugin(
-                  prompt_file_path,
-                  movements,
-                  self.personas,
-                )
+              with open(plugin_config_path) as plugin_config_file:
+                plugin_config = json.load(plugin_config_file)
 
-                with open(
-                  f"{plugin_path}/output/{self.step}-{prompt_file}.json",
-                  "w",
-                ) as outfile:
-                  outfile.write(json.dumps(response, indent=2))
+              # Currently only works for 2-agent sims
+              conversation = list(movements["persona"].values())[0]["chat"]
+
+              time_condition = self.curr_time.time() >= datetime.datetime.strptime(
+                  plugin_config["run_between"]["start_time"], "%H:%M:%S"
+                ).time() and self.curr_time.time() <= datetime.datetime.strptime(
+                  plugin_config["run_between"]["end_time"], "%H:%M:%S"
+                ).time()
+              conversation_condition = (True if not plugin_config["conversations_only"]
+                else (True if conversation else False))
+
+              if (time_condition and conversation_condition):
+                for prompt_file in prompt_files:
+                  prompt_file_path = (
+                    f"{plugin_path}/prompt_template/{prompt_file}"
+                  )
+                  response = run_plugin(
+                    prompt_file_path,
+                    movements,
+                    self.personas,
+                  )
+
+                  with open(
+                    f"{plugin_path}/output/{self.step}-{prompt_file}.json",
+                    "w",
+                  ) as outfile:
+                    outfile.write(json.dumps(response, indent=2))
 
           # If we're running in headless mode, also create the environment file
           # to immediately trigger the next simulation step

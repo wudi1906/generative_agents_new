@@ -13,6 +13,7 @@ _______________________________________
 1. [Setup](#setting-up-the-environment)
 2. [Execution](#running-a-simulation)
 3. [Cost-Tracking](#cost-tracking)
+4. [Customizing the Map](#customizing-the-map)
 _______________________________________
 
 ## Setting Up The Environment
@@ -126,7 +127,7 @@ The following script offer a range of enhanced features:
 - **Headless Mode**: The scripts support running simulations in headless mode, enabling execution on a server without a UI.
 - **Configurable Port Number**: You can configure the port number as needed.
 
-For more details, refer to: [run_backend_automatic.sh](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/run_backend_automatic.sh) and [automatic_execution.py](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/reverie/backend_server/automatic_execution.py).
+For more details, refer to: [run_backend_automatic.sh](run_backend_automatic.sh) and [automatic_execution.py](reverie/backend_server/automatic_execution.py).
 ```bash
     ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
 ```
@@ -156,7 +157,7 @@ For a more detailed explanation see the [original readme](README_origin.md).
 
 For the cost tracking is used the package "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)". Given the possible high cost of a simulation,  you can set a cost upperbound in the config file to be able to raise an exception and stop the execution when it is reached.
 
-See all the details of your expenses using the notebook "[cost_viz.ipynb](https://github.com/drudilorenzo/generative_agents/blob/main/cost_viz.ipynb)."
+See all the details of your expenses using the notebook "[cost_viz.ipynb](cost_viz.ipynb)."
 
 ## Cost Assessment
 
@@ -170,7 +171,7 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](https:
 
 ### 2. base_the_ville_n25
 
-- See the simulation saved: [skip-morning-s-14](https://github.com/drudilorenzo/generative_agents/tree/fix-and-improve/environment/frontend_server/storage/skip-morning-s-14)
+- See the simulation saved: [skip-morning-s-14](environment/frontend_server/storage/skip-morning-s-14)
 - **Model**: "gpt-3.5-turbo-0125"
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 25
@@ -184,3 +185,44 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](https:
 - **N. Agents**: 25
 - **Steps**: ~8650 (full day)
 - **Final Cost**: ~18.5 USD
+
+## Customizing the Map
+
+The default simulation map, "The Ville", is a small town with locations such as a college, apartments, a cafe, a market, etc. The full list of locations and objects in this map are contained in the following files: [`sector_blocks.csv`](environment/frontend_server/static_dirs/assets/the_ville/matrix/special_blocks/sector_blocks.csv), [`arena_blocks.csv`](environment/frontend_server/static_dirs/assets/the_ville/matrix/special_blocks/arena_blocks.csv), and [`game_object_blocks.csv`](environment/frontend_server/static_dirs/assets/the_ville/matrix/special_blocks/game_object_blocks.csv). These are organized in a rough hierarchy: sector blocks roughly define buildings, arena blocks define rooms in buildings, and game object blocks define objects or areas in rooms.
+
+To fully overhaul the map for your own customized simulation, you'd probably need to use the Tiled map editor as described in the [original repo's README](README_origin.md). This repo has added a shortcut method of customizing the map: renaming locations and objects that already exist in the Ville map.
+
+To use this feature, add a `block_remaps` property to your simulation's `meta.json` file. Here's an example of remapping the supply store to be a fire station instead:
+
+```json
+{
+  "fork_sim_code": "base_the_ville_isabella_maria_klaus",
+  "start_date": "February 13, 2023",
+  "curr_time": "February 13, 2023, 00:00:00",
+  "sec_per_step": 10,
+  "maze_name": "the_ville",
+  "persona_names": [
+    "Isabella Rodriguez",
+    "Maria Lopez",
+    "Klaus Mueller"
+  ],
+  "step": 0,
+  "block_remaps": {
+    "sector": {
+      "Harvey Oak Supply Store": "Fire station"
+    },
+    "arena": {
+      "supply store": "fire station"
+    },
+    "game_object": {
+      "supply store product shelf": "fire truck",
+      "supply store counter": "common area",
+      "behind the supply store counter": "bunks"
+    }
+  }
+}
+```
+
+When using this feature, reference the existing blocks in the blocks CSVs listed above. **Make sure to spell and case everything exactly as they are in those files!**
+
+After remapping locations and objects in `meta.json`, you'll also need to rename them in each agent's `spatial_memory.json` file too, if they're referenced. This file defines what locations the agent is already aware of when the simulation starts. For instance, here's a link to Isabella's spatial memory file for the `base_the_ville_isabella_maria_klaus` simulation: [`spatial_memory.json`](environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/personas/Isabella%20Rodriguez/bootstrap_memory/spatial_memory.json). Also, if a particular location is referenced in an agent's `scratch.json`, you'll need to update that too: [`scratch.json`](environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/personas/Isabella%20Rodriguez/bootstrap_memory/scratch.json).
