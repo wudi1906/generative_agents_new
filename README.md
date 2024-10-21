@@ -127,7 +127,7 @@ The following script offer a range of enhanced features:
 - **Headless Mode**: The scripts support running simulations in headless mode, enabling execution on a server without a UI.
 - **Configurable Port Number**: You can configure the port number as needed.
 
-For more details, refer to: [run_backend_automatic.sh](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/run_backend_automatic.sh) and [automatic_execution.py](https://github.com/drudilorenzo/generative_agents/blob/fix-and-improve/reverie/backend_server/automatic_execution.py).
+For more details, refer to: [run_backend_automatic.sh](run_backend_automatic.sh) and [automatic_execution.py](automatic_execution.py).
 ```bash
     ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
 ```
@@ -157,7 +157,7 @@ For a more detailed explanation see the [original readme](README_origin.md).
 
 For the cost tracking is used the package "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)". Given the possible high cost of a simulation,  you can set a cost upperbound in the config file to be able to raise an exception and stop the execution when it is reached.
 
-See all the details of your expenses using the notebook "[cost_viz.ipynb](https://github.com/drudilorenzo/generative_agents/blob/main/cost_viz.ipynb)."
+See all the details of your expenses using the notebook "[cost_viz.ipynb](cost_viz.ipynb)."
 
 ## Cost Assessment
 
@@ -171,7 +171,7 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](https:
 
 ### 2. base_the_ville_n25
 
-- See the simulation saved: [skip-morning-s-14](https://github.com/drudilorenzo/generative_agents/tree/fix-and-improve/environment/frontend_server/storage/skip-morning-s-14)
+- See the simulation saved: [skip-morning-s-14](environment/frontend_server/storage/skip-morning-s-14)
 - **Model**: "gpt-3.5-turbo-0125"
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 25
