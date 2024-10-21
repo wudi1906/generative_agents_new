@@ -127,7 +127,7 @@ The following script offer a range of enhanced features:
 - **Headless Mode**: The scripts support running simulations in headless mode, enabling execution on a server without a UI.
 - **Configurable Port Number**: You can configure the port number as needed.
 
-For more details, refer to: [run_backend_automatic.sh](run_backend_automatic.sh) and [reverie/backend_server/automatic_execution.py](automatic_execution.py).
+For more details, refer to: [run_backend_automatic.sh](run_backend_automatic.sh) and [automatic_execution.py](reverie/backend_server/automatic_execution.py).
 ```bash
     ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
 ```
