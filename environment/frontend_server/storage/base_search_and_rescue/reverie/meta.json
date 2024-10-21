@@ -10,7 +10,7 @@
     "Klaus Mueller"    
   ],
   "step": 0,
-  "world_block_remaps": {
+  "block_remaps": {
     "sector": {
       "Harvey Oak Supply Store": "Fire station"
     },

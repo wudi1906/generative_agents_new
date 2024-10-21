@@ -14,10 +14,10 @@ from global_methods import read_file_to_list
 from utils import env_matrix
 
 class Maze:
-  def __init__(self, maze_name, remaps: Union[dict, None] = None):
+  def __init__(self, maze_name, block_remaps: Union[dict, None] = None):
     # READING IN THE BASIC META INFORMATION ABOUT THE MAP
     self.maze_name = maze_name
-    self.remaps = remaps
+    self.block_remaps = block_remaps
     # Reading in the meta information about the world. If you want tp see the
     # example variables, check out the maze_meta_info.json file. 
     meta_info = json.load(open(f"{env_matrix}/maze_meta_info.json"))
@@ -53,12 +53,12 @@ class Maze:
     _sb = blocks_folder + "/sector_blocks.csv"
     sb_rows = read_file_to_list(_sb, header=False)
     # Apply any applicable sector remaps
-    if remaps is not None:
+    if block_remaps is not None:
       new_sb_rows = []
       for row in sb_rows:
         new_row = row.copy()
-        if row[2] in remaps["sector"]:
-          new_row[2] = remaps["sector"][row[2]]
+        if row[2] in block_remaps["sector"]:
+          new_row[2] = block_remaps["sector"][row[2]]
         new_sb_rows.append(new_row)
       sb_rows = new_sb_rows
     sb_dict = dict()
@@ -67,14 +67,14 @@ class Maze:
     _ab = blocks_folder + "/arena_blocks.csv"
     ab_rows = read_file_to_list(_ab, header=False)
     # Apply any applicable arena remaps
-    if remaps is not None:
+    if block_remaps is not None:
       new_ab_rows = []
       for row in ab_rows:
         new_row = row.copy()
-        if row[2] in remaps["sector"]:
-          new_row[2] = remaps["sector"][row[2]]
-        if row[3] in remaps["arena"]:
-          new_row[3] = remaps["arena"][row[3]]
+        if row[2] in block_remaps["sector"]:
+          new_row[2] = block_remaps["sector"][row[2]]
+        if row[3] in block_remaps["arena"]:
+          new_row[3] = block_remaps["arena"][row[3]]
         new_ab_rows.append(new_row)
       ab_rows = new_ab_rows
     ab_dict = dict()
@@ -83,12 +83,12 @@ class Maze:
     _gob = blocks_folder + "/game_object_blocks.csv"
     gob_rows = read_file_to_list(_gob, header=False)
     # Apply any applicable game object remaps
-    if remaps is not None:
+    if block_remaps is not None:
       new_gob_rows = []
       for row in gob_rows:
         new_row = row.copy()
-        if row[3] in remaps["game_object"]:
-          new_row[3] = remaps["game_object"][row[3]]
+        if row[3] in block_remaps["game_object"]:
+          new_row[3] = block_remaps["game_object"][row[3]]
         new_gob_rows.append(new_row)
       gob_rows = new_gob_rows
     gob_dict = dict()

@@ -102,7 +102,7 @@ class ReverieServer:
     # <maze> is the main Maze instance. Note that we pass in the maze_name
     # (e.g., "double_studio") to instantiate Maze. 
     # e.g., Maze("double_studio")
-    self.block_remaps = reverie_meta['world_block_remaps'] if 'world_block_remaps' in reverie_meta else None
+    self.block_remaps = reverie_meta['block_remaps'] if 'block_remaps' in reverie_meta else None
     self.maze = Maze(reverie_meta['maze_name'], self.block_remaps)
     
     # <step> denotes the number of steps that our game has taken. A step here
@@ -194,7 +194,7 @@ class ReverieServer:
     reverie_meta["maze_name"] = self.maze.maze_name
     reverie_meta["persona_names"] = list(self.personas.keys())
     reverie_meta["step"] = self.step
-    reverie_meta["world_block_remaps"] = self.block_remaps
+    reverie_meta["block_remaps"] = self.block_remaps
     reverie_meta_f = f"{sim_folder}/reverie/meta.json"
     with open(reverie_meta_f, "w") as outfile: 
       outfile.write(json.dumps(reverie_meta, indent=2))
