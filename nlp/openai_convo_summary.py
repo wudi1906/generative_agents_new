@@ -4,7 +4,6 @@
 ##import libraries
 import sys
 from openai import OpenAI
-from reverie.backend_server.utils import *
 
 client = OpenAI(api_key="Your API Key Here")
 
