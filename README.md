@@ -194,7 +194,7 @@ To fully overhaul the map for your own customized simulation, you'd probably nee
 
 To use this feature, add a `block_remaps` property to your simulation's `meta.json` file. Here's an example of remapping the supply store to be a fire station instead:
 
-```
+```json
 {
   "fork_sim_code": "base_the_ville_isabella_maria_klaus",
   "start_date": "February 13, 2023",
