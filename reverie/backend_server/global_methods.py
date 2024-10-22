@@ -5,16 +5,9 @@ File: global_methods.py
 Description: Contains functions used throughout my projects.
 """
 
-import random
-import string
 import csv
-import time
-import datetime as dt
-import pathlib
 import os
-import sys
 import numpy
-import math
 import shutil, errno
 from typing import TextIO
 
@@ -234,27 +227,6 @@ def copyanything(src, dst):
       shutil.copy(src, dst)
     else:
       raise
-
-
-# Anything written to this logger object will be written
-# to both stdout and a logfile
-class Logger(object):
-  def __init__(self, logfile_path: str, std_channel: TextIO):
-    self.terminal = std_channel
-    self.logfile = open(logfile_path, "a")
-
-  def write(self, message):
-    self.terminal.write(message)
-    self.terminal.flush()
-    self.logfile.write(message)
-
-  def flush(self):
-    self.terminal.flush()
-    self.logfile.flush()
-
-  def __del__(self):
-    self.flush()
-    self.logfile.close()
 
 
 def freeze(value):
