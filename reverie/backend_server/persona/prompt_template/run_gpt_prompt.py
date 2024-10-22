@@ -2721,6 +2721,8 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class Convo_Takeaways(BaseModel):
+  takeaway: str
 
 def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=False): 
   def create_prompt_input(persona, all_utt, test_input=None): 
@@ -2765,8 +2767,17 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   example_output = 'Jane Doe was interesting to talk to.' ########
   special_instruction = 'The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  
+  #output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe, __chat_func_validate, __chat_func_clean_up, True)
+  output = generate_structured_response(
+    prompt,
+    gpt_param,
+    Convo_Takeaways,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
