@@ -205,7 +205,7 @@ def ChatGPT_structured_request(prompt, response_format):
   print("Prompt:", prompt)
 
   try: 
-    completion = client.chat.completions.create(
+    completion = client.beta.chat.completions.parse(
       model=openai_config["model"],
       response_format=response_format,
       messages=[{"role": "user", "content": prompt}]
