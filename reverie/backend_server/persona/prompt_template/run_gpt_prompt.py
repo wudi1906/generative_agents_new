@@ -1012,7 +1012,8 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class prompt_act_obj_desc(BaseModel):
+  desc: str
 def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_desp, persona): 
     prompt_input = [act_game_object, 
@@ -1038,7 +1039,7 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    cr = gpt_response.strip()
+    cr = gpt_response.desc.strip()
     if cr[-1] == ".": cr = cr[:-1]
     return cr
 
