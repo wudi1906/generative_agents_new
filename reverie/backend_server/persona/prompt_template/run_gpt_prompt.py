@@ -535,6 +535,23 @@ def run_gpt_prompt_task_decomp(persona,
     
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
+class ActionLoc(BaseModel):
+    '''
+    Action Location class to be used for action sector and action arena
+    Takes in "Answer: {name}" and reduces to just name.
+    Also hanldes an input of {name}
+    '''
+    name: str
+
+    # Validator to clean up input and ensure only arena name is stored
+    @validator('name', pre=True)
+    def extract_name(cls, value):
+        if value.startswith("Answer:"):
+            # Remove "Answer:" prefix and strip surrounding spaces
+            value = value[len("Answer:"):].strip()
+            # Remove surrounding curly brackets if present
+        value = re.sub(r'^\{|\}$', '', value).strip()
+        return value.strip()  # Ensure no leading or trailing spaces
 
 def run_gpt_prompt_action_sector(action_description, 
                                 persona, 
@@ -592,15 +609,18 @@ def run_gpt_prompt_action_sector(action_description,
     prompt_input += [persona.scratch.get_str_name()]
     return prompt_input
 
+
   def __func_clean_up(gpt_response, prompt=""):
-    return ''.join(gpt_response.split("}")[0]).strip().strip("{").strip()
+    #return ''.join(gpt_response.split("}")[0]).strip().strip("{").strip()
+    return gpt_response.name
 
   def __func_validate(gpt_response, prompt=""): 
-    if len(gpt_response.strip()) < 1: 
+    sector = __func_clean_up(gpt_response)
+    if len(sector.strip()) < 1: 
       return False
-    if "}" not in gpt_response:
+    if "}" in sector:
       return False
-    if "," in gpt_response: 
+    if "," in sector: 
       return False
     return True
   
@@ -660,15 +680,7 @@ def run_gpt_prompt_action_sector(action_description,
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-class action_arena(BaseModel):
-  '''
-  Your answer is a dictionary of the form {"answer":"arena"}
-  '''
-  answer: dict[str,str]
-  @validator('answer', pre=True)
-  def strip_whitespace_from_dict(cls, value):
-      # Strip spaces from both keys and values
-      return {key.strip(): val.strip() for key, val in value.items()}
+
   
 def run_gpt_prompt_action_arena(action_description, 
                                 persona, 
@@ -725,25 +737,16 @@ def run_gpt_prompt_action_arena(action_description,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    #arena = gpt_response.strip().strip("Answer:").strip().strip("{}").strip()
-    arena=gpt_response.answer.get("Answer",0)
-    if not arena:
-      raise ValueError("No Answer Key value provided (incorrect format)")
-    return arena
+    #arena = gpt_response.answer.strip().strip("Answer:").strip().strip("{}").strip()
+    return gpt_response.name
 
   def __func_validate(gpt_response, prompt=""): 
-    '''
-    if len(gpt_response.strip()) < 1: 
+    arena = __func_clean_up(gpt_response)
+    if len(arena.strip()) < 1: 
       return False
-    if "}" not in gpt_response:
+    if "}" in arena:
       return False
-    if "," in gpt_response: 
-      return False
-    return True
-    '''
-    try: __func_clean_up(gpt_response, prompt="")
-    except:
-      traceback.print_exc()
+    if "," in arena: 
       return False
     return True
   
