@@ -17,7 +17,7 @@ import random
 import string
 from typing import Tuple
 import traceback
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import List
 
 sys.path.append('../../')
@@ -660,7 +660,16 @@ def run_gpt_prompt_action_sector(action_description,
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class action_arena(BaseModel):
+  '''
+  Your answer is a dictionary of the form {"answer":"arena"}
+  '''
+  answer: dict[str,str]
+  @validator('answer', pre=True)
+  def strip_whitespace_from_dict(cls, value):
+      # Strip spaces from both keys and values
+      return {key.strip(): val.strip() for key, val in value.items()}
+  
 def run_gpt_prompt_action_arena(action_description, 
                                 persona, 
                                 maze, act_world, act_sector,
@@ -716,15 +725,25 @@ def run_gpt_prompt_action_arena(action_description,
     return prompt_input
 
   def __func_clean_up(gpt_response, prompt=""):
-    arena = gpt_response.strip().strip("Answer:").strip().strip("{}").strip()
+    #arena = gpt_response.strip().strip("Answer:").strip().strip("{}").strip()
+    arena=gpt_response.answer.get("Answer",0)
+    if not arena:
+      raise ValueError("No Answer Key value provided (incorrect format)")
     return arena
 
   def __func_validate(gpt_response, prompt=""): 
+    '''
     if len(gpt_response.strip()) < 1: 
       return False
     if "}" not in gpt_response:
       return False
     if "," in gpt_response: 
+      return False
+    return True
+    '''
+    try: __func_clean_up(gpt_response, prompt="")
+    except:
+      traceback.print_exc()
       return False
     return True
   
@@ -740,8 +759,8 @@ def run_gpt_prompt_action_arena(action_description,
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up, verbose=False)
+  #output = safe_generate_response(prompt, gpt_param, 5, fail_safe,__func_validate, __func_clean_up, verbose=False)
+  output = generate_structured_response(prompt, gpt_param, action_arena ,5, fail_safe,__func_validate, __func_clean_up, verbose=False)
   print (output)
   # y = f"{act_world}:{act_sector}"
   # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
