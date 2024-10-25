@@ -17,7 +17,7 @@ import random
 import string
 from typing import Tuple
 import traceback
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from typing import List
 
 sys.path.append('../../')
@@ -544,7 +544,7 @@ class ActionLoc(BaseModel):
     name: str
 
     # Validator to clean up input and ensure only arena name is stored
-    @validator('name', pre=True)
+    @field_validator('name', pre=True)
     def extract_name(cls, value):
         if value.startswith("Answer:"):
             # Remove "Answer:" prefix and strip surrounding spaces
@@ -662,10 +662,9 @@ def run_gpt_prompt_action_sector(action_description,
   prompt_template = "persona/prompt_template/v1/action_location_sector_v1.txt"
   prompt_input = create_prompt_input(action_description, persona, maze)
   prompt = generate_prompt(prompt_input, prompt_template)
-
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  #output = safe_generate_response(prompt, gpt_param, 5, fail_safe, __func_validate, __func_clean_up)
+  output = generate_structured_response(prompt, gpt_param, ActionLoc ,5, fail_safe,__func_validate, __func_clean_up, verbose=False)
   y = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
   x = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(y).split(",")]
   if output not in x: 
@@ -763,7 +762,7 @@ def run_gpt_prompt_action_arena(action_description,
 
   fail_safe = get_fail_safe()
   #output = safe_generate_response(prompt, gpt_param, 5, fail_safe,__func_validate, __func_clean_up, verbose=False)
-  output = generate_structured_response(prompt, gpt_param, action_arena ,5, fail_safe,__func_validate, __func_clean_up, verbose=False)
+  output = generate_structured_response(prompt, gpt_param, ActionLoc ,5, fail_safe,__func_validate, __func_clean_up, verbose=False)
   print (output)
   # y = f"{act_world}:{act_sector}"
   # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
@@ -1012,8 +1011,16 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-class prompt_act_obj_desc(BaseModel):
+class ObjDesc(BaseModel):
   desc: str
+
+  @field_validator("desc")
+  def max_token_limit(cls, value):
+      # Split text by whitespace to count words (tokens)
+      tokens = value.split()
+      if len(tokens) > 15:
+          raise ValueError("Text exceeds the maximum limit of 15 tokens.")
+      return value
 def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False): 
   def create_prompt_input(act_game_object, act_desp, persona): 
     prompt_input = [act_game_object, 
@@ -1052,7 +1059,8 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
     return True 
 
   print ("DEBUG 6") ########
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
+  #max tokens bumped up to 100 due to parsing issues
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100, 
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v3_ChatGPT/generate_obj_event_v1.txt" ########
@@ -1061,8 +1069,8 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   example_output = "being fixed" ########
   special_instruction = "The output should ONLY contain the phrase that should go in <fill in>." ########
   fail_safe = get_fail_safe(act_game_object) ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  #output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,__chat_func_validate, __chat_func_clean_up, True)
+  output = generate_structured_response(prompt, gpt_param, ObjDesc ,5, fail_safe,__chat_func_validate, __chat_func_clean_up, verbose=False)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
@@ -1654,7 +1662,7 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
 
 
 class SummarizeConversation(BaseModel):
-  summary: string
+  summary: str
 
 def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None, verbose=False): 
   def create_prompt_input(conversation, test_input=None): 
