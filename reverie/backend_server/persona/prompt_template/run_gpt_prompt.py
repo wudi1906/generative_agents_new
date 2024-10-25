@@ -548,7 +548,7 @@ class ActionLoc(BaseModel):
     name: str
 
     # Validator to clean up input and ensure only arena name is stored
-    @field_validator('name', pre=True)
+    @field_validator('name')
     def extract_name(cls, value):
         if value.startswith("Answer:"):
             # Remove "Answer:" prefix and strip surrounding spaces
