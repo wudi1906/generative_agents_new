@@ -35,8 +35,6 @@ def main():
     response = client.chat.completions.create(
 <<<<<<< HEAD
         model="gpt-4o-mini",
-=======
-        model="gpt-4-mini",
 >>>>>>> fd498e0b (adjusting for gpt-4-mini and setup)
         messages=[
             {
