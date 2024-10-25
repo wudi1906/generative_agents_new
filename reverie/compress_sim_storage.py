@@ -6,7 +6,7 @@ Description: Compresses a simulation for replay demos.
 """
 import shutil
 import json
-from global_methods import *
+from global_methods import create_folder_if_not_there, find_filenames
 
 def compress(sim_code):
   sim_storage = f"../environment/frontend_server/storage/{sim_code}"

@@ -6,11 +6,10 @@ Description: Defines the MemoryTree class that serves as the agents' spatial
 memory that aids in grounding their behavior in the game world. 
 """
 import json
+
 import sys
 sys.path.append('../../')
-
-from utils import *
-from global_methods import *
+from global_methods import check_if_file_exists
 
 class MemoryTree: 
   def __init__(self, f_saved): 
@@ -120,10 +119,3 @@ if __name__ == '__main__':
   x.print_tree()
 
   print (x.get_str_accessible_sector_arenas("dolores double studio:double studio"))
-
-
-
-
-
-
-
