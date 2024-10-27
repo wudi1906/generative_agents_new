@@ -575,8 +575,9 @@ def generate_structured_response(
           prompt=prompt
         ):
           return func_clean_up(curr_gpt_response, prompt=prompt)
-        print("Response validation failed.")
-      except:
+        print("Response validation failed.", func_validate(curr_gpt_response,
+          prompt=prompt), curr_gpt_response.decision)
+      except Exception as e:
         print("Could not process response.")
       if verbose:
         print("---- repeat count: ", i, curr_gpt_response)

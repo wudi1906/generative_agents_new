@@ -176,7 +176,7 @@ def agent_chat_v2(maze, init_persona, target_persona):
     focal_points = [f"{target_persona.scratch.name}"]
     retrieved = new_retrieve(init_persona, focal_points, 50) 
     relationship = generate_summarize_agent_relationship(init_persona, target_persona, retrieved)
-    print ("-------- relationshopadsjfhkalsdjf", relationship)
+    print ("-------- relationship", relationship)
     last_chat = ""
     for i in curr_chat[-4:]:
       last_chat += ": ".join(i) + "\n"
