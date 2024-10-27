@@ -52,6 +52,30 @@ Create a file called `openai_config.json` in the root directory.
     "cost-upperbound": 10
 }
 ```
+<<<<<<< HEAD
+OpenAI example:
+```json
+{
+    "client": "openai", 
+    "model": "gpt-4-turbo",
+    "model-key": "<API-KEY>",
+    "model-costs": {
+        "input":  0.5,
+        "output": 1.5
+    },
+    "embeddings-client": "openai",
+    "embeddings": "text-embedding-3-small",
+    "embeddings-key": "<API-KEY>",
+    "embeddings-costs": {
+        "input": 0.02,
+        "output": 0.0
+    },
+    "experiment-name": "simulacra-test",
+    "cost-upperbound": 10
+}
+```
+=======
+>>>>>>> origin/chowington-search-and-rescue
 
 <<<<<<< HEAD
 Azure example:
