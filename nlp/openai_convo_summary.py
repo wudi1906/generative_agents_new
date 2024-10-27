@@ -4,7 +4,6 @@
 ##import libraries
 import sys
 from openai import OpenAI
-from reverie.backend_server.utils import *
 
 client = OpenAI(api_key="Your API Key Here")
 
@@ -34,7 +33,7 @@ def main():
     print(file_chunks[0])
 
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o-mini",
         messages=[
             {
                 "role": "system",
