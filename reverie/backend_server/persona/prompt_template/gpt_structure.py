@@ -10,7 +10,7 @@ from pathlib import Path
 import time
 import traceback
 from openai import AzureOpenAI, OpenAI
-from utils import openai_api_key, use_openai, api_model
+from utils import openai_api_key, use_openai
 from openai_cost_logger import DEFAULT_LOG_PATH
 from persona.prompt_template.openai_logger_singleton import OpenAICostLogger_Singleton
 
