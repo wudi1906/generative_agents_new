@@ -26,6 +26,7 @@ from persona.prompt_template.gpt_structure import (
   generate_prompt,
   safe_generate_response,
   generate_structured_response,
+  ChatGPT_generate_structured_response,
 )
 from persona.prompt_template.print_prompt import print_run_prompts
 
@@ -1271,7 +1272,8 @@ def run_gpt_prompt_new_decomp_schedule(persona,
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class Decide_to_Talk(BaseModel):
+  decision: str
 def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=None, 
                                        verbose=False): 
   def create_prompt_input(init_persona, target_persona, retrieved, 
@@ -1334,23 +1336,21 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
     prompt_input += [target_persona.name]
     return prompt_input
   
+  def __func_clean_up(gpt_response, prompt=""):
+    return gpt_response.decision
+  
   def __func_validate(gpt_response, prompt=""): 
     try: 
-      if gpt_response.split("Answer in yes or no:")[-1].strip().lower() in ["yes", "no"]: 
+      if __func_clean_up(gpt_response, prompt) in ["yes", "no"]: 
         return True
       return False     
     except:
       traceback.print_exc()
       return False 
-
-  def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split("Answer in yes or no:")[-1].strip().lower()
-
+    
   def get_fail_safe(): 
     fs = "yes"
     return fs
-
-
 
   gpt_param = {"engine": openai_config["model"], "max_tokens": 20, 
                "temperature": 0, "top_p": 1, "stream": False,
@@ -1361,8 +1361,7 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(prompt,gpt_param,Decide_to_Talk,5,fail_safe,__func_validate,__func_clean_up)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -2130,7 +2129,8 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class Idea_Summary(BaseModel):
+  idea_summary: str
 def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statements, curr_context, test_input=None, verbose=False): 
   def create_prompt_input(persona, target_persona, statements, curr_context, test_input=None): 
     prompt_input = [persona.scratch.get_str_curr_date_str(), curr_context, persona.scratch.currently, 
@@ -2138,7 +2138,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split('"')[0].strip()
+    return gpt_response.idea_summary
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -2173,8 +2173,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
   example_output = 'Jane Doe is working on a project' ########
   special_instruction = 'The output should be a string that responds to the question.' ########
   fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
+  output = ChatGPT_generate_structured_response(prompt, Idea_Summary, example_output, special_instruction, 3, fail_safe, __chat_func_validate, __chat_func_clean_up, True)
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # ChatGPT Plugin ===========================================================
@@ -2449,7 +2448,8 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class Next_Conversation_Line(BaseModel):
+  next_conversation_line: str
 def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_convo, retrieved_summary, test_input=None, verbose=False): 
   def create_prompt_input(persona, interlocutor_desc, prev_convo, retrieved_summary, test_input=None): 
     prompt_input = [persona.scratch.name, 
@@ -2463,7 +2463,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split('"')[0].strip()
+    return gpt_response.next_conversation_line
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -2511,8 +2511,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(prompt,gpt_param,Next_Conversation_Line,5,fail_safe,__func_validate,__func_clean_up)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -2557,14 +2556,15 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class Planning_Thought(BaseModel):
+  planning_thought: str
 def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, verbose=False): 
   def create_prompt_input(persona, all_utt, test_input=None): 
     prompt_input = [all_utt, persona.scratch.name, persona.scratch.name, persona.scratch.name]
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    return gpt_response.split('"')[0].strip()
+    return gpt_response.planning_thought
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -2585,8 +2585,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = generate_structured_response(prompt, gpt_param, Planning_Thought, 5, fail_safe, __func_validate,__func_clean_up)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
@@ -2594,7 +2593,8 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-
+class Convo_Takeaways(BaseModel):
+  takeaway: str
 def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=False): 
   def create_prompt_input(persona, all_utt, test_input=None): 
     prompt_input = [all_utt, persona.scratch.name, persona.scratch.name, persona.scratch.name]
@@ -2616,7 +2616,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    return gpt_response.strip()
+    return gpt_response.takeaway
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
@@ -2650,8 +2650,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+  output = ChatGPT_generate_structured_response(prompt, Convo_Takeaways,example_output, special_instruction, 3, fail_safe, __chat_func_validate, __chat_func_clean_up, True)
 
   if debug or verbose: 
     print_run_prompts(prompt_template, persona, gpt_param, 
