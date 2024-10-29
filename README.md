@@ -78,30 +78,6 @@ Azure example:
     "cost-upperbound": 10
 }
 ```
-<<<<<<< HEAD
-OpenAI example:
-```json
-{
-    "client": "openai", 
-    "model": "gpt-4-turbo",
-    "model-key": "<API-KEY>",
-    "model-costs": {
-        "input":  0.5,
-        "output": 1.5
-    },
-    "embeddings-client": "openai",
-    "embeddings": "text-embedding-3-small",
-    "embeddings-key": "<API-KEY>",
-    "embeddings-costs": {
-        "input": 0.02,
-        "output": 0.0
-    },
-    "experiment-name": "simulacra-test",
-    "cost-upperbound": 10
-}
-```
-=======
->>>>>>> origin/chowington-search-and-rescue
 
 Feel free to change and test also other models (and change accordingly the input and output costs). Note that this repo uses OpenAI's Structured Outputs feature, which is currently only available for certain models, like the GPT-4o series. Check the OpenAI docs for more info. \
 The generation and the embedding models are configured separately to be able to use different clients.\
