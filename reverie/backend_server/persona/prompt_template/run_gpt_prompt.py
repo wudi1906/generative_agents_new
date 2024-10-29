@@ -16,7 +16,6 @@ import random
 import string
 import traceback
 from pydantic import BaseModel, field_validator
-from typing import List
 
 import sys
 sys.path.append('../../')
@@ -118,7 +117,7 @@ def run_gpt_prompt_wake_up_hour(persona, test_input=None, verbose=False):
 
 
 class DailyPlan(BaseModel):
-  daily_plan: List[str]
+  daily_plan: list[str]
 
 def run_gpt_prompt_daily_plan(persona, 
                               wake_up_hour, 
@@ -196,7 +195,7 @@ class Activity(BaseModel):
   activity: str
 
 class HourlySchedule(BaseModel):
-  hourly_schedule: List[Activity]
+  hourly_schedule: list[Activity]
 
 def run_gpt_prompt_generate_hourly_schedule(
   persona,
@@ -342,7 +341,7 @@ class Subtask(BaseModel):
   minutes_left: int
 
 class TaskDecomposition(BaseModel):
-  subtasks: List[Subtask]
+  subtasks: list[Subtask]
 
 def run_gpt_prompt_task_decomp(persona, 
                                task, 
@@ -1152,7 +1151,7 @@ class NewActivity(BaseModel):
   subtask: str
 
 class NewSchedule(BaseModel):
-  schedule: List[NewActivity]
+  schedule: list[NewActivity]
 
 def run_gpt_prompt_new_decomp_schedule(persona, 
                                        main_act_dur, 
@@ -1638,13 +1637,6 @@ def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-
-
-
-
-
-
-
 def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None, verbose=False): 
   def create_prompt_input(conversation, test_input=None): 
     convo_str = ""
@@ -1858,29 +1850,6 @@ def run_gpt_prompt_convo_to_thoughts(persona,
                       prompt_input, prompt, output)
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, verbose=False): 

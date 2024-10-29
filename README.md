@@ -53,32 +53,6 @@ Create a file called `openai_config.json` in the root directory.
 }
 ```
 
-Azure example:
-```json
-{
-    "client": "azure", 
-    "model": "gpt-35-turbo-0125",
-    "model-key": "<API-KEY>",
-    "model-endpoint": "<MODEL-ENDPOINT>",
-    "model-api-version": "<API-VERSION>",
-    "model-costs": {
-        "input":  0.5,
-        "output": 1.5
-    },
-    "embeddings-client": "azure",
-    "embeddings": "text-embedding-3-small",
-    "embeddings-key": "<API-KEY>",
-    "embeddings-endpoint": "<EMBEDDING-MODEL-ENDPOINT>",
-    "embeddings-api-version": "<API-VERSION>",
-    "embeddings-costs": {
-        "input": 0.02,
-        "output": 0.0
-    },
-    "experiment-name": "simulacra-test",
-    "cost-upperbound": 10
-}
-```
-
 Feel free to change and test also other models (and change accordingly the input and output costs). Note that this repo uses OpenAI's Structured Outputs feature, which is currently only available for certain models, like the GPT-4o series. Check the OpenAI docs for more info. \
 The generation and the embedding models are configured separately to be able to use different clients.\
 Change also the `cost-upperbound` according to your needs (the cost computation is done using "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)" and the costs are specified per million tokens).
