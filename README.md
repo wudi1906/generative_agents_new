@@ -52,81 +52,7 @@ Create a file called `openai_config.json` in the root directory.
     "cost-upperbound": 10
 }
 ```
-<<<<<<< HEAD
-OpenAI example:
-```json
-{
-    "client": "openai", 
-    "model": "gpt-4-turbo",
-    "model-key": "<API-KEY>",
-    "model-costs": {
-        "input":  0.5,
-        "output": 1.5
-    },
-    "embeddings-client": "openai",
-    "embeddings": "text-embedding-3-small",
-    "embeddings-key": "<API-KEY>",
-    "embeddings-costs": {
-        "input": 0.02,
-        "output": 0.0
-    },
-    "experiment-name": "simulacra-test",
-    "cost-upperbound": 10
-}
-```
-=======
->>>>>>> origin/chowington-search-and-rescue
 
-<<<<<<< HEAD
-Azure example:
-```json
-{
-    "client": "azure", 
-    "model": "gpt-4o-mini",
-    "model-key": "<API-KEY>",
-    "model-endpoint": "<MODEL-ENDPOINT>",
-    "model-api-version": "<API-VERSION>",
-    "model-costs": {
-        "input":  0.5,
-        "output": 1.5
-    },
-    "embeddings-client": "azure",
-    "embeddings": "text-embedding-3-small",
-    "embeddings-key": "<API-KEY>",
-    "embeddings-endpoint": "<EMBEDDING-MODEL-ENDPOINT>",
-    "embeddings-api-version": "<API-VERSION>",
-    "embeddings-costs": {
-        "input": 0.02,
-        "output": 0.0
-    },
-    "experiment-name": "simulacra-test",
-    "cost-upperbound": 10
-}
-```
-OpenAI example:
-```json
-{
-    "client": "openai", 
-    "model": "gpt-4o-mini",
-    "model-key": "<API-KEY>",
-    "model-costs": {
-        "input":  0.5,
-        "output": 1.5
-    },
-    "embeddings-client": "openai",
-    "embeddings": "text-embedding-3-small",
-    "embeddings-key": "<API-KEY>",
-    "embeddings-costs": {
-        "input": 0.02,
-        "output": 0.0
-    },
-    "experiment-name": "simulacra-test",
-    "cost-upperbound": 10
-}
-```
-
-=======
->>>>>>> origin/dev
 Feel free to change and test also other models (and change accordingly the input and output costs). Note that this repo uses OpenAI's Structured Outputs feature, which is currently only available for certain models, like the GPT-4o series. Check the OpenAI docs for more info. \
 The generation and the embedding models are configured separately to be able to use different clients.\
 Change also the `cost-upperbound` according to your needs (the cost computation is done using "[openai-cost-logger](https://github.com/drudilorenzo/openai-cost-logger)" and the costs are specified per million tokens).
@@ -209,7 +135,7 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](cost_v
 
 ### 1. base_the_ville_isabella_maria_klaus
 
-- **Model**: "gpt-4o-mini"
+- **Model**: "gpt-3.5-turbo-0125"
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 3
 - **Steps**: ~5000
@@ -217,13 +143,8 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](cost_v
 
 ### 2. base_the_ville_n25
 
-<<<<<<< HEAD
-- See the simulation saved: [skip-morning-s-14](https://github.com/drudilorenzo/generative_agents/tree/fix-and-improve/environment/frontend_server/storage/skip-morning-s-14)
-- **Model**: "gpt-4o-mini"
-=======
 - See the simulation saved: [skip-morning-s-14](environment/frontend_server/storage/skip-morning-s-14)
 - **Model**: "gpt-3.5-turbo-0125"
->>>>>>> origin/dev
 - **Embeddings**: "text-embedding-3-small"
 - **N. Agents**: 25
 - **Steps**: ~3000 (until ~8 a.m.)
@@ -231,9 +152,9 @@ See all the details of your expenses using the notebook "[cost_viz.ipynb](cost_v
 
 ### 3. base_the_ville_n25
 
-- **Model**: "gpt-4o-mini"
+- **Model**: "gpt-3.5-turbo-0125"
 - **Embeddings**: "text-embedding-3-small"
-- **N. Agents**: 25 
+- **N. Agents**: 25
 - **Steps**: ~8650 (full day)
 - **Final Cost**: ~18.5 USD
 

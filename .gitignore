@@ -14,7 +14,7 @@ logs/*
 !logs/skip-morning_2024-05-15_13-54-44.txt
 
 ### Add simulations to keep here ###
-!environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/*
+!environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/
 !environment/frontend_server/storage/base_the_ville_n25/*
 !environment/frontend_server/storage/July1_the_ville_isabella_maria_klaus-step-3-*/*
 !environment/frontend_server/storage/skip-morning-s-14/
@@ -124,9 +124,4 @@ ENV/
 # Rope project settings
 .ropeproject
 
-<<<<<<< HEAD
 .history/
-environment/frontend_server/temp_storage/curr_sim_code.json
-=======
-.history/
->>>>>>> origin/dev
