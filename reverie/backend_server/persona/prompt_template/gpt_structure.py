@@ -313,6 +313,7 @@ def ChatGPT_safe_generate_response_OLD(prompt,
 
       except Exception as e:
         print("ERROR:", e)
+        traceback.print_exc()
 
   print("FAIL SAFE TRIGGERED")
   return fail_safe_response
