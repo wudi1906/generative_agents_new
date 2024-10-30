@@ -1814,8 +1814,13 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = int(gpt_response.strip())
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1830,8 +1835,13 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
@@ -1954,8 +1964,13 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = int(gpt_response.strip())
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1970,8 +1985,13 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
