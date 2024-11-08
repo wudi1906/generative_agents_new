@@ -12,4 +12,4 @@ source /home/${USER}/anaconda3/bin/activate ${CONDA_ENV}
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 echo "Timestamp: ${timestamp}"
 mkdir -p ${LOGS_PATH}
-python3 ${BACKEND_SCRIPT_FILE} --origin ${1} --target ${2} | tee  ${LOGS_PATH}/${2}_${timestamp}.txt
+python3 ${BACKEND_SCRIPT_FILE} --origin ${1} --target ${2} 2>&1 | tee ${LOGS_PATH}/${2}_${timestamp}.txt
