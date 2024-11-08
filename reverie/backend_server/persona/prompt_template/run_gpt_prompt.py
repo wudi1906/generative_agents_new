@@ -1511,130 +1511,130 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
-                                       test_input=None, verbose=False): 
-  def create_prompt_input(init_persona, target_persona, curr_loc, 
-                          test_input=None): 
+# def run_gpt_prompt_create_conversation(persona, target_persona, curr_loc,
+#                                        test_input=None, verbose=False): 
+#   def create_prompt_input(init_persona, target_persona, curr_loc, 
+#                           test_input=None): 
 
-    prev_convo_insert = "\n"
-    if init_persona.a_mem.seq_chat: 
-      for i in init_persona.a_mem.seq_chat: 
-        if i.object == target_persona.scratch.name: 
-          v1 = int((init_persona.scratch.curr_time - i.created).total_seconds()/60)
-          prev_convo_insert += f'{str(v1)} minutes ago, they had the following conversation.\n'
-          for row in i.filling: 
-            prev_convo_insert += f'{row[0]}: "{row[1]}"\n'
-          break
-    if prev_convo_insert == "\n": 
-      prev_convo_insert = ""
-    if init_persona.a_mem.seq_chat: 
-      if int((init_persona.scratch.curr_time - init_persona.a_mem.seq_chat[-1].created).total_seconds()/60) > 480: 
-        prev_convo_insert = ""
+#     prev_convo_insert = "\n"
+#     if init_persona.a_mem.seq_chat: 
+#       for i in init_persona.a_mem.seq_chat: 
+#         if i.object == target_persona.scratch.name: 
+#           v1 = int((init_persona.scratch.curr_time - i.created).total_seconds()/60)
+#           prev_convo_insert += f'{str(v1)} minutes ago, they had the following conversation.\n'
+#           for row in i.filling: 
+#             prev_convo_insert += f'{row[0]}: "{row[1]}"\n'
+#           break
+#     if prev_convo_insert == "\n": 
+#       prev_convo_insert = ""
+#     if init_persona.a_mem.seq_chat: 
+#       if int((init_persona.scratch.curr_time - init_persona.a_mem.seq_chat[-1].created).total_seconds()/60) > 480: 
+#         prev_convo_insert = ""
 
-    init_persona_thought_nodes = init_persona.a_mem.retrieve_relevant_thoughts(target_persona.scratch.act_event[0],
-                                target_persona.scratch.act_event[1],
-                                target_persona.scratch.act_event[2])
-    init_persona_thought = ""
-    for i in init_persona_thought_nodes: 
-      init_persona_thought += f"-- {i.description}\n"
+#     init_persona_thought_nodes = init_persona.a_mem.retrieve_relevant_thoughts(target_persona.scratch.act_event[0],
+#                                 target_persona.scratch.act_event[1],
+#                                 target_persona.scratch.act_event[2])
+#     init_persona_thought = ""
+#     for i in init_persona_thought_nodes: 
+#       init_persona_thought += f"-- {i.description}\n"
 
-    target_persona_thought_nodes = target_persona.a_mem.retrieve_relevant_thoughts(init_persona.scratch.act_event[0],
-                                init_persona.scratch.act_event[1],
-                                init_persona.scratch.act_event[2])
-    target_persona_thought = ""
-    for i in target_persona_thought_nodes: 
-      target_persona_thought += f"-- {i.description}\n"
+#     target_persona_thought_nodes = target_persona.a_mem.retrieve_relevant_thoughts(init_persona.scratch.act_event[0],
+#                                 init_persona.scratch.act_event[1],
+#                                 init_persona.scratch.act_event[2])
+#     target_persona_thought = ""
+#     for i in target_persona_thought_nodes: 
+#       target_persona_thought += f"-- {i.description}\n"
 
-    init_persona_curr_desc = ""
-    if init_persona.scratch.planned_path: 
-      init_persona_curr_desc = f"{init_persona.name} is on the way to {init_persona.scratch.act_description}"
-    else: 
-      init_persona_curr_desc = f"{init_persona.name} is {init_persona.scratch.act_description}"
+#     init_persona_curr_desc = ""
+#     if init_persona.scratch.planned_path: 
+#       init_persona_curr_desc = f"{init_persona.name} is on the way to {init_persona.scratch.act_description}"
+#     else: 
+#       init_persona_curr_desc = f"{init_persona.name} is {init_persona.scratch.act_description}"
 
-    target_persona_curr_desc = ""
-    if target_persona.scratch.planned_path: 
-      target_persona_curr_desc = f"{target_persona.name} is on the way to {target_persona.scratch.act_description}"
-    else: 
-      target_persona_curr_desc = f"{target_persona.name} is {target_persona.scratch.act_description}"
+#     target_persona_curr_desc = ""
+#     if target_persona.scratch.planned_path: 
+#       target_persona_curr_desc = f"{target_persona.name} is on the way to {target_persona.scratch.act_description}"
+#     else: 
+#       target_persona_curr_desc = f"{target_persona.name} is {target_persona.scratch.act_description}"
  
-    curr_loc = curr_loc["arena"]
+#     curr_loc = curr_loc["arena"]
 
-    prompt_input = []
-    prompt_input += [init_persona.scratch.get_str_iss()]
-    prompt_input += [target_persona.scratch.get_str_iss()]
+#     prompt_input = []
+#     prompt_input += [init_persona.scratch.get_str_iss()]
+#     prompt_input += [target_persona.scratch.get_str_iss()]
 
-    prompt_input += [init_persona.name]
-    prompt_input += [target_persona.name]
-    prompt_input += [init_persona_thought]
+#     prompt_input += [init_persona.name]
+#     prompt_input += [target_persona.name]
+#     prompt_input += [init_persona_thought]
 
-    prompt_input += [target_persona.name]
-    prompt_input += [init_persona.name]
-    prompt_input += [target_persona_thought]
+#     prompt_input += [target_persona.name]
+#     prompt_input += [init_persona.name]
+#     prompt_input += [target_persona_thought]
 
-    prompt_input += [init_persona.scratch.curr_time.strftime("%B %d, %Y, %H:%M:%S")]
+#     prompt_input += [init_persona.scratch.curr_time.strftime("%B %d, %Y, %H:%M:%S")]
 
-    prompt_input += [init_persona_curr_desc]
-    prompt_input += [target_persona_curr_desc]
+#     prompt_input += [init_persona_curr_desc]
+#     prompt_input += [target_persona_curr_desc]
 
-    prompt_input += [prev_convo_insert]
+#     prompt_input += [prev_convo_insert]
 
-    prompt_input += [init_persona.name]
-    prompt_input += [target_persona.name]
+#     prompt_input += [init_persona.name]
+#     prompt_input += [target_persona.name]
 
-    prompt_input += [curr_loc]
-    prompt_input += [init_persona.name]
-    return prompt_input
+#     prompt_input += [curr_loc]
+#     prompt_input += [init_persona.name]
+#     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    # print ("???")
-    # print (gpt_response)
+#   def __func_clean_up(gpt_response, prompt=""):
+#     # print ("???")
+#     # print (gpt_response)
 
-    gpt_response = (prompt + gpt_response).split("What would they talk about now?")[-1].strip()
-    content = re.findall('"([^"]*)"', gpt_response)
+#     gpt_response = (prompt + gpt_response).split("What would they talk about now?")[-1].strip()
+#     content = re.findall('"([^"]*)"', gpt_response)
 
-    speaker_order = []
-    for i in gpt_response.split("\n"): 
-      name = i.split(":")[0].strip() 
-      if name: 
-        speaker_order += [name]
+#     speaker_order = []
+#     for i in gpt_response.split("\n"): 
+#       name = i.split(":")[0].strip() 
+#       if name: 
+#         speaker_order += [name]
 
-    ret = []
-    for count, speaker in enumerate(speaker_order): 
-      ret += [[speaker, content[count]]]
+#     ret = []
+#     for count, speaker in enumerate(speaker_order): 
+#       ret += [[speaker, content[count]]]
 
-    return ret
+#     return ret
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      traceback.print_exc()
-      return False 
+#   def __func_validate(gpt_response, prompt=""): 
+#     try: 
+#       __func_clean_up(gpt_response, prompt)
+#       return True
+#     except:
+#       traceback.print_exc()
+#       return False 
 
-  def get_fail_safe(init_persona, target_persona): 
-    convo = [[init_persona.name, "Hi!"], 
-             [target_persona.name, "Hi!"]]
-    return convo
+#   def get_fail_safe(init_persona, target_persona): 
+#     convo = [[init_persona.name, "Hi!"], 
+#              [target_persona.name, "Hi!"]]
+#     return convo
 
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 1000, 
-               "temperature": 0.7, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v2/create_conversation_v2.txt"
-  prompt_input = create_prompt_input(persona, target_persona, curr_loc, 
-                                     test_input)
-  prompt = generate_prompt(prompt_input, prompt_template)
+#   gpt_param = {"engine": openai_config["model"], "max_tokens": 1000, 
+#                "temperature": 0.7, "top_p": 1, "stream": False,
+#                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+#   prompt_template = "persona/prompt_template/v2/create_conversation_v2.txt"
+#   prompt_input = create_prompt_input(persona, target_persona, curr_loc, 
+#                                      test_input)
+#   prompt = generate_prompt(prompt_input, prompt_template)
 
-  fail_safe = get_fail_safe(persona, target_persona)
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+#   fail_safe = get_fail_safe(persona, target_persona)
+#   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+#                                    __func_validate, __func_clean_up)
 
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
-                      prompt_input, prompt, output)
+#   if debug or verbose: 
+#     print_run_prompts(prompt_template, persona, gpt_param, 
+#                       prompt_input, prompt, output)
   
-  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+#   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
 def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None, verbose=False): 
@@ -1709,147 +1709,147 @@ def run_gpt_prompt_summarize_conversation(persona, conversation, test_input=None
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbose=False): 
-  def create_prompt_input(description, test_input=None): 
-    if "\n" in description: 
-      description = description.replace("\n", " <LINE_BREAK> ")
-    prompt_input = [description]
-    return prompt_input
+# def run_gpt_prompt_extract_keywords(persona, description, test_input=None, verbose=False): 
+#   def create_prompt_input(description, test_input=None): 
+#     if "\n" in description: 
+#       description = description.replace("\n", " <LINE_BREAK> ")
+#     prompt_input = [description]
+#     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    print ("???")
-    print (gpt_response)
-    gpt_response = gpt_response.strip().split("Emotive keywords:")
-    factual = [i.strip() for i in gpt_response[0].split(",")]
-    emotive = [i.strip() for i in gpt_response[1].split(",")]
-    all_keywords = factual + emotive
-    ret = []
-    for i in all_keywords: 
-      if i: 
-        i = i.lower()
-        if i[-1] == ".": 
-          i = i[:-1]
-        ret += [i]
-    print (ret)
-    return set(ret)
+#   def __func_clean_up(gpt_response, prompt=""):
+#     print ("???")
+#     print (gpt_response)
+#     gpt_response = gpt_response.strip().split("Emotive keywords:")
+#     factual = [i.strip() for i in gpt_response[0].split(",")]
+#     emotive = [i.strip() for i in gpt_response[1].split(",")]
+#     all_keywords = factual + emotive
+#     ret = []
+#     for i in all_keywords: 
+#       if i: 
+#         i = i.lower()
+#         if i[-1] == ".": 
+#           i = i[:-1]
+#         ret += [i]
+#     print (ret)
+#     return set(ret)
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      traceback.print_exc()
-      return False 
+#   def __func_validate(gpt_response, prompt=""): 
+#     try: 
+#       __func_clean_up(gpt_response, prompt)
+#       return True
+#     except:
+#       traceback.print_exc()
+#       return False 
 
-  def get_fail_safe(): 
-    return []
+#   def get_fail_safe(): 
+#     return []
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 50, 
-               "temperature": 0, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v2/get_keywords_v1.txt"
-  prompt_input = create_prompt_input(description, test_input)
-  prompt = generate_prompt(prompt_input, prompt_template)
+#   gpt_param = {"engine": openai_config["model"], "max_tokens": 50, 
+#                "temperature": 0, "top_p": 1, "stream": False,
+#                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+#   prompt_template = "persona/prompt_template/v2/get_keywords_v1.txt"
+#   prompt_input = create_prompt_input(description, test_input)
+#   prompt = generate_prompt(prompt_input, prompt_template)
 
-  fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+#   fail_safe = get_fail_safe()
+#   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+#                                    __func_validate, __func_clean_up)
 
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
-                      prompt_input, prompt, output)
+#   if debug or verbose: 
+#     print_run_prompts(prompt_template, persona, gpt_param, 
+#                       prompt_input, prompt, output)
   
-  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+#   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_input=None, verbose=False): 
-  def create_prompt_input(persona, keyword, concept_summary, test_input=None): 
-    prompt_input = [keyword, concept_summary, persona.name]
-    return prompt_input
+# def run_gpt_prompt_keyword_to_thoughts(persona, keyword, concept_summary, test_input=None, verbose=False): 
+#   def create_prompt_input(persona, keyword, concept_summary, test_input=None): 
+#     prompt_input = [keyword, concept_summary, persona.name]
+#     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = gpt_response.strip()
-    return gpt_response
+#   def __func_clean_up(gpt_response, prompt=""):
+#     gpt_response = gpt_response.strip()
+#     return gpt_response
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      traceback.print_exc()
-      return False 
+#   def __func_validate(gpt_response, prompt=""): 
+#     try: 
+#       __func_clean_up(gpt_response, prompt)
+#       return True
+#     except:
+#       traceback.print_exc()
+#       return False 
 
-  def get_fail_safe(): 
-    return ""
+#   def get_fail_safe(): 
+#     return ""
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 40, 
-               "temperature": 0.7, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v2/keyword_to_thoughts_v1.txt"
-  prompt_input = create_prompt_input(persona, keyword, concept_summary)
-  prompt = generate_prompt(prompt_input, prompt_template)
+#   gpt_param = {"engine": openai_config["model"], "max_tokens": 40, 
+#                "temperature": 0.7, "top_p": 1, "stream": False,
+#                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+#   prompt_template = "persona/prompt_template/v2/keyword_to_thoughts_v1.txt"
+#   prompt_input = create_prompt_input(persona, keyword, concept_summary)
+#   prompt = generate_prompt(prompt_input, prompt_template)
 
-  fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+#   fail_safe = get_fail_safe()
+#   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+#                                    __func_validate, __func_clean_up)
 
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
-                      prompt_input, prompt, output)
+#   if debug or verbose: 
+#     print_run_prompts(prompt_template, persona, gpt_param, 
+#                       prompt_input, prompt, output)
   
-  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+#   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_convo_to_thoughts(persona, 
-                                    init_persona_name,  
-                                    target_persona_name,
-                                    convo_str,
-                                    fin_target, test_input=None, verbose=False): 
-  def create_prompt_input(init_persona_name,  
-                                    target_persona_name,
-                                    convo_str,
-                                    fin_target, test_input=None): 
-    prompt_input = [init_persona_name,
-                    target_persona_name,
-                    convo_str,
-                    init_persona_name,
-                    fin_target]
-    return prompt_input
+# def run_gpt_prompt_convo_to_thoughts(persona, 
+#                                     init_persona_name,  
+#                                     target_persona_name,
+#                                     convo_str,
+#                                     fin_target, test_input=None, verbose=False): 
+#   def create_prompt_input(init_persona_name,  
+#                                     target_persona_name,
+#                                     convo_str,
+#                                     fin_target, test_input=None): 
+#     prompt_input = [init_persona_name,
+#                     target_persona_name,
+#                     convo_str,
+#                     init_persona_name,
+#                     fin_target]
+#     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = gpt_response.strip()
-    return gpt_response
+#   def __func_clean_up(gpt_response, prompt=""):
+#     gpt_response = gpt_response.strip()
+#     return gpt_response
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      traceback.print_exc()
-      return False 
+#   def __func_validate(gpt_response, prompt=""): 
+#     try: 
+#       __func_clean_up(gpt_response, prompt)
+#       return True
+#     except:
+#       traceback.print_exc()
+#       return False 
 
-  def get_fail_safe(): 
-    return ""
+#   def get_fail_safe(): 
+#     return ""
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 40, 
-               "temperature": 0.7, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v2/convo_to_thoughts_v1.txt"
-  prompt_input = create_prompt_input(init_persona_name,  
-                                    target_persona_name,
-                                    convo_str,
-                                    fin_target)
-  prompt = generate_prompt(prompt_input, prompt_template)
+#   gpt_param = {"engine": openai_config["model"], "max_tokens": 40, 
+#                "temperature": 0.7, "top_p": 1, "stream": False,
+#                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+#   prompt_template = "persona/prompt_template/v2/convo_to_thoughts_v1.txt"
+#   prompt_input = create_prompt_input(init_persona_name,  
+#                                     target_persona_name,
+#                                     convo_str,
+#                                     fin_target)
+#   prompt = generate_prompt(prompt_input, prompt_template)
 
-  fail_safe = get_fail_safe()
-  output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-                                   __func_validate, __func_clean_up)
+#   fail_safe = get_fail_safe()
+#   output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+#                                    __func_validate, __func_clean_up)
 
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
-                      prompt_input, prompt, output)
+#   if debug or verbose: 
+#     print_run_prompts(prompt_template, persona, gpt_param, 
+#                       prompt_input, prompt, output)
   
-  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+#   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
 def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, verbose=False): 
@@ -1861,8 +1861,13 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = int(gpt_response.strip())
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -1877,8 +1882,13 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
@@ -1922,74 +1932,74 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None, verbose=False): 
-  def create_prompt_input(persona, event_description, test_input=None): 
-    prompt_input = [persona.scratch.name,
-                    persona.scratch.get_str_iss(),
-                    persona.scratch.name,
-                    event_description]
-    return prompt_input
+# def run_gpt_prompt_thought_poignancy(persona, event_description, test_input=None, verbose=False): 
+#   def create_prompt_input(persona, event_description, test_input=None): 
+#     prompt_input = [persona.scratch.name,
+#                     persona.scratch.get_str_iss(),
+#                     persona.scratch.name,
+#                     event_description]
+#     return prompt_input
   
-  def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = int(gpt_response.strip())
-    return gpt_response
+#   def __func_clean_up(gpt_response, prompt=""):
+#     gpt_response = int(gpt_response.strip())
+#     return gpt_response
 
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      traceback.print_exc()
-      return False 
+#   def __func_validate(gpt_response, prompt=""): 
+#     try: 
+#       __func_clean_up(gpt_response, prompt)
+#       return True
+#     except:
+#       traceback.print_exc()
+#       return False 
 
-  def get_fail_safe(): 
-    return 4
+#   def get_fail_safe(): 
+#     return 4
 
-  # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+#   # ChatGPT Plugin ===========================================================
+#   def __chat_func_clean_up(gpt_response, prompt=""): ############
+#     gpt_response = int(gpt_response)
+#     return gpt_response
 
-  def __chat_func_validate(gpt_response, prompt=""): ############
-    try: 
-      __func_clean_up(gpt_response, prompt)
-      return True
-    except:
-      traceback.print_exc()
-      return False 
+#   def __chat_func_validate(gpt_response, prompt=""): ############
+#     try: 
+#       __func_clean_up(gpt_response, prompt)
+#       return True
+#     except:
+#       traceback.print_exc()
+#       return False 
 
-  print ("DEBUG 8") ########
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
-               "temperature": 0, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  prompt_template = "persona/prompt_template/v3_ChatGPT/poignancy_thought_v1.txt" ########
-  prompt_input = create_prompt_input(persona, event_description)  ########
-  prompt = generate_prompt(prompt_input, prompt_template)
-  example_output = "5" ########
-  special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
-  fail_safe = get_fail_safe() ########
-  output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
-                                          __chat_func_validate, __chat_func_clean_up, True)
-  if output != False: 
-    return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-  # ChatGPT Plugin ===========================================================
+#   print ("DEBUG 8") ########
+#   gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
+#                "temperature": 0, "top_p": 1, "stream": False,
+#                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+#   prompt_template = "persona/prompt_template/v3_ChatGPT/poignancy_thought_v1.txt" ########
+#   prompt_input = create_prompt_input(persona, event_description)  ########
+#   prompt = generate_prompt(prompt_input, prompt_template)
+#   example_output = "5" ########
+#   special_instruction = "The output should ONLY contain ONE integer value on the scale of 1 to 10." ########
+#   fail_safe = get_fail_safe() ########
+#   output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
+#                                           __chat_func_validate, __chat_func_clean_up, True)
+#   if output != False: 
+#     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+#   # ChatGPT Plugin ===========================================================
 
-  # gpt_param = {"engine": openai_config["model"], "max_tokens": 3, 
-  #              "temperature": 0, "top_p": 1, "stream": False,
-  #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
-  # prompt_template = "persona/prompt_template/v2/poignancy_thought_v1.txt"
-  # prompt_input = create_prompt_input(persona, event_description)
-  # prompt = generate_prompt(prompt_input, prompt_template)
+#   # gpt_param = {"engine": openai_config["model"], "max_tokens": 3, 
+#   #              "temperature": 0, "top_p": 1, "stream": False,
+#   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+#   # prompt_template = "persona/prompt_template/v2/poignancy_thought_v1.txt"
+#   # prompt_input = create_prompt_input(persona, event_description)
+#   # prompt = generate_prompt(prompt_input, prompt_template)
 
-  # fail_safe = get_fail_safe()
-  # output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
-  #                                  __func_validate, __func_clean_up)
+#   # fail_safe = get_fail_safe()
+#   # output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
+#   #                                  __func_validate, __func_clean_up)
 
-  # if debug or verbose: 
-  #   print_run_prompts(prompt_template, persona, gpt_param, 
-  #                     prompt_input, prompt, output)
+#   # if debug or verbose: 
+#   #   print_run_prompts(prompt_template, persona, gpt_param, 
+#   #                     prompt_input, prompt, output)
   
-  # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+#   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
 def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, verbose=False): 
@@ -2001,8 +2011,13 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
     return prompt_input
   
   def __func_clean_up(gpt_response, prompt=""):
-    gpt_response = int(gpt_response.strip())
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
@@ -2017,8 +2032,13 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response, prompt=""): ############
-    gpt_response = int(gpt_response)
-    return gpt_response
+    if isinstance(gpt_response, str):
+      processed_response = int(gpt_response.strip())
+    elif isinstance(gpt_response, int):
+      processed_response = gpt_response
+    else:
+      raise TypeError("Invalid gpt_response type: ", type(gpt_response))
+    return processed_response
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
