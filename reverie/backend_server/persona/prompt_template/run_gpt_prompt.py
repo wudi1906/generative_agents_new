@@ -1954,6 +1954,7 @@ def run_gpt_prompt_event_poignancy(persona, event_description, test_input=None, 
   
 #   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
+
 class IntPoignancy(BaseModel): 
   number: int
 
@@ -2037,7 +2038,9 @@ def run_gpt_prompt_chat_poignancy(persona, event_description, test_input=None, v
   #                     prompt_input, prompt, output)
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-class FocalPt(BaseModel): 
+
+
+class FocalPt(BaseModel):
   questions: list[str]
 
 def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=False): 
@@ -2045,7 +2048,7 @@ def run_gpt_prompt_focal_pt(persona, statements, n, test_input=None, verbose=Fal
     prompt_input = [statements, str(n)]
     return prompt_input
   
-  def __func_clean_up(gpt_response:FocalPt, prompt=""):
+  def __func_clean_up(gpt_response: FocalPt, prompt=""):
     gpt_response = "1) " + gpt_response.strip()
     ret = []
     for i in gpt_response.split("\n"): 
@@ -2237,6 +2240,8 @@ def run_gpt_prompt_agent_chat_summarize_ideas(persona, target_persona, statement
   #                     prompt_input, prompt, output)
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+
+
 class ChatSummarizeRelationship(BaseModel):
   response: str
 
@@ -2311,9 +2316,11 @@ def run_gpt_prompt_agent_chat_summarize_relationship(persona, target_persona, st
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-class PromptAgentChat(BaseModel): 
-    convo: list[list[str]]
 
+class PromptAgentChat(BaseModel):
+  convo: list[list[str]]
+
+# Note: This function is not currently used in the program logic flow
 def run_gpt_prompt_agent_chat(maze, persona, target_persona,
                                curr_context, 
                                init_summ_idea, 
@@ -2356,7 +2363,7 @@ def run_gpt_prompt_agent_chat(maze, persona, target_persona,
                     persona.scratch.name]
     return prompt_input
   
-  def __func_clean_up(gpt_response:PromptAgentChat, prompt=""):
+  def __func_clean_up(gpt_response: PromptAgentChat, prompt=""):
     print (gpt_response)
 
     gpt_response = (prompt + gpt_response).split("Here is their conversation.")[-1].strip()
