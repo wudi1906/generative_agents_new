@@ -132,6 +132,7 @@ def ChatGPT_single_request(prompt):
   print("Response content:", content)
 
   if content:
+    content = content.strip("`").removeprefix("json").strip()
     return content
   else:
     print("ERROR: No message content from LLM.")
@@ -181,6 +182,8 @@ def ChatGPT_request(prompt):
     cost_logger.update_cost(
       completion, input_cost=openai_config["model-costs"]["input"], output_cost=openai_config["model-costs"]["output"]
     )
+    if content:
+      content = content.strip("`").removeprefix("json").strip()
     return content
   
   except Exception as e: 
@@ -367,6 +370,7 @@ def ChatGPT_safe_generate_response_OLD(prompt,
 
       except Exception as e:
         print("ERROR:", e)
+        traceback.print_exc()
 
   print("FAIL SAFE TRIGGERED")
   return fail_safe_response
