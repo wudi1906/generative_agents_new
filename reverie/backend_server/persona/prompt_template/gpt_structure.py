@@ -283,8 +283,8 @@ def ChatGPT_structured_request(prompt, response_format):
 
 def ChatGPT_safe_generate_response(
   prompt,
-  example_output,
-  special_instruction,
+  example_output="",
+  special_instruction="",
   repeat=3,
   fail_safe_response="error",
   func_validate=None,
@@ -294,11 +294,13 @@ def ChatGPT_safe_generate_response(
   if func_validate and func_clean_up:
     # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
     prompt = '"""\n' + prompt + '\n"""\n'
-    prompt += (
-      f"Output the response to the prompt above in json. {special_instruction}\n"
-    )
-    prompt += "Example output json:\n"
-    prompt += '{"output": "' + str(example_output) + '"}'
+    if example_output or special_instruction:
+      prompt += (
+        f"Output the response to the prompt above in json. {special_instruction}\n"
+      )
+      if example_output:
+        prompt += "Example output json:\n"
+        prompt += '{"output": "' + str(example_output) + '"}'
 
     if verbose:
       print("LLM PROMPT")
@@ -310,9 +312,10 @@ def ChatGPT_safe_generate_response(
         if not chatgpt_response:
           raise Exception("No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
-        end_index = curr_gpt_response.rfind("}") + 1
-        curr_gpt_response = curr_gpt_response[:end_index]
-        curr_gpt_response = json.loads(curr_gpt_response)["output"]
+        if example_output or special_instruction:
+          end_index = curr_gpt_response.rfind("}") + 1
+          curr_gpt_response = curr_gpt_response[:end_index]
+          curr_gpt_response = json.loads(curr_gpt_response)["output"]
 
         if verbose:
           print("---- repeat count:", i)
@@ -327,13 +330,15 @@ def ChatGPT_safe_generate_response(
         print("ERROR:", e)
         traceback.print_exc()
 
+  print("FAIL SAFE TRIGGERED")
   return fail_safe_response
+
 
 def ChatGPT_safe_generate_structured_response(
   prompt,
   response_format,
-  example_output,
-  special_instruction,
+  example_output="",
+  special_instruction="",
   repeat=3,
   fail_safe_response="error",
   func_validate=None,
@@ -343,11 +348,13 @@ def ChatGPT_safe_generate_structured_response(
   if func_validate and func_clean_up:
     # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
     prompt = '"""\n' + prompt + '\n"""\n'
-    prompt += (
-      f"Output the response to the prompt above in json. {special_instruction}\n"
-    )
-    prompt += "Example output json:\n"
-    prompt += '{"output": "' + str(example_output) + '"}'
+    if example_output or special_instruction:
+      prompt += (
+        f"Output the response to the prompt above in json. {special_instruction}\n"
+      )
+      if example_output:
+        prompt += "Example output json:\n"
+        prompt += str(example_output)
 
     if verbose:
       print("LLM PROMPT")
@@ -376,38 +383,6 @@ def ChatGPT_safe_generate_structured_response(
         traceback.print_exc()
 
   return fail_safe_response
-
-def ChatGPT_safe_generate_response_OLD(prompt, 
-                                   repeat=3,
-                                   fail_safe_response="error",
-                                   func_validate=None,
-                                   func_clean_up=None,
-                                   verbose=False): 
-  if verbose: 
-    print ("LLM PROMPT")
-    print (prompt)
-
-  if func_validate and func_clean_up:
-    for i in range(repeat):
-      try:
-        chatgpt_response = ChatGPT_request(prompt)
-        if not chatgpt_response:
-          raise Exception("No valid response from LLM.")
-        curr_gpt_response = chatgpt_response.strip()
-        if func_validate(curr_gpt_response, prompt=prompt):
-          return func_clean_up(curr_gpt_response, prompt=prompt)
-        if verbose:
-          print(f"---- repeat count: {i}")
-          print(curr_gpt_response)
-          print("~~~~")
-
-      except Exception as e:
-        print("ERROR:", e)
-        traceback.print_exc()
-
-  print("FAIL SAFE TRIGGERED")
-  return fail_safe_response
-
 
 
 # ============================================================================
