@@ -191,6 +191,49 @@ def ChatGPT_request(prompt):
     traceback.print_exc()
     return "LLM ERROR"
 
+def ChatGPT_structured_request(prompt, response_format):
+  """
+  Given a prompt and a dictionary of GPT parameters, make a request to OpenAI
+  server and returns the response. 
+  ARGS:
+    prompt: a str prompt
+    gpt_parameter: a python dictionary with the keys indicating the names of  
+                   the parameter and the values indicating the parameter 
+                   values.   
+  RETURNS: 
+    a str of GPT-3's response. 
+  """
+  # temp_sleep()
+  print("--- ChatGPT_request() ---")
+  print("Prompt:", prompt)
+
+  try: 
+    completion = client.beta.chat.completions.parse(
+      model=openai_config["model"],
+      response_format=response_format,
+      messages=[{"role": "user", "content": prompt}]
+    )
+
+    print("Response:", completion)
+    message = completion.choices[0].message
+
+    cost_logger.update_cost(
+      completion,
+      input_cost=openai_config["model-costs"]["input"],
+      output_cost=openai_config["model-costs"]["output"],
+    )
+
+    if message.parsed:
+      return message.parsed
+    if message.refusal:
+      raise ValueError("Request refused: " + message.refusal)
+    raise ValueError("No parsed content or refusal found.")
+
+  except Exception as e: 
+    print(f"Error: {e}")
+    traceback.print_exc()
+    return "LLM ERROR"
+
 
 # def GPT4_safe_generate_response(
 #   prompt,
@@ -286,6 +329,53 @@ def ChatGPT_safe_generate_response(
 
   return fail_safe_response
 
+def ChatGPT_safe_generate_structured_response(
+  prompt,
+  response_format,
+  example_output,
+  special_instruction,
+  repeat=3,
+  fail_safe_response="error",
+  func_validate=None,
+  func_clean_up=None,
+  verbose=False,
+):
+  if func_validate and func_clean_up:
+    # prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
+    prompt = '"""\n' + prompt + '\n"""\n'
+    prompt += (
+      f"Output the response to the prompt above in json. {special_instruction}\n"
+    )
+    prompt += "Example output json:\n"
+    prompt += '{"output": "' + str(example_output) + '"}'
+
+    if verbose:
+      print("LLM PROMPT")
+      print(prompt)
+
+    for i in range(repeat):
+      try:
+        curr_gpt_response = ChatGPT_structured_request(prompt, response_format)
+        if not curr_gpt_response:
+          raise ValueError("No valid response from LLM.")
+
+        if verbose:
+          print("---- repeat count:", i)
+          print("~~~~ curr_gpt_response:")
+          print(curr_gpt_response)
+          print("~~~~")
+
+        if (
+          not isinstance(curr_gpt_response, str)
+          and func_validate(curr_gpt_response, prompt=prompt)
+        ):
+          return func_clean_up(curr_gpt_response, prompt=prompt)
+
+      except Exception as e:
+        print("ERROR:", e)
+        traceback.print_exc()
+
+  return fail_safe_response
 
 def ChatGPT_safe_generate_response_OLD(prompt, 
                                    repeat=3,
@@ -367,7 +457,7 @@ def GPT_request(prompt, gpt_parameter):
     return "REQUEST ERROR"
 
 
-def structured_GPT_request(prompt, gpt_parameter, response_format):
+def GPT_structured_request(prompt, gpt_parameter, response_format):
   """
   Given a prompt, a dictionary of GPT parameters, and a response format, make a request to OpenAI
   server and returns the response.
@@ -412,7 +502,7 @@ def structured_GPT_request(prompt, gpt_parameter, response_format):
     raise ValueError("No parsed content or refusal found.")
   except Exception as e:
     print("REQUEST ERROR")
-    print(e)
+    traceback.print_exc()
     return "REQUEST ERROR"
 
 
@@ -473,7 +563,7 @@ def safe_generate_response(prompt,
   return fail_safe_response
 
 
-def generate_structured_response(
+def safe_generate_structured_response(
   prompt,
   gpt_parameter,
   response_format,
@@ -488,7 +578,7 @@ def generate_structured_response(
 
   if func_validate and func_clean_up:
     for i in range(repeat):
-      curr_gpt_response = structured_GPT_request(prompt, gpt_parameter, response_format)
+      curr_gpt_response = GPT_structured_request(prompt, gpt_parameter, response_format)
       try:
         if not isinstance(curr_gpt_response, str) and func_validate(
           curr_gpt_response,
