@@ -2711,14 +2711,16 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   example_output = 'Jane Doe was interesting to talk to.' ########
   special_instruction = 'The output should ONLY contain a string that summarizes anything interesting that the agent may have noticed' ########
   fail_safe = get_fail_safe() ########
-  output = safe_generate_structured_response(
+  output = ChatGPT_safe_generate_structured_response(
     prompt,
-    gpt_param,
     Convo_Takeaways,
-    5,
+    example_output,
+    special_instruction,
+    3,
     fail_safe,
     __chat_func_validate,
     __chat_func_clean_up,
+    True
   )
   if output != False: 
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2732,16 +2734,14 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  output = ChatGPT_safe_generate_structured_response(
+  output = safe_generate_structured_response(
     prompt,
+    gpt_param,
     Convo_Takeaways,
-    example_output,
-    special_instruction,
-    3,
+    5,
     fail_safe,
     __chat_func_validate,
     __chat_func_clean_up,
-    True
   )
 
   if debug or verbose: 

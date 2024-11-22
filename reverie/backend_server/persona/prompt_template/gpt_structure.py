@@ -597,7 +597,6 @@ def safe_generate_structured_response(
   return fail_safe_response
 
 
-
 def get_embedding(text, model=openai_config["embeddings"]):
   text = text.replace("\n", " ")
   if not text: 
