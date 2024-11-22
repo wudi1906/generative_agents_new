@@ -2849,7 +2849,8 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
     prompt,
     repeat=3,
     fail_safe_response=fail_safe,
-    func_validate=__chat_func_validate, func_clean_up=__chat_func_clean_up,
+    func_validate=__chat_func_validate,
+    func_clean_up=__chat_func_clean_up,
     verbose=verbose,
   )
   print (output)
