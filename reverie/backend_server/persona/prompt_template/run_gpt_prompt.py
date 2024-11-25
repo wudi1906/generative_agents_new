@@ -657,7 +657,7 @@ def run_gpt_prompt_action_sector(
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # # ChatGPT Plugin ===========================================================
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 15,
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v1/action_location_sector_v1.txt"
@@ -756,7 +756,7 @@ def run_gpt_prompt_action_arena(
     fs = "main room"
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 15,
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v1/action_location_object_vMar11.txt"
@@ -1062,15 +1062,14 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
     return True
 
   print ("DEBUG 6") ########
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 200,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v3_ChatGPT/generate_obj_event_v1.txt" ########
   prompt_input = create_prompt_input(act_game_object, act_desp, persona)  ########
   prompt = generate_prompt(prompt_input, prompt_template)
   example_output = "being fixed" ########
-  #add that it should be 15 tokens or less to the special_instruction
-  special_instruction = "The output should ONLY contain the phrase that should go in <fill in>. It should also be 15 tokens or less." ########
+  special_instruction = "The output should ONLY contain the phrase that should go in <fill in>. It should be 15 tokens or less." ########
   fail_safe = get_fail_safe(act_game_object) ########
   output = ChatGPT_safe_generate_structured_response(
     prompt,
@@ -1433,7 +1432,7 @@ class DecideToReactEnum(IntEnum):
 
 class DecideToReact(BaseModel):
   '''
-  Should be a decision 1,2, or 3
+  Should be a decision 1, 2, or 3
   '''
   decision: DecideToReactEnum
 
@@ -1509,13 +1508,13 @@ def run_gpt_prompt_decide_to_react(
       return False
 
   def __func_clean_up(gpt_response: DecideToReact, prompt=""):
-    return gpt_response.decision
+    return str(gpt_response.decision)
 
   def get_fail_safe():
-    fs = 3
+    fs = "3"
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 20,
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/decide_to_react_v1.txt"
@@ -2884,16 +2883,6 @@ class SafetyScore(BaseModel):
   safety_score: int
 
 def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False):
-  """
-    Given the persona and a comment, returns a structured response containing
-    the safety score.
-
-    INPUT:
-      persona: The Persona class instance
-      comment: A comment that will be used to generate the safety score
-    OUTPUT:
-      Structured output containing the safety score
-  """
   def create_prompt_input(comment, test_input=None):
     prompt_input = [comment]
     return prompt_input
@@ -2932,7 +2921,7 @@ def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=Fal
   )
   print(output)
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 50,
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
