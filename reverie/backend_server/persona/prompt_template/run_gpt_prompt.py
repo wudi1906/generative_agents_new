@@ -8,13 +8,13 @@ interface with the safe_generate_response function.
 
 import re
 import datetime
-import ast
 import copy
 import json
 from pathlib import Path
 import random
 import string
 import traceback
+from enum import IntEnum
 from pydantic import BaseModel, field_validator
 
 import sys
@@ -538,71 +538,70 @@ def run_gpt_prompt_task_decomp(persona,
     
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
+
 class ActionLoc(BaseModel):
-    '''
-    Action Location class to be used for action sector and action arena
-    Takes in "Answer: {name}" and reduces to just name.
-    Also hanldes an input of {name}
-    '''
-    name: str
+  '''
+  Action Location class to be used for action sector and action arena
+  Takes in "Answer: {name}" and reduces to just name.
+  Also hanldes an input of {name}
+  '''
+  area: str
 
-    # Validator to clean up input and ensure only arena name is stored
-    @field_validator('name')
-    def extract_name(cls, value):
-        if value.startswith("Answer:"):
-            # Remove "Answer:" prefix and strip surrounding spaces
-            value = value[len("Answer:"):].strip()
-            # Remove surrounding curly brackets if present
-        value = re.sub(r'^\{|\}$', '', value).strip()
-        return value.strip()  # Ensure no leading or trailing spaces
+  # Validator to clean up input and ensure only arena name is stored
+  @field_validator('area')
+  def extract_name(self, value):
+    if value.startswith("Answer:"):
+      # Remove "Answer:" prefix and strip surrounding spaces
+      value = value[len("Answer:"):].strip()
+    # Remove surrounding curly brackets if present
+    value = re.sub(r'^\{|\}$', '', value).strip()
+    return value.strip()  # Ensure no leading or trailing spaces
 
-def run_gpt_prompt_action_sector(action_description, 
-                                persona, 
-                                maze, 
-                                test_input=None, 
-                                verbose=False):
-  def create_prompt_input(action_description, persona, maze, test_input=None): 
+def run_gpt_prompt_action_sector(
+  action_description,
+  persona,
+  maze,
+  test_input=None,
+  verbose=False
+):
+  def create_prompt_input(action_description, persona, maze, test_input=None):
     act_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
-    
+
     prompt_input = []
-    
+
     prompt_input += [persona.scratch.get_str_name()]
     prompt_input += [persona.scratch.living_area.split(":")[1]]
     x = f"{act_world}:{persona.scratch.living_area.split(':')[1]}"
     prompt_input += [persona.s_mem.get_str_accessible_sector_arenas(x)]
-
 
     prompt_input += [persona.scratch.get_str_name()]
     prompt_input += [f"{maze.access_tile(persona.scratch.curr_tile)['sector']}"]
     x = f"{act_world}:{maze.access_tile(persona.scratch.curr_tile)['sector']}"
     prompt_input += [persona.s_mem.get_str_accessible_sector_arenas(x)]
 
-    if persona.scratch.get_str_daily_plan_req() != "": 
+    if persona.scratch.get_str_daily_plan_req() != "":
       prompt_input += [f"\n{persona.scratch.get_str_daily_plan_req()}"]
-    else: 
+    else:
       prompt_input += [""]
-
 
     # MAR 11 TEMP
     accessible_sector_str = persona.s_mem.get_str_accessible_sectors(act_world)
     curr = accessible_sector_str.split(", ")
     fin_accessible_sectors = []
-    for i in curr: 
-      if "'s house" in i: 
-        if persona.scratch.last_name in i: 
+    for i in curr:
+      if "'s house" in i:
+        if persona.scratch.last_name in i:
           fin_accessible_sectors += [i]
-      else: 
+      else:
         fin_accessible_sectors += [i]
     accessible_sector_str = ", ".join(fin_accessible_sectors)
     # END MAR 11 TEMP
 
     prompt_input += [accessible_sector_str]
 
-
-
     action_description_1 = action_description
     action_description_2 = action_description
-    if "(" in action_description: 
+    if "(" in action_description:
       action_description_1 = action_description.split("(")[0].strip()
       action_description_2 = action_description.split("(")[-1][:-1]
     prompt_input += [persona.scratch.get_str_name()]
@@ -613,22 +612,21 @@ def run_gpt_prompt_action_sector(action_description,
     return prompt_input
 
 
-  def __func_clean_up(gpt_response, prompt=""):
-    #return ''.join(gpt_response.split("}")[0]).strip().strip("{").strip()
+  def __func_clean_up(gpt_response: ActionLoc, prompt=""):
     return gpt_response.name
 
-  def __func_validate(gpt_response, prompt=""): 
+  def __func_validate(gpt_response, prompt=""):
     sector = __func_clean_up(gpt_response)
-    if len(sector.strip()) < 1: 
+    if len(sector.strip()) < 1:
       return False
     if "}" in sector:
       return False
-    if "," in sector: 
+    if "," in sector:
       return False
     return True
-  
-  def get_fail_safe(): 
-    fs = ("main room")
+
+  def get_fail_safe():
+    fs = "main room"
     return fs
 
   # # ChatGPT Plugin ===========================================================
@@ -659,37 +657,45 @@ def run_gpt_prompt_action_sector(action_description,
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # # ChatGPT Plugin ===========================================================
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 15,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v1/action_location_sector_v1.txt"
   prompt_input = create_prompt_input(action_description, persona, maze)
   prompt = generate_prompt(prompt_input, prompt_template)
   fail_safe = get_fail_safe()
-  #output = safe_generate_response(prompt, gpt_param, 5, fail_safe, __func_validate, __func_clean_up)
-  output = generate_structured_response(prompt, gpt_param, ActionLoc ,5, fail_safe,__func_validate, __func_clean_up, verbose=False)
+  output = safe_generate_structured_response(
+    prompt,
+    gpt_param,
+    ActionLoc,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up,
+  )
   y = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
   x = [i.strip() for i in persona.s_mem.get_str_accessible_sectors(y).split(",")]
-  if output not in x: 
+  if output not in x:
     # output = random.choice(x)
     output = persona.scratch.living_area.split(":")[1]
 
   # print ("DEBUG", random.choice(x), "------", output)
 
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
+  if debug or verbose:
+    print_run_prompts(prompt_template, persona, gpt_param,
                       prompt_input, prompt, output)
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-  
-def run_gpt_prompt_action_arena(action_description, 
-                                persona, 
-                                maze, act_world, act_sector,
-                                test_input=None, 
-                                verbose=False):
-  def create_prompt_input(action_description, persona, maze, act_world, act_sector, test_input=None): 
+def run_gpt_prompt_action_arena(
+  action_description,
+  persona,
+  maze, act_world, act_sector,
+  test_input=None,
+  verbose=False
+):
+  def create_prompt_input(action_description, persona, maze, act_world, act_sector, test_input=None):
     prompt_input = []
     # prompt_input += [persona.scratch.get_str_name()]
     # prompt_input += [maze.access_tile(persona.scratch.curr_tile)["arena"]]
@@ -702,18 +708,16 @@ def run_gpt_prompt_action_arena(action_description,
     accessible_arena_str = persona.s_mem.get_str_accessible_sector_arenas(x)
     curr = accessible_arena_str.split(", ")
     fin_accessible_arenas = []
-    for i in curr: 
-      if "'s room" in i: 
-        if persona.scratch.last_name in i: 
+    for i in curr:
+      if "'s room" in i:
+        if persona.scratch.last_name in i:
           fin_accessible_arenas += [i]
-      else: 
+      else:
         fin_accessible_arenas += [i]
     accessible_arena_str = ", ".join(fin_accessible_arenas)
     # END MAR 11 TEMP
 
-
     prompt_input += [accessible_arena_str]
-
 
     action_description_1 = action_description
     action_description_2 = action_description
@@ -726,8 +730,6 @@ def run_gpt_prompt_action_arena(action_description,
     prompt_input += [action_description_2]
     prompt_input += [persona.scratch.get_str_name()]
 
-    
-
     prompt_input += [act_sector]
 
     prompt_input += [accessible_arena_str]
@@ -735,28 +737,26 @@ def run_gpt_prompt_action_arena(action_description,
     # x = f"{maze.access_tile(persona.scratch.curr_tile)['world']}:{maze.access_tile(persona.scratch.curr_tile)['sector']}:{maze.access_tile(persona.scratch.curr_tile)['arena']}"
     # prompt_input += [persona.s_mem.get_str_accessible_arena_game_objects(x)]
 
-    
     return prompt_input
 
-  def __func_clean_up(gpt_response, prompt=""):
-    #arena = gpt_response.answer.strip().strip("Answer:").strip().strip("{}").strip()
-    return gpt_response.name
+  def __func_clean_up(gpt_response: ActionLoc, prompt=""):
+    return gpt_response.area
 
-  def __func_validate(gpt_response, prompt=""): 
+  def __func_validate(gpt_response, prompt=""):
     arena = __func_clean_up(gpt_response)
-    if len(arena.strip()) < 1: 
+    if len(arena.strip()) < 1:
       return False
     if "}" in arena:
       return False
-    if "," in arena: 
+    if "," in arena:
       return False
     return True
-  
-  def get_fail_safe(): 
-    fs = ("main room")
+
+  def get_fail_safe():
+    fs = "main room"
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 15,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v1/action_location_object_vMar11.txt"
@@ -764,20 +764,27 @@ def run_gpt_prompt_action_arena(action_description,
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  #output = safe_generate_response(prompt, gpt_param, 5, fail_safe,__func_validate, __func_clean_up, verbose=False)
-  output = generate_structured_response(prompt, gpt_param, ActionLoc ,5, fail_safe,__func_validate, __func_clean_up, verbose=False)
-  print (output)
+  output = safe_generate_structured_response(
+    prompt,
+    gpt_param,
+    ActionLoc,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up,
+    verbose=False,
+  )
+  print(output)
   # y = f"{act_world}:{act_sector}"
   # x = [i.strip() for i in persona.s_mem.get_str_accessible_sector_arenas(y).split(",")]
-  # if output not in x: 
+  # if output not in x:
   #   output = random.choice(x)
 
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
+  if debug or verbose:
+    print_run_prompts(prompt_template, persona, gpt_param,
                       prompt_input, prompt, output)
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
 
 
 def run_gpt_prompt_action_game_object(action_description, 
@@ -1012,56 +1019,50 @@ def run_gpt_prompt_event_triple(action_description, persona, verbose=False):
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
-class ObjDesc(BaseModel):
-  desc: str
 
-  @field_validator("desc")
-  def max_token_limit(cls, value):
-      # Split text by whitespace to count words (tokens)
-      tokens = value.split()
-      if len(tokens) > 100:
-          raise ValueError("Text exceeds the maximum limit of 100 tokens.")
-      return value
-def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False): 
-  def create_prompt_input(act_game_object, act_desp, persona): 
-    prompt_input = [act_game_object, 
+class ObjDesc(BaseModel):
+  description: str
+
+def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=False):
+  def create_prompt_input(act_game_object, act_desp, persona):
+    prompt_input = [act_game_object,
                     persona.name,
                     act_desp,
                     act_game_object,
                     act_game_object]
     return prompt_input
-  
+
   # def __func_clean_up(gpt_response, prompt=""):
   #   return ''.join(gpt_response.split("\n")[0].split(".")[0]).strip()
 
-  # def __func_validate(gpt_response, prompt=""): 
-  #   try: 
+  # def __func_validate(gpt_response, prompt=""):
+  #   try:
   #     gpt_response = __func_clean_up(gpt_response, prompt="")
-  #   except: 
+  #   except:
   #     return False
-  #   return True 
+  #   return True
 
-  def get_fail_safe(act_game_object): 
+  def get_fail_safe(act_game_object):
     fs = f"{act_game_object} is idle"
     return fs
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response, prompt=""): ############
-    cr = gpt_response.desc.strip()
-    if cr[-1] == ".": cr = cr[:-1]
+  def __chat_func_clean_up(gpt_response: ObjDesc, prompt=""): ############
+    cr = gpt_response.description.strip()
+    if cr[-1] == ".":
+      cr = cr[:-1]
     return cr
 
   def __chat_func_validate(gpt_response, prompt=""): ############
-    try: 
+    try:
       gpt_response = __chat_func_clean_up(gpt_response, prompt="")
     except:
       traceback.print_exc()
       return False
-    return True 
+    return True
 
   print ("DEBUG 6") ########
-  #max tokens bumped up to 100 due to parsing issues
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 100, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v3_ChatGPT/generate_obj_event_v1.txt" ########
@@ -1071,13 +1072,24 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   #add that it should be 15 tokens or less to the special_instruction
   special_instruction = "The output should ONLY contain the phrase that should go in <fill in>. It should also be 15 tokens or less." ########
   fail_safe = get_fail_safe(act_game_object) ########
-  #output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,__chat_func_validate, __chat_func_clean_up, True)
-  output = generate_structured_response(prompt, gpt_param, ObjDesc ,5, fail_safe,__chat_func_validate, __chat_func_clean_up, verbose=False)
-  if output != False: 
+  output = ChatGPT_safe_generate_structured_response(
+    prompt,
+    ObjDesc,
+    example_output,
+    special_instruction,
+    3,
+    fail_safe,
+    __chat_func_validate,
+    __chat_func_clean_up,
+    True,
+  )
+
+  if output != False:
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+
   # ChatGPT Plugin ===========================================================
 
-  # gpt_param = {"engine": openai_config["model"], "max_tokens": 30, 
+  # gpt_param = {"engine": openai_config["model"], "max_tokens": 30,
   #              "temperature": 0, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": ["\n"]}
   # prompt_template = "persona/prompt_template/v2/generate_obj_event_v1.txt"
@@ -1087,8 +1099,8 @@ def run_gpt_prompt_act_obj_desc(act_game_object, act_desp, persona, verbose=Fals
   # output = safe_generate_response(prompt, gpt_param, 5, fail_safe,
   #                                  __func_validate, __func_clean_up)
 
-  # if debug or verbose: 
-  #   print_run_prompts(prompt_template, persona, gpt_param, 
+  # if debug or verbose:
+  #   print_run_prompts(prompt_template, persona, gpt_param,
   #                     prompt_input, prompt, output)
   
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -1414,50 +1426,60 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
+class DecideToReactEnum(IntEnum):
+  one = 1
+  two = 2
+  three = 3
+
 class DecideToReact(BaseModel):
   '''
   Should be a decision 1,2, or 3
   '''
-  decision: int
+  decision: DecideToReactEnum
 
-def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input=None, 
-                                       verbose=False): 
-  def create_prompt_input(init_persona, target_persona, retrieved, 
-                          test_input=None): 
+def run_gpt_prompt_decide_to_react(
+    persona,
+    target_persona,
+    retrieved,
+    test_input=None,
+    verbose=False,
+):
+  def create_prompt_input(init_persona, target_persona, retrieved,
+                          test_input=None):
     context = ""
-    for c_node in retrieved["events"]: 
+    for c_node in retrieved["events"]:
       curr_desc = c_node.description.split(" ")
       curr_desc[2:3] = ["was"]
       curr_desc = " ".join(curr_desc)
       context +=  f"{curr_desc}. "
     context += "\n"
-    for c_node in retrieved["thoughts"]: 
+    for c_node in retrieved["thoughts"]:
       context +=  f"{c_node.description}. "
 
     curr_time = init_persona.scratch.curr_time.strftime("%B %d, %Y, %H:%M:%S %p")
     init_act_desc = init_persona.scratch.act_description
-    if "(" in init_act_desc: 
+    if "(" in init_act_desc:
       init_act_desc = init_act_desc.split("(")[-1][:-1]
-    if len(init_persona.scratch.planned_path) == 0: 
+    if len(init_persona.scratch.planned_path) == 0:
       loc = ""
       if ":" in init_persona.scratch.act_address:
         loc = init_persona.scratch.act_address.split(":")[-1] + " in " + init_persona.scratch.act_address.split(":")[-2]
       init_p_desc = f"{init_persona.name} is already {init_act_desc} at {loc}"
-    else: 
+    else:
       loc = ""
       if ":" in init_persona.scratch.act_address:
         loc = init_persona.scratch.act_address.split(":")[-1] + " in " + init_persona.scratch.act_address.split(":")[-2]
       init_p_desc = f"{init_persona.name} is on the way to {init_act_desc} at {loc}"
 
     target_act_desc = target_persona.scratch.act_description
-    if "(" in target_act_desc: 
+    if "(" in target_act_desc:
       target_act_desc = target_act_desc.split("(")[-1][:-1]
-    if len(target_persona.scratch.planned_path) == 0: 
+    if len(target_persona.scratch.planned_path) == 0:
       loc = ""
       if ":" in target_persona.scratch.act_address:
         loc = target_persona.scratch.act_address.split(":")[-1] + " in " + target_persona.scratch.act_address.split(":")[-2]
       target_p_desc = f"{target_persona.name} is already {target_act_desc} at {loc}"
-    else: 
+    else:
       loc = ""
       if ":" in target_persona.scratch.act_address:
         loc = target_persona.scratch.act_address.split(":")[-1] + " in " + target_persona.scratch.act_address.split(":")[-2]
@@ -1476,27 +1498,24 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
 
     prompt_input += [init_act_desc]
     return prompt_input
-  
-  def __func_validate(gpt_response, prompt=""): 
-    try: 
-      #if gpt_response.split("Answer: Option")[-1].strip().lower() in ["3", "2", "1"]: 
-      if gpt_response.decision in [1,2,3]:
+
+  def __func_validate(gpt_response, prompt=""):
+    try:
+      if gpt_response.decision in [1, 2, 3]:
         return True
-      return False     
+      return False
     except:
       traceback.print_exc()
-      return False 
+      return False
 
-  def __func_clean_up(gpt_response, prompt=""):
-    #return gpt_response.split("Answer: Option")[-1].strip().lower() 
+  def __func_clean_up(gpt_response: DecideToReact, prompt=""):
     return gpt_response.decision
-  def get_fail_safe(): 
-    #fs = "3"
+
+  def get_fail_safe():
     fs = 3
     return fs
 
-
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 20, 
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 20,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   prompt_template = "persona/prompt_template/v2/decide_to_react_v1.txt"
@@ -1505,18 +1524,17 @@ def run_gpt_prompt_decide_to_react(persona, target_persona, retrieved,test_input
   prompt = generate_prompt(prompt_input, prompt_template)
 
   fail_safe = get_fail_safe()
-  #output = safe_generate_response(prompt, gpt_param, 5, fail_safe, __func_validate, __func_clean_up)
-  output = generate_structured_response(
-        prompt,
-        gpt_param,
-        DecideToReact,
-        5,
-        fail_safe,
-        __func_validate,
-        __func_clean_up
-    )
-  if debug or verbose: 
-    print_run_prompts(prompt_template, persona, gpt_param, 
+  output = safe_generate_structured_response(
+    prompt,
+    gpt_param,
+    DecideToReact,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up,
+  )
+  if debug or verbose:
+    print_run_prompts(prompt_template, persona, gpt_param,
                       prompt_input, prompt, output)
   
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
@@ -2862,80 +2880,59 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
 
 
 class SafetyScore(BaseModel):
-    #safety score should range 1-10
-    output: int
+  # Safety score should range 1-10
+  safety_score: int
 
 def run_gpt_generate_safety_score(persona, comment, test_input=None, verbose=False):
   """
     Given the persona and a comment, returns a structured response containing
     the safety score.
 
-    INPUT: 
+    INPUT:
       persona: The Persona class instance
       comment: A comment that will be used to generate the safety score
-    OUTPUT: 
+    OUTPUT:
       Structured output containing the safety score
-    """
+  """
   def create_prompt_input(comment, test_input=None):
     prompt_input = [comment]
     return prompt_input
 
-  def __chat_func_clean_up(gpt_response, prompt=""): 
-    #gpt_response = json.loads(gpt_response)
-    #return gpt_response["output"]
-    if isinstance(gpt_response.output, int) and 1 <= gpt_response.output <= 10:
-      return gpt_response.output
+  def __chat_func_clean_up(gpt_response: SafetyScore, prompt=""):
+    score = gpt_response.safety_score
+    if isinstance(score, int) and 1 <= score <= 10:
+      return score
     raise ValueError("Output is not a valid integer between 1 and 10")
 
-  def __chat_func_validate(gpt_response, prompt=""): 
+  def __chat_func_validate(gpt_response, prompt=""):
     try:
-      '''
-      fields = ["output"]
-      response = json.loads(gpt_response)
-      for field in fields: 
-        if field not in response: 
-          return False
-      return True
-      '''
       __chat_func_clean_up(gpt_response)
     except:
       traceback.print_exc()
-      return False 
+      return False
 
   def get_fail_safe():
-    '''
-    Provides a baseline safety score of 5
-    '''
-    #return None
-    return 5 #more neutral score for safety as returning None may cause errors
+    return None
 
   print ("11")
-  prompt_template = "persona/prompt_template/safety/anthromorphosization_v1.txt" 
-  prompt_input = create_prompt_input(comment) 
+  prompt_template = "persona/prompt_template/safety/anthromorphosization_v1.txt"
+  prompt_input = create_prompt_input(comment)
   print ("22")
   prompt = generate_prompt(prompt_input, prompt_template)
   print (prompt)
-  fail_safe = get_fail_safe() 
-  # output = ChatGPT_safe_generate_response(
-  #   prompt,
-  #   repeat=3,
-  #   fail_safe_response=fail_safe,
-  #   func_validate=__chat_func_validate,
-  #   func_clean_up=__chat_func_clean_up,
-  #   verbose=verbose,
-  # )
-  output = safe_generate_structured_response(
-        prompt,
-        gpt_param,
-        SafetyScore,
-        3,
-        fail_safe,
-        __chat_func_validate,
-        __chat_func_clean_up
-    )
-  print (output)
-  
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 50, 
+  fail_safe = get_fail_safe()
+  output = ChatGPT_safe_generate_structured_response(
+    prompt,
+    SafetyScore,
+    repeat=3,
+    fail_safe_response=fail_safe,
+    func_validate=__chat_func_validate,
+    func_clean_up=__chat_func_clean_up,
+    verbose=verbose,
+  )
+  print(output)
+
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 50,
                "temperature": 0, "top_p": 1, "stream": False,
                "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
