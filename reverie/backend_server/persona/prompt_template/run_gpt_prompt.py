@@ -811,7 +811,7 @@ def run_gpt_prompt_action_game_object(
     return prompt_input
 
   def __func_validate(gpt_response, prompt=""):
-    if len(gpt_response.strip()) < 1:
+    if len(gpt_response.object.strip()) < 1:
       return False
     return True
 
@@ -836,6 +836,7 @@ def run_gpt_prompt_action_game_object(
   output = safe_generate_structured_response(
     prompt,
     gpt_param,
+    GameObject,
     5,
     fail_safe,
     __func_validate,
@@ -1327,7 +1328,7 @@ def run_gpt_prompt_new_decomp_schedule(persona,
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-class Decide_to_Talk(BaseModel):
+class DecideToTalk(BaseModel):
   decision: bool
 
 def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=None, 
@@ -1392,13 +1393,13 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
     prompt_input += [target_persona.name]
     return prompt_input
   
-  def __func_clean_up(gpt_response: Decide_to_Talk, prompt=""):
+  def __func_clean_up(gpt_response: DecideToTalk, prompt=""):
     return "yes" if gpt_response.decision is True else "no"
 
   def __func_validate(gpt_response, prompt=""):
     try:
       if (
-        isinstance(gpt_response, Decide_to_Talk)
+        isinstance(gpt_response, DecideToTalk)
         and __func_clean_up(gpt_response, prompt) in ["yes", "no"]
       ):
         return True
@@ -1423,7 +1424,7 @@ def run_gpt_prompt_decide_to_talk(persona, target_persona, retrieved,test_input=
   output = safe_generate_structured_response(
     prompt,
     gpt_param,
-    Decide_to_Talk,
+    DecideToTalk,
     5,
     fail_safe,
     __func_validate,
@@ -2291,7 +2292,7 @@ def run_gpt_prompt_insight_and_guidance(persona, statements, n, test_input=None,
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-class Idea_Summary(BaseModel):
+class IdeaSummary(BaseModel):
   idea_summary: str
 
 def run_gpt_prompt_agent_chat_summarize_ideas(
@@ -2322,12 +2323,12 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
     return "..."
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response: Idea_Summary, prompt=""): ############
+  def __chat_func_clean_up(gpt_response: IdeaSummary, prompt=""): ############
     return gpt_response.idea_summary
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try:
-      if not isinstance(gpt_response, Idea_Summary):
+      if not isinstance(gpt_response, IdeaSummary):
         return False
       return True
     except:
@@ -2346,7 +2347,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
   fail_safe = get_fail_safe() ########
   output = ChatGPT_safe_generate_structured_response(
     prompt,
-    Idea_Summary,
+    IdeaSummary,
     example_output,
     special_instruction,
     3,
@@ -2620,7 +2621,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
     return "..."
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response: Idea_Summary, prompt=""): ############
+  def __chat_func_clean_up(gpt_response: IdeaSummary, prompt=""): ############
     return gpt_response.idea_summary.strip()
 
   def __chat_func_validate(gpt_response, prompt=""): ############
@@ -2645,7 +2646,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
   fail_safe = get_fail_safe() ########
   output = ChatGPT_safe_generate_structured_response(
     prompt,
-    Idea_Summary,
+    IdeaSummary,
     example_output,
     special_instruction,
     3,
@@ -2678,7 +2679,7 @@ def run_gpt_prompt_summarize_ideas(persona, statements, question, test_input=Non
   # return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-class Next_Conversation_Line(BaseModel):
+class NextConversationLine(BaseModel):
   next_conversation_line: str
 
 def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_convo, retrieved_summary, test_input=None, verbose=False): 
@@ -2693,12 +2694,12 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
                     persona.scratch.name,]
     return prompt_input
   
-  def __func_clean_up(gpt_response: Next_Conversation_Line, prompt=""):
+  def __func_clean_up(gpt_response: NextConversationLine, prompt=""):
     return gpt_response.next_conversation_line
 
   def __func_validate(gpt_response, prompt=""): 
     try: 
-      if not isinstance(gpt_response, Next_Conversation_Line):
+      if not isinstance(gpt_response, NextConversationLine):
         return False
       __func_clean_up(gpt_response, prompt)
       return True
@@ -2747,7 +2748,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
   output = safe_generate_structured_response(
     prompt,
     gpt_param,
-    Next_Conversation_Line,
+    NextConversationLine,
     5,
     fail_safe,
     __func_validate,
@@ -2760,7 +2761,7 @@ def run_gpt_prompt_generate_next_convo_line(persona, interlocutor_desc, prev_con
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-class Inner_Thought(BaseModel):
+class InnerThought(BaseModel):
   thought: str
 
 def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=None, verbose=False):
@@ -2768,7 +2769,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
     prompt_input = [persona.scratch.name, whisper]
     return prompt_input
 
-  def __func_clean_up(gpt_response: Inner_Thought, prompt=""):
+  def __func_clean_up(gpt_response: InnerThought, prompt=""):
     return gpt_response.thought.split('"')[0].strip()
 
   def __func_validate(gpt_response, prompt=""):
@@ -2793,7 +2794,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
   output = safe_generate_structured_response(
     prompt,
     gpt_param,
-    Inner_Thought,
+    InnerThought,
     5,
     fail_safe,
     __func_validate,
@@ -2808,7 +2809,7 @@ def run_gpt_prompt_generate_whisper_inner_thought(persona, whisper, test_input=N
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-class Planning_Thought(BaseModel):
+class PlanningThought(BaseModel):
   planning_thought: str
 
 def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, verbose=False):
@@ -2816,12 +2817,12 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
     prompt_input = [all_utt, persona.scratch.name, persona.scratch.name, persona.scratch.name]
     return prompt_input
   
-  def __func_clean_up(gpt_response: Planning_Thought, prompt=""):
+  def __func_clean_up(gpt_response: PlanningThought, prompt=""):
     return gpt_response.planning_thought
 
   def __func_validate(gpt_response, prompt=""):
     try:
-      if not isinstance(gpt_response, Planning_Thought):
+      if not isinstance(gpt_response, PlanningThought):
         return False
       __func_clean_up(gpt_response, prompt)
       return True
@@ -2843,7 +2844,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
   output = safe_generate_structured_response(
     prompt,
     gpt_param,
-    Planning_Thought,
+    PlanningThought,
     5,
     fail_safe,
     __func_validate,
@@ -2857,7 +2858,7 @@ def run_gpt_prompt_planning_thought_on_convo(persona, all_utt, test_input=None, 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
 
 
-class Convo_Takeaways(BaseModel):
+class ConvoTakeaways(BaseModel):
   takeaway: str
 
 def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=False):
@@ -2880,12 +2881,12 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
     return "..."
 
   # ChatGPT Plugin ===========================================================
-  def __chat_func_clean_up(gpt_response: Convo_Takeaways, prompt=""): ############
+  def __chat_func_clean_up(gpt_response: ConvoTakeaways, prompt=""): ############
     return gpt_response.takeaway
 
   def __chat_func_validate(gpt_response, prompt=""): ############
     try: 
-      if not isinstance(gpt_response, Convo_Takeaways):
+      if not isinstance(gpt_response, ConvoTakeaways):
         return False
       __chat_func_clean_up(gpt_response, prompt)
       return True
@@ -2905,7 +2906,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   fail_safe = get_fail_safe() ########
   output = ChatGPT_safe_generate_structured_response(
     prompt,
-    Convo_Takeaways,
+    ConvoTakeaways,
     example_output,
     special_instruction,
     3,
@@ -2929,7 +2930,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   output = safe_generate_structured_response(
     prompt,
     gpt_param,
-    Convo_Takeaways,
+    ConvoTakeaways,
     5,
     fail_safe,
     __chat_func_validate,
