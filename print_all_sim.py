@@ -4,7 +4,11 @@ import re
 import sys
 
 def get_unique_conversations(simulation_name):
+<<<<<<< HEAD
     sim_folder = os.path.join("environment", "frontend_server", "storage", "base_search_and_rescue")
+=======
+    sim_folder = os.path.join("environment", "frontend_server", "storage")
+>>>>>>> dev
 
     regex_name = re.compile(re.escape(simulation_name + '-'))
     for file_name in os.listdir(sim_folder):
@@ -56,4 +60,8 @@ if __name__ == "__main__":
     unique_conversations = get_unique_conversations(simulation_name)
     print(json.dumps(unique_conversations, indent=2))
     '''
+<<<<<<< HEAD
     get_unique_conversations(simulation_name)
+=======
+    get_unique_conversations(simulation_name)
+>>>>>>> dev

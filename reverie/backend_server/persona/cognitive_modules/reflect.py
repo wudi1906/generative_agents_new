@@ -54,7 +54,7 @@ def generate_insights_and_evidence(persona, nodes, n=5):
 
   print(ret)
   try:
-    if type(ret) == dict:
+    if isinstance(ret, dict):
       for thought, evi_raw in ret.items():
         evidence_node_id = [nodes[i].node_id for i in evi_raw]
         ret[thought] = evidence_node_id
