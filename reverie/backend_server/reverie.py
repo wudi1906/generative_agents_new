@@ -695,12 +695,18 @@ class ReverieServer:
           self.personas[persona_name].open_convo_session("analysis")
 
         elif "call -- load history" in sim_command.lower():
-          curr_file = (
-            maze_assets_loc
-            + "/"
-            + sim_command[len("call -- load history") :].strip()
-          )
-          # call -- load history the_ville/agent_history_init_n3.csv
+          # Loads the agent history from a file.
+          # Ex: call -- load history the_ville/agent_history_init_n3.csv
+          # Ex: call -- load history ./environment/frontend_server/storage/base_the_ville_isabella_maria_klaus/agent_history.csv
+          file_path = sim_command[len("call -- load history") :].strip()
+
+          # If the file path starts with "./", interpret it as a relative path
+          # starting from the project root.
+          if file_path.startswith("./"):
+            curr_file = "../../" + file_path[2:]
+          else:
+            # Otherwise, it's a relative path from the maze assets folder.
+            curr_file = maze_assets_loc + "/" + file_path
 
           rows = read_file_to_list(curr_file, header=True, strip_trail=True)[
             1

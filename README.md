@@ -101,7 +101,7 @@ The following script offer a range of enhanced features:
 
 For more details, refer to: [run_backend_automatic.sh](run_backend_automatic.sh) and [automatic_execution.py](reverie/backend_server/automatic_execution.py).
 ```bash
-    ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH>
+    ./run_backend_automatic.sh -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH> [--load_history <HISTORY-FILE>]
 ```
 
 Arguments taken by `run_backend_automatic.sh`:
@@ -111,6 +111,7 @@ Arguments taken by `run_backend_automatic.sh`:
 - `--ui <True|None|False>`: Whether to run the UI or run the simulation headless (no UI). There are two different headless modes: "None" runs in pure headless mode (no browser needed), whereas "False" runs in Chrome's builtin headless mode (needs [headless-chrome](https://developer.chrome.com/blog/headless-chrome) installed). Prefer "None" over "False" in normal cases.
 - `-p <PORT>`: The port to run the simulation on.
 - `--browser_path <BROWSER-PATH>`: The path to the UI in the browser.
+- `--load_history <HISTORY-FILE>`: (Optional) Load an agent history file. Start path with "./" to make it relative to the project root, otherwise it's interpreted as relative to the maze assets folder (`environment/frontend_server/static_dirs/assets/`).
 
 Example:
 ```bash
