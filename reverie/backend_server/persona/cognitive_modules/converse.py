@@ -16,7 +16,7 @@ from persona.prompt_template.run_gpt_prompt import (
     run_gpt_prompt_chat_poignancy,
     run_gpt_prompt_agent_chat_summarize_ideas,
     run_gpt_prompt_agent_chat_summarize_relationship,
-    run_gpt_prompt_agent_chat,
+    # run_gpt_prompt_agent_chat,
     run_gpt_prompt_summarize_ideas,
     run_gpt_prompt_generate_next_convo_line,
     run_gpt_prompt_generate_whisper_inner_thought,
@@ -75,70 +75,70 @@ def generate_summarize_agent_relationship(init_persona,
     return summarized_relationship
 
 
-def generate_agent_chat(
-    maze, init_persona, target_persona, curr_context, init_summ_idea, target_summ_idea
-):
-  response = run_gpt_prompt_agent_chat(
-    maze,
-    init_persona,
-    target_persona,
-    curr_context,
-    init_summ_idea,
-    target_summ_idea,
-  )
-  if response:
-    summarized_idea = response[0]
-  else:
-    print("ERROR: <generate_agent_chat>: Could not get summarized idea")
-    summarized_idea = []
-  for i in summarized_idea:
-    print(i)
-  return summarized_idea
+# def generate_agent_chat(
+#     maze, init_persona, target_persona, curr_context, init_summ_idea, target_summ_idea
+# ):
+#   response = run_gpt_prompt_agent_chat(
+#     maze,
+#     init_persona,
+#     target_persona,
+#     curr_context,
+#     init_summ_idea,
+#     target_summ_idea,
+#   )
+#   if response:
+#     summarized_idea = response[0]
+#   else:
+#     print("ERROR: <generate_agent_chat>: Could not get summarized idea")
+#     summarized_idea = []
+#   for i in summarized_idea:
+#     print(i)
+#   return summarized_idea
 
 
-def agent_chat_v1(maze, init_persona, target_persona):
-  # Chat version optimized for speed via batch generation
-  curr_context = (
-    f"{init_persona.scratch.name} "
-    + f"was {init_persona.scratch.act_description} "
-    + f"when {init_persona.scratch.name} "
-    + f"saw {target_persona.scratch.name} "
-    + f"in the middle of {target_persona.scratch.act_description}.\n"
-  )
-  curr_context += (
-    f"{init_persona.scratch.name} "
-    + f"is thinking of initating a conversation with "
-    + f"{target_persona.scratch.name}."
-  )
+# def agent_chat_v1(maze, init_persona, target_persona):
+#   # Chat version optimized for speed via batch generation
+#   curr_context = (
+#     f"{init_persona.scratch.name} "
+#     + f"was {init_persona.scratch.act_description} "
+#     + f"when {init_persona.scratch.name} "
+#     + f"saw {target_persona.scratch.name} "
+#     + f"in the middle of {target_persona.scratch.act_description}.\n"
+#   )
+#   curr_context += (
+#     f"{init_persona.scratch.name} "
+#     + f"is thinking of initating a conversation with "
+#     + f"{target_persona.scratch.name}."
+#   )
 
-  summarized_ideas = []
-  part_pairs = [(init_persona, target_persona), (target_persona, init_persona)]
-  for p_1, p_2 in part_pairs:
-    focal_points = [f"{p_2.scratch.name}"]
-    ###JSG: If there are no focal points, we will add a default value to it
-    # if not focal_points:
-    #     for i in range(len(focal_points)):
-    #         focal_points[i] = "play hide-and-seek"
-    retrieved = new_retrieve(p_1, focal_points, 50)
-    relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
-    focal_points = [
-      f"{relationship}",
-      f"{p_2.scratch.name} is {p_2.scratch.act_description}",
-    ]
-    retrieved = new_retrieve(p_1, focal_points, 25)
-    summarized_idea = generate_agent_chat_summarize_ideas(
-      p_1, p_2, retrieved, curr_context
-    )
-    summarized_ideas += [summarized_idea]
+#   summarized_ideas = []
+#   part_pairs = [(init_persona, target_persona), (target_persona, init_persona)]
+#   for p_1, p_2 in part_pairs:
+#     focal_points = [f"{p_2.scratch.name}"]
+#     ###JSG: If there are no focal points, we will add a default value to it
+#     # if not focal_points:
+#     #     for i in range(len(focal_points)):
+#     #         focal_points[i] = "play hide-and-seek"
+#     retrieved = new_retrieve(p_1, focal_points, 50)
+#     relationship = generate_summarize_agent_relationship(p_1, p_2, retrieved)
+#     focal_points = [
+#       f"{relationship}",
+#       f"{p_2.scratch.name} is {p_2.scratch.act_description}",
+#     ]
+#     retrieved = new_retrieve(p_1, focal_points, 25)
+#     summarized_idea = generate_agent_chat_summarize_ideas(
+#       p_1, p_2, retrieved, curr_context
+#     )
+#     summarized_ideas += [summarized_idea]
 
-  return generate_agent_chat(
-    maze,
-    init_persona,
-    target_persona,
-    curr_context,
-    summarized_ideas[0],
-    summarized_ideas[1],
-  )
+#   return generate_agent_chat(
+#     maze,
+#     init_persona,
+#     target_persona,
+#     curr_context,
+#     summarized_ideas[0],
+#     summarized_ideas[1],
+#   )
 
 
 def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_chat):
@@ -299,21 +299,21 @@ def generate_poig_score(persona, event_type, description):
       return 0
 
 
-def load_history_via_whisper(personas, whispers):
-  for count, row in enumerate(whispers): 
+def load_history_via_whisper(personas, whispers, curr_time):
+  for count, row in enumerate(whispers):
     persona = personas[row[0]]
     whisper = row[1]
 
     thought = generate_inner_thought(persona, whisper)
 
-    created = persona.scratch.curr_time
-    expiration = persona.scratch.curr_time + datetime.timedelta(days=30)
+    created = persona.scratch.curr_time if persona.scratch.curr_time else curr_time
+    expiration = created + datetime.timedelta(days=30)
     s, p, o = generate_action_event_triple(thought, persona)
     keywords = set([s, p, o])
     thought_poignancy = generate_poig_score(persona, "event", whisper)
     thought_embedding_pair = (thought, get_embedding(thought))
-    persona.a_mem.add_thought(created, expiration, s, p, o, 
-                              thought, keywords, thought_poignancy, 
+    persona.a_mem.add_thought(created, expiration, s, p, o,
+                              thought, keywords, thought_poignancy,
                               thought_embedding_pair, None)
 
 

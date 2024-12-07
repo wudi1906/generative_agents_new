@@ -44,6 +44,11 @@ while [[ $# -gt 0 ]]; do
             shift
             shift
             ;;
+        --load_history|-h)
+            ARGS="${ARGS} --load_history ${2}"
+            shift
+            shift
+            ;;
         *)
             echo "Unknown argument: $1"
             exit 1
