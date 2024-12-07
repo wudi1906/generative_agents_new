@@ -713,7 +713,7 @@ class ReverieServer:
             for whisper in whispers:
               clean_whispers += [[agent_name, whisper]]
 
-          load_history_via_whisper(self.personas, clean_whispers)
+          load_history_via_whisper(self.personas, clean_whispers, self.curr_time)
 
         print(ret_str)
 

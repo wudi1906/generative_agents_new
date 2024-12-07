@@ -549,7 +549,8 @@ class ActionLoc(BaseModel):
 
   # Validator to clean up input and ensure only arena name is stored
   @field_validator('area')
-  def extract_name(self, value):
+  @classmethod
+  def extract_name(cls, value):
     if value.startswith("Answer:"):
       # Remove "Answer:" prefix and strip surrounding spaces
       value = value[len("Answer:"):].strip()
@@ -613,7 +614,7 @@ def run_gpt_prompt_action_sector(
 
 
   def __func_clean_up(gpt_response: ActionLoc, prompt=""):
-    return gpt_response.name
+    return gpt_response.area
 
   def __func_validate(gpt_response, prompt=""):
     sector = __func_clean_up(gpt_response)
