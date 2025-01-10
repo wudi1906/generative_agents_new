@@ -763,10 +763,14 @@ if __name__ == "__main__":
 
   # Get the name of the new simulation from the user
   last_sim_code = ""
-  with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
-    curr_sim_code = json.load(json_file)
-    last_sim_code = curr_sim_code["sim_code"]
-  target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
+  try:
+    with open(f"{fs_temp_storage}/curr_sim_code.json") as json_file:
+      curr_sim_code = json.load(json_file)
+      last_sim_code = curr_sim_code["sim_code"]
+    target_prompt = f"Enter the name of the new simulation (last was {last_sim_code}): "
+  except (FileNotFoundError, KeyError):
+    target_prompt = "Enter the name of the new simulation: "
+
   target = input(target_prompt).strip()
 
   rs = ReverieServer(origin, target)
