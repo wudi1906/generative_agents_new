@@ -17,7 +17,7 @@ while [[ $# -gt 0 ]]; do
             shift 2
             break
             ;;
-        --conda-env)
+        --env-name)
             CONDA_ENV="${2}"
             shift 2
             break
