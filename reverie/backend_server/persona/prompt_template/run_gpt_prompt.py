@@ -10,12 +10,17 @@ import re
 import datetime
 import copy
 import json
-from pathlib import Path
 import random
 import string
 import traceback
 from enum import IntEnum
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel
+
+from .common import openai_config
+
+from .v1.action_location_object_vMar11 import run_gpt_prompt_action_arena
+from .v1.action_location_sector_v1 import run_gpt_prompt_action_sector
+from .v1.action_object_v2 import run_gpt_prompt_action_game_object
 
 import sys
 sys.path.append('../../')
@@ -27,14 +32,6 @@ from persona.prompt_template.gpt_structure import (
   ChatGPT_safe_generate_structured_response,
 )
 from persona.prompt_template.print_prompt import print_run_prompts
-
-from v1.action_location_object_vMar11 import run_gpt_prompt_action_arena
-from v1.action_location_sector_v1 import run_gpt_prompt_action_sector
-from v1.action_object_v2 import run_gpt_prompt_action_game_object
-
-config_path = Path("../../openai_config.json")
-with open(config_path, "r") as f:
-  openai_config = json.load(f)
 
 USE_REGEX = True
 
@@ -540,26 +537,6 @@ def run_gpt_prompt_task_decomp(persona,
                       prompt_input, prompt, output)
     
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
-
-
-class ActionLoc(BaseModel):
-  '''
-  Action Location class to be used for action sector and action arena
-  Takes in "Answer: {name}" and reduces to just name.
-  Also hanldes an input of {name}
-  '''
-  area: str
-
-  # Validator to clean up input and ensure only arena name is stored
-  @field_validator('area')
-  @classmethod
-  def extract_name(cls, value):
-    if value.startswith("Answer:"):
-      # Remove "Answer:" prefix and strip surrounding spaces
-      value = value[len("Answer:"):].strip()
-    # Remove surrounding curly brackets if present
-    value = re.sub(r'^\{|\}$', '', value).strip()
-    return value.strip()  # Ensure no leading or trailing spaces
 
 
 class Pronunciatio(BaseModel):

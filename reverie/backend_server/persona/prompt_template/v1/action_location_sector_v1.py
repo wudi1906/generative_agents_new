@@ -1,7 +1,7 @@
 from utils import debug
-from run_gpt_prompt import ActionLoc, openai_config
-from gpt_structure import generate_prompt, safe_generate_structured_response
-from persona.prompt_template.print_prompt import print_run_prompts
+from ..common import ActionLoc, openai_config
+from ..gpt_structure import generate_prompt, safe_generate_structured_response
+from ..print_prompt import print_run_prompts
 
 # Variables:
 # !<INPUT 0>! -- Persona name

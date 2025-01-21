@@ -1,7 +1,7 @@
 from utils import debug
-from run_gpt_prompt import ActionLoc, openai_config
-from gpt_structure import generate_prompt, safe_generate_structured_response
-from persona.prompt_template.print_prompt import print_run_prompts
+from ..common import ActionLoc, openai_config
+from ..gpt_structure import generate_prompt, safe_generate_structured_response
+from ..print_prompt import print_run_prompts
 
 # Variables:
 # !<INPUT 0>! -- Persona name
@@ -16,12 +16,12 @@ from persona.prompt_template.print_prompt import print_run_prompts
 
 template = """
 Jane Anderson is in kitchen in Jane Anderson's house.
-Jane Anderson is going to Jane Anderson's house that has the following areas: {kitchen,  bedroom, bathroom}
+Jane Anderson is going to Jane Anderson's house that has the following areas: {kitchen, bedroom, bathroom}
 Stay in the current area if the activity can be done there. Never go into other people's rooms unless necessary.
 For cooking, Jane Anderson should go to the following area in Jane Anderson's house:
 Answer: {kitchen}
 ---
-Tom Watson is in common room in Tom Watson's apartment. 
+Tom Watson is in common room in Tom Watson's apartment.
 Tom Watson is going to Hobbs Cafe that has the following areas: {cafe}
 Stay in the current area if the activity can be done there. Never go into other people's rooms unless necessary.
 For getting coffee, Tom Watson should go to the following area in Hobbs Cafe:
@@ -29,7 +29,7 @@ Answer: {cafe}
 ---
 
 !<INPUT 0>! is going to !<INPUT 1>! that has the following areas: {!<INPUT 2>!}
-* Stay in the current area if the activity can be done there. 
+* Stay in the current area if the activity can be done there.
 * NEVER go into other people's rooms unless necessary.
 !<INPUT 3>! is !<INPUT 4>!. For !<INPUT 5>!, !<INPUT 6>! should go to the following area in !<INPUT 7>! (MUST pick one of {!<INPUT 8>!}):
 Answer: {
