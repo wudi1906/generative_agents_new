@@ -40,12 +40,9 @@ Area options: {!<INPUT 7>!}.
 !<INPUT 8>! is !<INPUT 9>!. For !<INPUT 10>!, !<INPUT 11>! should go to the following area: {
 """
 
+
 def run_gpt_prompt_action_sector(
-  action_description,
-  persona,
-  maze,
-  test_input=None,
-  verbose=False
+  action_description, persona, maze, test_input=None, verbose=False
 ):
   def create_prompt_input(action_description, persona, maze, test_input=None):
     act_world = f"{maze.access_tile(persona.scratch.curr_tile)['world']}"
@@ -94,7 +91,6 @@ def run_gpt_prompt_action_sector(
     prompt_input += [persona.scratch.get_str_name()]
     return prompt_input
 
-
   def __func_clean_up(gpt_response: ActionLoc, prompt=""):
     return gpt_response.area
 
@@ -118,14 +114,14 @@ def run_gpt_prompt_action_sector(
   #   return cr
 
   # def __chat_func_validate(gpt_response, prompt=""): ############
-  #   try: 
+  #   try:
   #     gpt_response = __func_clean_up(gpt_response, prompt="")
-  #   except: 
+  #   except:
   #     return False
-  #   return True 
+  #   return True
 
   # print ("asdhfapsh8p9hfaiafdsi;ldfj as DEBUG 20") ########
-  # gpt_param = {"engine": openai_config["model"], "max_tokens": 15, 
+  # gpt_param = {"engine": openai_config["model"], "max_tokens": 15,
   #              "temperature": 0, "top_p": 1, "stream": False,
   #              "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
   # prompt_template = "persona/prompt_template/v3_ChatGPT/action_location_sector_v2.txt" ########
@@ -136,13 +132,20 @@ def run_gpt_prompt_action_sector(
   # fail_safe = get_fail_safe() ########
   # output = ChatGPT_safe_generate_response(prompt, example_output, special_instruction, 3, fail_safe,
   #                                         __chat_func_validate, __chat_func_clean_up, True)
-  # if output != False: 
+  # if output != False:
   #   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
   # # ChatGPT Plugin ===========================================================
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
-               "temperature": 0, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  gpt_param = {
+    "engine": openai_config["model"],
+    "max_tokens": 100,
+    "temperature": 0,
+    "top_p": 1,
+    "stream": False,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "stop": None,
+  }
   prompt_template = "persona/prompt_template/v1/action_location_sector_v1.py"
   prompt_input = create_prompt_input(action_description, persona, maze)
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
@@ -165,7 +168,6 @@ def run_gpt_prompt_action_sector(
   # print ("DEBUG", random.choice(x), "------", output)
 
   if debug or verbose:
-    print_run_prompts(prompt_template, persona, gpt_param,
-                      prompt_input, prompt, output)
+    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]

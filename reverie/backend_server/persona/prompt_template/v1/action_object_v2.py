@@ -40,25 +40,19 @@ Objects available: {!<INPUT 1>!}
 Pick ONE most relevant object from the objects available:
 """
 
+
 class GameObject(BaseModel):
   object: str
 
+
 def run_gpt_prompt_action_game_object(
-    action_description,
-    persona,
-    maze,
-    temp_address,
-    test_input=None,
-    verbose=False
+  action_description, persona, maze, temp_address, test_input=None, verbose=False
 ):
-  def create_prompt_input(action_description,
-                          persona,
-                          temp_address,
-                          test_input=None):
+  def create_prompt_input(action_description, persona, temp_address, test_input=None):
     prompt_input = []
     if "(" in action_description:
       action_description = action_description.split("(")[-1][:-1]
-  
+
     prompt_input += [action_description]
     prompt_input += [persona.s_mem.get_str_accessible_arena_game_objects(temp_address)]
     return prompt_input
@@ -75,29 +69,32 @@ def run_gpt_prompt_action_game_object(
     fs = "<random>"
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
-               "temperature": 0, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  gpt_param = {
+    "engine": openai_config["model"],
+    "max_tokens": 100,
+    "temperature": 0,
+    "top_p": 1,
+    "stream": False,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "stop": None,
+  }
   prompt_template = "persona/prompt_template/v1/action_object_v2.py"
-  prompt_input = create_prompt_input(action_description,
-                                     persona,
-                                     temp_address,
-                                     test_input)
+  prompt_input = create_prompt_input(
+    action_description, persona, temp_address, test_input
+  )
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe()
   output = safe_generate_structured_response(
-    prompt,
-    gpt_param,
-    GameObject,
-    5,
-    fail_safe,
-    __func_validate,
-    __func_clean_up
+    prompt, gpt_param, GameObject, 5, fail_safe, __func_validate, __func_clean_up
   )
 
   x = [
-    i.strip() for i in persona.s_mem.get_str_accessible_arena_game_objects(temp_address).split(",")
+    i.strip()
+    for i in persona.s_mem.get_str_accessible_arena_game_objects(temp_address).split(
+      ","
+    )
   ]
   if output not in x:
     print("ERROR: Output is not an accessible game object:", output)
@@ -106,7 +103,6 @@ def run_gpt_prompt_action_game_object(
     print("Randomly chosen object:", output)
 
   if debug or verbose:
-    print_run_prompts(prompt_template, persona, gpt_param,
-                      prompt_input, prompt, output)
-  
+    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
+
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]

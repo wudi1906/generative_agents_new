@@ -35,14 +35,19 @@ Answer: {cafe}
 Answer: {
 """
 
+
 def run_gpt_prompt_action_arena(
   action_description,
   persona,
-  maze, act_world, act_sector,
+  maze,
+  act_world,
+  act_sector,
   test_input=None,
-  verbose=False
+  verbose=False,
 ):
-  def create_prompt_input(action_description, persona, maze, act_world, act_sector, test_input=None):
+  def create_prompt_input(
+    action_description, persona, maze, act_world, act_sector, test_input=None
+  ):
     prompt_input = []
     # prompt_input += [persona.scratch.get_str_name()]
     # prompt_input += [maze.access_tile(persona.scratch.curr_tile)["arena"]]
@@ -68,7 +73,7 @@ def run_gpt_prompt_action_arena(
 
     action_description_1 = action_description
     action_description_2 = action_description
-    if "(" in action_description: 
+    if "(" in action_description:
       action_description_1 = action_description.split("(")[0].strip()
       action_description_2 = action_description.split("(")[-1][:-1]
     prompt_input += [persona.scratch.get_str_name()]
@@ -103,11 +108,20 @@ def run_gpt_prompt_action_arena(
     fs = "main room"
     return fs
 
-  gpt_param = {"engine": openai_config["model"], "max_tokens": 100,
-               "temperature": 0, "top_p": 1, "stream": False,
-               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  gpt_param = {
+    "engine": openai_config["model"],
+    "max_tokens": 100,
+    "temperature": 0,
+    "top_p": 1,
+    "stream": False,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "stop": None,
+  }
   prompt_template = "persona/prompt_template/v1/action_location_object_vMar11.py"
-  prompt_input = create_prompt_input(action_description, persona, maze, act_world, act_sector)
+  prompt_input = create_prompt_input(
+    action_description, persona, maze, act_world, act_sector
+  )
   prompt = generate_prompt(prompt_input, prompt_template_str=template)
 
   fail_safe = get_fail_safe()
@@ -128,7 +142,6 @@ def run_gpt_prompt_action_arena(
   #   output = random.choice(x)
 
   if debug or verbose:
-    print_run_prompts(prompt_template, persona, gpt_param,
-                      prompt_input, prompt, output)
+    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
