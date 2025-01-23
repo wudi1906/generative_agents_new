@@ -208,7 +208,7 @@ def GPT_request(prompt, gpt_parameter):
     return response.choices[0].message.content
   except Exception as e:
     print(f"Error: {e}")
-    return "TOKEN LIMIT EXCEEDED"
+    return f"Error occurred: {e}"
 
 
 def generate_prompt(curr_input, prompt_lib_file): 
