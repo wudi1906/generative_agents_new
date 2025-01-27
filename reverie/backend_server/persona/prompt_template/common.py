@@ -1,3 +1,8 @@
+"""
+File: common.py
+Description: Classes and variables used in multiple prompt template functions.
+"""
+
 import re
 import json
 from pathlib import Path
@@ -35,3 +40,7 @@ class FocalPoint(BaseModel):
 
 class ConvoTakeaways(BaseModel):
   takeaway: str
+
+
+class IdeaSummary(BaseModel):
+  idea_summary: str
