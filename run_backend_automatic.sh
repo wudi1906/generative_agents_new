@@ -12,15 +12,13 @@ cd ${BACKEND_SCRIPT_PATH}
 # Parse conda-specific arguments first
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --conda-path)
+        --conda_path)
             CONDA_PATH="${2}"
             shift 2
-            break
             ;;
-        --env-name)
+        --env_name)
             CONDA_ENV="${2}"
             shift 2
-            break
             ;;
         *)
             break
