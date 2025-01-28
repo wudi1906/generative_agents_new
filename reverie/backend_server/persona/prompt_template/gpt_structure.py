@@ -481,30 +481,38 @@ def GPT_structured_request(prompt, gpt_parameter, response_format):
     return "REQUEST ERROR"
 
 
-def generate_prompt(curr_input, prompt_lib_file): 
+def generate_prompt(curr_input, prompt_lib_file='', prompt_template_str=''):
   """
-  Takes in the current input (e.g. comment that you want to classifiy) and 
-  the path to a prompt file. The prompt file contains the raw str prompt that
-  will be used, which contains the following substr: !<INPUT>! -- this 
-  function replaces this substr with the actual curr_input to produce the 
-  final promopt that will be sent to the GPT3 server. 
+  Takes in the current input (e.g. comment that you want to classifiy) and
+  either the path to a prompt file or the prompt template string itself. The
+  prompt file contains the raw str prompt that will be used, which contains the
+  following substr: !<INPUT>! -- this function replaces this substr with the
+  actual curr_input to produce the final promopt that will be sent to the GPT3
+  server.
+
   ARGS:
     curr_input: the input we want to feed in (IF THERE ARE MORE THAN ONE
                 INPUT, THIS CAN BE A LIST.)
-    prompt_lib_file: the path to the promopt file. 
-  RETURNS: 
-    a str prompt that will be sent to OpenAI's GPT server.  
+    prompt_lib_file: the path to the promopt file.
+    prompt_template_str: the prompt template string.
+  RETURNS:
+    a str prompt that will be sent to OpenAI's GPT server.
   """
-  if type(curr_input) == type("string"): 
+  if type(curr_input) == type("string"):
     curr_input = [curr_input]
   curr_input = [str(i) for i in curr_input]
 
-  f = open(prompt_lib_file, "r")
-  prompt = f.read()
-  f.close()
-  for count, i in enumerate(curr_input):   
+  if prompt_lib_file:
+    with open(prompt_lib_file, "r") as f:
+      prompt = f.read()
+  elif prompt_template_str:
+    prompt = prompt_template_str
+  else:
+    raise ValueError("Either prompt_lib_file or prompt_template_str must be provided.")
+
+  for count, i in enumerate(curr_input):
     prompt = prompt.replace(f"!<INPUT {count}>!", i)
-  if "<commentblockmarker>###</commentblockmarker>" in prompt: 
+  if "<commentblockmarker>###</commentblockmarker>" in prompt:
     prompt = prompt.split("<commentblockmarker>###</commentblockmarker>")[1]
   return prompt.strip()
 
