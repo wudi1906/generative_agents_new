@@ -3247,3 +3247,95 @@ def run_plugin(
   }
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
+
+
+
+
+
+
+
+class EventPriority(BaseModel):
+  urgency: int #ranges from 0-10 
+
+def run_gpt_prompt_prioritized_event_reaction(init_persona,node,test_input=None,verbose=False): 
+  def create_prompt_input(init_persona, node,test_input=None):
+    #add context and current time first similar to decide_to_react
+    context = ""
+    curr_desc = node.description.split(" ")
+    curr_desc[2:3] = ["was"]
+    curr_desc = " ".join(curr_desc)
+    context +=  f"{curr_desc}. "
+
+    curr_time = init_persona.scratch.curr_time.strftime("%B %d, %Y, %H:%M:%S %p")
+    
+    #determine what our persona is currently doing
+    init_act_desc = init_persona.scratch.act_description
+    if "(" in init_act_desc:
+      init_act_desc = init_act_desc.split("(")[-1][:-1]
+    if len(init_persona.scratch.planned_path) == 0:
+      loc = ""
+      if ":" in init_persona.scratch.act_address:
+        loc = init_persona.scratch.act_address.split(":")[-1] + " in " + init_persona.scratch.act_address.split(":")[-2]
+      init_p_desc = f"{init_persona.name} is already {init_act_desc} at {loc}"
+    else:
+      loc = ""
+      if ":" in init_persona.scratch.act_address:
+        loc = init_persona.scratch.act_address.split(":")[-1] + " in " + init_persona.scratch.act_address.split(":")[-2]
+      init_p_desc = f"{init_persona.name} is on the way to {init_act_desc} at {loc}"
+    #now provide info about the node in question
+    node_desc = node.description
+
+    prompt_input = []
+    prompt_input += [context]
+    prompt_input += [curr_time]
+    prompt_input += [init_p_desc]
+    prompt_input += [init_persona.name]
+    prompt_input += [node_desc]
+    
+    return prompt_input
+  
+  def __func_clean_up(gpt_response: EventPriority, prompt=""):
+    print(f"Inside func_clean_up, here is gpt_response.urgency: {gpt_response.urgency}")
+    return gpt_response.urgency if type(gpt_response.urgency) is int else int(gpt_response.urgency)
+
+  def __func_validate(gpt_response, prompt=""):
+    try:
+      if (
+        isinstance(gpt_response, EventPriority)
+        and __func_clean_up(gpt_response, prompt) in [0,1,2,3,4,5,6,7,8,9,10]
+      ):
+        return True
+      return False
+    except:
+      traceback.print_exc()
+      return False
+
+  def get_fail_safe():
+    fs = "yes"
+    return fs
+
+  gpt_param = {"engine": openai_config["model"], "max_tokens": 100, 
+               "temperature": 0, "top_p": 1, "stream": False,
+               "frequency_penalty": 0, "presence_penalty": 0, "stop": None}
+  prompt_template = "persona/prompt_template/v2/prioritized_event_reaction.txt"
+  prompt_input = create_prompt_input(init_persona, node,
+                                     test_input)
+  prompt = generate_prompt(prompt_input, prompt_template)
+
+  fail_safe = get_fail_safe()
+  output = safe_generate_structured_response(
+    prompt,
+    gpt_param,
+    EventPriority,
+    5,
+    fail_safe,
+    __func_validate,
+    __func_clean_up
+  )
+  print(f"GPT Safe Generated Output for run_gpt_prompt_prioritized_event_reaction: {output}")
+
+  if debug or verbose: 
+    print_run_prompts(prompt_template, init_persona, gpt_param, 
+                      prompt_input, prompt, output)
+  
+  return output, [output, prompt, gpt_param, prompt_input, fail_safe]
