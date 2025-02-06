@@ -29,7 +29,7 @@ Answer: cafe
 {persona_name} is going to {action_sector} that has the following areas: {accessible_arenas}
 * Stay in the current area if the activity can be done there.
 * NEVER go into other people's rooms unless necessary.
-{persona_name} is {broad_action}. For {specific_action}, {persona_name} should go to the following area in {action_sector} (MUST pick one of {accessible_arenas}):
+{persona_name} is {broad_action}. For {specific_action}, {persona_name} should go to the following area in {action_sector} (MUST pick one of [{accessible_arenas}]):
 Answer:
   """
   return prompt
@@ -102,7 +102,7 @@ def run_gpt_prompt_action_arena(
     "presence_penalty": 0,
     "stop": None,
   }
-  prompt_template = "persona/prompt_template/v1/action_location_object_vMar11.py"
+  prompt_template = "persona/prompt_template/v1/action_location_arena_vMar11.py"
   prompt_input = create_prompt_input(action_description, persona, act_world, act_sector)
   prompt = create_prompt(prompt_input)
 
