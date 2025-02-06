@@ -242,15 +242,17 @@ def generate_summarize_ideas(persona, nodes, question):
 
 
 def generate_next_line(persona, interlocutor_desc, curr_convo, summarized_idea):
-  # Original chat -- line by line generation 
+  # Original chat -- line by line generation
   prev_convo = ""
-  for row in curr_convo: 
+  for row in curr_convo:
     prev_convo += f'{row[0]}: {row[1]}\n'
 
-  next_line = run_gpt_prompt_generate_next_convo_line(persona, 
-                                                      interlocutor_desc, 
-                                                      prev_convo, 
-                                                      summarized_idea)[0]  
+  next_line = run_gpt_prompt_generate_next_convo_line(
+    persona,
+    interlocutor_desc,
+    prev_convo,
+    summarized_idea,
+  )[0]
   return next_line
 
 

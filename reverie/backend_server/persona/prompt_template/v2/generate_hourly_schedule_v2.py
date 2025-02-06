@@ -14,6 +14,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   schedule_format = prompt_input["schedule_format"]
   identity_stable_set = prompt_input["identity_stable_set"]
   instructions = prompt_input["instructions"]
+  broad_daily_plan = prompt_input["broad_daily_plan"]
   existing_schedule = prompt_input["existing_schedule"]
   extra_instructions = prompt_input["extra_instructions"]
   prompt_ending = prompt_input["prompt_ending"]
@@ -24,6 +25,7 @@ Hourly schedule format:
 ===
 {identity_stable_set}
 {instructions}
+{broad_daily_plan}
 {existing_schedule}
 {extra_instructions}
 {prompt_ending}
@@ -75,11 +77,12 @@ def run_gpt_prompt_generate_hourly_schedule(
       instructions = "Create an hourly schedule for the following person to fill out their whole day."
     else:
       instructions = "Complete the given hourly schedule for the following person, filling out the whole rest of their day."
-    instructions += "\nHere is the originally intended hourly breakdown of"
-    instructions += f" {persona_firstname}'s schedule today: "
+
+    broad_daily_plan = "\nHere is the originally intended hourly breakdown of"
+    broad_daily_plan += f" {persona_firstname}'s schedule today: "
     for count, task in enumerate(persona.scratch.daily_req):
-      instructions += f"{str(count + 1)}) {task}, "
-    instructions = instructions[:-2]
+      broad_daily_plan += f"{str(count + 1)}) {task}, "
+    broad_daily_plan = broad_daily_plan[:-2]
 
     existing_schedule = ""
     if p_f_ds_hourly_org and not all_in_one:
@@ -99,6 +102,7 @@ def run_gpt_prompt_generate_hourly_schedule(
       "schedule_format": schedule_format,
       "identity_stable_set": persona.scratch.get_str_iss(),
       "instructions": instructions,
+      "broad_daily_plan": broad_daily_plan,
       "existing_schedule": existing_schedule,
       "extra_instructions": extra_instructions,
       "prompt_ending": prompt_ending,

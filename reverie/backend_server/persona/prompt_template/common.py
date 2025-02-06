@@ -39,7 +39,7 @@ class FocalPoint(BaseModel):
 
 
 class ConvoTakeaways(BaseModel):
-  takeaway: str
+  takeaways: str
 
 
 class IdeaSummary(BaseModel):

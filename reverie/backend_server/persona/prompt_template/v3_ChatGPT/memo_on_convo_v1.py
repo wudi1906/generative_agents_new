@@ -37,7 +37,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response: ConvoTakeaways, prompt=""):  ############
-    return gpt_response.takeaway
+    return gpt_response.takeaways
 
   def __chat_func_validate(gpt_response, prompt=""):  ############
     try:
