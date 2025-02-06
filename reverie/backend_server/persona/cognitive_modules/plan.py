@@ -251,7 +251,7 @@ def generate_action_arena(act_desp, persona, maze, act_world, act_sector):
   """
   if debug:
     print("GNS FUNCTION: <generate_action_arena>")
-  return run_gpt_prompt_action_arena(act_desp, persona, maze, act_world, act_sector)[
+  return run_gpt_prompt_action_arena(act_desp, persona, act_world, act_sector)[
     0
   ]
 
@@ -279,7 +279,7 @@ def generate_action_game_object(act_desp, act_address, persona, maze):
     print("ERROR: act_address not valid. Returning '<random>' as game object.")
     print("act_address:", act_address)
     return "<random>"
-  return run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)[0]
+  return run_gpt_prompt_action_game_object(act_desp, persona, act_address)[0]
 
 
 def generate_action_pronunciatio(act_desp, persona):

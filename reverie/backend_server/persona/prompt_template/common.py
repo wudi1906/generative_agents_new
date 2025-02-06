@@ -17,7 +17,7 @@ class ActionLoc(BaseModel):
   """
   Action Location class to be used for action sector and action arena
   Takes in "Answer: {name}" and reduces to just name.
-  Also hanldes an input of {name}
+  Also handles an input of {name}
   """
 
   area: str
