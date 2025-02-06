@@ -2,32 +2,41 @@
 
 from pydantic import BaseModel
 import traceback
+from typing import Any
 
 from utils import debug
 from ..common import openai_config
-from ..gpt_structure import generate_prompt, safe_generate_structured_response
+from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
-template = """
-Task -- given context, determine whether the subject will initiate a conversation with another.
-Format:
-Context: []
-Question: []
-Reasoning: []
-Answer in "yes" or "no": []
----
-Context: !<INPUT 0>!
-Right now, it is !<INPUT 1>!. !<INPUT 2>! and !<INPUT 3>! last chatted at !<INPUT 4>! about !<INPUT 5>!.
-!<INPUT 6>!
-!<INPUT 7>!
 
-Question: Would !<INPUT 8>! initiate a conversation with !<INPUT 9>!?
+def create_prompt(prompt_input: dict[str, Any]):
+  context = prompt_input["context"]
+  curr_time = prompt_input["curr_time"]
+  init_persona_name = prompt_input["init_persona_name"]
+  target_persona_name = prompt_input["target_persona_name"]
+  last_talk_time = prompt_input["last_talk_time"]
+  last_talk_topic = prompt_input["last_talk_topic"]
+  init_persona_action = prompt_input["init_persona_action"]
+  target_persona_action = prompt_input["target_persona_action"]
 
-Reasoning: Let's think step by step.
+  prompt = f"""
+Task -- Given some context, determine whether the subject will initiate a conversation with the other person. Provide your reasoning.
+
+Context: {context}
+Right now, it is {curr_time}.
+{init_persona_name} and {target_persona_name} last chatted at {last_talk_time} about {last_talk_topic}.
+{init_persona_name} is {init_persona_action}.
+{target_persona_name} is {target_persona_action}.
+
+Question: Would {init_persona_name} initiate a conversation with {target_persona_name}?
+Let's think step by step.
 """
+  return prompt
 
 
 class DecideToTalk(BaseModel):
+  reasoning: str
   decision: bool
 
 
@@ -75,20 +84,17 @@ def run_gpt_prompt_decide_to_talk(
     else:
       target_p_desc = f"{target_persona.name} is on the way to {target_act_desc}"
 
-    prompt_input = []
-    prompt_input += [context]
+    prompt_input = {
+      "context": context,
+      "curr_time": curr_time,
+      "init_persona_name": init_persona.name,
+      "target_persona_name": target_persona.name,
+      "last_talk_time": last_chatted_time,
+      "last_talk_topic": last_chat_about,
+      "init_persona_action": init_p_desc,
+      "target_persona_action": target_p_desc,
+    }
 
-    prompt_input += [curr_time]
-
-    prompt_input += [init_persona.name]
-    prompt_input += [target_persona.name]
-    prompt_input += [last_chatted_time]
-    prompt_input += [last_chat_about]
-
-    prompt_input += [init_p_desc]
-    prompt_input += [target_p_desc]
-    prompt_input += [init_persona.name]
-    prompt_input += [target_persona.name]
     return prompt_input
 
   def __func_clean_up(gpt_response: DecideToTalk, prompt=""):
@@ -101,7 +107,7 @@ def run_gpt_prompt_decide_to_talk(
       ) in ["yes", "no"]:
         return True
       return False
-    except:
+    except Exception:
       traceback.print_exc()
       return False
 
@@ -121,7 +127,7 @@ def run_gpt_prompt_decide_to_talk(
   }
   prompt_template = "persona/prompt_template/v2/decide_to_talk_v2.py"
   prompt_input = create_prompt_input(persona, target_persona, retrieved, test_input)
-  prompt = generate_prompt(prompt_input, prompt_template_str=template)
+  prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
   output = safe_generate_structured_response(

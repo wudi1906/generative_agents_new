@@ -118,7 +118,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
     prompt_input += [persona.scratch.get_str_firstname()]
     return prompt_input
 
-  def __func_clean_up(gpt_response: TaskDecomposition, prompt=""):
+  def __func_clean_up(gpt_response: TaskDecomposition, prompt="") -> list[list]:
     debug = True
 
     if debug:
@@ -225,11 +225,12 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
     __func_clean_up,
   )
 
-  # print ("DEBUG")
-  # print("PROMPT:")
-  # print (prompt)
-  # print("\nOUTPUT:")
-  # print (output)
+  if verbose:
+    print ("DEBUG")
+    print("PROMPT:")
+    print (prompt)
+    print("\nOUTPUT:")
+    print(output)
 
   fin_output = []
   time_sum = 0
@@ -241,6 +242,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
       fin_output += [[i_task, i_duration]]
     else:
       break
+
   ftime_sum = 0
   for _fi_task, fi_duration in fin_output:
     ftime_sum += fi_duration

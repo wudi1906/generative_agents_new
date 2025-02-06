@@ -109,7 +109,7 @@ def generate_hourly_schedule(persona, wake_up_hour):
   if debug:
     print("GNS FUNCTION: <generate_hourly_schedule>")
 
-  hour_str = [
+  hour_strings = [
     "00:00 AM",
     "01:00 AM",
     "02:00 AM",
@@ -149,15 +149,15 @@ def generate_hourly_schedule(persona, wake_up_hour):
     if len(n_m1_activity_set) < 5:
       n_m1_activity = []
 
-      if not all_in_one:
-        for count, curr_hour_str in enumerate(hour_str):
-          n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
-            persona, curr_hour_str, n_m1_activity, hour_str, all_in_one=False
-          )[0]]
-      else:
+      if all_in_one:
         n_m1_activity = run_gpt_prompt_generate_hourly_schedule(
-          persona, hour_str, n_m1_activity, hour_str, all_in_one=True
+          persona, n_m1_activity, hour_strings, all_in_one=True
         )[0]
+      else:
+        for _i in range(len(hour_strings)):
+          n_m1_activity += [run_gpt_prompt_generate_hourly_schedule(
+            persona, n_m1_activity, hour_strings, all_in_one=False
+          )[0]]
 
   # Step 1. Compressing the hourly schedule to the following format:
   # The integer indicates the number of hours. They should add up to 24.
