@@ -51,7 +51,7 @@ def run_gpt_prompt_summarize_conversation(
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response: ConversationSummary, prompt=""):  ############
-    ret = "conversing about " + gpt_response.summary.strip()
+    ret = gpt_response.summary.strip()
     return ret
 
   def __chat_func_validate(gpt_response, prompt=""):  ############
