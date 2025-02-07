@@ -310,7 +310,7 @@ def ChatGPT_safe_generate_response(
       try:
         chatgpt_response = ChatGPT_request(prompt)
         if not chatgpt_response:
-          raise Exception("No valid response from LLM.")
+          raise Exception("Error: No valid response from LLM.")
         curr_gpt_response = chatgpt_response.strip()
         if example_output or special_instruction:
           end_index = curr_gpt_response.rfind("}") + 1
@@ -327,10 +327,10 @@ def ChatGPT_safe_generate_response(
           return func_clean_up(curr_gpt_response, prompt=prompt)
 
       except Exception as e:
-        print("ERROR:", e)
+        print("Error:", e)
         traceback.print_exc()
 
-  print("FAIL SAFE TRIGGERED")
+  print("Error: Fail safe triggered.")
   return fail_safe_response
 
 
@@ -377,9 +377,12 @@ def ChatGPT_safe_generate_structured_response(
           and func_validate(curr_gpt_response, prompt=prompt)
         ):
           return func_clean_up(curr_gpt_response, prompt=prompt)
+        else:
+          print("Error: Response validation failed. Response:")
+          print(curr_gpt_response)
 
       except Exception as e:
-        print("ERROR:", e)
+        print("Error:", e)
         traceback.print_exc()
 
   return fail_safe_response
@@ -427,8 +430,8 @@ def GPT_request(prompt, gpt_parameter):
     return content
 
   except Exception as e:
-    print("REQUEST ERROR")
-    print(e)
+    print("Error:", e)
+    traceback.print_exc()
     return "REQUEST ERROR"
 
 
@@ -476,7 +479,7 @@ def GPT_structured_request(prompt, gpt_parameter, response_format):
       raise ValueError("Request refused: " + message.refusal)
     raise ValueError("No parsed content or refusal found.")
   except Exception as e:
-    print("REQUEST ERROR")
+    print("Error:", e)
     traceback.print_exc()
     return "REQUEST ERROR"
 
@@ -534,15 +537,17 @@ def safe_generate_response(prompt,
         if func_validate(curr_gpt_response, prompt=prompt):
           return func_clean_up(curr_gpt_response, prompt=prompt)
         else:
-          print("Response validation failed.")
-      except:
-        print("Could not process response.")
+          print("Error: Response validation failed. Response:")
+          print(curr_gpt_response)
+      except Exception as e:
+        print("Could not process response. Error:", e)
+        traceback.print_exc()
       if verbose:
         print("---- repeat count: ", i, curr_gpt_response)
         print(curr_gpt_response)
         print("~~~~")
 
-  print("FAIL SAFE TRIGGERED")
+  print("Error: Fail safe triggered.")
   return fail_safe_response
 
 
@@ -568,15 +573,17 @@ def safe_generate_structured_response(
           prompt=prompt
         ):
           return func_clean_up(curr_gpt_response, prompt=prompt)
-        print("Response validation failed.")
-      except:
-        print("Could not process response.")
+        print("Error: Response validation failed. Response:")
+        print(curr_gpt_response)
+      except Exception as e:
+        print("Could not process response. Error:", e)
+        traceback.print_exc()
       if verbose:
         print("---- repeat count: ", i, curr_gpt_response)
         print(curr_gpt_response)
         print("~~~~")
 
-  print("FAIL SAFE TRIGGERED")
+  print("Error: Fail safe triggered.")
   return fail_safe_response
 
 
