@@ -134,11 +134,17 @@ def run_gpt_prompt_new_decomp_schedule(
           return False
         if str(type(dur)) != "<class 'int'>":
           return False
-      x = (
-        prompt.split("\n")[0].split("originally planned schedule from")[-1].strip()[:-1]
-      )
-      x = [datetime.datetime.strptime(i.strip(), "%H:%M %p") for i in x.split(" to ")]
-      delta_min = int((x[1] - x[0]).total_seconds() / 60)
+
+      time_range_str = prompt.split(" originally planned schedule from ")[1].split(
+        "\n"
+      )[0]
+      print(time_range_str)
+      time_range = [
+        datetime.datetime.strptime(time_str.strip(), "%H:%M %p")
+        for time_str in time_range_str.split(" to ")
+      ]
+      print(time_range)
+      delta_min = int((time_range[1] - time_range[0]).total_seconds() / 60)
 
       if int(dur_sum) != int(delta_min):
         return False
@@ -150,7 +156,7 @@ def run_gpt_prompt_new_decomp_schedule(
 
   def get_fail_safe(main_act_dur, truncated_act_dur):
     dur_sum = 0
-    for act, dur in main_act_dur:
+    for _act, dur in main_act_dur:
       dur_sum += dur
 
     ret = truncated_act_dur[:]
@@ -160,7 +166,7 @@ def run_gpt_prompt_new_decomp_schedule(
     ret_dur_sum = 0
     count = 0
     over = None
-    for act, dur in ret:
+    for _act, dur in ret:
       ret_dur_sum += dur
       if ret_dur_sum == dur_sum:
         break
@@ -197,6 +203,7 @@ def run_gpt_prompt_new_decomp_schedule(
     test_input,
   )
   prompt = create_prompt(prompt_input)
+  print(prompt)
   fail_safe = get_fail_safe(main_act_dur, truncated_act_dur)
   output = safe_generate_structured_response(
     prompt, gpt_param, NewSchedule, 5, fail_safe, __func_validate, __func_clean_up

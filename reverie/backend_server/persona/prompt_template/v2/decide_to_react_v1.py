@@ -155,9 +155,9 @@ def run_gpt_prompt_decide_to_react(
 
     return prompt_input
 
-  def __func_validate(gpt_response, prompt=""):
+  def __func_validate(gpt_response: DecideToReact, prompt=""):
     try:
-      if gpt_response.decision in [1, 2]:
+      if gpt_response.decision.value in [1, 2]:
         return True
       return False
     except Exception:
@@ -165,7 +165,7 @@ def run_gpt_prompt_decide_to_react(
       return False
 
   def __func_clean_up(gpt_response: DecideToReact, prompt=""):
-    return str(gpt_response.decision)
+    return str(gpt_response.decision.value)
 
   def get_fail_safe():
     fs = "3"
