@@ -1,9 +1,7 @@
-# summarize_chat_ideas_v1.py
-
 import traceback
 from typing import Any
 
-from ..common import openai_config, StatementsSummary
+from ..common import openai_config, StatementsSummary, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
@@ -83,7 +81,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
     "presence_penalty": 0,
     "stop": None,
   }
-  prompt_template = "persona/prompt_template/v3_ChatGPT/summarize_chat_ideas_v1.py"
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(persona, target_persona, statements, curr_context)
   prompt = create_prompt(prompt_input)
   example_output = "Jane Doe is working on a project"
@@ -101,7 +99,7 @@ def run_gpt_prompt_agent_chat_summarize_ideas(
   )
 
   if verbose:
-    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
+    print_run_prompts(prompt_file, persona, gpt_param, prompt_input, prompt, output)
 
   if output:
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]

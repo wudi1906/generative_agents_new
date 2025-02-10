@@ -5,12 +5,17 @@ Description: Classes and variables used in multiple prompt template functions.
 
 import re
 import json
+import os
 from pathlib import Path
 from pydantic import BaseModel, field_validator
 
 config_path = Path("../../openai_config.json")
 with open(config_path, "r") as f:
   openai_config = json.load(f)
+
+
+def get_prompt_file_path(curr_file):
+  return os.path.relpath(os.path.abspath(curr_file), os.path.pardir)
 
 
 class ActionLoc(BaseModel):

@@ -1,10 +1,8 @@
-# iterative_convo_v1.py
-
 import traceback
 from pydantic import BaseModel
 from typing import Any
 
-from ..common import openai_config
+from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
@@ -145,7 +143,7 @@ def run_gpt_generate_iterative_chat_utt(
     }
     return cleaned_dict
 
-  prompt_template = "persona/prompt_template/v3_ChatGPT/iterative_convo_v1.py"
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
   )
@@ -174,7 +172,7 @@ def run_gpt_generate_iterative_chat_utt(
 
   if verbose:
     print_run_prompts(
-      prompt_template, init_persona, gpt_param, prompt_input, prompt, output
+      prompt_file, init_persona, gpt_param, prompt_input, prompt, output
     )
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]

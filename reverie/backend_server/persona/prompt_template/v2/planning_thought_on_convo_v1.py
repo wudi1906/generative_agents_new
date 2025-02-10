@@ -1,11 +1,9 @@
-# planning_thought_on_convo_v1.py
-
 from pydantic import BaseModel
 import traceback
 from typing import Any
 
 from utils import debug
-from ..common import openai_config
+from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
@@ -66,7 +64,7 @@ def run_gpt_prompt_planning_thought_on_convo(
     "presence_penalty": 0,
     "stop": None,
   }
-  prompt_template = "persona/prompt_template/v2/planning_thought_on_convo_v1.py"
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(persona, all_utterances)
   prompt = create_prompt(prompt_input)
 
@@ -82,6 +80,6 @@ def run_gpt_prompt_planning_thought_on_convo(
   )
 
   if debug or verbose:
-    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
+    print_run_prompts(prompt_file, persona, gpt_param, prompt_input, prompt, output)
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]

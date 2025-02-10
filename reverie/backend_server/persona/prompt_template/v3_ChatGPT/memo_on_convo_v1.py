@@ -1,9 +1,7 @@
-# memo_on_convo_v1.py
-
 import traceback
 from typing import Any
 
-from ..common import openai_config, ConvoTakeaways
+from ..common import openai_config, ConvoTakeaways, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
 from ..v2.memo_on_convo_v1 import run_gpt_prompt_memo_on_convo_v1
 from ..print_prompt import print_run_prompts
@@ -61,7 +59,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
     "presence_penalty": 0,
     "stop": None,
   }
-  prompt_template = "persona/prompt_template/v3_ChatGPT/memo_on_convo_v1.py"
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(persona, all_utt)
   prompt = create_prompt(prompt_input)
   example_output = "Jane Doe was interesting to talk to."
@@ -80,7 +78,7 @@ def run_gpt_prompt_memo_on_convo(persona, all_utt, test_input=None, verbose=Fals
   )
 
   if verbose:
-    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
+    print_run_prompts(prompt_file, persona, gpt_param, prompt_input, prompt, output)
 
   if output:
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]

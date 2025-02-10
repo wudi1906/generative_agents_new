@@ -1,10 +1,8 @@
-# summarize_conversation_v1.py
-
 import traceback
 from pydantic import BaseModel
 from typing import Any
 
-from ..common import openai_config
+from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
@@ -87,7 +85,7 @@ def run_gpt_prompt_summarize_conversation(
     "presence_penalty": 0,
     "stop": None,
   }
-  prompt_template = "persona/prompt_template/v3_ChatGPT/summarize_conversation_v1.py"
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(conversation, test_input)
   prompt = create_prompt(prompt_input)
   example_output = "Isabella is talking to Klaus about what to eat for lunch."
@@ -106,7 +104,7 @@ def run_gpt_prompt_summarize_conversation(
   )
 
   if verbose:
-    print_run_prompts(prompt_template, persona, gpt_param, prompt_input, prompt, output)
+    print_run_prompts(prompt_file, persona, gpt_param, prompt_input, prompt, output)
 
   if output:
     return output, [output, prompt, gpt_param, prompt_input, fail_safe]

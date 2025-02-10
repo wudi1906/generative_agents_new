@@ -1,8 +1,10 @@
 import traceback
 from pydantic import BaseModel
 from typing import Any
-from ..common import openai_config
+
+from ..common import openai_config, get_prompt_file_path
 from ..gpt_structure import ChatGPT_safe_generate_structured_response
+from ..print_prompt import print_run_prompts
 
 
 def create_prompt(prompt_input: dict[str, Any]):
@@ -42,6 +44,7 @@ def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=False):
   def get_fail_safe():
     return None
 
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(comment)
   prompt = create_prompt(prompt_input)
 
@@ -66,4 +69,8 @@ def run_gpt_generate_safety_score(comment: str, test_input=None, verbose=False):
     "presence_penalty": 0,
     "stop": None,
   }
+
+  if verbose:
+    print_run_prompts(prompt_file, None, gpt_param, prompt_input, prompt, output)
+
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
