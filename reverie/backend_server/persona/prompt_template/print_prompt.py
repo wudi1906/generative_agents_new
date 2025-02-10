@@ -11,23 +11,23 @@ Description: For printing prompts when the setting for verbose is set to True.
 
 
 def print_run_prompts(
-    prompt_template=None,
+    prompt_file="",
     persona=None,
     gpt_param=None,
     prompt_input=None,
-    prompt=None,
+    prompt="",
     output=None,
 ):
-    print(f"=== {prompt_template}")
+    print(f"=== File: {prompt_file}")
     print("~~~ persona    ---------------------------------------------------")
     print(persona.name if persona else "None", "\n")
     print("~~~ gpt_param ----------------------------------------------------")
     print(gpt_param, "\n")
     print("~~~ prompt_input    ----------------------------------------------")
     print(prompt_input, "\n")
-    print("~~~ prompt    ----------------------------------------------------")
+    print("~~~ final prompt    ----------------------------------------------------")
     print(prompt, "\n")
-    print("~~~ processed final output    ----------------------------------------------------")
+    print("~~~ processed output    ----------------------------------------------------")
     print(output, "\n")
     print("=== END ==========================================================")
     print("\n\n\n")
