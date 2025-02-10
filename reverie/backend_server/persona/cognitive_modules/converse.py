@@ -5,6 +5,7 @@ File: converse.py
 Description: An extra cognitive module for generating conversations. 
 """
 import datetime
+import traceback
 
 import sys
 sys.path.append('../')
@@ -152,21 +153,21 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
   )
   curr_context += (
     f"{init_persona.scratch.name} "
-    + f"is initiating a conversation with "
+    + "is initiating a conversation with "
     + f"{target_persona.scratch.name}."
   )
 
-  x = run_gpt_generate_iterative_chat_utt(
+  convo_response = run_gpt_generate_iterative_chat_utt(
     maze, init_persona, target_persona, retrieved, curr_context, curr_chat
   )[0]
 
-  print("DEBUG HERE", x)
-
   try:
-    return x["utterance"], x["end"]  # type: ignore
-  except:
-    print("ERROR: <generate_one_utterance>: Could not get utterance")
+    return convo_response["utterance"], convo_response["end"]
+  except Exception:
+    print("Error <generate_one_utterance>: Could not get utterance")
+    traceback.print_exc()
     return "", True
+
 
 def agent_chat_v2(maze, init_persona, target_persona): 
   curr_chat = []

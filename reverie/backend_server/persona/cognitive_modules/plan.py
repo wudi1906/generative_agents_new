@@ -6,7 +6,8 @@ Description: This defines the "Plan" module for generative agents.
 """
 import datetime
 import math
-import random 
+import random
+import traceback
 
 import sys
 sys.path.append('../../')
@@ -302,13 +303,14 @@ def generate_action_pronunciatio(act_desp, persona):
   try:
     response = run_gpt_prompt_pronunciatio(act_desp, persona)
     if response:
-      x = response[0]
-  except:
-    x = "🙂"
+      emoji = response[0]
+  except Exception:
+    traceback.print_exc()
+    emoji = "🙂"
 
-  if not x:
-    return "🙂"
-  return x
+  if emoji:
+    return emoji
+  return "🙂"
 
 
 def generate_action_event_triple(act_desp, persona):
@@ -374,7 +376,7 @@ def generate_convo_summary(persona, convo):
     convo_summary = response[0]
     return convo_summary
   else:
-    print("ERROR: <generate_convo_summary>")
+    print("ERROR <generate_convo_summary>: Failed to generate convo summary.")
     return ""
 
 
@@ -947,7 +949,7 @@ def _chat_react(maze, persona, focused_event, reaction_mode, personas):
   target_persona = personas[reaction_mode[9:].strip()]
   # curr_personas = [init_persona, target_persona]
 
-  # Actually creating the conversation here. 
+  # Actually creating the conversation here.
   convo, duration_min = generate_convo(maze, init_persona, target_persona)
   convo_summary = generate_convo_summary(init_persona, convo)
   inserted_act = convo_summary

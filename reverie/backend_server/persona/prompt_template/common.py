@@ -42,5 +42,9 @@ class ConvoTakeaways(BaseModel):
   takeaways: str
 
 
-class IdeaSummary(BaseModel):
-  idea_summary: str
+class StatementsSummary(BaseModel):
+  statements_summary: str
+
+
+class Poignancy(BaseModel):
+  poignancy: int

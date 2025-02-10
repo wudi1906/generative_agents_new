@@ -385,6 +385,7 @@ def ChatGPT_safe_generate_structured_response(
         print("Error:", e)
         traceback.print_exc()
 
+  print("Error: Fail safe triggered.")
   return fail_safe_response
 
 
