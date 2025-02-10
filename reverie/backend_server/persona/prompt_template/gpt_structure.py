@@ -302,10 +302,6 @@ def ChatGPT_safe_generate_response(
         prompt += "Example output json:\n"
         prompt += '{"output": "' + str(example_output) + '"}'
 
-    if verbose:
-      print("LLM PROMPT")
-      print(prompt)
-
     for i in range(repeat):
       try:
         chatgpt_response = ChatGPT_request(prompt)
@@ -319,9 +315,6 @@ def ChatGPT_safe_generate_response(
 
         if verbose:
           print("---- repeat count:", i)
-          print("~~~~ curr_gpt_response:")
-          print(curr_gpt_response)
-          print("~~~~")
 
         if func_validate(curr_gpt_response, prompt=prompt):
           return func_clean_up(curr_gpt_response, prompt=prompt)

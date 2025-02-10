@@ -1,5 +1,5 @@
 import traceback
-import unicodedata
+import re
 from pydantic import BaseModel
 from typing import Any
 
@@ -38,13 +38,12 @@ def run_gpt_prompt_pronunciatio(action_description, persona, verbose=False):
 
   # ChatGPT Plugin ===========================================================
   def __chat_func_clean_up(gpt_response: Pronunciatio, prompt=""):
-    emojis = ""
-    for char in gpt_response.emoji:
-      if unicodedata.name(char, "").startswith(("EMOJI", "EMOTICON")):
-        emojis += char
-    if len(emojis) == 0:
-      raise ValueError(f"No emoji found in response: {gpt_response.emoji}")
-    return emojis
+    # This pattern matches most modern emojis
+    pattern = r"[\U0001F300-\U0001F9FF\u200d\u2600-\u26FF\u2700-\u27BF]"
+    result = re.search(pattern, gpt_response.emoji)
+    if result:
+        return result.group()
+    raise ValueError("No emoji found in the response.")
 
   def __chat_func_validate(gpt_response, prompt=""):
     try:
