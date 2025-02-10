@@ -9,6 +9,7 @@ from ..print_prompt import print_run_prompts
 
 
 def create_prompt(prompt_input: dict[str, Any]):
+  persona_name = prompt_input["persona_name"]
   schedule_format = prompt_input["schedule_format"]
   identity_stable_set = prompt_input["identity_stable_set"]
   instructions = prompt_input["instructions"]
@@ -23,6 +24,8 @@ Hourly schedule format:
 ===
 {identity_stable_set}
 {instructions}
+Replace "[Fill in]" with the actual activity for each hour.
+Here is the originally intended hourly breakdown of {persona_name}'s schedule today:
 {broad_daily_plan}
 {existing_schedule}
 {extra_instructions}
@@ -76,8 +79,7 @@ def run_gpt_prompt_generate_hourly_schedule(
     else:
       instructions = "Complete the given hourly schedule for the following person, filling out the whole rest of their day."
 
-    broad_daily_plan = "\nHere is the originally intended hourly breakdown of"
-    broad_daily_plan += f" {persona_firstname}'s schedule today: "
+    broad_daily_plan = ""
     for count, task in enumerate(persona.scratch.daily_req):
       broad_daily_plan += f"{str(count + 1)}) {task}, "
     broad_daily_plan = broad_daily_plan[:-2]
@@ -97,6 +99,7 @@ def run_gpt_prompt_generate_hourly_schedule(
       prompt_ending = "Completed hourly schedule (start from the hour after the existing schedule ends, and use present progressive tense, e.g. 'waking up and completing the morning routine'):"
 
     prompt_input = {
+      "persona_name": persona_firstname,
       "schedule_format": schedule_format,
       "identity_stable_set": persona.scratch.get_str_iss(),
       "instructions": instructions,

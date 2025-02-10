@@ -18,16 +18,24 @@ def print_run_prompts(
     prompt="",
     output=None,
 ):
-    print(f"=== File: {prompt_file}")
-    print("~~~ persona    ---------------------------------------------------")
-    print(persona.name if persona else "None", "\n")
-    print("~~~ gpt_param ----------------------------------------------------")
-    print(gpt_param, "\n")
-    print("~~~ prompt_input    ----------------------------------------------")
-    print(prompt_input, "\n")
-    print("~~~ final prompt    ----------------------------------------------------")
-    print(prompt, "\n")
-    print("~~~ processed output    ----------------------------------------------------")
-    print(output, "\n")
-    print("=== END ==========================================================")
-    print("\n\n\n")
+    print(f'''
+
+=== File: {prompt_file}
+~~~ persona    ---------------------------------------------------
+{persona.name if persona else "None"}
+
+~~~ gpt_param ----------------------------------------------------
+{gpt_param}
+
+~~~ prompt_input    ----------------------------------------------
+{prompt_input}
+
+~~~ final prompt    ----------------------------------------------------
+{prompt}
+
+~~~ processed output    ----------------------------------------------------
+{output}
+
+=== END ==========================================================
+
+''', flush=True)

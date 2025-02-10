@@ -25,7 +25,7 @@ start_time ~ end_time -- main_task (subtask)
 Here was {persona_name}'s originally planned schedule from {start_hour} to {end_hour}:
 {original_plan}
 
-But {persona_name} unexpectedly ended up {new_action} for {new_action_duration} minutes. Revise {persona_name}'s schedule from {start_hour} to {end_hour} accordingly (it has to end by {end_hour}).
+But {persona_name} unexpectedly ended up {new_action} for {new_action_duration} minutes. Revise {persona_name}'s schedule from {start_hour} to {end_hour} accordingly (it has to end by {end_hour}). Use present progressive tense (e.g., "working on the lesson plan").
 
 Revised schedule:
 {new_schedule_start}
@@ -133,15 +133,17 @@ def run_gpt_prompt_new_decomp_schedule(
         if str(type(dur)) != "<class 'int'>":
           return False
 
-      time_range_str = prompt.split(" originally planned schedule from ")[1].split(
-        "\n"
-      )[0]
-      print(time_range_str)
+      time_range_str = (
+        prompt.split(" originally planned schedule from ")[1]
+        .split("\n")[0]
+        .strip()
+        .strip(":")
+        .strip()
+      )
       time_range = [
         datetime.datetime.strptime(time_str.strip(), "%H:%M %p")
         for time_str in time_range_str.split(" to ")
       ]
-      print(time_range)
       delta_min = int((time_range[1] - time_range[0]).total_seconds() / 60)
 
       if int(dur_sum) != int(delta_min):
@@ -201,16 +203,10 @@ def run_gpt_prompt_new_decomp_schedule(
     test_input,
   )
   prompt = create_prompt(prompt_input)
-  print(prompt)
   fail_safe = get_fail_safe(main_act_dur, truncated_act_dur)
   output = safe_generate_structured_response(
     prompt, gpt_param, NewSchedule, 5, fail_safe, __func_validate, __func_clean_up
   )
-
-  # print ("* * * * output")
-  # print (output)
-  # print ('* * * * fail_safe')
-  # print (fail_safe)
 
   if debug or verbose:
     print_run_prompts(prompt_file, persona, gpt_param, prompt_input, prompt, output)

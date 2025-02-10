@@ -13,8 +13,7 @@ def create_prompt(prompt_input: dict[str, Any]):
   curr_time = prompt_input["curr_time"]
   init_persona_name = prompt_input["init_persona_name"]
   target_persona_name = prompt_input["target_persona_name"]
-  last_talk_time = prompt_input["last_talk_time"]
-  last_talk_topic = prompt_input["last_talk_topic"]
+  last_talk_info = prompt_input["last_talk_info"]
   init_persona_action = prompt_input["init_persona_action"]
   target_persona_action = prompt_input["target_persona_action"]
 
@@ -23,7 +22,7 @@ Task -- Given some context, determine whether the subject will initiate a conver
 
 Context: {context}
 Right now, it is {curr_time}.
-{init_persona_name} and {target_persona_name} last chatted at {last_talk_time} about {last_talk_topic}.
+{last_talk_info}
 {init_persona_name} is {init_persona_action}.
 {target_persona_name} is {target_persona_action}.
 
@@ -45,9 +44,13 @@ def run_gpt_prompt_decide_to_talk(
     last_chat = init_persona.a_mem.get_last_chat(target_persona.name)
     last_chatted_time = ""
     last_chat_about = ""
+
     if last_chat:
       last_chatted_time = last_chat.created.strftime("%B %d, %Y, %H:%M:%S")
       last_chat_about = last_chat.description
+      last_talk_info = f"last chatted at {last_chatted_time} about {last_chat_about}"
+    else:
+      last_talk_info = ""
 
     context = ""
     for c_node in retrieved["events"]:
@@ -87,8 +90,7 @@ def run_gpt_prompt_decide_to_talk(
       "curr_time": curr_time,
       "init_persona_name": init_persona.name,
       "target_persona_name": target_persona.name,
-      "last_talk_time": last_chatted_time,
-      "last_talk_topic": last_chat_about,
+      "last_talk_info": last_talk_info,
       "init_persona_action": init_p_desc,
       "target_persona_action": target_p_desc,
     }
@@ -115,7 +117,7 @@ def run_gpt_prompt_decide_to_talk(
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 100,
+    "max_tokens": 1000,
     "temperature": 0,
     "top_p": 1,
     "stream": False,

@@ -171,7 +171,7 @@ def run_gpt_prompt_decide_to_react(
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 100,
+    "max_tokens": 1000,
     "temperature": 0,
     "top_p": 1,
     "stream": False,

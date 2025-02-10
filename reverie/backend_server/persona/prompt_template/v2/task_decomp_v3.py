@@ -42,7 +42,7 @@ In 5 min increments, list the subtasks Kelly does when Kelly is working on the n
 ---
 {identity_stable_set}
 {broad_schedule_summary}
-In 5 min increments, list the subtasks {persona_firstname} does when {persona_firstname} is {action} from {action_time_range} (total duration in minutes {action_duration}):
+In 5 min increments, list the subtasks {persona_firstname} does when {persona_firstname} is {action} from {action_time_range} (total duration in minutes: {action_duration}). Use present progressive tense (e.g., "printing the lesson plan").
 """
   return prompt
 
@@ -58,7 +58,7 @@ class TaskDecomposition(BaseModel):
 
 
 def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose=False):
-  def create_prompt_input(persona, task, duration, test_input=None):
+  def create_prompt_input(persona, task, duration, test_input=None, debug=False):
     """
     Today is Saturday June 25. From 00:00 ~ 06:00am, Maeve is
     planning on sleeping, 06:00 ~ 07:00am, Maeve is
@@ -77,14 +77,17 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
 
     curr_time_range = ""
 
-    print("DEBUG")
-    print(persona.scratch.f_daily_schedule_hourly_org)
-    print(all_indices)
+    if debug:
+      print("DEBUG")
+      print(persona.scratch.f_daily_schedule_hourly_org)
+      print(all_indices)
 
     summary_str = f"Today is {persona.scratch.curr_time.strftime('%B %d, %Y')}. "
     summary_str += "From "
     for index in all_indices:
-      print("index", index)
+      if debug:
+        print("index", index)
+
       if index < len(persona.scratch.f_daily_schedule_hourly_org):
         start_min = 0
         for i in range(index):
@@ -139,9 +142,7 @@ def run_gpt_prompt_task_decomp(persona, task, duration, test_input=None, verbose
       print("(cleanup func) Unpacked (final_task_list)): ", final_task_list)
       print("(cleanup func) Prompt:", prompt)
 
-    total_expected_min = int(
-      prompt.split("(total duration in minutes")[-1].split("):")[0].strip()
-    )
+    total_expected_min = int(duration)
 
     if debug:
       print("(cleanup func) Expected Minutes:", total_expected_min)

@@ -398,11 +398,10 @@ def generate_decide_to_react(init_persona, target_persona, retrieved):
 
 def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start_hour, end_hour): 
   # Step 1: Setting up the core variables for the function. 
-  # <p> is the persona whose schedule we are editing right now. 
-  p = persona
+
   # <today_min_pass> indicates the number of minutes that have passed today. 
-  today_min_pass = (int(p.scratch.curr_time.hour) * 60 
-                    + int(p.scratch.curr_time.minute) + 1)
+  today_min_pass = (int(persona.scratch.curr_time.hour) * 60 
+                    + int(persona.scratch.curr_time.minute) + 1)
   
   # Step 2: We need to create <main_act_dur> and <truncated_act_dur>. 
   # These are basically a sub-component of <f_daily_schedule> of the persona,
@@ -436,8 +435,7 @@ def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start
   count = 0 # enumerate count
   truncated_fin = False 
 
-  print ("DEBUG::: ", persona.scratch.name)
-  for act, dur in p.scratch.f_daily_schedule: 
+  for act, dur in persona.scratch.f_daily_schedule:
     if (dur_sum >= start_hour * 60) and (dur_sum < end_hour * 60): 
       main_act_dur += [[act, dur]]
       if dur_sum <= today_min_pass:
@@ -445,24 +443,20 @@ def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start
       elif dur_sum > today_min_pass and not truncated_fin: 
         # We need to insert that last act, duration list like this one: 
         # e.g., ['wakes up and completes her morning routine (wakes up...)', 2]
-        truncated_act_dur += [[p.scratch.f_daily_schedule[count][0], 
+        truncated_act_dur += [[persona.scratch.f_daily_schedule[count][0], 
                                dur_sum - today_min_pass]] 
         truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
         # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
-        print ("DEBUG::: ", truncated_act_dur)
 
         # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do??? 
         truncated_fin = True
     dur_sum += dur
     count += 1
 
-  persona_name = persona.name 
-  main_act_dur = main_act_dur
-
   x = truncated_act_dur[-1][0].split("(")[0].strip() + " (on the way to " + truncated_act_dur[-1][0].split("(")[-1][:-1] + ")"
-  truncated_act_dur[-1][0] = x 
+  truncated_act_dur[-1][0] = x
 
-  if "(" in truncated_act_dur[-1][0]: 
+  if "(" in truncated_act_dur[-1][0]:
     inserted_act = truncated_act_dur[-1][0].split("(")[0].strip() + " (" + inserted_act + ")"
 
   # To do inserted_act_dur+1 below is an important decision but I'm not sure
@@ -474,14 +468,18 @@ def generate_new_decomp_schedule(persona, inserted_act, inserted_act_dur,  start
   end_time_hour = (datetime.datetime(2022, 10, 31, 0, 0) 
                    + datetime.timedelta(hours=end_hour))
 
-  if debug: print ("GNS FUNCTION: <generate_new_decomp_schedule>")
-  return run_gpt_prompt_new_decomp_schedule(persona, 
-                                            main_act_dur, 
-                                            truncated_act_dur, 
-                                            start_time_hour,
-                                            end_time_hour,
-                                            inserted_act,
-                                            inserted_act_dur)[0]
+  if debug:
+    print ("GNS FUNCTION: <generate_new_decomp_schedule>")
+
+  return run_gpt_prompt_new_decomp_schedule(
+    persona,
+    main_act_dur,
+    truncated_act_dur,
+    start_time_hour,
+    end_time_hour,
+    inserted_act,
+    inserted_act_dur
+  )[0]
 
 
 ##############################################################################
