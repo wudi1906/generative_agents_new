@@ -12,7 +12,9 @@ def get_unique_conversations(simulation_name):
         output = []  
         if regex_name.search(file_name):
             step_folder = os.path.join(sim_folder, file_name, "movement")
-            for filename in os.listdir(step_folder):
+            files=[filename for filename in os.listdir(step_folder)]
+            files = sorted(files, key = lambda files:int(files[:-5]))
+            for filename in files:
                 filepath = os.path.join(step_folder, filename)
                 output.append(f"Step {str(step)}:")
                 try:
@@ -41,7 +43,7 @@ def get_unique_conversations(simulation_name):
                     continue
                 step+=1
 
-            output_filename = os.path.join(sim_folder, file_name, f"output_0-{file_name.split('-')[5]}.txt", )
+            output_filename = os.path.join(sim_folder, file_name, f"output_0-{file_name.split('-')[4]}.txt", )
             with open(output_filename, "w") as output_file:
                 output_file.write('\n'.join(output))
 
