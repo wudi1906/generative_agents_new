@@ -1,34 +1,41 @@
-# priorized_event_reaction.py
-
 from pydantic import BaseModel
 import traceback
+from typing import Any
 
 from utils import debug
-from ..common import openai_config
-from ..gpt_structure import generate_prompt, safe_generate_structured_response
+from ..common import openai_config, get_prompt_file_path
+from ..gpt_structure import safe_generate_structured_response
 from ..print_prompt import print_run_prompts
 
-template = """
-Task -- given context and the node of interest, decide how much of a priority the event should be on a scale of 0-10 where 0 means
 
-Context: Jane is Liz's house mate. Jane and Liz exchanged a conversation about saying good morning at 07:05am, October 25, 2022. 
-Right now, it is 07:09 am, October 25, 2022. 
-Jane was on her way to using the bathroom right now. 
-My question: Let's think logically. On a scale of 0-10, with 0 being absolutely not a priority, 
-4-6 being something that should surely be reacted to but not really ASAP, 
+def create_prompt(prompt_input: dict[str, Any]):
+  context = prompt_input["context"]
+  curr_time = prompt_input["curr_time"]
+  persona_name = prompt_input["persona_name"]
+  persona_action_and_place = prompt_input["persona_action_and_place"]
+  event = prompt_input["event"]
+
+  prompt = f"""
+Task -- Given context and the node of interest, decide how much of a priority the event should be on a scale of 0-10 where 0 means
+
+Context: Jane is Liz's house mate. Jane and Liz exchanged a conversation about saying good morning at 07:05am, October 25, 2022.
+Right now, it is 07:09 am, October 25, 2022.
+Jane was on her way to using the bathroom right now.
+My question: Let's think logically. On a scale of 0-10, with 0 being absolutely not a priority,
+4-6 being something that should surely be reacted to but not really ASAP,
 and then 9-10 being highly important events that need our persona's immediate attention,
 provide a rating of priority to Jane in regards to the following
 observed event: Jane sees Liz fall down the stairs.
-Reasoning: Jane wants to use the bathroom, but her house mate Liz has fallen. 
+Reasoning: Jane wants to use the bathroom, but her house mate Liz has fallen.
 It would be strange for her to not want to check on her house mate immediately since she could be injured.
 Liz's fall must be highly prioritized because she is likely in pain, and any potential injury could worsen if there are delays in helping her.
 Answer: 10
 ---
-Context: Sam is Sarah's friend. Sam and Sarah exchanged a conversation about favorite movies at 11pm, October 24, 2022. 
-Right now, it is 12:40 pm, October 25, 2022. 
-Sam is on the way to study for his test. 
-My question: Let's think logically. On a scale of 0-10, with 0 being absolutely not a priority, 
-4-6 being something that should surely be reacted to but not really ASAP, 
+Context: Sam is Sarah's friend. Sam and Sarah exchanged a conversation about favorite movies at 11pm, October 24, 2022.
+Right now, it is 12:40 pm, October 25, 2022.
+Sam is on the way to study for his test.
+My question: Let's think logically. On a scale of 0-10, with 0 being absolutely not a priority,
+4-6 being something that should surely be reacted to but not really ASAP,
 and then 9-10 being highly important events that need our persona's immediate attention,
 provide a rating of priority to Sam in regards to the following
 observed event: Sam sees Sarah reading a book.
@@ -37,20 +44,21 @@ He could stop to say hi to his friend Sarah as this is the social norm, but it i
 He can surely continue on with his day without saying hi, but if he has the time, it could be nice to react and say hi.
 Answer: 3
 ---
-Context: !<INPUT 0>!
-Right now, it is !<INPUT 1>!.
-!<INPUT 2>! 
-My question: Let's think logically. On a scale of 0-10, with 0 being absolutely not a priority, 
-4-6 being something that should surely be reacted to but not really ASAP, 
+Context: {context}
+Right now, it is {curr_time}.
+{persona_action_and_place}
+My question: Let's think logically. On a scale of 0-10, with 0 being absolutely not a priority,
+4-6 being something that should surely be reacted to but not really ASAP,
 and then 9-10 being highly important events that need our persona's immediate attention,
-provide a rating of priority to !<INPUT 3>! in regards to the following
-observed event: !<INPUT 4>!
-Reasoning: 
+provide a rating of priority to {persona_name} in regards to the following
+observed event: {event}
 """
+  return prompt
 
 
 class EventPriority(BaseModel):
   urgency: int  # ranges from 0-10
+  reasoning: str
 
 
 def run_gpt_prompt_prioritized_event_reaction(
@@ -88,15 +96,17 @@ def run_gpt_prompt_prioritized_event_reaction(
           + init_persona.scratch.act_address.split(":")[-2]
         )
       init_p_desc = f"{init_persona.name} is on the way to {init_act_desc} at {loc}"
+
     # now provide info about the node in question
     node_desc = node.description
 
-    prompt_input = []
-    prompt_input += [context]
-    prompt_input += [curr_time]
-    prompt_input += [init_p_desc]
-    prompt_input += [init_persona.name]
-    prompt_input += [node_desc]
+    prompt_input = {
+      "context": context,
+      "curr_time": curr_time,
+      "persona_name": init_persona.name,
+      "persona_action_and_place": init_p_desc,
+      "event": node_desc,
+    }
 
     return prompt_input
 
@@ -115,7 +125,7 @@ def run_gpt_prompt_prioritized_event_reaction(
       ) in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
         return True
       return False
-    except:
+    except Exception:
       traceback.print_exc()
       return False
 
@@ -125,7 +135,7 @@ def run_gpt_prompt_prioritized_event_reaction(
 
   gpt_param = {
     "engine": openai_config["model"],
-    "max_tokens": 100,
+    "max_tokens": 1000,
     "temperature": 0,
     "top_p": 1,
     "stream": False,
@@ -133,9 +143,9 @@ def run_gpt_prompt_prioritized_event_reaction(
     "presence_penalty": 0,
     "stop": None,
   }
-  prompt_template = "persona/prompt_template/v2/prioritized_event_reaction.py"
+  prompt_file = get_prompt_file_path(__file__)
   prompt_input = create_prompt_input(init_persona, node, test_input)
-  prompt = generate_prompt(prompt_input, prompt_template_str=template)
+  prompt = create_prompt(prompt_input)
 
   fail_safe = get_fail_safe()
   output = safe_generate_structured_response(
@@ -147,7 +157,7 @@ def run_gpt_prompt_prioritized_event_reaction(
 
   if debug or verbose:
     print_run_prompts(
-      prompt_template, init_persona, gpt_param, prompt_input, prompt, output
+      prompt_file, init_persona, gpt_param, prompt_input, prompt, output
     )
 
   return output, [output, prompt, gpt_param, prompt_input, fail_safe]
