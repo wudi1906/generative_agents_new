@@ -231,22 +231,22 @@ if __name__ == '__main__':
             print("(Auto-Exec): KeyboardInterrupt: Stopping the experiment.", flush=True)
             sys.exit(0)
         except Exception as e:
-            print(e, flush=True)
             traceback.print_exc()
+            step = e.args[1]
 
             if len(e.args) > 2 and e.args[2] == "stepback":
                 curr_stepbacks += 1
                 if curr_stepbacks > max_stepbacks:
-                    print(f"(Auto-Exec): Maximum consecutive stepbacks reached. Aborting the experiment.", flush=True)
+                    print("(Auto-Exec): Maximum consecutive stepbacks reached. Aborting the experiment.", flush=True)
+                    if step <= 0:
+                      # Remove the experiment folder if no steps were run
+                      shutil.rmtree(f"../../environment/frontend_server/storage/{target}") 
                     break
             else:
                 curr_stepbacks = 0
 
-            step = e.args[1]
-            if step != 0:
+            if step > 0:
                 origin, current_step, idx = save_checkpoint(rs, idx)
-            else:
-                shutil.rmtree(f"../../environment/frontend_server/storage/{target}") # Remove the experiment folder if no steps were run
 
             print(f"(Auto-Exec): Error at step {current_step}", flush=True)
             print(f"(Auto-Exec): Exception {e.args[0]}", flush=True)

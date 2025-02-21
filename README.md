@@ -68,19 +68,19 @@ api_model = ""
 ## Running a simulation
 
 > All of the following scripts accept two optional arguments to customize the conda setup:
-> - `--conda-path`: Path to your conda activate script (default: `/home/${USER}/anaconda3/bin/activate`)
-> - `--env-name`: Name of the conda environment to use (default: `simulacra`)
+> - `--conda_path`: Path to your conda activate script (default: `/home/${USER}/anaconda3/bin/activate`)
+> - `--env_name`: Name of the conda environment to use (default: `simulacra`)
 >
 > Example with custom conda setup:
 > ```bash
-> ./run_frontend.sh --conda-path /path/to/conda/activate --env-name my_env [other args...]
+> ./run_frontend.sh --conda_path /path/to/conda/activate --env_name my_env [other args...]
 > ```
 
 ### Step 1. Starting the Environment Server
 If you're running the backend in headless mode (see below), you can skip this step.
 
 ```bash
-    ./run_frontend.sh [--conda-path PATH] [--env-name ENV] [PORT-NUMBER]
+    ./run_frontend.sh [--conda_path PATH] [--env_name ENV] [PORT-NUMBER]
 ```
  >Note: omit the port number to use the default 8000.
 
@@ -88,7 +88,7 @@ If you're running the backend in headless mode (see below), you can skip this st
 
 #### Option 1: Running the server manually
 ```bash
-    ./run_backend.sh [--conda-path PATH] [--env-name ENV] <ORIGIN> <TARGET>
+    ./run_backend.sh [--conda_path PATH] [--env_name ENV] <ORIGIN> <TARGET>
 ```
 Example:
 ```bash
@@ -107,12 +107,12 @@ The following script offer a range of enhanced features:
 
 For more details, refer to: [run_backend_automatic.sh](run_backend_automatic.sh) and [automatic_execution.py](reverie/backend_server/automatic_execution.py).
 ```bash
-    ./run_backend_automatic.sh [--conda-path <PATH>] [--env-name <ENV>] -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH> [--load_history <HISTORY-FILE>]
+    ./run_backend_automatic.sh [--conda_path <PATH>] [--env_name <ENV>] -o <ORIGIN> -t <TARGET> -s <STEP> --ui <True|None|False> -p <PORT> --browser_path <BROWSER-PATH> [--load_history <HISTORY-FILE>]
 ```
 
 Arguments taken by `run_backend_automatic.sh`:
-- `--conda-path`: (Optional) Path to your conda activate script
-- `--env-name`: (Optional) Name of the conda environment to use
+- `--conda_path`: (Optional) Path to your conda activate script
+- `--env_name`: (Optional) Name of the conda environment to use
 - `-o <ORIGIN>`: The name of an existing simulation to use as the base for the new simulation.
 - `-t <TARGET>`: The new simulation name (Note: you cannot have multiple simulations of the same name).
 - `-s <STEP>`: The step number to end on (NOT necessarily the number of steps to run for!).

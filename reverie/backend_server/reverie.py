@@ -735,8 +735,9 @@ class ReverieServer:
         if os.path.exists(env_file):
           os.remove(env_file)
         print(f"(reverie): Error at step {self.step}")
-        self.step -= 1
-        self.curr_time -= datetime.timedelta(seconds=self.sec_per_step)
+        if self.step > 0:
+          self.step -= 1
+          self.curr_time -= datetime.timedelta(seconds=self.sec_per_step)
         raise Exception(e, self.step, "stepback")
       else:
         # If an input command was passed, then execute one command and exit.
