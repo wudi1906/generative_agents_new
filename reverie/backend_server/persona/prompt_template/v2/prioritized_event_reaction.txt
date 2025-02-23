@@ -2,7 +2,7 @@ priorized_event_reaction.txt
 
 
 <commentblockmarker>###</commentblockmarker>
-Task -- given context and the node of interest, decide how much of a priority the event should be on a scale of 0-10 where 0 means
+Task -- given context and the node of interest, decide how much of a priority the event should be on a scale of 0-10 where 0
 
 Context: Jane is Liz's house mate. Jane and Liz exchanged a conversation about saying good morning at 07:05am, October 25, 2022. 
 Right now, it is 07:09 am, October 25, 2022. 

@@ -3262,7 +3262,6 @@ def run_gpt_prompt_prioritized_event_reaction(init_persona,node,test_input=None,
     #add context and current time first similar to decide_to_react
     context = ""
     curr_desc = node.description.split(" ")
-    curr_desc[2:3] = ["was"]
     curr_desc = " ".join(curr_desc)
     context +=  f"{curr_desc}. "
 
@@ -3311,7 +3310,7 @@ def run_gpt_prompt_prioritized_event_reaction(init_persona,node,test_input=None,
       return False
 
   def get_fail_safe():
-    fs = "yes"
+    fs = 4
     return fs
 
   gpt_param = {"engine": openai_config["model"], "max_tokens": 100, 
@@ -3332,7 +3331,6 @@ def run_gpt_prompt_prioritized_event_reaction(init_persona,node,test_input=None,
     __func_validate,
     __func_clean_up
   )
-  print(f"GPT Safe Generated Output for run_gpt_prompt_prioritized_event_reaction: {output}")
 
   if debug or verbose: 
     print_run_prompts(prompt_template, init_persona, gpt_param, 

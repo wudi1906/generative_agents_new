@@ -539,17 +539,16 @@ def revise_identity(persona):
   print ("DEBUG new_daily_req:", new_daily_req)
   persona.scratch.daily_plan_req = new_daily_req
 
-def generate_prioritzed_event_reaction(persona, priority):
+def generate_prioritized_event_reaction(persona, priority):
   """
   Given the persona and the potential events to prioritize, call GPT to determine 
   urgency scores for each event (0-10). Add on .1*importance/poignancy score to act as a tie-breaker,
   and then order events in descending order. Return the list of prioritized events.
 
   INPUT:
-    prioritize: list of dictioanries containing keys curr_event (Concept node), 
-      events (list of event concept nodes relat4ed to the curr_event), thoughts 
+    priority: list of dictionaries containing keys curr_event (Concept node), 
+      events (list of event concept nodes related to the curr_event), thoughts 
       (list of thought concept nodes that are related)
-    retrieved: same format as prioritize. prioritize is a subset of retrieved
     persona: The Persona class instance
   OUTPUT:
     dict: A reordered list of INPUT dictionaries where first is the most pertinent event to react to, 
@@ -562,7 +561,7 @@ def generate_prioritzed_event_reaction(persona, priority):
 
   #first build out priority scores based on GPT function call
   if debug:
-    print("GNS FUNCTION: <generate_prioritzed_event_reaction>")
+    print("GNS FUNCTION: <generate_prioritized_event_reaction>")
   priorities = dict()
   for node in curr_events:
     priorities[node.node_id] = run_gpt_prompt_prioritized_event_reaction(persona,node)[0]
@@ -570,29 +569,48 @@ def generate_prioritzed_event_reaction(persona, priority):
   #second extract poinancy scores to act as importance scores (essentially a tie-breaker)
   importance_out = dict()
   for count, node in enumerate(curr_events):
-    if type(node.poignancy) == int:
+    if isinstance(node.poignancy,int):
       importance_out[node.node_id] = node.poignancy
     else:
       importance_out[node.node_id] = 4
 
+  #importance wieght is uysed to weight the importance_out of a node much lower than the most recent
+  #GPT call to determine urgency, and it essentially acts as a tiebreaker if there is a tie
+  importance_weight = .1
   #third combine to create urgency scores 
   urgency_score = {
-    node_id: .1*float(importance_out.get(node_id,0))+float(priorities.get(node_id,0))
+    node_id: importance_weight*float(importance_out.get(node_id,0))+float(priorities.get(node_id,0))
     for node_id in set(importance_out) | set(priorities)
   }
   #use these urgency scores to build an ordered list of output with more urgent events to react to first
-  urgency_scored_dict = {
-    event["curr_event"].node_id:{"data":event, "urgency_score":urgency_score.get(event["curr_event"].node_id,0)}
-    for event in priority
-  }
+  urgency_scored_dict = {}
+  for event in priority:
+    node_id = event["curr_event"].node_id
+    urgency_scored_dict[node_id] = {
+        "data": event,
+        "urgency_score": urgency_score.get(node_id, 0)
+    }
+  #print statements for debugging
   print("-------DEBUG Prioritize Events--------")
   for key, value in urgency_scored_dict.items():
     print(f"Curr_event:{value['data']['curr_event'].spo_summary()}; Urgency Score: {value['urgency_score']}")
   print("-------End of DEBUG Priotize Events------")
-  #note that we include an extra random.random() which generates a random number to act as a tie breaker if all else is equal
-  sorted_list = sorted([value["data"] for value in urgency_scored_dict.values()],
-                       key=lambda x: (urgency_scored_dict[x['curr_event'].node_id]['urgency_score'],random.random()),
-                       reverse=True)
+  
+  #urgency sorting function
+  def urgency_sort_key(event):
+    node_id = event['curr_event'].node_id #get the node_id for the given event for indexing purposes
+    return (
+        urgency_scored_dict[node_id]['urgency_score'], #order by urgency score with a random tiebreaker
+        random.uniform(0, 1)  # Tie-breaker
+    )
+
+  #higher urgency scores listed first with a random tie breaker (if the urgency value and weighted importance_out are still equal)
+  sorted_list = sorted(
+    [value["data"] for value in urgency_scored_dict.values()],
+    key=urgency_sort_key,
+    reverse=True
+  )
+  #print out the events for debugging to see data structures and sorted event list
   print(f"Sorted List output for gen_prioritized_reaction: {sorted_list}")
   return sorted_list
 
@@ -823,14 +841,9 @@ def _choose_retrieved(persona, retrieved):
     if (":" not in curr_event.subject 
         and curr_event.subject != persona.name): 
       priority += [rel_ctx]
-  #OLD code
-  '''
-  if priority: 
-    return random.choice(priority)
-  '''
-  #NEW Code
+
   if priority and len(priority)>1:
-    return generate_prioritzed_event_reaction(persona, priority)[0] 
+    return generate_prioritized_event_reaction(persona, priority)[0] 
   elif priority and len(priority)==1:
     return priority[0]
 
@@ -840,12 +853,9 @@ def _choose_retrieved(persona, retrieved):
     curr_event = rel_ctx["curr_event"]
     if "is idle" not in event_desc: 
       priority += [rel_ctx]
-  '''
-  if priority: x
-    return random.choice(priority)
-  '''
+
   if priority and len(priority)>1:
-    return generate_prioritzed_event_reaction(persona, priority)[0]
+    return generate_prioritized_event_reaction(persona, priority)[0]
   elif priority and len(priority)==1:
     return priority[0]
   return None
