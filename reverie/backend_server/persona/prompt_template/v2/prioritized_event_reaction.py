@@ -16,7 +16,9 @@ def create_prompt(prompt_input: dict[str, Any]):
   event = prompt_input["event"]
 
   prompt = f"""
-Task -- Given context and the node of interest, decide how much of a priority the event should be on a scale of 0-10 where 0 means
+Task -- Given context and the node of interest, decide how much of a priority the event should be on a scale of 0-10 where 0 means absolutely not a priority, 
+4-6 being something that should surely be reacted to but not really ASAP, 
+and then 9-10 being highly important events that need our persona's immediate attention
 
 Context: Jane is Liz's house mate. Jane and Liz exchanged a conversation about saying good morning at 07:05am, October 25, 2022.
 Right now, it is 07:09 am, October 25, 2022.
