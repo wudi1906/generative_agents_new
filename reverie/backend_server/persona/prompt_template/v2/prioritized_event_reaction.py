@@ -70,7 +70,7 @@ def run_gpt_prompt_prioritized_event_reaction(
     # add context and current time first similar to decide_to_react
     context = ""
     curr_desc = node.description.split(" ")
-    curr_desc[2:3] = ["was"]
+    # curr_desc[2:3] = ["was"]
     curr_desc = " ".join(curr_desc)
     context += f"{curr_desc}. "
 
