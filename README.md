@@ -32,6 +32,7 @@ Note: If you change the environment name from `simulacra`, you'll need to update
 
 Create a file called `openai_config.json` in the root directory.
 
+OpenAI example:
 ```json
 {
     "client": "openai", 
@@ -44,6 +45,32 @@ Create a file called `openai_config.json` in the root directory.
     "embeddings-client": "openai",
     "embeddings": "text-embedding-3-small",
     "embeddings-key": "<API-KEY>",
+    "embeddings-costs": {
+        "input": 0.02,
+        "output": 0.0
+    },
+    "experiment-name": "simulacra-test",
+    "cost-upperbound": 10
+}
+```
+
+Azure example:
+```json
+{
+    "client": "azure", 
+    "model": "gpt-4o-mini",
+    "model-key": "<API-KEY>",
+    "model-endpoint": "<MODEL-ENDPOINT>",
+    "model-api-version": "<API-VERSION>",
+    "model-costs": {
+        "input":  0.5,
+        "output": 1.5
+    },
+    "embeddings-client": "azure",
+    "embeddings": "text-embedding-3-small",
+    "embeddings-key": "<API-KEY>",
+    "embeddings-endpoint": "<EMBEDDING-MODEL-ENDPOINT>",
+    "embeddings-api-version": "<API-VERSION>",
     "embeddings-costs": {
         "input": 0.02,
         "output": 0.0
