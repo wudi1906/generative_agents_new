@@ -854,11 +854,10 @@ def _choose_retrieved(persona, retrieved):
         and curr_event.subject != persona.name): 
       priority += [rel_ctx]
 
-  if priority and len(priority)>1:
+  if priority and len(priority) > 1:
     return generate_prioritized_event_reaction(persona, priority)[0] 
-  elif priority and len(priority)==1:
+  elif priority and len(priority) == 1:
     return priority[0]
-
 
   # Skip idle. 
   for event_desc, rel_ctx in retrieved.items(): 
@@ -866,9 +865,9 @@ def _choose_retrieved(persona, retrieved):
     if "is idle" not in event_desc: 
       priority += [rel_ctx]
 
-  if priority and len(priority)>1:
+  if priority and len(priority) > 1:
     return generate_prioritized_event_reaction(persona, priority)[0]
-  elif priority and len(priority)==1:
+  elif priority and len(priority) == 1:
     return priority[0]
   return None
 
@@ -1145,8 +1144,9 @@ def plan(persona, maze, personas, new_day, retrieved):
   #                     ["events"] = [<ConceptNode>, ...], 
   #                     ["thoughts"] = [<ConceptNode>, ...]}
   focused_event = False
-  if retrieved.keys(): 
-    focused_event = _choose_retrieved(persona, retrieved) #will later add more logic to consider multiple events
+  if retrieved.keys():
+     # Will later add more logic to consider multiple events
+    focused_event = _choose_retrieved(persona, retrieved)
   
   # Step 2: Once we choose an event, we need to determine whether the
   #         persona will take any actions for the perceived event. There are
