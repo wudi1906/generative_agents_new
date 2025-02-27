@@ -132,7 +132,7 @@ def run_gpt_prompt_prioritized_event_reaction(
       return False
 
   def get_fail_safe():
-    fs = "yes"
+    fs = 4
     return fs
 
   gpt_param = {
@@ -152,9 +152,6 @@ def run_gpt_prompt_prioritized_event_reaction(
   fail_safe = get_fail_safe()
   output = safe_generate_structured_response(
     prompt, gpt_param, EventPriority, 5, fail_safe, __func_validate, __func_clean_up
-  )
-  print(
-    f"GPT Safe Generated Output for run_gpt_prompt_prioritized_event_reaction: {output}"
   )
 
   if debug or verbose:
