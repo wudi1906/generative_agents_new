@@ -45,8 +45,8 @@
 	// Configuration meant to be passed to the main Phaser game instance. 
 	const config = {
 		type: Phaser.AUTO,
-		width: 1500,
-		height: 800,
+		width: 1400,
+		height: 850,
 		parent: "game-container",
 		pixelArt: true,
 		physics: {
@@ -192,6 +192,13 @@
 
 	function create() {
 		const map = this.make.tilemap({ key: "map" });
+		// 0302- add adjust screen
+		this.cameras.main.setZoom(0.7);
+		this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+		this.cameras.main.centerOn(map.widthInPixels / 2, map.heightInPixels / 2);
+
+
+
 		// Joon: Logging map is really helpful for debugging here: 
 		//       console.log(map);
 
@@ -287,7 +294,7 @@
 			.sprite(initialX, initialY, "atlas", "misa-front")
 			.setSize(characterWidth, characterHeight)
 			.setOffset(offsetX, offsetY);
-		player.setDepth(-1);
+		player.setDepth(1);
 		this.physics.add.collider(player, collisionsLayer);
 
 		chatbox = this.add.text(
@@ -386,15 +393,17 @@
 		//Isabella Rodriguez
 		//Klaus Mueller
 		// Maria Lopez
-		const selectedNpcName = "Isabella Rodriguez";
-		if (personas.hasOwnProperty(selectedNpcName)) {
-			player = personas[selectedNpcName];
-			let npcText = pronunciatios[selectedNpcName];
-			npcText.setVisible(false);
-			console.log("Assigned NPC as player:", selectedNpcName);
-		} else {
-			console.error("NPC not found:", selectedNpcName);
-		}
+
+		// 0302 - remove as isabella becomes players
+		// const selectedNpcName = "Isabella Rodriguez";
+		// if (personas.hasOwnProperty(selectedNpcName)) {
+		// 	player = personas[selectedNpcName];
+		// 	let npcText = pronunciatios[selectedNpcName];
+		// 	npcText.setVisible(false);
+		// 	console.log("Assigned NPC as player:", selectedNpcName);
+		// } else {
+		// 	console.error("NPC not found:", selectedNpcName);
+		// }
 
 		// Setting up the camera. 
 		const camera = this.cameras.main;

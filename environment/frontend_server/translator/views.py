@@ -317,11 +317,15 @@ def path_tester_update(request):
 #Qian
 def save_message(request):
     data = json.loads(request.body)
-    message = data["message"]
     sim_code = data["sim_code"]
-    message_path = f"storage/{sim_code}/environment/player_chat_message.json"
+    message = {
+        'content': data["message"],
+        'sender': data.get('sender', 'player'),
+        'receiver': data.get('receiver', '')
+    }
+    message_path = f"storage/{sim_code}/environment/player_chat_message.json"   
     with open(message_path, "w") as message_file:
-      json.dump(message, message_file, indent=2)
+        json.dump(message, message_file, indent=2)
     return JsonResponse({'status': 'success', 'message': 'message saved'})
 
 def save_player_position(request):

@@ -1,0 +1,34 @@
+{
+  "persona": {
+    "Isabella Rodriguez": {
+      "movement": [
+        72,
+        14
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "[Tuesday August 01 -- 00:00 AM] Activity: Isabella is sleeping @ the Ville:Isabella Rodriguez's apartment:{main room:floor",
+      "chat": null
+    },
+    "Maria Lopez": {
+      "movement": [
+        123,
+        57
+      ],
+      "pronunciatio": "\ud83c\udfa5\ud83d\udce1",
+      "description": "[Tuesday August 01 -- 00:00 AM] Activity: Maria is streaming games on Twitch (setting up her streaming equipment) @ the Ville:Dorm for Oak Hill College:{Maria Lopez's room:floor",
+      "chat": null
+    },
+    "Klaus Mueller": {
+      "movement": [
+        126,
+        46
+      ],
+      "pronunciatio": "\ud83d\ude34\ud83d\udca4",
+      "description": "[Tuesday August 01 -- 00:00 AM] Activity: Klaus is sleeping @ the Ville:Dorm for Oak Hill College:{Klaus Mueller's room:floor",
+      "chat": null
+    }
+  },
+  "meta": {
+    "curr_time": "August 01, 2023, 06:15:20"
+  }
+}

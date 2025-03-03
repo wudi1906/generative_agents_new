@@ -16,6 +16,9 @@ from persona.prompt_template.run_gpt_prompt import *
 from persona.cognitive_modules.retrieve import *
 from persona.cognitive_modules.converse import *
 
+debug = False
+
+
 ##############################################################################
 # CHAPTER 2: Generate
 ##############################################################################
@@ -95,6 +98,7 @@ def generate_hourly_schedule(persona, wake_up_hour):
               "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM",
               "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM"]
   n_m1_activity = []
+
   diversity_repeat_count = 3
   for i in range(diversity_repeat_count): 
     n_m1_activity_set = set(n_m1_activity)
@@ -218,8 +222,12 @@ def generate_action_game_object(act_desp, act_address, persona, maze):
     "bed"
   """
   if debug: print ("GNS FUNCTION: <generate_action_game_object>")
-  if not persona.s_mem.get_str_accessible_arena_game_objects(act_address): 
-    return "<random>"
+  try:
+    if not persona.s_mem.get_str_accessible_arena_game_objects(act_address): 
+      return "floor"
+  except:
+      print(f"Warning: Could not access spatial memory for {act_address}, using default")
+      return "floor"
   return run_gpt_prompt_action_game_object(act_desp, persona, maze, act_address)[0]
 
 
