@@ -12,13 +12,19 @@ def create_prompt(prompt_input: dict[str, Any]):
   conversation = prompt_input["conversation"]
   persona_1_name = prompt_input["persona_1_name"]
   persona_2_name = prompt_input["persona_2_name"]
-
+  persona_1_schedule_decomp = prompt_input["person_1_schedule_decomp"]
+  curr_time = prompt_input["curr_time"]
+  
   prompt = f"""
 [Conversation]
 {conversation}
 [End of conversation]
 
-Write down if there is anything from the conversation that {persona_1_name} needs to remember for their planning, from {persona_2_name}'s perspective, in a full sentence. Start the sentence with {persona_1_name}'s name.
+[{persona_1_name}'s Current Daily Plan at the current time {curr_time}]
+{persona_1_schedule_decomp}
+[End of {persona_1_name}'s Current Daily Current Plan]
+
+Write down if there is anything from the conversation that {persona_1_name} needs to remember for their planning, from {persona_2_name}'s perspective, in a full sentence. Take the current Daily Plan into account. Start the sentence with {persona_1_name}'s name.
 """
   return prompt
 
@@ -35,6 +41,8 @@ def run_gpt_prompt_planning_thought_on_convo(
       "conversation": all_utterances,
       "persona_1_name": persona.scratch.name,
       "persona_2_name": persona.scratch.name,
+      "person_1_schedule_decomp": persona.scratch.f_daily_schedule,
+      "curr_time":persona.scratch.curr_time.strftime("%B %d, %Y, %H:%M:%S %p")
     }
     return prompt_input
 
