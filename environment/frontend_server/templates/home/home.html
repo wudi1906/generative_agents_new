@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load staticfiles %}
 
 {% block content %}
 <br>
@@ -14,19 +14,23 @@
 				<h2><span id="game-time-content"></span></h2>
 			</div>
 			<div class="col-md-4">
+
 				<h2 style="text-align: right; {% if mode == 'simulate' %} display: none {% endif %}">
 					<button id="play_button" type="button" class="btn btn-default">
 						<strong style=" font-size:1.2em"><i class="glyphicon glyphicon-play"></i> &nbsp;Play</strong>
 					</button>
+
 					<button id="pause_button" type="button" class="btn btn-default">
 						<strong style=" font-size:1.2em"><i class="glyphicon glyphicon-pause"></i> &nbsp;Pause</strong>
 					</button>
+
 				</h2>
+
 			</div>
 		</div>
 
 		<br>
-		<hr style="border-color:#d22b2b">
+		<hr style="border-color:#999999">
 		<br>
 
 		{% for p_name, p_name_os in persona_names %}
@@ -57,89 +61,23 @@
 		</div>
 		<br>
 		{% endfor %}
-	</div>
 
-	<!-- 新添加的固定在底部的对话框 -->
-	<div
-		style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1bde99; padding: 15px; text-align: center;">
-		<form id="chatForm">
-			<input type="text" id="chatInput" placeholder="输入聊天内容">
-			<button type="button" onclick="sendMessage(event)">发送</button>
-		</form>
-		<div id="chatMessages"></div>
-	</div>
 
+
+
+
+
+	</div>
 </div>
 
+
+
+
+
 <div style="padding-bottom:15em"> </div>
+
+
 <!-- partial -->
 <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
 {% include 'home/main_script.html' %}
-
-<script>
-	// Qian
-	function sendMessage(event) {
-		event.preventDefault();
-
-		var inputElement = document.getElementById("chatInput");
-		var message = inputElement.value;
-		if (message.trim() !== '') {
-
-			var chatMessagesElement = document.getElementById("chatMessages");
-			let playerData = {
-				message: message,
-				sim_code: sim_code
-			};
-			sendPlayerDataToServer(playerData);
-			if (typeof window.updateChatbox === 'function') {
-				window.updateChatbox(message);
-			}
-			inputElement.value = "";
-		}
-		var reply = "你好";
-		var chatMessagesElement = document.getElementById("chatMessages");
-		chatMessagesElement.innerHTML += "<p><strong>你：</strong> " + message + "</p>";
-		chatMessagesElement.innerHTML += "<p><strong>characterName：</strong> " + reply + "</p>";
-
-		inputElement.value = "";
-	}
-
-	function sendPlayerDataToServer(playerData) {
-		var jsonPayload = JSON.stringify(playerData);
-		console.log("Sending JSON payload:", jsonPayload);
-		console.log("Sending data to server:", playerData);
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost:8000/save_message/", true);
-		xhr.setRequestHeader("Content-Type", "application/json");
-
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === 4) {
-				if (xhr.status === 200) {
-					console.log("Data sent successfully.");
-				} else {
-					console.error("Failed to send data. Status:", xhr.status);
-				}
-			}
-		};
-		xhr.send(JSON.stringify(playerData));
-	}
-	// Qian
-
-	// 添加点击事件监听器
-	document.addEventListener("DOMContentLoaded", function () {
-		var characterElements = document.querySelectorAll(".media");
-		characterElements.forEach(function (element) {
-			element.addEventListener("click", function () {
-				// 获取点击的角色的名字
-				var characterName = element.querySelector("h2").textContent.trim();
-
-				// 在聊天框中显示与该角色的聊天
-				var chatMessagesElement = document.getElementById("chatMessages");
-				chatMessagesElement.innerHTML += "<p><strong>你：</strong> 与 " + characterName + " 开始聊天</p>";
-			});
-		});
-	});
-
-</script>
-
 {% endblock content %}

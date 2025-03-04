@@ -9,6 +9,31 @@
 	{% endfor %}
 </div>
 
+<!-- Add the conversation container here -->
+<div id="conversation-container"
+	style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+</div>
+
+<style>
+	.conversation-box {
+		background: rgba(255, 255, 255, 0.9);
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		max-width: 400px;
+	}
+
+	.conversation-box button {
+		margin-top: 10px;
+		padding: 5px 10px;
+		background: #4CAF50;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+</style>
+
 <script type="text/javascript">
 	/*
 	  Main resources: 
@@ -147,6 +172,164 @@
 	//         create() is also called once after preloading... creates sprites 
 	//           and actually displays stuff
 	//         update() is called on each frame during the game play 
+
+	function calculateDistance(x1, y1, x2, y2) {
+		return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+	}
+
+	function checkNPCProximity() {
+		const INTERACTION_DISTANCE = 3;
+		const playerTileX = Math.round(player.x / 32);
+		const playerTileY = Math.round(player.y / 32);
+
+		console.log('Player position (tiles):', playerTileX, playerTileY);
+
+		Object.entries(personas).forEach(([name, npc]) => {
+			const npcTileX = Math.round(npc.x / 32);
+			const npcTileY = Math.round(npc.y / 32);
+			const distance = calculateDistance(playerTileX, playerTileY, npcTileX, npcTileY);
+
+			console.log(`Distance to ${name}:`, distance, 'NPC position:', npcTileX, npcTileY);
+
+			if (distance > INTERACTION_DISTANCE && npc.inConversation) {
+				console.log('Ending conversation due to distance:', name);
+				endConversation(name);
+			}
+
+			else if (distance <= INTERACTION_DISTANCE && !npc.inConversation) {
+				console.log('Triggering conversation with:', name);
+				triggerConversation(name, npc);
+			}
+		});
+	}
+
+	function triggerConversation(npcName, npc) {
+		console.log('Starting conversation with:', npcName);
+		npc.inConversation = true;
+
+		const tileX = Math.round(player.x / 32);
+		const tileY = Math.round(player.y / 32);
+
+		fetch('/get_npc_reply/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				npc_id: npcName,
+				player_position: { x: tileX, y: tileY },
+				current_time: new Date().toISOString()
+			})
+		})
+			.then(response => {
+				console.log('Server response:', response);
+				return response.json();
+			})
+			.then(data => {
+				console.log('Response data:', data);
+				displayConversation(data.response || "Hello!", npcName, npc);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				displayConversation("Hello!", npcName, npc);
+			});
+	}
+
+	function displayConversation(response, npcName, npc) {
+		console.log('Displaying conversation:', response, npcName);
+		const conversationContainer = document.getElementById('conversation-container');
+		conversationContainer.innerHTML = `
+        <div class="conversation-box">
+            <h3>${npcName}</h3>
+            <div id="chatMessages">
+                <p><strong>${npcName}:</strong> ${response}</p>
+            </div>
+            <form id="chatForm" onsubmit="sendMessage(event, '${npcName}')">
+                <input type="text" id="chatInput" placeholder="Type your message...">
+                <button type="submit">Send</button>
+            </form>
+            <button onclick="endConversation('${npcName}')">End Conversation</button>
+        </div>
+    `;
+		conversationContainer.style.display = 'block';
+	}
+
+	function sendMessage(event, npcName) {
+		event.preventDefault();
+
+		const inputElement = document.getElementById("chatInput");
+		const message = inputElement.value.trim();
+
+		if (message !== '') {
+			const chatMessages = document.getElementById("chatMessages");
+			chatMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+
+			// Save the message
+			const playerData = {
+				message: message,
+				sim_code: sim_code,
+				sender: 'player',
+				receiver: npcName
+			};
+
+			// Send message to server and get NPC's response
+			fetch('/save_message/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(playerData)
+			})
+				.then(response => response.json())
+				.then(() => {
+					// After saving, get NPC's response
+					return fetch('/get_npc_reply/', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							npc_id: npcName,
+							player_position: {
+								x: Math.round(player.x / 32),
+								y: Math.round(player.y / 32)
+							},
+							player_message: message,
+							current_time: new Date().toISOString()
+						})
+					});
+				})
+				.then(response => response.json())
+				.then(data => {
+					chatMessages.innerHTML += `<p><strong>${npcName}:</strong> ${data.response || "..."}</p>`;
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
+			inputElement.value = "";
+		}
+	}
+
+	function handleKeyPress(event) {
+		if (event.target.id === 'chatInput') {
+			return true;
+		}
+
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			return false;
+		}
+	}
+
+	function endConversation(npcName) {
+		const npc = personas[npcName];
+		if (npc) {
+			npc.inConversation = false;
+		}
+		document.getElementById('conversation-container').style.display = 'none';
+	}
+
 
 	function preload() {
 		// Loading the necessary images (e.g., the background image, character 
@@ -411,6 +594,18 @@
 		camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 		cursors = this.input.keyboard.createCursorKeys();
 
+		this.input.keyboard.removeCapture(32);
+
+		this.input.keyboard.on('keydown', function (event) {
+			if (document.activeElement.id === 'chatInput') {
+				event.stopPropagation();
+				return;
+			}
+		});
+
+		document.addEventListener('keypress', handleKeyPress);
+
+
 		//Qian
 
 		// Create the player's walking animations from the texture atlas. These are
@@ -490,6 +685,8 @@
 		if (player.body.velocity.x === 0 && player.body.velocity.y === 0) {
 			player.anims.stop();
 		}
+
+		checkNPCProximity();
 
 		//Qian
 		// Send player position to the backend
