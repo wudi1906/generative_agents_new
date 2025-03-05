@@ -8,6 +8,7 @@ import random
 import json
 from os import listdir
 import os
+import openai
 
 import datetime
 from django.shortcuts import render, redirect, HttpResponseRedirect
@@ -17,6 +18,8 @@ from global_methods import *
 from django.templatetags.static import static
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def landing(request): 
   context = {}
@@ -337,21 +340,41 @@ def save_player_position(request):
         json.dump(player_position, outfile, indent=2)
     return JsonResponse({'status': 'success', 'message': 'Player position saved'})
 
+
 def get_npc_reply(request):
     if request.method == "POST":
-        npc_name = request.POST.get("npc_name")
-        file_path = "/Users/qian/GitHub-Project/generative_agents/reverie/reply/reply.json"
         try:
-            with open(file_path, "r") as file:
-                data = json.load(file)
-                # Find the NPC's reply based on the given npc_name
-                npc_reply = next((item for item in data if item["npc"] == npc_name), None)
-                if npc_reply:
-                    return JsonResponse(npc_reply)
-                else:
-                    return JsonResponse({'error': 'NPC not found'}, status=404)
-        except FileNotFoundError:
-            return JsonResponse({'error': 'File not found'}, status=404)
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=400)
+            data = json.loads(request.body)
+            npc_id = data.get('npc_id')
+            player_position = data.get('player_position')
+            current_time = data.get('current_time')
+            player_message = data.get('player_message', 'Hello!')
+            
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": f"You are {npc_id}, a character in a game world. The player is at position x:{player_position['x']}, y:{player_position['y']}. Respond naturally and in character. Keep responses concise (max 2 sentences)."},
+                    {"role": "user", "content": "Hello!"}
+                ],
+                max_tokens=100,
+                temperature=0.7
+            )
+
+            npc_reply = response.choices[0].message.content
+            
+            return JsonResponse({
+                'status': 'success',
+                'response': npc_reply
+            })
+            
+        except Exception as e:
+            print(f"Error in get_npc_reply: {str(e)}")
+            return JsonResponse({
+                'status': 'error',
+                'response': 'Hello! (Fallback response)',
+                'error': str(e)
+            })
+    
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
 #Qian
