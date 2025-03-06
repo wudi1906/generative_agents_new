@@ -8,14 +8,18 @@ import random
 import json
 from os import listdir
 import os
+import openai
 
 import datetime
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 from global_methods import *
 
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.templatetags.static import static
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def landing(request): 
   context = {}
@@ -313,11 +317,88 @@ def path_tester_update(request):
 
   return HttpResponse("received")
 
+#Qian
+def save_message(request):
+    data = json.loads(request.body)
+    sim_code = data["sim_code"]
+    new_message = f"{data.get('sender', 'player')}: {data['message']}\n"
+    message_path = f"storage/{sim_code}/environment/player_chat_message.json"
+    
+    with open(message_path, "a") as message_file:
+        message_file.write(new_message)
+    
+    return JsonResponse({'status': 'success', 'message': 'message saved'})    
 
 
 
+def save_player_position(request):
+    data = json.loads(request.body)
+    player_position = data["playerPosition"]
+    sim_code = data["sim_code"]
+    file_path = f"storage/{sim_code}/environment/player_position.json"
+    with open(file_path, "w") as outfile:
+        json.dump(player_position, outfile, indent=2)
+    return JsonResponse({'status': 'success', 'message': 'Player position saved'})
 
 
 
+def get_npc_reply(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            sim_code = data.get("sim_code")
+            npc_id = data.get("npc_id")
+            player_message = data.get("player_message", "Hello!")
+            
+            message_path = f"storage/{sim_code}/environment/player_chat_message.json"
+            messages = []
+            
+            if os.path.exists(message_path):
+                with open(message_path, "r") as f:
+                    messages = json.load(f)
+            
+            # Append player's message to the conversation history
+            messages.append({"sender": "player", "content": player_message})
+            
+            # Create a plain text conversation history for the prompt
+            chat_history = "\n".join([f"{msg['sender']}: {msg['content']}" for msg in messages])
+            
+            # Generate the NPC reply from the LLM using the conversation history
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": f"You are {npc_id}, a character in a game world. Here is the conversation so far:\n{chat_history}"
+                    },
+                    {"role": "user", "content": player_message}
+                ],
+                max_tokens=100,
+                temperature=0.7
+            )
+            
+            npc_reply = response.choices[0].message.content
+            
+            # Append NPC's reply to the conversation history
+            messages.append({"sender": npc_id, "content": npc_reply})
+            
+            # Save the updated conversation history back to the JSON file
+            with open(message_path, "w") as f:
+                json.dump(messages, f, indent=2)
+            
+            return JsonResponse({
+                "status": "success",
+                "response": npc_reply
+            })
+            
+        except Exception as e:
+            print(f"Error in get_npc_reply: {str(e)}")
+            return JsonResponse({
+                "status": "error",
+                "response": "Hello! (Fallback response)",
+                "error": str(e)
+            })
+    
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 
 

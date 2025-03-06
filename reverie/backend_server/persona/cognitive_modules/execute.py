@@ -82,16 +82,38 @@ def execute(persona, maze, personas, plan):
       target_tiles = maze.address_tiles[plan]
       target_tiles = random.sample(list(target_tiles), 1)
 
-    else: 
+    else:
+
       # This is our default execution. We simply take the persona to the
       # location where the current action is taking place. 
       # Retrieve the target addresses. Again, plan is an action address in its
       # string form. <maze.address_tiles> takes this and returns candidate 
       # coordinates. 
+
+      # 03022025 - ori
+      # if plan not in maze.address_tiles: 
+      #   maze.address_tiles["Johnson Park:park:park garden"] #ERRORRRRRRR
+      # else: 
+      #   target_tiles = maze.address_tiles[plan]
+
+      # 03022025 - add
       if plan not in maze.address_tiles: 
-        maze.address_tiles["Johnson Park:park:park garden"] #ERRORRRRRRR
+          # Try to find a valid default location
+          default_locations = [
+              "the Ville:common_area:common area",
+              "Johnson Park:park:park garden"
+          ]
+          for loc in default_locations:
+              if loc in maze.address_tiles:
+                  target_tiles = maze.address_tiles[loc]
+                  break
+          else:  # if no default location found
+              print(f"Warning: No valid location found for plan {plan}")
+              target_tiles = list(maze.address_tiles.values())[0]  # take first available location
       else: 
-        target_tiles = maze.address_tiles[plan]
+          target_tiles = maze.address_tiles[plan]
+
+
 
     # There are sometimes more than one tile returned from this (e.g., a tabe
     # may stretch many coordinates). So, we sample a few here. And from that 

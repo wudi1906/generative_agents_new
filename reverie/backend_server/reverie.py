@@ -27,8 +27,15 @@ import math
 import os
 import shutil
 import traceback
+#from selenium import webdriver
 
-from selenium import webdriver
+#Qian
+import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse, parse_qs
+import threading
+
+#Qian
 
 from global_methods import *
 from utils import *
@@ -63,6 +70,14 @@ class ReverieServer:
     with open(f"{sim_folder}/reverie/meta.json", "w") as outfile: 
       reverie_meta["fork_sim_code"] = fork_sim_code
       outfile.write(json.dumps(reverie_meta, indent=2))
+    
+    # #Qian
+    # with open(f"{sim_folder}/environment/player_position.json") as json_files:
+    #   player_position = json.load(json_files)
+    #   x_coor = player_position['x']
+    #   y_coor = player_position['y']
+    # #Qian
+
 
     # LOADING REVERIE'S GLOBAL VARIABLES
     # The start datetime of the Reverie: 
@@ -398,6 +413,9 @@ class ReverieServer:
           #  "persona": {"Klaus Mueller": {"movement": [38, 12]}}, 
           #  "meta": {curr_time: <datetime>}}
           curr_move_file = f"{sim_folder}/movement/{self.step}.json"
+# 0302 - add ; create movement file
+          os.makedirs(os.path.dirname(curr_move_file), exist_ok=True)
+
           with open(curr_move_file, "w") as outfile: 
             outfile.write(json.dumps(movements, indent=2))
 
@@ -610,54 +628,6 @@ if __name__ == '__main__':
 
   rs = ReverieServer(origin, target)
   rs.open_server()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

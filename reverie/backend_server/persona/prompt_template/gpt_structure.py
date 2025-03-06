@@ -8,10 +8,12 @@ import json
 import random
 import openai
 import time 
+import os
 
 from utils import *
 
-openai.api_key = openai_api_key
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
@@ -71,7 +73,7 @@ def ChatGPT_request(prompt):
   # temp_sleep()
   try: 
     completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo", 
+    model="gpt-4o-mini", 
     messages=[{"role": "user", "content": prompt}]
     )
     return completion["choices"][0]["message"]["content"]
@@ -89,7 +91,7 @@ def GPT4_safe_generate_response(prompt,
                                    func_validate=None,
                                    func_clean_up=None,
                                    verbose=False): 
-  prompt = 'GPT-3 Prompt:\n"""\n' + prompt + '\n"""\n'
+  prompt = 'GPT-4o Prompt:\n"""\n' + prompt + '\n"""\n'
   prompt += f"Output the response to the prompt above in json. {special_instruction}\n"
   prompt += "Example output json:\n"
   prompt += '{"output": "' + str(example_output) + '"}'
@@ -207,10 +209,10 @@ def GPT_request(prompt, gpt_parameter):
     a str of GPT-3's response. 
   """
   temp_sleep()
-  try: 
-    response = openai.Completion.create(
+  try:
+    response = openai.ChatCompletion.create(
                 model=gpt_parameter["engine"],
-                prompt=prompt,
+                messages=[{"role": "system", "content": prompt}],
                 temperature=gpt_parameter["temperature"],
                 max_tokens=gpt_parameter["max_tokens"],
                 top_p=gpt_parameter["top_p"],
@@ -218,7 +220,7 @@ def GPT_request(prompt, gpt_parameter):
                 presence_penalty=gpt_parameter["presence_penalty"],
                 stream=gpt_parameter["stream"],
                 stop=gpt_parameter["stop"],)
-    return response.choices[0].text
+    return response["choices"][0]["message"]["content"]
   except: 
     print ("TOKEN LIMIT EXCEEDED")
     return "TOKEN LIMIT EXCEEDED"
@@ -264,7 +266,11 @@ def safe_generate_response(prompt,
 
   for i in range(repeat): 
     curr_gpt_response = GPT_request(prompt, gpt_parameter)
-    if func_validate(curr_gpt_response, prompt=prompt): 
+    if func_validate(curr_gpt_response, prompt=prompt):
+      print("Raw GPT Response:")
+      print(curr_gpt_response)
+      print("Prompt:")
+      print(prompt) 
       return func_clean_up(curr_gpt_response, prompt=prompt)
     if verbose: 
       print ("---- repeat count: ", i, curr_gpt_response)
@@ -282,7 +288,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
 
 
 if __name__ == '__main__':
-  gpt_parameter = {"engine": "text-davinci-003", "max_tokens": 50, 
+  gpt_parameter = {"engine": "gpt-4o-mini", "max_tokens": 50, 
                    "temperature": 0, "top_p": 1, "stream": False,
                    "frequency_penalty": 0, "presence_penalty": 0, 
                    "stop": ['"']}
@@ -309,7 +315,6 @@ if __name__ == '__main__':
                                  True)
 
   print (output)
-
 
 
 
