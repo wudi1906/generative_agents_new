@@ -254,6 +254,7 @@
 		conversationContainer.style.display = 'block';
 	}
 
+
 	function sendMessage(event, npcName) {
 		event.preventDefault();
 
@@ -261,44 +262,28 @@
 		const message = inputElement.value.trim();
 
 		if (message !== '') {
+
 			const chatMessages = document.getElementById("chatMessages");
 			chatMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
 
-			// Save the message
-			const playerData = {
-				message: message,
+			const requestData = {
+				npc_id: npcName,
+				player_message: message,
 				sim_code: sim_code,
-				sender: 'player',
-				receiver: npcName
+				current_time: new Date().toISOString(),
+				player_position: {
+					x: Math.round(player.x / 32),
+					y: Math.round(player.y / 32)
+				}
 			};
 
-			// Send message to server and get NPC's response
-			fetch('/save_message/', {
+			fetch('/get_npc_reply/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(playerData)
+				body: JSON.stringify(requestData)
 			})
-				.then(response => response.json())
-				.then(() => {
-					// get NPC's response
-					return fetch('/get_npc_reply/', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							npc_id: npcName,
-							player_position: {
-								x: Math.round(player.x / 32),
-								y: Math.round(player.y / 32)
-							},
-							player_message: message,
-							current_time: new Date().toISOString()
-						})
-					});
-				})
 				.then(response => response.json())
 				.then(data => {
 					chatMessages.innerHTML += `<p><strong>${npcName}:</strong> ${data.response || "..."}</p>`;

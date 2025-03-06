@@ -321,15 +321,15 @@ def path_tester_update(request):
 def save_message(request):
     data = json.loads(request.body)
     sim_code = data["sim_code"]
-    message = {
-        'content': data["message"],
-        'sender': data.get('sender', 'player'),
-        'receiver': data.get('receiver', '')
-    }
-    message_path = f"storage/{sim_code}/environment/player_chat_message.json"   
-    with open(message_path, "w") as message_file:
-        json.dump(message, message_file, indent=2)
-    return JsonResponse({'status': 'success', 'message': 'message saved'})
+    new_message = f"{data.get('sender', 'player')}: {data['message']}\n"
+    message_path = f"storage/{sim_code}/environment/player_chat_message.json"
+    
+    with open(message_path, "a") as message_file:
+        message_file.write(new_message)
+    
+    return JsonResponse({'status': 'success', 'message': 'message saved'})    
+
+
 
 def save_player_position(request):
     data = json.loads(request.body)
@@ -341,40 +341,64 @@ def save_player_position(request):
     return JsonResponse({'status': 'success', 'message': 'Player position saved'})
 
 
+
 def get_npc_reply(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            npc_id = data.get('npc_id')
-            player_position = data.get('player_position')
-            current_time = data.get('current_time')
-            player_message = data.get('player_message', 'Hello!')
+            sim_code = data.get("sim_code")
+            npc_id = data.get("npc_id")
+            player_message = data.get("player_message", "Hello!")
             
+            message_path = f"storage/{sim_code}/environment/player_chat_message.json"
+            messages = []
+            
+            if os.path.exists(message_path):
+                with open(message_path, "r") as f:
+                    messages = json.load(f)
+            
+            # Append player's message to the conversation history
+            messages.append({"sender": "player", "content": player_message})
+            
+            # Create a plain text conversation history for the prompt
+            chat_history = "\n".join([f"{msg['sender']}: {msg['content']}" for msg in messages])
+            
+            # Generate the NPC reply from the LLM using the conversation history
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": f"You are {npc_id}, a character in a game world. The player is at position x:{player_position['x']}, y:{player_position['y']}. Respond naturally and in character. Keep responses concise (max 2 sentences)."},
-                    {"role": "user", "content": "Hello!"}
+                    {
+                        "role": "system",
+                        "content": f"You are {npc_id}, a character in a game world. Here is the conversation so far:\n{chat_history}"
+                    },
+                    {"role": "user", "content": player_message}
                 ],
                 max_tokens=100,
                 temperature=0.7
             )
-
+            
             npc_reply = response.choices[0].message.content
             
+            # Append NPC's reply to the conversation history
+            messages.append({"sender": npc_id, "content": npc_reply})
+            
+            # Save the updated conversation history back to the JSON file
+            with open(message_path, "w") as f:
+                json.dump(messages, f, indent=2)
+            
             return JsonResponse({
-                'status': 'success',
-                'response': npc_reply
+                "status": "success",
+                "response": npc_reply
             })
             
         except Exception as e:
             print(f"Error in get_npc_reply: {str(e)}")
             return JsonResponse({
-                'status': 'error',
-                'response': 'Hello! (Fallback response)',
-                'error': str(e)
+                "status": "error",
+                "response": "Hello! (Fallback response)",
+                "error": str(e)
             })
     
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 
-#Qian
+
