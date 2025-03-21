@@ -19,7 +19,7 @@ def create_prompt(prompt_input: dict[str, Any]):
 {conversation}
 [End of conversation]
 
-Write down if there is anything from the conversation that {persona_1_name} might have found interesting from {persona_2_name}'s perspective, in a full sentence.
+Write down if there is anything from the conversation that {persona_1_name} might have found interesting from {persona_1_name}'s perspective, in a full sentence.
 Start the sentence with {persona_1_name}'s name.
 """
   return prompt
