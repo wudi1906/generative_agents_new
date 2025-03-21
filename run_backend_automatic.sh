@@ -3,8 +3,9 @@
 BACKEND_SCRIPT_PATH="reverie/backend_server"
 BACKEND_SCRIPT_FILE="automatic_execution.py"
 CONDA_ENV="simulacra"
-CONDA_PATH="/home/${USER}/anaconda3/bin/activate"
+CONDA_PATH="/opt/anaconda3/bin/activate"
 LOGS_PATH="../../logs"
+OUTPUT_SCRIPT="../../utils/print_all_sim.py"
 
 FILE_NAME="Bash-Script"
 cd ${BACKEND_SCRIPT_PATH}
@@ -78,3 +79,4 @@ timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 echo "(${FILE_NAME}): Timestamp: ${timestamp}"
 mkdir -p ${LOGS_PATH}
 python3 ${BACKEND_SCRIPT_FILE} ${ARGS} 2>&1 | tee ${LOGS_PATH}/${TARGET}_${timestamp}.txt
+python3 ${OUTPUT_SCRIPT} ${TARGET}
