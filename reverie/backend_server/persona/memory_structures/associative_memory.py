@@ -9,8 +9,6 @@ agents paper.
 """
 import json
 import datetime
-from sklearn.metrics.pairwise import cosine_similarity
-
 
 
 class ConceptNode: 
@@ -130,7 +128,7 @@ class AssociativeMemory:
 
       r[node_id]["description"] = node.description
       r[node_id]["embedding_key"] = node.embedding_key
-      node.poignancy = self.reduce_poignancy(node.poignancy,node.created,0.001)
+
       r[node_id]["poignancy"] = node.poignancy
       r[node_id]["keywords"] = list(node.keywords)
       r[node_id]["filling"] = node.filling
@@ -311,27 +309,24 @@ class AssociativeMemory:
     ret = set(ret)
     return ret
 
-
-  def retrieve_relevant_events(self, s_content, p_content, o_content): 
+  def retrieve_relevant_events(self, s_content, p_content, o_content):
     contents = [s_content, p_content, o_content]
 
     ret = []
-    for i in contents: 
-      if i in self.kw_to_event: 
+    for i in contents:
+      if i in self.kw_to_event:
         ret += self.kw_to_event[i]
 
     ret = set(ret)
     return ret
 
-
-  def get_last_chat(self, target_persona_name): 
-    if target_persona_name.lower() in self.kw_to_chat: 
+  def get_last_chat(self, target_persona_name):
+    if target_persona_name.lower() in self.kw_to_chat:
       return self.kw_to_chat[target_persona_name.lower()][0]
     else: 
       return False
-    
+
   def reduce_poignancy(self, poignancy, timestamp, decay_rate):
-      current_time= datetime.datetime.now()
-      time_diff = (current_time-timestamp).total_seconds()
-      return poignancy* ((1-decay_rate)**time_diff)
-      
+    current_time = datetime.datetime.now()
+    time_diff = (current_time - timestamp).total_seconds()
+    return poignancy * ((1 - decay_rate) ** time_diff)
