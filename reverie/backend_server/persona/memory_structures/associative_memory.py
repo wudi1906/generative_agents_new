@@ -128,7 +128,6 @@ class AssociativeMemory:
 
       r[node_id]["description"] = node.description
       r[node_id]["embedding_key"] = node.embedding_key
-
       r[node_id]["poignancy"] = node.poignancy
       r[node_id]["keywords"] = list(node.keywords)
       r[node_id]["filling"] = node.filling
