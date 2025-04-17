@@ -11,7 +11,7 @@ from ..print_prompt import print_run_prompts
 def create_prompt(prompt_input: dict[str, Any]):
   conversation = prompt_input["conversation"]
   persona_name = prompt_input["persona_name"]
-  persona_schedule = prompt_input["person_schedule"]
+  persona_schedule = prompt_input["persona_schedule"]
   curr_time = prompt_input["curr_time"]
 
   prompt = f"""
@@ -39,7 +39,7 @@ def run_gpt_prompt_planning_thought_on_convo(
     prompt_input = {
       "conversation": all_utterances,
       "persona_name": persona.scratch.name,
-      "person_schedule": persona.scratch.f_daily_schedule,
+      "persona_schedule": persona.scratch.f_daily_schedule,
       "curr_time": persona.scratch.curr_time.strftime("%B %d, %Y, %H:%M:%S %p"),
     }
     return prompt_input
